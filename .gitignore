@@ -1,0 +1,30 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+.vscode/
+
+# Angular
+node_modules/
+dist/
+.angular/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Build output
+publish/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Cabcon.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Domain has ZERO external dependencies by design (Clean Architecture core) -->
+
+</Project>

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Cabcon.WebApi</RootNamespace>
+    <UserSecretsId>cabcon-webapi-secrets</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cabcon.Application\Cabcon.Application.csproj" />
+    <ProjectReference Include="..\Cabcon.Domain\Cabcon.Domain.csproj" />
+    <ProjectReference Include="..\Cabcon.Infrastructure\Cabcon.Infrastructure.csproj" />
+    <ProjectReference Include="..\Cabcon.Persistence\Cabcon.Persistence.csproj" />
+    <ProjectReference Include="..\Cabcon.Shared\Cabcon.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

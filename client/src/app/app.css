@@ -1,0 +1,111 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-toolbar {
+  background: #ffffff !important;
+  color: #101d32;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.toolbar-title {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #101d32;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.user-role {
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: rgba(99, 102, 241, 0.15);
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.sidenav-container {
+  flex: 1;
+}
+
+.main-sidenav {
+  width: 250px;
+  background: #ffffff !important;
+  border-right: 1px solid #e5e7eb !important;
+}
+
+.main-sidenav .mat-mdc-list-item {
+  margin: 6px 10px;
+  border-radius: 8px;
+  height: 48px;
+  color: #101d32 !important;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.main-sidenav .mat-mdc-list-item:hover {
+  background-color: #f1f5f9 !important;
+}
+
+
+/* Active menu */
+.main-sidenav .mat-mdc-list-item.active-link {
+  background-color: #101d32 !important;
+}
+
+
+/* Active text */
+.main-sidenav .mat-mdc-list-item.active-link 
+.mdc-list-item__primary-text {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+
+/* Active icon */
+.main-sidenav .mat-mdc-list-item.active-link mat-icon {
+  color: #ffffff !important;
+}
+
+
+/* Red Cabcon accent line */
+.main-sidenav .mat-mdc-list-item.active-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 4px;
+  height: 32px;
+  background: #d62828;
+  border-radius: 0 4px 4px 0;
+}
+.main-content {
+  background-color: var(--bg-primary);
+}
+
+.page-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}

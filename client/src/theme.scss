@@ -1,0 +1,20 @@
+/* Cabcon Enterprise Theme Variables */
+:root {
+  --bg-primary: #F5F7FA;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --border-glass: #E5E7EB;
+  
+  --primary-color: #101D32;
+  --accent-color: #D62828;
+  
+  --primary-gradient: linear-gradient(135deg, #101D32 0%, #1c3256 100%);
+  --secondary-gradient: linear-gradient(135deg, #D62828 0%, #b81d1d 100%);
+  
+  --text-primary: #101D32;
+  --text-secondary: #6B7280;
+  --text-muted: #9ca3af;
+  
+  --shadow-premium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 15px rgba(16, 29, 50, 0.1);
+}

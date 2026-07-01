@@ -1,0 +1,155 @@
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import 'theme.scss';
+
+/* --- Light/Enterprise Theme & Modern Typography System --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Glassmorphism Card Style / Enterprise Style */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  box-shadow: var(--shadow-premium);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card:hover {
+  border-color: rgba(16, 29, 50, 0.2);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), var(--shadow-glow);
+}
+
+/* Gradient Buttons */
+.btn-primary {
+  background: var(--primary-color) !important;
+  color: white !important;
+  font-weight: 500 !important;
+  border-radius: 8px !important;
+  padding: 0 20px !important;
+  box-shadow: 0 4px 14px 0 rgba(16, 29, 50, 0.3) !important;
+  transition: all 0.2s ease !important;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  background: var(--primary-gradient) !important;
+  box-shadow: 0 6px 20px 0 rgba(16, 29, 50, 0.4) !important;
+}
+
+.btn-secondary {
+  background: var(--accent-color) !important;
+  color: white !important;
+  font-weight: 500 !important;
+  border-radius: 8px !important;
+  padding: 0 20px !important;
+  box-shadow: 0 4px 14px 0 rgba(214, 40, 40, 0.3) !important;
+  transition: all 0.2s ease !important;
+}
+.btn-secondary:hover {
+  transform: translateY(-1px);
+  background: var(--secondary-gradient) !important;
+  box-shadow: 0 6px 20px 0 rgba(214, 40, 40, 0.4) !important;
+}
+
+/* Tables Styling */
+.mat-mdc-table {
+  background: var(--bg-card) !important;
+}
+.mat-mdc-header-row {
+  background: #f8fafc !important;
+}
+.mat-mdc-header-cell {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+  border-bottom: 2px solid var(--border-glass) !important;
+}
+.mat-mdc-row {
+  transition: background-color 0.2s ease;
+}
+.mat-mdc-row:hover {
+  background-color: #f1f5f9 !important;
+}
+.mat-mdc-cell {
+  color: var(--text-secondary) !important;
+  border-bottom: 1px solid var(--border-glass) !important;
+}
+
+/* Material Dialog & Fields */
+.cdk-overlay-pane {
+  max-width: 90vw !important;
+}
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-glass) !important;
+  box-shadow: var(--shadow-premium) !important;
+}
+.mat-mdc-dialog-title {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+}
+.mat-mdc-dialog-content {
+  color: var(--text-secondary) !important;
+}
+
+/* Input Fields Overlay */
+.mat-mdc-form-field {
+  width: 100%;
+}
+.mat-mdc-text-field-wrapper {
+  background-color: #ffffff !important;
+  border: 1px solid var(--border-glass);
+  border-radius: 4px;
+}
+.mat-mdc-form-field-focus-indicator {
+  border-color: var(--primary-color) !important;
+}
+
+/* Material Toolbar overriding */
+.mat-toolbar.mat-primary {
+  background: var(--primary-color) !important;
+  color: #fff !important;
+}
+
+/* Logo styling */
+.cabcon-logo {
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 16px;
+}
+.toolbar-logo {
+  height: 40px;
+  object-fit: contain;
+  margin-right: 16px;
+}
+
+/* Micro-animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animated-view {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
