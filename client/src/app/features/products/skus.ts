@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -38,10 +38,14 @@ import { AuthService } from '../../core/auth.service';
           <h1>SKU & Bill of Materials (BOM)</h1>
           <p class="subtitle">Define wire/cable specifications and raw material weights</p>
         </div>
-        <button mat-flat-button class="btn-primary" (click)="addSku()" *ngIf="canCreate()">
-          <mat-icon>add</mat-icon>
-          Add SKU
-        </button>
+        <div class="action-buttons">
+          <button mat-flat-button class="btn-secondary" (click)="manageCategories()" *ngIf="canCreate()">
+            <mat-icon>category</mat-icon> Manage Category
+          </button>
+          <button mat-flat-button class="btn-primary" (click)="addSku()" *ngIf="canCreate()">
+            <mat-icon>add</mat-icon> Add SKU
+          </button>
+        </div>
       </div>
 
       <div class="filters-row glass-card">
@@ -199,7 +203,7 @@ export class SkusComponent implements OnInit {
   public displayedColumns = ['category', 'name', 'spec', 'unit', 'rmCost', 'mfgCost', 'actions'];
   public dataSource: Sku[] = [];
   public categories = signal<Category[]>([]);
-
+  private cdr = inject(ChangeDetectorRef);
   // Page state
   public totalCount = 0;
   public pageIndex = 0;
@@ -244,6 +248,7 @@ export class SkusComponent implements OnInit {
       next: (res) => {
         this.dataSource = res.items;
         this.totalCount = res.totalCount;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.snackBar.open('Failed to load SKUs.', 'Close', { duration: 3000 });
@@ -287,6 +292,17 @@ export class SkusComponent implements OnInit {
       if (result) {
         this.loadSkus();
       }
+    });
+  }
+
+  public manageCategories() {
+    const dialogRef = this.dialog.open(CategoryManageDialogComponent, {
+      width: '500px',
+      data: null
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadCategories();
     });
   }
 
@@ -585,3 +601,166 @@ export class SkuEditDialogComponent implements OnInit {
     });
   }
 }
+
+// --- DIALOG FOR MANAGING CATEGORIES ---
+@Component({
+  selector: 'app-category-manage',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule
+  ],
+  template: `
+    <h2 mat-dialog-title>Manage Categories</h2>
+    <mat-dialog-content class="dialog-content">
+      <div class="add-section">
+        <mat-form-field appearance="outline" class="flex-1">
+          <mat-label>New Category Name</mat-label>
+          <input matInput [formControl]="newCategoryCtrl" (keyup.enter)="addCategory()">
+        </mat-form-field>
+        <button mat-flat-button class="btn-primary add-btn" [disabled]="!newCategoryCtrl.value || loading()" (click)="addCategory()">
+          <mat-icon>add</mat-icon> Add
+        </button>
+      </div>
+
+      <div class="table-container">
+        <table mat-table [dataSource]="categories">
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Category Name</th>
+            <td mat-cell *matCellDef="let element">{{element.name}}</td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="actions-header">Actions</th>
+            <td mat-cell *matCellDef="let element" class="actions-cell">
+              <button mat-icon-button color="warn" (click)="deleteCategory(element)" [disabled]="loading()" title="Delete Category">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        
+        <div *ngIf="categories.length === 0" class="empty-state">
+          No categories found.
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+  `,
+  styles: [`
+    .dialog-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 300px;
+    }
+    .add-section {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-top: 8px;
+    }
+    .flex-1 {
+      flex: 1;
+    }
+    .add-btn {
+      margin-top: 4px;
+      height: 48px;
+    }
+    .table-container {
+      border: 1px solid var(--border-glass);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .actions-header {
+      width: 80px;
+      text-align: center;
+    }
+    .actions-cell {
+      text-align: center;
+    }
+    .empty-state {
+      padding: 24px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+  `]
+})
+export class CategoryManageDialogComponent implements OnInit {
+  private pricingService = inject(PricingService);
+  private snackBar = inject(MatSnackBar);
+  private fb = inject(FormBuilder);
+  private cdr = inject(ChangeDetectorRef);
+  
+  public categories: Category[] = [];
+  public displayedColumns = ['name', 'actions'];
+  public loading = signal(false);
+  public newCategoryCtrl = this.fb.control('', Validators.required);
+
+  ngOnInit() {
+    this.loadCategories();
+  }
+
+  private loadCategories() {
+    this.loading.set(true);
+    this.pricingService.getCategories().subscribe({
+      next: (res) => {
+        this.categories = res;
+        this.loading.set(false);
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.loading.set(false);
+        this.snackBar.open('Failed to load categories.', 'Close', { duration: 3000 });
+      }
+    });
+  }
+
+  public addCategory() {
+    if (this.newCategoryCtrl.invalid) return;
+    
+    this.loading.set(true);
+    this.pricingService.createCategory(this.newCategoryCtrl.value!).subscribe({
+      next: () => {
+        this.newCategoryCtrl.reset();
+        this.snackBar.open('Category created successfully.', 'Close', { duration: 3000 });
+        this.loadCategories();
+      },
+      error: (err: any) => {
+        this.loading.set(false);
+        this.snackBar.open(`Error: ${err.error?.message || 'Failed to create category.'}`, 'Close', { duration: 5000 });
+      }
+    });
+  }
+
+  public deleteCategory(category: Category) {
+    if (confirm(`Are you sure you want to delete the category "${category.name}"?`)) {
+      this.loading.set(true);
+      this.pricingService.deleteCategory(category.id).subscribe({
+        next: () => {
+          this.snackBar.open('Category deleted successfully.', 'Close', { duration: 3000 });
+          this.loadCategories();
+        },
+        error: (err: any) => {
+          this.loading.set(false);
+          this.snackBar.open(`Error: ${err.error?.message || 'Failed to delete category.'}`, 'Close', { duration: 5000 });
+        }
+      });
+    }
+  }
+}
+

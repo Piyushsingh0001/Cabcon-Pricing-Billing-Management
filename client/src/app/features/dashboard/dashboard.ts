@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, inject, signal } from '@angular/core';
+import { Component, Inject, OnInit, inject, signal, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -355,6 +355,7 @@ export class DashboardComponent implements OnInit {
   private pricingService = inject(PricingService);
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
+  private cdr = inject(ChangeDetectorRef);
 
   public columns = ['product', 'rmCost', 'mfgOverride', 'markupOverride', 'offerOverride', 'effectiveRate', 'gst', 'netOffer'];
   public rows: CalculatorRow[] = [];
@@ -459,6 +460,7 @@ export class DashboardComponent implements OnInit {
             grossRate: item.grossRate
           };
         });
+        this.cdr.detectChanges();
       },
       error: () => {
         this.snackBar.open('Calculation failed. Check overrides.', 'Close', { duration: 3000 });
@@ -523,6 +525,22 @@ export class DashboardComponent implements OnInit {
         this.pricingService.saveQuotation(payload).subscribe({
           next: (res) => {
             this.snackBar.open(`Quotation saved successfully: ${res.quotationNumber}`, 'Close', { duration: 5000 });
+            
+            // Download PDF
+            this.pricingService.downloadQuotationPdf(res.id).subscribe({
+              next: (blob) => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Quotation_${res.quotationNumber}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+              },
+              error: () => this.snackBar.open('Failed to download PDF.', 'Close', { duration: 3000 })
+            });
+
             // Clear sheet
             this.overridesMap.clear();
             this.rows = [];

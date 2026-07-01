@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -204,7 +204,7 @@ export class AdminComponent implements OnInit {
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
-
+  private cdr = inject(ChangeDetectorRef);
   public users: UserDto[] = [];
   public roles: RoleSummary[] = [];
 
@@ -234,14 +234,20 @@ export class AdminComponent implements OnInit {
 
   private loadUsers() {
     this.pricingService.getUsers().subscribe({
-      next: (res) => this.users = res,
+      next: (res) => {
+        this.users = res;
+        this.cdr.detectChanges();
+      },
       error: () => this.snackBar.open('Failed to load users.', 'Close', { duration: 3000 })
     });
   }
 
   private loadRoles() {
     this.pricingService.getRoles().subscribe({
-      next: (res) => this.roles = res,
+      next: (res) => {
+        this.roles = res;
+        this.cdr.detectChanges();
+      },
       error: () => this.snackBar.open('Failed to load roles.', 'Close', { duration: 3000 })
     });
   }
@@ -304,13 +310,14 @@ export class AdminComponent implements OnInit {
               assignedPermissionCodes: roleDetail.permissions.map((p: any) => p.code)
             }
           });
-
+          this.cdr.detectChanges();
           dialogRef.afterClosed().subscribe(res => {
             if (res) {
               this.loadRoles();
             }
           });
         });
+
       },
       error: () => this.snackBar.open('Failed to load role permissions.', 'Close', { duration: 3000 })
     });

@@ -282,8 +282,8 @@ export class PricingService {
       gstAmount: number;
       grossRate: number;
     }[];
-  }): Observable<{ quotationNumber: string }> {
-    return this.http.post<{ quotationNumber: string }>(`${this.apiBase}/quotations`, payload);
+  }): Observable<{ id: number; quotationNumber: string }> {
+    return this.http.post<{ id: number; quotationNumber: string }>(`${this.apiBase}/quotations`, payload);
   }
 
   public getQuotations(): Observable<QuotationSummary[]> {
@@ -292,6 +292,10 @@ export class PricingService {
 
   public getQuotation(id: number): Observable<QuotationDetails> {
     return this.http.get<QuotationDetails>(`${this.apiBase}/quotations/${id}`);
+  }
+
+  public downloadQuotationPdf(id: number): Observable<Blob> {
+    return this.http.get(`${this.apiBase}/quotations/${id}/pdf`, { responseType: 'blob' });
   }
 
   // --- Admin User / Role management ---

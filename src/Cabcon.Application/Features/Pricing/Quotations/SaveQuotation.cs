@@ -19,7 +19,9 @@ public record SaveQuotationLineInput
     public decimal GrossRate { get; init; }
 }
 
-public record SaveQuotationCommand : IRequest<Result<string>>
+public record SaveQuotationResponse(int Id, string QuotationNumber);
+
+public record SaveQuotationCommand : IRequest<Result<SaveQuotationResponse>>
 {
     public string PartyName { get; init; } = string.Empty;
     public int ValidityDays { get; init; }
@@ -48,7 +50,7 @@ public class SaveQuotationCommandValidator : AbstractValidator<SaveQuotationComm
     }
 }
 
-public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand, Result<string>>
+public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand, Result<SaveQuotationResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IDateTime _dateTime;
@@ -59,7 +61,7 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
         _dateTime = dateTime;
     }
 
-    public async Task<Result<string>> Handle(SaveQuotationCommand request, CancellationToken cancellationToken)
+    public async Task<Result<SaveQuotationResponse>> Handle(SaveQuotationCommand request, CancellationToken cancellationToken)
     {
         var skuRepo = _unitOfWork.Repository<Sku>();
         var skuIds = request.Lines.Select(l => l.SkuId).Distinct().ToList();
@@ -70,7 +72,7 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
 
         if (skus.Count != skuIds.Count)
         {
-            return Result<string>.Failure("One or more SKU IDs are invalid.");
+            return Result<SaveQuotationResponse>.Failure("One or more SKU IDs are invalid.");
         }
 
         var today = _dateTime.UtcNow.Date;
@@ -121,6 +123,6 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
         await quotationRepo.AddAsync(quotation, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Result<string>.Success(quotationNumber);
+        return Result<SaveQuotationResponse>.Success(new SaveQuotationResponse(quotation.Id, quotationNumber));
     }
 }

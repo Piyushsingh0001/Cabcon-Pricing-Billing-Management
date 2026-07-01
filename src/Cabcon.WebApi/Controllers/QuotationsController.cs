@@ -30,7 +30,7 @@ public class QuotationsController : ControllerBase
     public async Task<IActionResult> Save([FromBody] SaveQuotationCommand command, CancellationToken ct)
     {
         var result = await _mediator.Send(command, ct);
-        return result.Succeeded ? Ok(new { quotationNumber = result.Data }) : BadRequest(result.Errors);
+        return result.Succeeded ? Ok(result.Data) : BadRequest(result.Errors);
     }
 
     [HttpGet]
@@ -47,5 +47,13 @@ public class QuotationsController : ControllerBase
     {
         var result = await _mediator.Send(new GetQuotationDetailsQuery(id), ct);
         return Ok(result);
+    }
+
+    [HttpGet("{id}/pdf")]
+    [HasPermission(AppPermissions.Quotation.View)]
+    public async Task<IActionResult> DownloadPdf(int id, CancellationToken ct)
+    {
+        var pdfBytes = await _mediator.Send(new GenerateQuotationPdfQuery(id), ct);
+        return File(pdfBytes, "application/pdf", $"Quotation_{id}.pdf");
     }
 }

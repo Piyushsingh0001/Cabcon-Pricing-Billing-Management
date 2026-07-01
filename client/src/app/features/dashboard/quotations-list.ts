@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
@@ -196,6 +196,7 @@ private loadQuotations() {
 @Component({
   selector: 'app-quotation-detail-dialog',
   standalone: true,
+  encapsulation: ViewEncapsulation.None,
   imports: [
     CommonModule,
     MatDialogModule,
@@ -215,8 +216,7 @@ private loadQuotations() {
       <div id="print-area" class="quotation-print-sheet">
         <div class="quote-header">
           <div class="company-logo-section">
-            <mat-icon class="icon">bolt</mat-icon>
-            <span class="co-title">CABCON INDIA LTD</span>
+            <img src="/Images/Logo.jpg" alt="CABCON INDIA LTD" class="company-logo">
           </div>
           <div class="meta-section">
             <div><strong>Quote Ref:</strong> {{quote.quotationNumber}}</div>
@@ -314,16 +314,9 @@ private loadQuotations() {
       align-items: center;
       gap: 8px;
     }
-    .company-logo-section .icon {
-      color: #6366f1;
-      font-size: 28px;
-      width: 28px;
-      height: 28px;
-    }
-    .company-logo-section .co-title {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+    .company-logo {
+      height: 48px;
+      object-fit: contain;
     }
     .meta-section {
       text-align: right;
@@ -429,33 +422,61 @@ private loadQuotations() {
     }
     
     @media print {
-      body * {
-        visibility: hidden;
+      app-root, .print-header-actions, .cdk-overlay-backdrop, mat-dialog-actions {
+        display: none !important;
       }
-      #print-area, #print-area * {
-        visibility: visible;
+      
+      .cdk-overlay-container, .cdk-global-overlay-wrapper, .cdk-overlay-pane, .mat-mdc-dialog-container, .mat-mdc-dialog-surface, .mat-mdc-dialog-panel {
+        position: static !important;
+        display: block !important;
+        height: auto !important;
+        max-height: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        transform: none !important;
+        overflow: visible !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
       }
+
+      .print-sheet-content {
+        max-height: none !important;
+        overflow: visible !important;
+        padding: 0 !important;
+      }
+
       #print-area {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        background: white !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
         color: black !important;
       }
+
+      .quote-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+      }
+
+      .meta-section {
+        text-align: right !important;
+        white-space: nowrap !important;
+      }
+
       .quote-lines-table th {
         background: #f3f4f6 !important;
         color: black !important;
         border-bottom: 2px solid #d1d5db !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
       .quote-lines-table td {
         border-bottom: 1px solid #e5e7eb !important;
-        color: #374151 !important;
+        color: #000 !important;
       }
-      .gross {
-        color: black !important;
-      }
-      .highlight-green {
+      .gross, .highlight, .highlight-green, .val, .label {
         color: black !important;
       }
     }
