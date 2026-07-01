@@ -173,8 +173,19 @@ import { PricingService } from '../../core/pricing.service';
       </mat-card>
     </div>
   `,
- styles: [`
+  styles: [`
+@keyframes cardEntry {
 
+from {
+ opacity:0;
+ transform:translateY(20px);
+}
+to {
+ opacity:1;
+ transform:translateY(0);
+}
+
+}
 .login-wrapper {
   position: relative;
   min-height: 100vh;
@@ -240,10 +251,11 @@ import { PricingService } from '../../core/pricing.service';
 /* Login card */
 
 .login-card {
-
+  animation: cardEntry .5s ease;
   width:100%;
   max-width:430px;
-
+  animation: cardEntry .5s ease;
+  margin:20px;
   padding:35px 30px;
 
   z-index:2;
@@ -251,14 +263,10 @@ import { PricingService } from '../../core/pricing.service';
   border-radius:20px;
 
   background:white;
+box-shadow:
+0 30px 70px rgba(0,0,0,.25);
 
-  box-shadow:
-  0 25px 60px rgba(0,0,0,.20);
-
-}
-
-
-
+  }
 
 /* Logo */
 
@@ -276,14 +284,17 @@ import { PricingService } from '../../core/pricing.service';
 .cabcon-logo {
 
   width:180px;
-
+transition:.3s;
   height:auto;
 
 }
 
 
+.cabcon-logo:hover {
 
+transform:scale(1.05);
 
+}
 mat-card-header {
 
  display:flex;
@@ -410,23 +421,16 @@ mat-form-field {
  transition:.3s;
 
 }
-
-
-
 .btn-primary:hover {
-
 
  background:#b91c1c !important;
 
-
  transform:translateY(-2px);
 
+ box-shadow:
+ 0 8px 20px rgba(214,40,40,.35);
+
 }
-
-
-
-
-
 /* Error */
 
 .error-banner {
@@ -521,21 +525,9 @@ mat-spinner {
 
 }
 
-
-.login-card {
-
- margin:20px;
-
-}
-
-
 .circle {
-
  display:none;
-
 }
-
-
 }
 
 `]
