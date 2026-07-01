@@ -1,0 +1,43 @@
+
+    <h2 mat-dialog-title>Price Stamp Log: {{material.name}}</h2>
+    <mat-dialog-content>
+      <div class="history-table-container">
+        <table mat-table [dataSource]="historyData">
+          
+          <ng-container matColumnDef="effectiveDate">
+            <th mat-header-cell *matHeaderCellDef>Effective Date</th>
+            <td mat-cell *matCellDef="let log">{{log.effectiveDate | date:'medium'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="rateDetails">
+            <th mat-header-cell *matHeaderCellDef>Rate Details</th>
+            <td mat-cell *matCellDef="let log">
+              <span *ngIf="material.type === 0">
+                LME: \${{log.lmeUsdPerMt}}, Prem: \${{log.premiumUsdPerMt}}, Fx: ₹{{log.fxRate}}
+              </span>
+              <span *ngIf="material.type === 1">
+                Direct Rate: ₹{{log.directRateInrPerKg}}/kg
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="landedCost">
+            <th mat-header-cell *matHeaderCellDef>Landed Cost</th>
+            <td mat-cell *matCellDef="let log" class="landed-cost-cell">
+              ₹{{log.landedCostInrPerKg | number:'1.2-2'}}/kg
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+        </table>
+
+        <div class="no-records" *ngIf="historyData.data.length === 0">
+          No pricing updates found for this material.
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+  

@@ -1,0 +1,19 @@
+
+    <h2 mat-dialog-title>Select Products for Estimator</h2>
+    <mat-dialog-content class="dialog-content">
+      <div class="product-selection-list">
+        <div *ngFor="let sku of skus" class="product-selection-row">
+          <mat-checkbox [checked]="isSelected(sku.id)" (change)="toggleSelection(sku.id)">
+            <div class="sku-info">
+              <span class="name">{{sku.name}}</span>
+              <span class="spec">{{sku.spec}} - {{sku.categoryName}}</span>
+            </div>
+          </mat-checkbox>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-flat-button class="btn-primary" (click)="onSave()">Apply Selection ({{selectedIds.size}})</button>
+    </mat-dialog-actions>
+  

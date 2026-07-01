@@ -4,36 +4,36 @@ import { authGuard, permissionGuard } from './core/auth.guards';
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('./features/auth/login').then(m => m.LoginComponent)
+    loadComponent: () => import('./features/auth/login.component').then(m => m.LoginComponent)
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./features/dashboard/dashboard').then(m => m.DashboardComponent),
+    loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent),
     canActivate: [authGuard, permissionGuard('Quotation.Generate')]
   },
   {
     path: 'quotations',
-    loadComponent: () => import('./features/dashboard/quotations-list').then(m => m.QuotationsListComponent),
+    loadComponent: () => import('./features/dashboard/quotations-list.component').then(m => m.QuotationsListComponent),
     canActivate: [authGuard, permissionGuard('Quotation.View')]
   },
   {
     path: 'materials',
-    loadComponent: () => import('./features/products/materials').then(m => m.MaterialsComponent),
+    loadComponent: () => import('./features/products/materials.component').then(m => m.MaterialsComponent),
     canActivate: [authGuard, permissionGuard('Pricing.View')]
   },
   {
     path: 'skus',
-    loadComponent: () => import('./features/products/skus').then(m => m.SkusComponent),
+    loadComponent: () => import('./features/products/skus.component').then(m => m.SkusComponent),
     canActivate: [authGuard, permissionGuard('Sku.View')]
   },
   {
     path: 'admin',
-    loadComponent: () => import('./features/admin/admin').then(m => m.AdminComponent),
+    loadComponent: () => import('./features/admin/admin.component').then(m => m.AdminComponent),
     canActivate: [authGuard, permissionGuard('Users.View')]
   },
   {
     path: 'forbidden',
-    loadComponent: () => import('./shared/forbidden').then(m => m.ForbiddenComponent)
+    loadComponent: () => import('./shared/forbidden.component').then(m => m.ForbiddenComponent)
   },
   {
     path: '',

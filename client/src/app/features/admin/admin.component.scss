@@ -1,0 +1,59 @@
+
+    .admin-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .header-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+    }
+    .subtitle {
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    .admin-tabs {
+      background: var(--bg-card);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .tab-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .tab-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tab-actions h3 {
+      margin: 0;
+      font-weight: 600;
+    }
+    .bold-cell {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .role-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      background: rgba(99, 102, 241, 0.15);
+      color: #818cf8;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-right: 4px;
+    }
+    ::ng-deep .mat-mdc-tab-group-actions-container {
+      border-bottom: 1px solid var(--border-glass) !important;
+    }
+  

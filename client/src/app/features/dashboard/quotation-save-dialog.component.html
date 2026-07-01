@@ -1,0 +1,27 @@
+
+    <h2 mat-dialog-title>Save Quotation Snapshot</h2>
+    <mat-dialog-content>
+      <form [formGroup]="form" class="save-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Customer / Party Name</mat-label>
+          <input matInput formControlName="partyName" placeholder="e.g. Tata Power Ltd">
+          <mat-error *ngIf="form.get('partyName')?.hasError('required')">Party Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Validity Period (Days)</mat-label>
+          <input matInput formControlName="validityDays" type="number">
+          <mat-error *ngIf="form.get('validityDays')?.hasError('required')">Validity period is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Price Basis / Notes</mat-label>
+          <textarea matInput formControlName="priceBasisNote" rows="3"></textarea>
+        </mat-form-field>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-flat-button class="btn-primary" [disabled]="form.invalid" (click)="onSubmit()">Generate Quotation</button>
+    </mat-dialog-actions>
+  

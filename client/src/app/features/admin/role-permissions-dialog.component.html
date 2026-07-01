@@ -1,0 +1,19 @@
+
+    <h2 mat-dialog-title>Edit Permissions: {{role.name}}</h2>
+    <mat-dialog-content class="dialog-content">
+      <div class="checkbox-grid">
+        <div *ngFor="let perm of allPermissions" class="permission-checkbox-row">
+          <mat-checkbox [checked]="hasPermission(perm.code)" (change)="togglePermission(perm.id, perm.code)">
+            <div class="perm-info">
+              <span class="code">{{perm.code}}</span>
+              <span class="name">{{perm.name}} ({{perm.module}})</span>
+            </div>
+          </mat-checkbox>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-flat-button class="btn-primary" [disabled]="loading()" (click)="onSubmit()">Save Permissions</button>
+    </mat-dialog-actions>
+  

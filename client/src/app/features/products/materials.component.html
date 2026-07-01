@@ -1,0 +1,90 @@
+
+    <div class="materials-container animated-view">
+      <div class="header-section">
+        <div>
+          <h1>Material Base Rates</h1>
+          <p class="subtitle">Create materials, set commodity prices and track history</p>
+        </div>
+        <button mat-flat-button class="btn-primary" (click)="addMaterial()" *ngIf="canUpdate()">
+          <mat-icon>add</mat-icon> Add Material
+        </button>
+      </div>
+
+      <div class="filters-row glass-card">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search Materials</mat-label>
+          <input matInput (keyup)="applySearch($event)" placeholder="e.g. Copper">
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Material Type</mat-label>
+          <mat-select (selectionChange)="applyTypeFilter($event.value)">
+            <mat-option [value]="null">All Types</mat-option>
+            <mat-option [value]="0">Exchange-linked</mat-option>
+            <mat-option [value]="1">Direct Rate</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="table-container glass-card">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+            <td mat-cell *matCellDef="let element">
+              <span class="material-name">{{element.name}}</span>
+              <span class="placeholder-tag" *ngIf="element.isPlaceholder">Placeholder</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+            <td mat-cell *matCellDef="let element">
+              <span class="type-tag" [ngClass]="element.type === 0 ? 'exchange' : 'direct'">
+                {{element.type === 0 ? 'Exchange-linked' : 'Direct Rate'}}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="asOnDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated</th>
+            <td mat-cell *matCellDef="let element">{{element.asOnDate | date:'medium'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="landedCost">
+            <th mat-header-cell *matHeaderCellDef>Landed Cost (₹/kg)</th>
+            <td mat-cell *matCellDef="let element" class="landed-cost-cell">
+              {{element.landedCost | number:'1.2-2'}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="action-buttons">
+                <button mat-icon-button color="accent" (click)="viewHistory(element)" title="View Price History">
+                  <mat-icon>history</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" (click)="editMaterial(element)" *ngIf="canUpdate()" title="Edit Name/Type/Rates">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteMaterial(element)" *ngIf="canUpdate()" title="Delete Material">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [length]="totalCount"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="[5, 10, 20]"
+                       (page)="onPageChange($event)"
+                       showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </div>
+  

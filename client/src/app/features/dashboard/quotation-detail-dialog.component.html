@@ -1,0 +1,83 @@
+
+    <div class="print-header-actions" mat-dialog-title>
+      <h2>Quotation Details: {{quote.quotationNumber}}</h2>
+      <button mat-stroked-button color="primary" (click)="printQuote()">
+        <mat-icon>print</mat-icon> Print Sheet
+      </button>
+    </div>
+    
+    <mat-dialog-content class="print-sheet-content">
+      <div id="print-area" class="quotation-print-sheet">
+        <div class="quote-header">
+          <div class="company-logo-section">
+            <img src="/Images/Logo.jpg" alt="CABCON INDIA LTD" class="company-logo">
+          </div>
+          <div class="meta-section">
+            <div><strong>Quote Ref:</strong> {{quote.quotationNumber}}</div>
+            <div><strong>Date:</strong> {{quote.quotationDate | date:'mediumDate'}}</div>
+            <div><strong>Validity:</strong> {{quote.validityDays}} Days</div>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="client-details">
+          <h3>Customer Details</h3>
+          <div class="party-name"><strong>Party Name:</strong> {{quote.partyName}}</div>
+        </div>
+
+        <div class="lines-table-container">
+          <table class="quote-lines-table">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Item Description</th>
+                <th>Unit</th>
+                <th class="num">RM Cost (₹)</th>
+                <th class="num">Mfg Cost (₹)</th>
+                <th class="num">Rate ex-GST (₹)</th>
+                <th class="num">GST (%)</th>
+                <th class="num">Net Rate (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let line of quote.lines; let idx = index">
+                <td>{{idx + 1}}</td>
+                <td>{{line.descriptionSnapshot}}</td>
+                <td>{{line.unit}}</td>
+                <td class="num">{{line.rmCostSnapshot | number:'1.2-2'}}</td>
+                <td class="num">{{line.mfgCostSnapshot | number:'1.2-2'}}</td>
+                <td class="num highlight">{{line.offerExGst | number:'1.2-2'}}</td>
+                <td class="num">{{line.gstPercent * 100 | number}}%</td>
+                <td class="num highlight gross">{{line.grossRate | number:'1.2-2'}}</td>
+              </tr>
+              <!-- Summary Rows -->
+              <tr class="summary-row separator">
+                <td colspan="5" class="label">Total (Excluding GST):</td>
+                <td colspan="3" class="num val">₹{{quote.totalExGst | number:'1.2-2'}}</td>
+              </tr>
+              <tr class="summary-row">
+                <td colspan="5" class="label">Total GST Amount:</td>
+                <td colspan="3" class="num val">₹{{quote.totalGst | number:'1.2-2'}}</td>
+              </tr>
+              <tr class="summary-row grand-total">
+                <td colspan="5" class="label">Grand Total (Inclusive of GST):</td>
+                <td colspan="3" class="num val highlight-green">₹{{quote.totalGross | number:'1.2-2'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="price-basis-disclaimer font-small">
+          <p><strong>Price Basis Notes:</strong> {{quote.priceBasisNote}}</p>
+          <p class="disclaimer-text">
+            * This is a frozen quotation snapshot. Raw material prices (LME/Premium/Fx) and markups are captured at the time of quotation generation. Terms of delivery as agreed.
+          </p>
+        </div>
+      </div>
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+  

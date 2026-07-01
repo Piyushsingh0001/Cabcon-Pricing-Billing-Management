@@ -1,0 +1,145 @@
+
+    <div class="login-wrapper">
+      <div class="background-decor">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+      </div>
+      
+      <mat-card class="glass-card login-card animated-view">
+        <mat-card-header>
+          <div class="logo-area">
+            <img src="images/logo.jpg" alt="Cabcon Logo" class="cabcon-logo">
+          </div>
+          <mat-card-subtitle>Enterprise Pricing & Billing Portal</mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <!-- SIGN IN VIEW -->
+          <ng-container *ngIf="currentView() === 'signin'">
+            <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+              <mat-form-field appearance="outline">
+                <mat-label>Username or Email</mat-label>
+                <input matInput formControlName="username" type="text" placeholder="e.g. admin">
+                <mat-icon matPrefix>person</mat-icon>
+                <mat-error *ngIf="loginForm.get('username')?.hasError('required')">Username is required</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" [type]="hidePassword() ? 'password' : 'text'">
+                <mat-icon matPrefix>lock</mat-icon>
+                <button type="button" mat-icon-button matSuffix (click)="togglePassword()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword()">
+                  <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+              </mat-form-field>
+
+              <div class="signin-options">
+                <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
+                <a class="nav-link" (click)="setView('forgot')">Forgot password?</a>
+              </div>
+
+              <div class="error-banner" *ngIf="errorMessage()">
+                <mat-icon>error_outline</mat-icon>
+                <span>{{ errorMessage() }}</span>
+              </div>
+
+              <button mat-flat-button class="btn-primary submit-btn" type="submit" [disabled]="loginForm.invalid || isLoading()">
+                <span *ngIf="!isLoading()">Sign In</span>
+                <mat-spinner diameter="24" *ngIf="isLoading()"></mat-spinner>
+              </button>
+
+              <div class="view-footer">
+                <span>Don't have an account? </span>
+                <a class="nav-link bold" (click)="setView('signup')">Sign Up / Create Account</a>
+              </div>
+            </form>
+          </ng-container>
+
+          <!-- SIGN UP / CREATE USER VIEW -->
+          <ng-container *ngIf="currentView() === 'signup'">
+            <form [formGroup]="signUpForm" (ngSubmit)="onSignUpSubmit()">
+              <mat-form-field appearance="outline">
+                <mat-label>Full Name</mat-label>
+                <input matInput formControlName="fullName" placeholder="e.g. John Doe">
+                <mat-icon matPrefix>badge</mat-icon>
+                <mat-error *ngIf="signUpForm.get('fullName')?.hasError('required')">Full Name is required</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Email Address</mat-label>
+                <input matInput formControlName="email" type="email" placeholder="e.g. john@example.com">
+                <mat-icon matPrefix>email</mat-icon>
+                <mat-error *ngIf="signUpForm.get('email')?.hasError('required')">Email is required</mat-error>
+                <mat-error *ngIf="signUpForm.get('email')?.hasError('email')">Invalid email address</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="userName" placeholder="e.g. johndoe">
+                <mat-icon matPrefix>person</mat-icon>
+                <mat-error *ngIf="signUpForm.get('userName')?.hasError('required')">Username is required</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" type="password">
+                <mat-icon matPrefix>lock</mat-icon>
+                <mat-error *ngIf="signUpForm.get('password')?.hasError('required')">Password is required</mat-error>
+                <mat-error *ngIf="signUpForm.get('password')?.hasError('minlength')">Password must be at least 6 characters</mat-error>
+              </mat-form-field>
+
+              <div class="error-banner" *ngIf="errorMessage()">
+                <mat-icon>error_outline</mat-icon>
+                <span>{{ errorMessage() }}</span>
+              </div>
+
+              <button mat-flat-button class="btn-primary submit-btn" type="submit" [disabled]="signUpForm.invalid || isLoading()">
+                <span *ngIf="!isLoading()">Create Account</span>
+                <mat-spinner diameter="24" *ngIf="isLoading()"></mat-spinner>
+              </button>
+
+              <div class="view-footer">
+                <a class="nav-link" (click)="setView('signin')">
+                  <mat-icon>arrow_back</mat-icon> Back to Sign In
+                </a>
+              </div>
+            </form>
+          </ng-container>
+
+          <!-- FORGOT PASSWORD VIEW -->
+          <ng-container *ngIf="currentView() === 'forgot'">
+            <form [formGroup]="forgotForm" (ngSubmit)="onForgotSubmit()">
+              <p class="instruction-text">
+                Enter your registered email address below. We'll send you instructions to reset your password.
+              </p>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Email Address</mat-label>
+                <input matInput formControlName="email" type="email" placeholder="e.g. yourname@example.com">
+                <mat-icon matPrefix>email</mat-icon>
+                <mat-error *ngIf="forgotForm.get('email')?.hasError('required')">Email is required</mat-error>
+                <mat-error *ngIf="forgotForm.get('email')?.hasError('email')">Invalid email address</mat-error>
+              </mat-form-field>
+
+              <div class="error-banner" *ngIf="errorMessage()">
+                <mat-icon>error_outline</mat-icon>
+                <span>{{ errorMessage() }}</span>
+              </div>
+
+              <button mat-flat-button class="btn-primary submit-btn" type="submit" [disabled]="forgotForm.invalid || isLoading()">
+                <span *ngIf="!isLoading()">Send Reset Link</span>
+                <mat-spinner diameter="24" *ngIf="isLoading()"></mat-spinner>
+              </button>
+
+              <div class="view-footer">
+                <a class="nav-link" (click)="setView('signin')">
+                  <mat-icon>arrow_back</mat-icon> Back to Sign In
+                </a>
+              </div>
+            </form>
+          </ng-container>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  

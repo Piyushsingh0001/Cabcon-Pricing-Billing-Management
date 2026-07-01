@@ -1,0 +1,39 @@
+
+    .dialog-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 300px;
+    }
+    .add-section {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-top: 8px;
+    }
+    .flex-1 {
+      flex: 1;
+    }
+    .add-btn {
+      margin-top: 4px;
+      height: 48px;
+    }
+    .table-container {
+      border: 1px solid var(--border-glass);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .actions-header {
+      width: 80px;
+      text-align: center;
+    }
+    .actions-cell {
+      text-align: center;
+    }
+    .empty-state {
+      padding: 24px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+  

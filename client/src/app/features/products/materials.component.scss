@@ -1,0 +1,18 @@
+
+    .materials-container { display: flex; flex-direction: column; gap: 24px; }
+    .header-section { display: flex; justify-content: space-between; align-items: center; }
+    h1 { font-size: 28px; font-weight: 700; margin: 0 0 4px 0; }
+    .subtitle { color: var(--text-secondary); margin: 0; }
+    .filters-row { display: flex; gap: 16px; padding: 16px; flex-wrap: wrap; }
+    .search-field { flex: 1; min-width: 250px; }
+    .filter-field { width: 200px; }
+    .table-container { padding: 8px; overflow-x: auto; }
+    .material-name { font-weight: 600; color: var(--text-primary); }
+    .placeholder-tag { background: rgba(234, 179, 8, 0.15); color: #facc15; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; margin-left: 8px; border: 1px solid rgba(234, 179, 8, 0.2); }
+    .type-tag { font-size: 11px; font-weight: 500; padding: 4px 8px; border-radius: 12px; }
+    .type-tag.exchange { background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.2); }
+    .type-tag.direct { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+    .landed-cost-cell { font-weight: 700; color: var(--text-primary); }
+    .action-buttons { display: flex; gap: 4px; }
+    ::ng-deep .mat-mdc-paginator { background: transparent !important; color: var(--text-secondary) !important; }
+  

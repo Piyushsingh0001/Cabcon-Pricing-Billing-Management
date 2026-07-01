@@ -1,0 +1,29 @@
+
+    .dialog-content {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .checkbox-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 8px 0;
+    }
+    .permission-checkbox-row {
+      border-bottom: 1px solid var(--border-glass);
+      padding-bottom: 8px;
+    }
+    .perm-info {
+      display: flex;
+      flex-direction: column;
+      margin-left: 8px;
+    }
+    .perm-info .code {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .perm-info .name {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+  

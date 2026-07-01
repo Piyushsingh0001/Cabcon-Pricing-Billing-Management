@@ -1,0 +1,60 @@
+
+    .quotations-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .header-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+    }
+    .subtitle {
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    .table-container {
+      padding: 8px;
+      overflow-x: auto;
+    }
+    .number-cell {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .party-cell {
+      font-weight: 500;
+    }
+    .gross-cell {
+      font-weight: 700;
+      color: #34d399;
+    }
+    .no-quotes-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 32px;
+      text-align: center;
+    }
+    .no-quotes-placeholder mat-icon {
+      font-size: 64px;
+      width: 64px;
+      height: 64px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .no-quotes-placeholder h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    .no-quotes-placeholder p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      max-width: 400px;
+    }
+  

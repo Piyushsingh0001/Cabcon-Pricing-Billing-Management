@@ -1,0 +1,15 @@
+
+    .history-table-container {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .landed-cost-cell {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .no-records {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-secondary);
+    }
+  

@@ -1,0 +1,28 @@
+
+    .dialog-content {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .product-selection-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .product-selection-row {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-glass);
+    }
+    .sku-info {
+      display: flex;
+      flex-direction: column;
+      margin-left: 8px;
+    }
+    .sku-info .name {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .sku-info .spec {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+  

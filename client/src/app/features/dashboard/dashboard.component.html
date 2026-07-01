@@ -1,0 +1,172 @@
+
+    <div class="dashboard-container animated-view">
+      <div class="header-section">
+        <div>
+          <h1>Pricing Calculation Sheet</h1>
+          <p class="subtitle">Stateless interactive cost estimator & quotation generator</p>
+        </div>
+        <div class="action-buttons">
+          <button mat-stroked-button color="primary" (click)="selectProducts()">
+            <mat-icon>add_shopping_cart</mat-icon>
+            Add/Remove SKUs ({{rows.length}})
+          </button>
+          <button mat-flat-button class="btn-secondary" (click)="saveQuotation()" [disabled]="rows.length === 0">
+            <mat-icon>save</mat-icon>
+            Save Quotation
+          </button>
+        </div>
+      </div>
+
+      <!-- Global Parameters Card -->
+      <div class="glass-card parameters-card">
+        <h3>Global Loadings & Markups</h3>
+        <div class="row">
+          <mat-form-field appearance="outline" class="loading-mode-select">
+            <mat-label>Loading Mode</mat-label>
+            <mat-select [value]="loadingMode()" (selectionChange)="onModeChange($event.value)">
+              <mat-option [value]="0">Simple Percentage (%)</mat-option>
+              <mat-option [value]="1">Simple Amount (₹/kg)</mat-option>
+              <mat-option [value]="2">Itemised Loadings</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="row parameters-grid">
+          <!-- Simple Percentage Inputs -->
+          <ng-container *ngIf="loadingMode() === 0">
+            <mat-form-field appearance="outline">
+              <mat-label>Global Percentage Markup (e.g. 0.05 for 5%)</mat-label>
+              <input matInput type="number" step="0.01" [value]="globalPct()" (change)="updateGlobalParam('pct', $event)">
+            </mat-form-field>
+          </ng-container>
+
+          <!-- Simple Amount Inputs -->
+          <ng-container *ngIf="loadingMode() === 1">
+            <mat-form-field appearance="outline">
+              <mat-label>Global Fixed Markup (₹/kg)</mat-label>
+              <input matInput type="number" step="1" [value]="globalAmt()" (change)="updateGlobalParam('amt', $event)">
+            </mat-form-field>
+          </ng-container>
+
+          <!-- Itemised Inputs -->
+          <ng-container *ngIf="loadingMode() === 2">
+            <mat-form-field appearance="outline">
+              <mat-label>Overhead (%)</mat-label>
+              <input matInput type="number" step="0.01" [value]="globalOverheadPct()" (change)="updateGlobalParam('overhead', $event)">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Margin (%)</mat-label>
+              <input matInput type="number" step="0.01" [value]="globalMarginPct()" (change)="updateGlobalParam('margin', $event)">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Packing (₹/kg)</mat-label>
+              <input matInput type="number" step="0.5" [value]="globalPacking()" (change)="updateGlobalParam('packing', $event)">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Freight (₹/kg)</mat-label>
+              <input matInput type="number" step="0.5" [value]="globalFreight()" (change)="updateGlobalParam('freight', $event)">
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Spreadsheet Table Card -->
+      <div class="table-container glass-card" *ngIf="rows.length > 0; else noProducts">
+        <table mat-table [dataSource]="rows">
+          <!-- Description -->
+          <ng-container matColumnDef="product">
+            <th mat-header-cell *matHeaderCellDef>Product Spec</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="desc-cell">
+                <span class="cat">{{element.categoryName}}</span>
+                <span class="name">{{element.skuName}}</span>
+                <span class="spec">{{element.spec}} ({{element.unit}})</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- RM Cost -->
+          <ng-container matColumnDef="rmCost">
+            <th mat-header-cell *matHeaderCellDef>RM Cost</th>
+            <td mat-cell *matCellDef="let element">₹{{element.rmCost | number:'1.2-2'}}</td>
+          </ng-container>
+
+          <!-- Mfg Override -->
+          <ng-container matColumnDef="mfgOverride">
+            <th mat-header-cell *matHeaderCellDef>Mfg Cost (Override)</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="override-cell">
+                <span class="base-val">₹{{element.mfgCost | number:'1.2-2'}}</span>
+                <input class="table-input" type="number" step="0.01" placeholder="Override ₹"
+                       [value]="element.rowMfgOverride ?? ''"
+                       (change)="updateRowOverride(element.skuId, 'mfg', $event)">
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Markup Override -->
+          <ng-container matColumnDef="markupOverride">
+            <th mat-header-cell *matHeaderCellDef>Markup Override</th>
+            <td mat-cell *matCellDef="let element">
+              <!-- Percentage loading mode -->
+              <input *ngIf="loadingMode() === 0" class="table-input" type="number" step="0.01" placeholder="Override %"
+                     [value]="element.rowPctOverride !== undefined ? element.rowPctOverride : ''"
+                     (change)="updateRowOverride(element.skuId, 'pct', $event)">
+              
+              <!-- Fixed amount loading mode -->
+              <input *ngIf="loadingMode() === 1" class="table-input" type="number" step="1" placeholder="Override ₹/kg"
+                     [value]="element.rowAmtOverride !== undefined ? element.rowAmtOverride : ''"
+                     (change)="updateRowOverride(element.skuId, 'amt', $event)">
+              
+              <span *ngIf="loadingMode() === 2" class="muted-text">Itemised</span>
+            </td>
+          </ng-container>
+
+          <!-- Final Offer Override -->
+          <ng-container matColumnDef="offerOverride">
+            <th mat-header-cell *matHeaderCellDef>Offer Override (ex-GST)</th>
+            <td mat-cell *matCellDef="let element">
+              <input class="table-input" type="number" step="1" placeholder="Final ex-GST ₹"
+                     [value]="element.rowOfferOverride ?? ''"
+                     (change)="updateRowOverride(element.skuId, 'offer', $event)">
+            </td>
+          </ng-container>
+
+          <!-- Effective Rate -->
+          <ng-container matColumnDef="effectiveRate">
+            <th mat-header-cell *matHeaderCellDef>Offer Ex-GST</th>
+            <td mat-cell *matCellDef="let element" class="ex-gst-cell">₹{{element.offerExGst | number:'1.2-2'}}</td>
+          </ng-container>
+
+          <!-- GST details -->
+          <ng-container matColumnDef="gst">
+            <th mat-header-cell *matHeaderCellDef>GST</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="gst-cell">
+                <span class="pct">{{element.gstPercent * 100 | number}}%</span>
+                <span class="amt">₹{{element.gstAmount | number:'1.2-2'}}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Net Offer -->
+          <ng-container matColumnDef="netOffer">
+            <th mat-header-cell *matHeaderCellDef>Net Rate (incl-GST)</th>
+            <td mat-cell *matCellDef="let element" class="gross-cell">₹{{element.grossRate | number:'1.2-2'}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+        </table>
+      </div>
+
+      <ng-template #noProducts>
+        <div class="no-products-placeholder glass-card animated-view">
+          <mat-icon>shopping_basket</mat-icon>
+          <h3>Your Pricing Sheet is Empty</h3>
+          <p>Click "Add/Remove SKUs" above to select products and start estimating rates.</p>
+          <button mat-flat-button class="btn-primary" (click)="selectProducts()">Select Products</button>
+        </div>
+      </ng-template>
+    </div>
+  

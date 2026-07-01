@@ -1,0 +1,20 @@
+
+    <h2 mat-dialog-title>Add New Security Role</h2>
+    <mat-dialog-content>
+      <form [formGroup]="form" class="admin-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Role Name</mat-label>
+          <input matInput formControlName="name" placeholder="e.g. SalesHead">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description">
+        </mat-form-field>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-flat-button class="btn-primary" [disabled]="form.invalid || loading()" (click)="onSubmit()">Save Role</button>
+    </mat-dialog-actions>
+  

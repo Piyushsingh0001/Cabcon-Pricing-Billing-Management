@@ -1,0 +1,102 @@
+
+    <div class="skus-container animated-view">
+      <div class="header-section">
+        <div>
+          <h1>SKU & Bill of Materials (BOM)</h1>
+          <p class="subtitle">Define wire/cable specifications and raw material weights</p>
+        </div>
+        <div class="action-buttons">
+          <button mat-flat-button class="btn-secondary" (click)="manageCategories()" *ngIf="canCreate()">
+            <mat-icon>category</mat-icon> Manage Category
+          </button>
+          <button mat-flat-button class="btn-primary" (click)="addSku()" *ngIf="canCreate()">
+            <mat-icon>add</mat-icon> Add SKU
+          </button>
+        </div>
+      </div>
+
+      <div class="filters-row glass-card">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search Products</mat-label>
+          <input matInput (keyup)="applySearch($event)" placeholder="Search by name, spec, or category...">
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Category</mat-label>
+          <mat-select (selectionChange)="applyCategoryFilter($event.value)">
+            <mat-option [value]="null">All Categories</mat-option>
+            <mat-option *ngFor="let cat of categories()" [value]="cat.id">{{cat.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="table-container glass-card">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+          <!-- Category Column -->
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+            <td mat-cell *matCellDef="let element">{{element.categoryName}}</td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Variant</th>
+            <td mat-cell *matCellDef="let element">
+              <span class="sku-name">{{element.name}}</span>
+              <span class="placeholder-tag" *ngIf="element.isPlaceholder">Placeholder</span>
+            </td>
+          </ng-container>
+
+          <!-- Spec Column -->
+          <ng-container matColumnDef="spec">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Specification</th>
+            <td mat-cell *matCellDef="let element">{{element.spec}}</td>
+          </ng-container>
+
+          <!-- Unit Column -->
+          <ng-container matColumnDef="unit">
+            <th mat-header-cell *matHeaderCellDef>Unit</th>
+            <td mat-cell *matCellDef="let element">{{element.unit}}</td>
+          </ng-container>
+
+          <!-- RM Cost Column -->
+          <ng-container matColumnDef="rmCost">
+            <th mat-header-cell *matHeaderCellDef>RM Cost (₹)</th>
+            <td mat-cell *matCellDef="let element">₹{{element.rawMaterialCost | number:'1.2-2'}}</td>
+          </ng-container>
+
+          <!-- Mfg Cost Column -->
+          <ng-container matColumnDef="mfgCost">
+            <th mat-header-cell *matHeaderCellDef>Base Mfg Cost (₹)</th>
+            <td mat-cell *matCellDef="let element">₹{{element.manufacturingCost | number:'1.2-2'}}</td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="action-buttons">
+                <button mat-icon-button color="primary" (click)="editSku(element)" *ngIf="canUpdate()" title="Edit SKU & BOM">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteSku(element)" *ngIf="canDelete()" title="Delete SKU">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [length]="totalCount"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="[5, 10, 20]"
+                       (page)="onPageChange($event)"
+                       showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </div>
+  

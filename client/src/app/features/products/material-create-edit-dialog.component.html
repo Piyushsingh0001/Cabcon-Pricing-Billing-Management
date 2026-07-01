@@ -1,0 +1,56 @@
+
+    <h2 mat-dialog-title>{{ material ? 'Edit Material Details' : 'Add Material' }}</h2>
+    <mat-dialog-content>
+      <form [formGroup]="form" class="edit-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Material Name</mat-label>
+          <input matInput formControlName="name" placeholder="e.g. Copper wire">
+          <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Material Type</mat-label>
+          <mat-select formControlName="type" (selectionChange)="onTypeChange($event.value)">
+            <mat-option [value]="0">Exchange-linked</mat-option>
+            <mat-option [value]="1">Direct Rate</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="rate-fields-section">
+          <ng-container *ngIf="form.get('type')?.value === 0">
+            <h3 class="section-title">Exchange-linked Metrics</h3>
+            <mat-form-field appearance="outline">
+              <mat-label>LME ($/MT)</mat-label>
+              <input matInput formControlName="lmeUsdPerMt" type="number">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Premium ($/MT)</mat-label>
+              <input matInput formControlName="premiumUsdPerMt" type="number">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Fx Rate (₹/$)</mat-label>
+              <input matInput formControlName="fxRate" type="number" step="0.01">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Freight (₹/MT)</mat-label>
+              <input matInput formControlName="freightInrPerMt" type="number">
+            </mat-form-field>
+          </ng-container>
+
+          <ng-container *ngIf="form.get('type')?.value === 1">
+            <h3 class="section-title">Direct Pricing</h3>
+            <mat-form-field appearance="outline">
+              <mat-label>Direct Rate (₹/kg)</mat-label>
+              <input matInput formControlName="directRateInrPerKg" type="number" step="0.01">
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-flat-button class="btn-primary" [disabled]="form.invalid || loading()" (click)="onSubmit()">
+        {{ material ? 'Save Changes' : 'Create Material' }}
+      </button>
+    </mat-dialog-actions>
+  
