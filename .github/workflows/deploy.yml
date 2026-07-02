@@ -6,24 +6,23 @@ on:
       - main
 
 jobs:
-  verify-runner:
+  build-backend:
     runs-on: self-hosted
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Show Runner
-        run: hostname
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
 
-      - name: Show .NET Version
-        run: dotnet --version
+      - name: Restore NuGet Packages
+        run: dotnet restore
 
-      - name: Show Node Version
-        run: node -v
+      - name: Build Solution
+        run: dotnet build --configuration Release --no-restore
 
-      - name: Show NPM Version
-        run: npm -v
-
-      - name: Success
-        run: echo "Runner is working successfully!"
+      - name: Publish Web API
+        run: dotnet publish .\src\Cabcon.WebApi\Cabcon.WebApi.csproj -c Release -o C:\Deployments\API
