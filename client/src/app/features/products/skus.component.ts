@@ -13,8 +13,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { PricingService, Sku, Category, Material } from '../../core/pricing.service';
 import { AuthService } from '../../core/auth.service';
-import { SkuEditDialogComponent } from './sku-edit-dialog.component';
-import { CategoryManageDialogComponent } from './category-manage-dialog.component';
+import { SkuEditDialogComponent } from './sku-edit-dialog/sku-edit-dialog.component';
+import { CategoryManageDialogComponent } from './category-manage-dialog/category-manage-dialog.component';
 
 
 

@@ -13,10 +13,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { PricingService, UserDto, RoleSummary, PermissionDto } from '../../core/pricing.service';
 import { AuthService } from '../../core/auth.service';
-import { UserCreateDialogComponent } from './user-create-dialog.component';
-import { UserRolesDialogComponent } from './user-roles-dialog.component';
-import { RoleCreateDialogComponent } from './role-create-dialog.component';
-import { RolePermissionsDialogComponent } from './role-permissions-dialog.component';
+import { UserCreateDialogComponent } from './user-create-dialog/user-create-dialog.component';
+import { UserRolesDialogComponent } from './user-roles-dialog/user-roles-dialog.component';
+import { RoleCreateDialogComponent } from './role-create-dialog/role-create-dialog.component';
+import { RolePermissionsDialogComponent } from './role-permissions-dialog/role-permissions-dialog.component';
 
 
 
@@ -84,7 +84,7 @@ export class AdminComponent implements OnInit {
         this.roles = res;
         this.cdr.detectChanges();
       },
-      error: () => this.snackBar.open('Failed to load roles.', 'Close', { duration: 3000 })
+      error: () => this.snackBar.open('Manager does not have right to change role .', 'Close', { duration: 3000 })
     });
   }
 

@@ -14,8 +14,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { forkJoin, of } from 'rxjs';
 import { PricingService, Material, MaterialPriceHistory } from '../../core/pricing.service';
 import { AuthService } from '../../core/auth.service';
-import { MaterialCreateEditDialogComponent } from './material-create-edit-dialog.component';
-import { MaterialHistoryDialogComponent } from './material-history-dialog.component';
+import { MaterialCreateEditDialogComponent } from './material-create-edit-dialog/material-create-edit-dialog.component';
+import { MaterialHistoryDialogComponent } from './material-history-dialog/material-history-dialog.component';
 
 
 

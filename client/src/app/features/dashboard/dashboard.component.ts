@@ -11,8 +11,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { PricingService, CalculatedQuotationItem, Sku, Material } from '../../core/pricing.service';
-import { ProductSelectDialogComponent } from './product-select-dialog.component';
-import { QuotationSaveDialogComponent } from './quotation-save-dialog.component';
+import { ProductSelectDialogComponent } from './product-select-dialog/product-select-dialog.component';
+import { QuotationSaveDialogComponent } from './quotation-save-dialog/quotation-save-dialog.component';
 
 interface CalculatorRow {
   skuId: number;

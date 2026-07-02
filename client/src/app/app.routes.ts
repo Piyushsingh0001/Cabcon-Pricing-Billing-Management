@@ -7,13 +7,17 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/login.component').then(m => m.LoginComponent)
   },
   {
+    path: 'reset-password',
+    loadComponent: () => import('./features/auth/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
+  },
+  {
     path: 'dashboard',
     loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent),
     canActivate: [authGuard, permissionGuard('Quotation.Generate')]
   },
   {
     path: 'quotations',
-    loadComponent: () => import('./features/dashboard/quotations-list.component').then(m => m.QuotationsListComponent),
+    loadComponent: () => import('./features/dashboard/quotations-list/quotations-list.component').then(m => m.QuotationsListComponent),
     canActivate: [authGuard, permissionGuard('Quotation.View')]
   },
   {

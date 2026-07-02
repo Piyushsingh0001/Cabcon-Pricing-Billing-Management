@@ -12,10 +12,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { forkJoin, of } from 'rxjs';
-import { PricingService, Material, MaterialPriceHistory } from '../../core/pricing.service';
-import { AuthService } from '../../core/auth.service';
-import { MaterialsComponent } from './materials.component';
-import { MaterialHistoryDialogComponent } from './material-history-dialog.component';
+import { PricingService, Material, MaterialPriceHistory } from '../../../core/pricing.service';
+import { AuthService } from '../../../core/auth.service';
+import { MaterialsComponent } from '../materials.component';
+import { MaterialHistoryDialogComponent } from '../material-history-dialog/material-history-dialog.component';
 
 
 

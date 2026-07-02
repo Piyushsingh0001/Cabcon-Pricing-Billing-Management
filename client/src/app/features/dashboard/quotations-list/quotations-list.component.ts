@@ -5,8 +5,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { PricingService, QuotationSummary, QuotationDetails, QuotationLine } from '../../core/pricing.service';
-import { QuotationDetailDialogComponent } from './quotation-detail-dialog.component';
+import { PricingService, QuotationSummary, QuotationDetails, QuotationLine } from '../../../core/pricing.service';
+import { QuotationDetailDialogComponent } from '../quotation-detail-dialog/quotation-detail-dialog.component';
 
 
 

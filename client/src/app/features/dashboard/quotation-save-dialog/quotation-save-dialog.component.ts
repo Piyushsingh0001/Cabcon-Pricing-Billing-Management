@@ -10,9 +10,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { PricingService, CalculatedQuotationItem, Sku, Material } from '../../core/pricing.service';
-import { DashboardComponent } from './dashboard.component';
-import { ProductSelectDialogComponent } from './product-select-dialog.component';
+import { PricingService, CalculatedQuotationItem, Sku, Material } from '../../../core/pricing.service';
+import { DashboardComponent } from '../dashboard.component';
+import { ProductSelectDialogComponent } from '../product-select-dialog/product-select-dialog.component';
 
 interface CalculatorRow {
   skuId: number;

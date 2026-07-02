@@ -11,10 +11,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { PricingService, Sku, Category, Material } from '../../core/pricing.service';
-import { AuthService } from '../../core/auth.service';
-import { SkusComponent } from './skus.component';
-import { CategoryManageDialogComponent } from './category-manage-dialog.component';
+import { PricingService, Sku, Category, Material } from '../../../core/pricing.service';
+import { AuthService } from '../../../core/auth.service';
+import { SkusComponent } from '../skus.component';
+import { CategoryManageDialogComponent } from '../category-manage-dialog/category-manage-dialog.component';
 
 
 

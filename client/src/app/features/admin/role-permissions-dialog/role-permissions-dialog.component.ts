@@ -11,12 +11,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { PricingService, UserDto, RoleSummary, PermissionDto } from '../../core/pricing.service';
-import { AuthService } from '../../core/auth.service';
-import { AdminComponent } from './admin.component';
-import { UserCreateDialogComponent } from './user-create-dialog.component';
-import { UserRolesDialogComponent } from './user-roles-dialog.component';
-import { RoleCreateDialogComponent } from './role-create-dialog.component';
+import { PricingService, UserDto, RoleSummary, PermissionDto } from '../../../core/pricing.service';
+import { AuthService } from '../../../core/auth.service';
+import { AdminComponent } from '../admin.component';
+import { UserCreateDialogComponent } from '../user-create-dialog/user-create-dialog.component';
+import { UserRolesDialogComponent } from '../user-roles-dialog/user-roles-dialog.component';
+import { RoleCreateDialogComponent } from '../role-create-dialog/role-create-dialog.component';
 
 
 
