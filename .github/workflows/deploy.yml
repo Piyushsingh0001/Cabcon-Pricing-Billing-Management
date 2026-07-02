@@ -1,0 +1,29 @@
+name: Cabcon CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  verify-runner:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Show Runner
+        run: hostname
+
+      - name: Show .NET Version
+        run: dotnet --version
+
+      - name: Show Node Version
+        run: node -v
+
+      - name: Show NPM Version
+        run: npm -v
+
+      - name: Success
+        run: echo "Runner is working successfully!"
