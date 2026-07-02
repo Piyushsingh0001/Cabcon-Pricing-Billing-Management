@@ -1,5 +1,6 @@
 
-    <div class="login-wrapper">
+    <div  class="login-wrapper"
+          [class.right-panel]="currentView() !== 'signin'">
       <div class="background-decor">
         <div class="circle circle-1"></div>
         <div class="circle circle-2"></div>
@@ -142,4 +143,3 @@
         </mat-card-content>
       </mat-card>
     </div>
-  
