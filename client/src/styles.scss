@@ -145,6 +145,9 @@ html, body {
   margin-right: 16px;
 }
 
+transform:scale(1.05);
+
+}
 /* Micro-animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
