@@ -43,7 +43,7 @@ export class SkusComponent implements OnInit {
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
 
-  public displayedColumns = ['category', 'name', 'spec', 'unit', 'rmCost', 'mfgCost', 'actions'];
+  public displayedColumns = ['category', 'name', 'spec', 'unit', 'rmCost', 'mfgCost', 'updatedBy', 'actions'];
   public dataSource: Sku[] = [];
   public categories = signal<Category[]>([]);
   private cdr = inject(ChangeDetectorRef);

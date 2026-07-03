@@ -44,7 +44,7 @@ export class MaterialsComponent implements OnInit {
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
 
-  public displayedColumns = ['name', 'type', 'asOnDate', 'landedCost', 'actions'];
+  public displayedColumns = ['name', 'type', 'asOnDate', 'landedCost', 'updatedBy', 'actions'];
   public dataSource = new MatTableDataSource<Material>();
   
   public totalCount = 0;

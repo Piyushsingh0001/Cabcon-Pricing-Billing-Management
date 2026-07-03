@@ -15,6 +15,7 @@ public record QuotationSummaryDto
     public decimal TotalExGst { get; init; }
     public decimal TotalGst { get; init; }
     public decimal TotalGross { get; init; }
+    public string? CreatedBy { get; init; }
 }
 
 public record GetQuotationsQuery : IRequest<IReadOnlyList<QuotationSummaryDto>>;
@@ -41,7 +42,8 @@ public class GetQuotationsQueryHandler : IRequestHandler<GetQuotationsQuery, IRe
                 ValidityDays = q.ValidityDays,
                 TotalExGst = q.TotalExGst,
                 TotalGst = q.TotalGst,
-                TotalGross = q.TotalGross
+                TotalGross = q.TotalGross,
+                CreatedBy = q.CreatedBy
             })
             .ToListAsync(cancellationToken);
     }

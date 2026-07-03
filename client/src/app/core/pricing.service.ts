@@ -28,6 +28,7 @@ export interface Material {
   asOnDate: string;
   isPlaceholder: boolean;
   landedCost: number;
+  updatedBy?: string;
 }
 
 export interface MaterialPriceHistory {
@@ -55,6 +56,7 @@ export interface Sku {
   rawMaterialCost: number;
   manufacturingCost: number;
   totalWeight: number;
+  updatedBy?: string;
 }
 
 export interface SkuBomLine {
@@ -93,6 +95,7 @@ export interface QuotationSummary {
   totalExGst: number;
   totalGst: number;
   totalGross: number;
+  createdBy?: string;
 }
 
 export interface QuotationLine {

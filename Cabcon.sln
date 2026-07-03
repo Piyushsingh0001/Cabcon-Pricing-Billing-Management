@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.9.0.0
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11626.88 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cabcon.Domain", "src\Cabcon.Domain\Cabcon.Domain.csproj", "{11111111-0000-0000-0000-000000000001}"
 EndProject
@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cabcon.Persistence", "src\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cabcon.Shared", "src\Cabcon.Shared\Cabcon.Shared.csproj", "{11111111-0000-0000-0000-000000000005}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cabcon.WebApi", "src\Cabcon.WebApi\Cabcon.WebApi.csproj", "{11111111-0000-0000-0000-000000000006}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cabcon.SKUQuoteApi", "src\Cabcon.WebApi\Cabcon.SKUQuoteApi.csproj", "{11111111-0000-0000-0000-000000000006}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cabcon.Domain.Tests", "tests\Cabcon.Domain.Tests\Cabcon.Domain.Tests.csproj", "{11111111-0000-0000-0000-000000000007}"
 EndProject
@@ -56,5 +56,8 @@ Global
 		{11111111-0000-0000-0000-000000000008}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11111111-0000-0000-0000-000000000008}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11111111-0000-0000-0000-000000000008}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

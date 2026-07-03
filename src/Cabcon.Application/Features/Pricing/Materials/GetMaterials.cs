@@ -21,6 +21,7 @@ public record MaterialDto
     public DateTime AsOnDate { get; init; }
     public bool IsPlaceholder { get; init; }
     public decimal LandedCost { get; init; }
+    public string? UpdatedBy { get; init; }
 }
 
 public record GetMaterialsQuery : IRequest<PaginatedList<MaterialDto>>
@@ -92,7 +93,8 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             DirectRateInrPerKg = m.DirectRateInrPerKg,
             AsOnDate = m.AsOnDate,
             IsPlaceholder = m.IsPlaceholder,
-            LandedCost = _pricingService.LandedCost(m)
+            LandedCost = _pricingService.LandedCost(m),
+            UpdatedBy = m.UpdatedBy ?? m.CreatedBy
         }).ToList();
 
         return new PaginatedList<MaterialDto>(dtos, count, request.PageNumber, request.PageSize);

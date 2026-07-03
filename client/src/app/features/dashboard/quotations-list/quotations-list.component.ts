@@ -30,7 +30,7 @@ export class QuotationsListComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   private cdr = inject(ChangeDetectorRef);
 
-  public displayedColumns = ['quoteNumber', 'partyName', 'date', 'totalExGst', 'totalGross', 'actions'];
+  public displayedColumns = ['quoteNumber', 'partyName', 'date', 'totalExGst', 'totalGross', 'createdBy', 'actions'];
   public dataSource: QuotationSummary[] = [];
  
 

@@ -25,6 +25,7 @@ public record SkuDto
     public decimal RawMaterialCost { get; init; }
     public decimal ManufacturingCost { get; init; }
     public decimal TotalWeight { get; init; }
+    public string? UpdatedBy { get; init; }
 }
 
 public record GetSkusQuery : IRequest<PaginatedList<SkuDto>>
@@ -104,7 +105,8 @@ public class GetSkusQueryHandler : IRequestHandler<GetSkusQuery, PaginatedList<S
             IsPlaceholder = s.IsPlaceholder,
             RawMaterialCost = _pricingService.RawMaterialCost(s),
             ManufacturingCost = _pricingService.ManufacturingCost(s),
-            TotalWeight = _pricingService.TotalBomWeight(s)
+            TotalWeight = _pricingService.TotalBomWeight(s),
+            UpdatedBy = s.UpdatedBy ?? s.CreatedBy
         }).ToList();
 
         return new PaginatedList<SkuDto>(dtos, count, request.PageNumber, request.PageSize);
