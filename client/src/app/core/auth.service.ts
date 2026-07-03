@@ -124,5 +124,6 @@ export class AuthService {
   private clearSession() {
     this.sessionSignal.set(null);
     localStorage.removeItem('cabcon_session');
+    localStorage.removeItem('cabcon_draft_quotation');
   }
 }

@@ -17,6 +17,24 @@
         </div>
       </div>
 
+      <!-- Draft Alert Card -->
+      <div class="glass-card draft-alert-card" *ngIf="hasDraft">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <mat-icon color="accent">restore_page</mat-icon>
+            <span style="font-weight: 500;">You have an unsaved Draft Quotation.</span>
+          </div>
+          <div class="action-buttons">
+            <button mat-stroked-button color="warn" (click)="deleteDraft()">
+              <mat-icon>delete</mat-icon> Discard
+            </button>
+            <button mat-flat-button class="btn-primary" (click)="loadDraft()">
+              <mat-icon>file_download</mat-icon> Load Draft
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Global Parameters Card -->
       <div class="glass-card parameters-card">
         <h3>Global Loadings & Markups</h3>

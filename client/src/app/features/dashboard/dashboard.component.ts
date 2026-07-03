@@ -76,8 +76,42 @@ export class DashboardComponent implements OnInit {
     rowOfferOverride?: number;
   }>();
 
+  public hasDraft = false;
+
   ngOnInit() {
+    const savedDraft = localStorage.getItem('cabcon_draft_quotation');
+    if (savedDraft) {
+      this.hasDraft = true;
+    }
     this.recalculate();
+  }
+
+  public loadDraft() {
+    const savedDraft = localStorage.getItem('cabcon_draft_quotation');
+    if (savedDraft) {
+      try {
+        const parsed = JSON.parse(savedDraft);
+        this.loadingMode.set(parsed.loadingMode || 0);
+        this.globalPct.set(parsed.globalPct || 0.05);
+        this.globalAmt.set(parsed.globalAmt || 10);
+        this.globalOverheadPct.set(parsed.globalOverheadPct || 0.05);
+        this.globalMarginPct.set(parsed.globalMarginPct || 0.05);
+        this.globalPacking.set(parsed.globalPacking || 2);
+        this.globalFreight.set(parsed.globalFreight || 3);
+        if (parsed.overridesMap) {
+          this.overridesMap = new Map<number, any>(parsed.overridesMap);
+        }
+        this.hasDraft = false;
+        this.recalculate();
+      } catch (e) {
+        // ignore
+      }
+    }
+  }
+
+  public deleteDraft() {
+    localStorage.removeItem('cabcon_draft_quotation');
+    this.hasDraft = false;
   }
 
   public onModeChange(value: number) {
@@ -136,6 +170,18 @@ export class DashboardComponent implements OnInit {
       globalFreight: this.globalFreight(),
       items: itemsPayload
     };
+
+    // Auto-save draft to localStorage
+    localStorage.setItem('cabcon_draft_quotation', JSON.stringify({
+      loadingMode: this.loadingMode(),
+      globalPct: this.globalPct(),
+      globalAmt: this.globalAmt(),
+      globalOverheadPct: this.globalOverheadPct(),
+      globalMarginPct: this.globalMarginPct(),
+      globalPacking: this.globalPacking(),
+      globalFreight: this.globalFreight(),
+      overridesMap: Array.from(this.overridesMap.entries())
+    }));
 
     this.pricingService.calculateQuotation(payload).subscribe({
       next: (res) => {
@@ -240,9 +286,11 @@ export class DashboardComponent implements OnInit {
               error: () => this.snackBar.open('Failed to download PDF.', 'Close', { duration: 3000 })
             });
 
-            // Clear sheet
+            // Clear sheet and draft
             this.overridesMap.clear();
             this.rows = [];
+            localStorage.removeItem('cabcon_draft_quotation');
+            this.hasDraft = false;
           },
           error: () => {
             this.snackBar.open('Failed to save quotation.', 'Close', { duration: 3000 });
