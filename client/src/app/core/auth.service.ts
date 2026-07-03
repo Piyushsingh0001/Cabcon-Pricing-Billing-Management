@@ -20,8 +20,8 @@ export interface UserSession {
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private readonly apiBase = 'https://localhost:55027/api/auth'; // Matches WebApi launchSettings.json
-
+  //private readonly apiBase = 'https://localhost:55027/api/auth'; // Matches WebApi launchSettings.json
+    private readonly apiBase = 'https://skuquotation.runasp.net/api/auth';
   // Signals
   private sessionSignal = signal<UserSession | null>(null);
   

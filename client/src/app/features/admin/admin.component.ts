@@ -135,7 +135,9 @@ export class AdminComponent implements OnInit {
     
     // We can call getRole Details via custom request
     const http = inject(this.pricingService['http'].constructor as any) as any;
-    http.get(`https://localhost:55027/api/roles/${role.id}`).subscribe({
+    // http.get(`https://localhost:55027/api/roles/${role.id}`).subscribe({
+    //   private readonly apiBase = 'https://skuquotation.runasp.net/api/auth';
+     http.get(`https://skuquotation.runasp.net/api/roles/${role.id}`).subscribe({
       next: (roleDetail: any) => {
         this.pricingService.getPermissions().subscribe(allPerms => {
           const dialogRef = this.dialog.open(RolePermissionsDialogComponent, {

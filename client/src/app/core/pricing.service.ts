@@ -121,7 +121,8 @@ export interface QuotationDetails extends QuotationSummary {
 })
 export class PricingService {
   private http = inject(HttpClient);
-  private readonly apiBase = 'https://localhost:55027/api';
+  // private readonly apiBase = 'https://localhost:55027/api';
+  private readonly apiBase = 'https://skuquotation.runasp.net/api';
 
   // --- Categories ---
   public getCategories(): Observable<Category[]> {
