@@ -1,6 +1,7 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError, throwError, of, BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface UserSession {
   userId: number;
@@ -21,7 +22,7 @@ export interface UserSession {
 export class AuthService {
   private http = inject(HttpClient);
   //private readonly apiBase = 'https://localhost:55027/api/auth'; // Matches WebApi launchSettings.json
-    private readonly apiBase = 'https://skuquotation.runasp.net/api/auth';
+    private readonly apiBase = `${environment.apiBase}/auth`;
   // Signals
   private sessionSignal = signal<UserSession | null>(null);
   
