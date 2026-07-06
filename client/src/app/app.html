@@ -15,7 +15,34 @@
           <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #profileMenu="matMenu" xPosition="before">
-          <button mat-menu-item (click)="logout()">
+          <div style="padding: 16px; min-width: 250px; max-width: 380px; outline: none; border-bottom: 1px solid rgba(255,255,255,0.1); cursor: default;" (click)="$event.stopPropagation()">
+           <div class="profile-header">
+
+                      <div class="profile-avatar">  <mat-icon>account_circle</mat-icon> </div>
+                           <div class="profile-info">
+                             <div class="profile-name">    {{ user.fullName }}    </div>
+                            <div class="profile-email">  <mat-icon>mail</mat-icon>  {{ user.email }}  </div>
+                           <div class="profile-role">    <mat-icon>verified_user</mat-icon> {{ user.roles.join(', ') }}    </div>
+                            </div>
+                            </div>
+            
+            <div style="font-size: 13px;">
+              <div style="color: #080808; margin-bottom: 4px;font-weight: 600; font-size: 14px; ">Permissions:</div>
+              <div class="permission-section">
+
+               <div class="permission-group" *ngFor="let group of groupedPermissions">
+                    <div class="module-title">
+                        <mat-icon class="module-icon"> {{ getModuleIcon(group.module) }}  </mat-icon>
+                       <span>{{ group.module }}</span>
+                        </div>
+                      <div class="permission-chips">
+                      <span class="permission-chip" *ngFor="let action of group.actions">  {{ action }} </span>
+                        </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button mat-menu-item class="logout-btn" (click)="logout()">
             <mat-icon>logout</mat-icon>
             <span>Sign Out</span>
           </button>

@@ -90,13 +90,13 @@ public class GenerateQuotationPdfQueryHandler : IRequestHandler<GenerateQuotatio
             {
                 table.ColumnsDefinition(columns =>
                 {
-                    columns.ConstantColumn(30); // #
-                    columns.RelativeColumn(3);  // Description
-                    columns.RelativeColumn();   // Unit
-                    columns.RelativeColumn();   // Ex-GST Rate
-                    columns.RelativeColumn();   // GST %
-                    columns.RelativeColumn();   // GST Amt
-                    columns.RelativeColumn();   // Gross Rate
+                    columns.ConstantColumn(25); // #
+                    columns.RelativeColumn();   // Description
+                    columns.ConstantColumn(40); // Unit
+                    columns.ConstantColumn(75); // Ex-GST Rate
+                    columns.ConstantColumn(45); // GST %
+                    columns.ConstantColumn(65); // GST Amt
+                    columns.ConstantColumn(75); // Gross Rate
                 });
 
                 table.Header(header =>
