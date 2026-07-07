@@ -1,0 +1,1486 @@
+2026-07-07 10:51:49.009 +05:30 [INF] GET / responded 404 in 78ms
+2026-07-07 10:54:17.531 +05:30 [INF] OPTIONS /api/skus responded 204 in 30ms
+2026-07-07 10:54:17.998 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 10:54:18.000 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 10:54:18.637 +05:30 [INF] GET /api/skus responded 401 in 59ms
+2026-07-07 10:54:18.676 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-07 10:54:18.735 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-07 10:54:18.940 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 10:54:19.177 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-07 10:54:19.185 +05:30 [INF] GET /api/skus responded 401 in 1ms
+2026-07-07 10:54:19.189 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 499ms
+2026-07-07 10:54:19.239 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 10:54:19.374 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 10:54:19.384 +05:30 [INF] GET /api/skus responded 200 in 178ms
+2026-07-07 10:54:19.389 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 10:54:19.395 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 10:54:19.396 +05:30 [INF] GET /api/skus responded 200 in 10ms
+2026-07-07 10:54:25.266 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 10:54:25.281 +05:30 [INF] Handling LogoutCommand
+2026-07-07 10:54:25.319 +05:30 [INF] Handled LogoutCommand
+2026-07-07 10:54:25.321 +05:30 [INF] POST /api/auth/logout responded 204 in 46ms
+2026-07-07 10:54:28.818 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 10:54:28.834 +05:30 [INF] Handling LoginCommand
+2026-07-07 10:54:28.845 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 10:54:28.958 +05:30 [INF] Handled LoginCommand
+2026-07-07 10:54:28.960 +05:30 [INF] POST /api/auth/login responded 200 in 132ms
+2026-07-07 10:54:30.544 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-07 10:54:30.557 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 10:54:30.564 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 10:54:30.566 +05:30 [INF] GET /api/skus responded 200 in 11ms
+2026-07-07 10:54:36.534 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-07 10:54:36.598 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-07 10:54:36.667 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-07 10:54:36.669 +05:30 [INF] POST /api/quotations/calculate responded 200 in 90ms
+2026-07-07 10:55:07.267 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 10:55:07.324 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-07 10:55:07.455 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-07 10:55:07.457 +05:30 [INF] POST /api/quotations responded 200 in 152ms
+2026-07-07 10:55:07.465 +05:30 [INF] OPTIONS /api/quotations/16/pdf responded 204 in 0ms
+2026-07-07 10:55:07.478 +05:30 [INF] Handling GenerateQuotationPdfQuery
+2026-07-07 10:55:07.818 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 10:55:07.841 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 10:55:08.200 +05:30 [INF] Handled GenerateQuotationPdfQuery
+2026-07-07 10:55:08.214 +05:30 [INF] GET /api/quotations/16/pdf responded 200 in 740ms
+2026-07-07 10:55:25.608 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-07 10:55:25.620 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 10:55:25.655 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 10:55:25.657 +05:30 [INF] GET /api/skus responded 200 in 38ms
+2026-07-07 10:55:31.735 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 10:55:31.746 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 10:55:31.760 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 10:55:31.763 +05:30 [INF] GET /api/quotations responded 200 in 21ms
+2026-07-07 10:55:33.098 +05:30 [INF] OPTIONS /api/quotations/16 responded 204 in 0ms
+2026-07-07 10:55:33.110 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 10:55:33.114 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 10:55:33.118 +05:30 [INF] GET /api/quotations/16 responded 200 in 10ms
+2026-07-07 11:40:57.089 +05:30 [INF] GET / responded 404 in 142ms
+2026-07-07 11:41:23.048 +05:30 [INF] OPTIONS /api/skus responded 204 in 8ms
+2026-07-07 11:41:24.753 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 11:41:24.757 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 11:41:24.822 +05:30 [INF] OPTIONS /api/skus responded 204 in 1ms
+2026-07-07 11:41:26.914 +05:30 [INF] GET /api/skus responded 401 in 144ms
+2026-07-07 11:41:27.088 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-07 11:41:27.089 +05:30 [INF] GET /api/skus responded 401 in 4ms
+2026-07-07 11:41:27.124 +05:30 [INF] GET /api/skus responded 401 in 4ms
+2026-07-07 11:41:27.265 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-07 11:41:28.023 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 11:41:28.050 +05:30 [INF] GET /api/skus responded 401 in 2ms
+2026-07-07 11:41:28.209 +05:30 [INF] GET /api/skus responded 401 in 2ms
+2026-07-07 11:41:28.381 +05:30 [INF] GET /api/skus responded 401 in 1ms
+2026-07-07 11:41:28.547 +05:30 [INF] GET /api/skus responded 401 in 2ms
+2026-07-07 11:41:28.814 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-07 11:41:28.860 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 1756ms
+2026-07-07 11:41:29.004 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 11:41:29.474 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 11:41:29.505 +05:30 [INF] GET /api/skus responded 200 in 622ms
+2026-07-07 11:41:29.524 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 11:41:29.545 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 11:41:29.548 +05:30 [INF] GET /api/skus responded 200 in 38ms
+2026-07-07 11:41:29.708 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 11:41:29.708 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 11:41:29.710 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 11:41:29.722 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 11:41:29.723 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 11:41:29.779 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 11:41:29.780 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 11:41:29.812 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 11:41:29.813 +05:30 [INF] GET /api/skus responded 200 in 261ms
+2026-07-07 11:41:29.900 +05:30 [INF] GET /api/skus responded 200 in 346ms
+2026-07-07 11:41:29.920 +05:30 [INF] GET /api/skus responded 200 in 286ms
+2026-07-07 11:41:29.993 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 11:41:29.994 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 11:41:30.006 +05:30 [INF] GET /api/skus responded 200 in 451ms
+2026-07-07 11:41:30.003 +05:30 [INF] GET /api/skus responded 200 in 450ms
+2026-07-07 11:41:37.998 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 11:41:38.065 +05:30 [INF] Handling LogoutCommand
+2026-07-07 11:41:38.185 +05:30 [INF] Handled LogoutCommand
+2026-07-07 11:41:38.189 +05:30 [INF] POST /api/auth/logout responded 204 in 149ms
+2026-07-07 11:41:47.263 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 11:41:47.311 +05:30 [INF] Handling LoginCommand
+2026-07-07 11:41:47.411 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 11:41:47.722 +05:30 [INF] Handled LoginCommand
+2026-07-07 11:41:47.727 +05:30 [INF] POST /api/auth/login responded 200 in 441ms
+2026-07-07 11:41:55.514 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-07 11:41:55.563 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 11:41:55.615 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 11:41:55.622 +05:30 [INF] GET /api/skus responded 200 in 68ms
+2026-07-07 11:42:18.292 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-07 11:42:18.410 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-07 11:42:18.639 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-07 11:42:18.650 +05:30 [INF] POST /api/quotations/calculate responded 200 in 321ms
+2026-07-07 11:42:42.578 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 11:42:42.686 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-07 11:42:43.185 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-07 11:42:43.190 +05:30 [INF] POST /api/quotations responded 200 in 567ms
+2026-07-07 11:42:43.208 +05:30 [INF] OPTIONS /api/quotations/17/pdf responded 204 in 0ms
+2026-07-07 11:42:43.232 +05:30 [INF] Handling GenerateQuotationPdfQuery
+2026-07-07 11:42:43.838 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 11:42:43.890 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 11:43:37.021 +05:30 [INF] GET / responded 404 in 113ms
+2026-07-07 11:43:51.189 +05:30 [INF] OPTIONS /api/quotations responded 204 in 5ms
+2026-07-07 11:43:52.935 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 11:43:52.940 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 11:43:55.808 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 11:43:55.880 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 11:43:55.930 +05:30 [INF] GET /api/quotations responded 200 in 1036ms
+2026-07-07 11:44:38.870 +05:30 [INF] OPTIONS /api/quotations/17 responded 204 in 0ms
+2026-07-07 11:44:39.018 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 11:44:39.498 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 11:44:39.514 +05:30 [INF] GET /api/quotations/17 responded 200 in 546ms
+2026-07-07 14:26:09.598 +05:30 [INF] GET / responded 404 in 197ms
+2026-07-07 14:32:42.525 +05:30 [INF] OPTIONS /api/quotations responded 204 in 9ms
+2026-07-07 14:32:44.286 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 14:32:44.290 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 14:32:46.410 +05:30 [INF] GET /api/quotations responded 401 in 159ms
+2026-07-07 14:32:46.559 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-07 14:32:46.754 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-07 14:32:47.610 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 14:32:48.429 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-07 14:32:48.470 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 1866ms
+2026-07-07 14:32:48.582 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 14:32:48.675 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 14:32:48.693 +05:30 [INF] GET /api/quotations responded 200 in 190ms
+2026-07-07 14:47:27.953 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 14:47:27.972 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 14:56:56.104 +05:30 [INF] GET / responded 404 in 84ms
+2026-07-07 14:58:17.295 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 10ms
+2026-07-07 14:58:18.223 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 14:58:18.225 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 14:58:19.300 +05:30 [INF] GET /api/quotations/pending-count responded 401 in 92ms
+2026-07-07 14:58:19.378 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-07 14:58:19.482 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-07 14:58:19.515 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 14:58:19.526 +05:30 [INF] POST /api/auth/logout responded 401 in 2ms
+2026-07-07 14:58:19.934 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 14:58:20.335 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-07 14:58:20.358 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 956ms
+2026-07-07 14:58:20.404 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 14:58:20.408 +05:30 [INF] Handling LogoutCommand
+2026-07-07 14:58:20.451 +05:30 [ERR] Failed executing DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Quotations] AS [q]
+WHERE [q].[IsDeleted] = CAST(0 AS bit) AND [q].[ApprovalStatus] = 0
+2026-07-07 14:58:20.455 +05:30 [INF] Handled LogoutCommand
+2026-07-07 14:58:20.457 +05:30 [INF] POST /api/auth/logout responded 204 in 90ms
+2026-07-07 14:58:20.473 +05:30 [ERR] An exception occurred while iterating over the results of a query for context type 'Cabcon.Persistence.Context.CabconDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+2026-07-07 14:58:20.767 +05:30 [ERR] Unhandled exception for GetPendingApprovalsCountQuery
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Cabcon.Application.Features.Pricing.Quotations.GetPendingApprovalsCountQueryHandler.Handle(GetPendingApprovalsCountQuery request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Pricing\Quotations\GetPendingApprovalsCount.cs:line 26
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 25
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+2026-07-07 14:58:26.601 +05:30 [ERR] Unhandled exception processing GET /api/quotations/pending-count
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Cabcon.Application.Features.Pricing.Quotations.GetPendingApprovalsCountQueryHandler.Handle(GetPendingApprovalsCountQuery request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Pricing\Quotations\GetPendingApprovalsCount.cs:line 26
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 25
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.QuotationsController.GetPendingCount(CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\QuotationsController.cs:line 64
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+2026-07-07 14:58:28.692 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 14:58:28.717 +05:30 [INF] Handling LoginCommand
+2026-07-07 14:58:28.742 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 14:58:28.901 +05:30 [INF] Handled LoginCommand
+2026-07-07 14:58:28.903 +05:30 [INF] POST /api/auth/login responded 200 in 197ms
+2026-07-07 14:58:33.043 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-07 14:58:33.088 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 14:58:33.261 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 14:58:33.274 +05:30 [INF] GET /api/skus responded 200 in 218ms
+2026-07-07 14:58:35.216 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-07 14:58:35.256 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-07 14:58:35.372 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-07 14:58:35.417 +05:30 [INF] POST /api/quotations/calculate responded 200 in 192ms
+2026-07-07 14:58:40.859 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 14:58:40.897 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-07 14:58:41.098 +05:30 [ERR] Failed executing DbCommand (8ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (Size = 4000), @p2='?' (DbType = DateTime2), @p3='?' (Size = 4000), @p4='?' (DbType = DateTime2), @p5='?' (DbType = Boolean), @p6='?' (Size = 250), @p7='?' (Size = 500), @p8='?' (DbType = DateTime2), @p9='?' (Size = 50), @p10='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p11='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p12='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p13='?' (Size = 4000), @p14='?' (DbType = DateTime2), @p15='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Quotations] ([ApprovalStatus], [CreatedBy], [CreatedDate], [DeletedBy], [DeletedDate], [IsDeleted], [PartyName], [PriceBasisNote], [QuotationDate], [QuotationNumber], [TotalExGst], [TotalGross], [TotalGst], [UpdatedBy], [UpdatedDate], [ValidityDays])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15);
+2026-07-07 14:58:41.108 +05:30 [ERR] An exception occurred in the database while saving changes for context type 'Cabcon.Persistence.Context.CabconDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-07-07 14:58:41.448 +05:30 [ERR] Unhandled exception for SaveQuotationCommand
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Cabcon.Persistence.Context.CabconDbContext.SaveChangesAsync(CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Persistence\Context\CabconDbContext.cs:line 290
+   at Cabcon.Persistence.Repositories.UnitOfWork.SaveChangesAsync(CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.Persistence\Repositories\UnitOfWork.cs:line 24
+   at Cabcon.Application.Features.Pricing.Quotations.SaveQuotationCommandHandler.Handle(SaveQuotationCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Pricing\Quotations\SaveQuotation.cs:line 124
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+2026-07-07 14:58:47.653 +05:30 [ERR] Unhandled exception processing POST /api/quotations
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Cabcon.Persistence.Context.CabconDbContext.SaveChangesAsync(CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Persistence\Context\CabconDbContext.cs:line 290
+   at Cabcon.Persistence.Repositories.UnitOfWork.SaveChangesAsync(CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.Persistence\Repositories\UnitOfWork.cs:line 24
+   at Cabcon.Application.Features.Pricing.Quotations.SaveQuotationCommandHandler.Handle(SaveQuotationCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Pricing\Quotations\SaveQuotation.cs:line 124
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.QuotationsController.Save(SaveQuotationCommand command, CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\QuotationsController.cs:line 32
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+2026-07-07 14:58:47.677 +05:30 [ERR] Failed executing DbCommand (6ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (Size = 2000), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (Size = -1), @p9='?' (DbType = DateTime2), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = DateTime2), @p13='?' (DbType = Int32), @p14='?' (DbType = Int32), @p15='?' (Size = 4000), @p16='?' (DbType = DateTime2), @p17='?' (Size = 4000), @p18='?' (DbType = DateTime2), @p19='?' (DbType = Boolean), @p20='?' (Size = 250), @p21='?' (Size = 500), @p22='?' (DbType = DateTime2), @p23='?' (Size = 50), @p24='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p25='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p26='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p27='?' (Size = 4000), @p28='?' (DbType = DateTime2), @p29='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [ExceptionLogs] ([CreatedBy], [CreatedDate], [DeletedBy], [DeletedDate], [IsDeleted], [Message], [Path], [Source], [StackTrace], [TimestampUtc], [TraceId], [UpdatedBy], [UpdatedDate], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13);
+INSERT INTO [Quotations] ([ApprovalStatus], [CreatedBy], [CreatedDate], [DeletedBy], [DeletedDate], [IsDeleted], [PartyName], [PriceBasisNote], [QuotationDate], [QuotationNumber], [TotalExGst], [TotalGross], [TotalGst], [UpdatedBy], [UpdatedDate], [ValidityDays])
+OUTPUT INSERTED.[Id]
+VALUES (@p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29);
+2026-07-07 14:58:47.682 +05:30 [ERR] An exception occurred in the database while saving changes for context type 'Cabcon.Persistence.Context.CabconDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-07-07 14:58:47.755 +05:30 [ERR] Failed to persist exception log to database.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Cabcon.Persistence.Context.CabconDbContext.SaveChangesAsync(CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Persistence\Context\CabconDbContext.cs:line 290
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 58
+2026-07-07 14:58:50.503 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 14:58:50.519 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 14:58:50.524 +05:30 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Quotations] AS [q]
+WHERE [q].[IsDeleted] = CAST(0 AS bit) AND [q].[ApprovalStatus] = 0
+2026-07-07 14:58:50.529 +05:30 [ERR] An exception occurred while iterating over the results of a query for context type 'Cabcon.Persistence.Context.CabconDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+2026-07-07 14:58:50.777 +05:30 [ERR] Unhandled exception for GetPendingApprovalsCountQuery
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Cabcon.Application.Features.Pricing.Quotations.GetPendingApprovalsCountQueryHandler.Handle(GetPendingApprovalsCountQuery request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Pricing\Quotations\GetPendingApprovalsCount.cs:line 26
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 25
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+2026-07-07 14:58:53.532 +05:30 [ERR] Unhandled exception processing GET /api/quotations/pending-count
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalStatus'.
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Cabcon.Application.Features.Pricing.Quotations.GetPendingApprovalsCountQueryHandler.Handle(GetPendingApprovalsCountQuery request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Pricing\Quotations\GetPendingApprovalsCount.cs:line 26
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 25
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.QuotationsController.GetPendingCount(CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\QuotationsController.cs:line 64
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+ClientConnectionId:7f12230e-1f5e-407f-8d36-6cd8b94ebd38
+Error Number:207,State:1,Class:16
+2026-07-07 15:01:07.760 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:01:07.780 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:02:47.232 +05:30 [INF] GET / responded 404 in 46ms
+2026-07-07 15:02:55.235 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 1ms
+2026-07-07 15:02:55.990 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:02:55.992 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:02:56.487 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-07 15:02:57.472 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:02:57.506 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-07 15:02:57.535 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:02:57.546 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 530ms
+2026-07-07 15:02:57.861 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-07 15:02:57.868 +05:30 [INF] POST /api/quotations/calculate responded 200 in 884ms
+2026-07-07 15:03:06.388 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:03:06.461 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-07 15:03:06.811 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-07 15:03:06.816 +05:30 [INF] POST /api/quotations responded 200 in 414ms
+2026-07-07 15:03:06.827 +05:30 [INF] OPTIONS /api/quotations/18/pdf responded 204 in 0ms
+2026-07-07 15:03:06.847 +05:30 [INF] Handling GenerateQuotationPdfQuery
+2026-07-07 15:03:07.164 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:03:07.203 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:03:07.747 +05:30 [INF] Handled GenerateQuotationPdfQuery
+2026-07-07 15:03:07.772 +05:30 [INF] GET /api/quotations/18/pdf responded 200 in 937ms
+2026-07-07 15:03:15.610 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:03:15.629 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:03:15.661 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:03:15.674 +05:30 [INF] GET /api/quotations responded 200 in 56ms
+2026-07-07 15:03:24.225 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:03:24.235 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:03:24.236 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:03:24.237 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-07 15:03:54.226 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:03:54.248 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:03:54.253 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:03:54.254 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-07 15:04:23.483 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:04:23.501 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:04:23.510 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:04:23.512 +05:30 [INF] GET /api/quotations responded 200 in 16ms
+2026-07-07 15:04:24.230 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:04:24.238 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:04:24.242 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:04:24.243 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:04:31.293 +05:30 [INF] OPTIONS /api/quotations/18 responded 204 in 0ms
+2026-07-07 15:04:31.309 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:04:31.321 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:04:31.326 +05:30 [INF] GET /api/quotations/18 responded 200 in 25ms
+2026-07-07 15:04:45.681 +05:30 [INF] OPTIONS /api/quotations/2 responded 204 in 0ms
+2026-07-07 15:04:45.693 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:04:45.698 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:04:45.700 +05:30 [INF] GET /api/quotations/2 responded 200 in 9ms
+2026-07-07 15:04:47.786 +05:30 [INF] OPTIONS /api/quotations/2/approve responded 204 in 0ms
+2026-07-07 15:04:47.814 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:04:47.856 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:04:47.857 +05:30 [INF] POST /api/quotations/2/approve responded 200 in 59ms
+2026-07-07 15:04:54.224 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:04:54.238 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:04:54.240 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:04:54.241 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:04:59.682 +05:30 [INF] OPTIONS /api/quotations/2/approve responded 204 in 0ms
+2026-07-07 15:04:59.701 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:04:59.707 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:04:59.708 +05:30 [INF] POST /api/quotations/2/approve responded 200 in 13ms
+2026-07-07 15:05:11.929 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:05:11.943 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:05:11.948 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:05:11.950 +05:30 [INF] GET /api/quotations responded 200 in 12ms
+2026-07-07 15:05:12.906 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:05:12.916 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:05:12.920 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:05:12.921 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:05:35.893 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:05:35.902 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:05:35.905 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:05:35.906 +05:30 [INF] GET /api/quotations responded 200 in 7ms
+2026-07-07 15:05:41.915 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:05:41.927 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:05:41.930 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:05:41.931 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:05:47.810 +05:30 [INF] OPTIONS /api/quotations/15 responded 204 in 0ms
+2026-07-07 15:05:47.821 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:05:47.831 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:05:47.833 +05:30 [INF] GET /api/quotations/15 responded 200 in 14ms
+2026-07-07 15:05:59.990 +05:30 [INF] OPTIONS /api/quotations/13 responded 204 in 0ms
+2026-07-07 15:06:00.003 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:06:00.006 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:06:00.007 +05:30 [INF] GET /api/quotations/13 responded 200 in 7ms
+2026-07-07 15:06:01.285 +05:30 [INF] OPTIONS /api/quotations/13/approve responded 204 in 0ms
+2026-07-07 15:06:01.305 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:06:01.320 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:06:01.322 +05:30 [INF] POST /api/quotations/13/approve responded 200 in 23ms
+2026-07-07 15:06:07.165 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:06:07.179 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:06:07.185 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:06:07.186 +05:30 [INF] GET /api/quotations responded 200 in 12ms
+2026-07-07 15:06:08.152 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:06:08.162 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:06:08.166 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:06:08.167 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:06:13.887 +05:30 [INF] OPTIONS /api/quotations/15 responded 204 in 0ms
+2026-07-07 15:06:13.899 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:06:13.910 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:06:13.912 +05:30 [INF] GET /api/quotations/15 responded 200 in 16ms
+2026-07-07 15:06:37.148 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:06:37.158 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:06:37.159 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:06:37.160 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-07 15:06:57.387 +05:30 [INF] OPTIONS /api/quotations/15/approve responded 204 in 0ms
+2026-07-07 15:06:57.398 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:06:57.408 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:06:57.410 +05:30 [INF] POST /api/quotations/15/approve responded 200 in 13ms
+2026-07-07 15:07:02.205 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:07:02.208 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:07:02.209 +05:30 [INF] POST /api/quotations/15/approve responded 200 in 7ms
+2026-07-07 15:07:07.142 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:07:07.158 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:07:07.162 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:07:07.162 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-07 15:07:08.403 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:07:08.415 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:07:08.419 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:07:08.420 +05:30 [INF] GET /api/quotations responded 200 in 9ms
+2026-07-07 15:07:09.389 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:07:09.393 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:07:09.394 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-07 15:07:10.985 +05:30 [INF] OPTIONS /api/quotations/14 responded 204 in 0ms
+2026-07-07 15:07:11.005 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:07:11.013 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:07:11.014 +05:30 [INF] GET /api/quotations/14 responded 200 in 15ms
+2026-07-07 15:07:12.546 +05:30 [INF] OPTIONS /api/quotations/14/approve responded 204 in 0ms
+2026-07-07 15:07:12.565 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:07:12.577 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:07:12.579 +05:30 [INF] POST /api/quotations/14/approve responded 200 in 19ms
+2026-07-07 15:07:38.382 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:07:38.397 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:07:38.400 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:07:38.401 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 5ms
+2026-07-07 15:08:08.385 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:08:08.403 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:08:08.404 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:08:08.405 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 5ms
+2026-07-07 15:08:24.400 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:08:24.414 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:08:24.419 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:08:24.421 +05:30 [INF] GET /api/quotations responded 200 in 11ms
+2026-07-07 15:08:25.381 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:08:25.389 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:08:25.394 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:08:25.394 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:08:28.855 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:08:28.857 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:08:28.858 +05:30 [INF] GET /api/quotations responded 200 in 5ms
+2026-07-07 15:08:29.482 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-07 15:08:29.511 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-07 15:08:29.540 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-07 15:08:29.554 +05:30 [INF] GET /api/materials responded 200 in 67ms
+2026-07-07 15:08:30.073 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-07 15:08:30.073 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-07 15:08:30.086 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-07 15:08:30.089 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 15:08:30.097 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-07 15:08:30.099 +05:30 [INF] GET /api/categories responded 200 in 20ms
+2026-07-07 15:08:30.148 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 15:08:30.156 +05:30 [INF] GET /api/skus responded 200 in 77ms
+2026-07-07 15:08:31.421 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:08:31.429 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:08:31.430 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:08:31.431 +05:30 [INF] GET /api/quotations responded 200 in 4ms
+2026-07-07 15:08:54.390 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:08:54.400 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:08:54.401 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:08:54.403 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-07 15:09:24.388 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:09:24.404 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:09:24.408 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:09:24.410 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-07 15:09:54.382 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:09:54.390 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:09:54.391 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:09:54.392 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 2ms
+2026-07-07 15:10:24.396 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:10:24.414 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:10:24.418 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:10:24.419 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-07 15:10:54.393 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:10:54.448 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:10:54.452 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:10:54.453 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 48ms
+2026-07-07 15:11:24.395 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:11:24.403 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:11:24.405 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:11:24.405 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 2ms
+2026-07-07 15:12:54.637 +05:30 [INF] GET / responded 404 in 41ms
+2026-07-07 15:13:00.560 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 4ms
+2026-07-07 15:13:01.488 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:13:01.489 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:13:02.184 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 15:13:02.840 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:13:02.854 +05:30 [INF] Handling LogoutCommand
+2026-07-07 15:13:02.909 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:13:02.923 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 514ms
+2026-07-07 15:13:03.059 +05:30 [INF] Handled LogoutCommand
+2026-07-07 15:13:03.062 +05:30 [INF] POST /api/auth/logout responded 204 in 652ms
+2026-07-07 15:13:08.694 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 15:13:08.739 +05:30 [INF] Handling LoginCommand
+2026-07-07 15:13:08.881 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 15:13:09.239 +05:30 [INF] Handled LoginCommand
+2026-07-07 15:13:09.246 +05:30 [INF] POST /api/auth/login responded 200 in 539ms
+2026-07-07 15:13:11.256 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:13:11.279 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:13:11.307 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:13:11.323 +05:30 [INF] GET /api/quotations responded 200 in 57ms
+2026-07-07 15:13:16.261 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:13:16.268 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:13:16.270 +05:30 [INF] GET /api/quotations responded 200 in 14ms
+2026-07-07 15:13:19.597 +05:30 [INF] OPTIONS /api/quotations/16 responded 204 in 0ms
+2026-07-07 15:13:19.620 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:13:19.717 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:13:19.723 +05:30 [INF] GET /api/quotations/16 responded 200 in 115ms
+2026-07-07 15:13:33.942 +05:30 [INF] OPTIONS /api/quotations/16 responded 204 in 0ms
+2026-07-07 15:13:33.957 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:13:33.961 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:13:33.962 +05:30 [INF] GET /api/quotations/16 responded 200 in 9ms
+2026-07-07 15:13:50.759 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 15:13:50.777 +05:30 [INF] Handling LogoutCommand
+2026-07-07 15:13:50.793 +05:30 [INF] Handled LogoutCommand
+2026-07-07 15:13:50.795 +05:30 [INF] POST /api/auth/logout responded 204 in 24ms
+2026-07-07 15:13:50.811 +05:30 [INF] GET /api/quotations responded 401 in 6ms
+2026-07-07 15:13:53.665 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 15:13:53.678 +05:30 [INF] Handling LoginCommand
+2026-07-07 15:13:53.756 +05:30 [INF] Handled LoginCommand
+2026-07-07 15:13:53.757 +05:30 [INF] POST /api/auth/login responded 200 in 81ms
+2026-07-07 15:13:54.847 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-07 15:13:54.848 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-07 15:13:54.865 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-07 15:13:54.878 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-07 15:13:54.881 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 15:13:54.881 +05:30 [INF] GET /api/categories responded 200 in 25ms
+2026-07-07 15:13:55.099 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 15:13:55.106 +05:30 [INF] GET /api/skus responded 200 in 249ms
+2026-07-07 15:13:59.592 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 15:13:59.604 +05:30 [INF] Handling LogoutCommand
+2026-07-07 15:13:59.609 +05:30 [INF] Handled LogoutCommand
+2026-07-07 15:13:59.610 +05:30 [INF] POST /api/auth/logout responded 204 in 9ms
+2026-07-07 15:13:59.620 +05:30 [INF] GET /api/categories responded 401 in 0ms
+2026-07-07 15:13:59.620 +05:30 [INF] GET /api/skus responded 401 in 0ms
+2026-07-07 15:14:03.029 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 15:14:03.040 +05:30 [INF] Handling LoginCommand
+2026-07-07 15:14:03.072 +05:30 [INF] Handled LoginCommand
+2026-07-07 15:14:03.074 +05:30 [INF] POST /api/auth/login responded 200 in 36ms
+2026-07-07 15:14:04.082 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-07 15:14:04.082 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-07 15:14:04.134 +05:30 [INF] GET /api/roles responded 403 in 5ms
+2026-07-07 15:14:04.137 +05:30 [INF] Handling GetUsersQuery
+2026-07-07 15:14:04.181 +05:30 [INF] Handled GetUsersQuery
+2026-07-07 15:14:04.191 +05:30 [INF] GET /api/users responded 200 in 65ms
+2026-07-07 15:14:07.459 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 15:14:07.472 +05:30 [INF] Handling LogoutCommand
+2026-07-07 15:14:07.478 +05:30 [INF] Handled LogoutCommand
+2026-07-07 15:14:07.479 +05:30 [INF] POST /api/auth/logout responded 204 in 9ms
+2026-07-07 15:14:11.839 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 15:14:11.849 +05:30 [INF] Handling LoginCommand
+2026-07-07 15:14:11.886 +05:30 [INF] Handled LoginCommand
+2026-07-07 15:14:11.888 +05:30 [INF] POST /api/auth/login responded 200 in 39ms
+2026-07-07 15:14:14.406 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:14:14.415 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:14:14.421 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:14:14.422 +05:30 [INF] GET /api/quotations responded 200 in 9ms
+2026-07-07 15:14:19.040 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:14:19.042 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:14:19.043 +05:30 [INF] GET /api/quotations responded 200 in 6ms
+2026-07-07 15:14:20.726 +05:30 [INF] OPTIONS /api/quotations/18 responded 204 in 0ms
+2026-07-07 15:14:20.739 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:14:20.750 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:14:20.752 +05:30 [INF] GET /api/quotations/18 responded 200 in 16ms
+2026-07-07 15:14:27.828 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-07 15:14:27.849 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-07 15:14:27.874 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-07 15:14:27.888 +05:30 [INF] GET /api/materials responded 200 in 52ms
+2026-07-07 15:14:30.746 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-07 15:14:30.746 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-07 15:14:30.757 +05:30 [INF] Handling GetUsersQuery
+2026-07-07 15:14:30.759 +05:30 [INF] Handled GetUsersQuery
+2026-07-07 15:14:30.760 +05:30 [INF] GET /api/users responded 200 in 5ms
+2026-07-07 15:14:30.764 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-07 15:14:30.791 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-07 15:14:30.795 +05:30 [INF] GET /api/roles responded 200 in 39ms
+2026-07-07 15:14:32.108 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-07 15:14:32.108 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-07 15:14:32.118 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-07 15:14:32.118 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 15:14:32.120 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-07 15:14:32.121 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-07 15:14:32.124 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 15:14:32.126 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-07 15:14:35.255 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-07 15:14:35.265 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-07 15:14:35.268 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-07 15:14:35.269 +05:30 [INF] GET /api/materials responded 200 in 5ms
+2026-07-07 15:14:36.052 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:14:36.066 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:14:36.069 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:14:36.070 +05:30 [INF] GET /api/quotations responded 200 in 6ms
+2026-07-07 15:14:37.519 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:14:37.531 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:14:37.538 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:14:37.540 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-07 15:14:38.980 +05:30 [INF] OPTIONS /api/quotations/11 responded 204 in 0ms
+2026-07-07 15:14:38.993 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:14:38.996 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:14:38.998 +05:30 [INF] GET /api/quotations/11 responded 200 in 7ms
+2026-07-07 15:14:40.860 +05:30 [INF] OPTIONS /api/quotations/11/approve responded 204 in 0ms
+2026-07-07 15:14:40.889 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:14:40.932 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:14:40.935 +05:30 [INF] POST /api/quotations/11/approve responded 200 in 62ms
+2026-07-07 15:14:54.554 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:14:54.569 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:14:54.575 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:14:54.576 +05:30 [INF] GET /api/quotations responded 200 in 12ms
+2026-07-07 15:14:55.533 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:14:55.543 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:14:55.548 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:14:55.550 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-07 15:15:09.053 +05:30 [INF] OPTIONS /api/quotations/12 responded 204 in 0ms
+2026-07-07 15:15:09.064 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:15:09.075 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:15:09.077 +05:30 [INF] GET /api/quotations/12 responded 200 in 14ms
+2026-07-07 15:15:11.314 +05:30 [INF] OPTIONS /api/quotations/12/approve responded 204 in 0ms
+2026-07-07 15:15:11.326 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:15:11.340 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:15:11.341 +05:30 [INF] POST /api/quotations/12/approve responded 200 in 17ms
+2026-07-07 15:15:24.533 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:15:24.543 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:15:24.545 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:15:24.547 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 5ms
+2026-07-07 15:15:27.125 +05:30 [INF] OPTIONS /api/quotations/16 responded 204 in 0ms
+2026-07-07 15:15:27.137 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:15:27.140 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:15:27.141 +05:30 [INF] GET /api/quotations/16 responded 200 in 7ms
+2026-07-07 15:15:54.530 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:15:54.541 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:15:54.543 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:15:54.544 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:16:24.530 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:16:24.545 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:16:24.548 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:16:24.549 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 8ms
+2026-07-07 15:16:38.943 +05:30 [INF] OPTIONS /api/quotations/11 responded 204 in 0ms
+2026-07-07 15:16:38.954 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:16:38.965 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:16:38.966 +05:30 [INF] GET /api/quotations/11 responded 200 in 13ms
+2026-07-07 15:16:54.536 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:16:54.547 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:16:54.549 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:16:54.551 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 5ms
+2026-07-07 15:17:00.540 +05:30 [INF] OPTIONS /api/quotations/16 responded 204 in 0ms
+2026-07-07 15:17:00.558 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:17:00.572 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:17:00.573 +05:30 [INF] GET /api/quotations/16 responded 200 in 21ms
+2026-07-07 15:17:24.535 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:17:24.551 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:17:24.554 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:17:24.554 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-07 15:17:45.587 +05:30 [INF] OPTIONS /api/quotations/10 responded 204 in 0ms
+2026-07-07 15:17:45.598 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:17:45.611 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:17:45.612 +05:30 [INF] GET /api/quotations/10 responded 200 in 15ms
+2026-07-07 15:17:50.212 +05:30 [INF] OPTIONS /api/quotations/16 responded 204 in 0ms
+2026-07-07 15:17:50.223 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:17:50.227 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:17:50.228 +05:30 [INF] GET /api/quotations/16 responded 200 in 6ms
+2026-07-07 15:17:54.528 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:17:54.535 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:17:54.537 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:17:54.538 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-07 15:17:58.986 +05:30 [INF] OPTIONS /api/quotations/11 responded 204 in 0ms
+2026-07-07 15:17:58.998 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:17:59.001 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:17:59.003 +05:30 [INF] GET /api/quotations/11 responded 200 in 6ms
+2026-07-07 15:18:21.574 +05:30 [INF] OPTIONS /api/quotations/16 responded 204 in 0ms
+2026-07-07 15:18:21.592 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:18:21.601 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:18:21.602 +05:30 [INF] GET /api/quotations/16 responded 200 in 14ms
+2026-07-07 15:18:24.530 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:18:24.539 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:18:24.545 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:18:24.545 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 8ms
+2026-07-07 15:18:54.538 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:18:54.553 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:18:54.557 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:18:54.560 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-07 15:19:24.538 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:19:24.553 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:19:24.556 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:19:24.557 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 8ms
+2026-07-07 15:19:45.007 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 15:19:45.018 +05:30 [INF] Handling LogoutCommand
+2026-07-07 15:19:45.031 +05:30 [INF] Handled LogoutCommand
+2026-07-07 15:19:45.032 +05:30 [INF] POST /api/auth/logout responded 204 in 17ms
+2026-07-07 15:19:45.041 +05:30 [INF] GET /api/quotations responded 401 in 0ms
+2026-07-07 15:20:54.125 +05:30 [INF] GET / responded 404 in 41ms
+2026-07-07 15:21:12.749 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 3ms
+2026-07-07 15:21:13.616 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:21:13.618 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:21:14.479 +05:30 [INF] Handling LoginCommand
+2026-07-07 15:21:14.934 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 15:21:15.439 +05:30 [INF] Handled LoginCommand
+2026-07-07 15:21:15.453 +05:30 [INF] POST /api/auth/login responded 200 in 1040ms
+2026-07-07 15:21:17.595 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:21:17.718 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:21:17.744 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:21:17.763 +05:30 [INF] GET /api/quotations responded 200 in 146ms
+2026-07-07 15:21:21.952 +05:30 [INF] OPTIONS /api/quotations/10 responded 204 in 0ms
+2026-07-07 15:21:21.980 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:21:22.078 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:21:22.085 +05:30 [INF] GET /api/quotations/10 responded 200 in 120ms
+2026-07-07 15:21:26.196 +05:30 [INF] OPTIONS /api/quotations/10/approve responded 204 in 0ms
+2026-07-07 15:21:26.236 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:21:26.287 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:21:26.289 +05:30 [INF] POST /api/quotations/10/approve responded 200 in 78ms
+2026-07-07 15:21:33.802 +05:30 [INF] OPTIONS /api/quotations/10/approve responded 204 in 0ms
+2026-07-07 15:21:33.823 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:21:33.828 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:21:33.830 +05:30 [INF] POST /api/quotations/10/approve responded 200 in 13ms
+2026-07-07 15:21:34.146 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:21:34.163 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:21:34.184 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:21:34.185 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 30ms
+2026-07-07 15:21:51.472 +05:30 [INF] OPTIONS /api/quotations/9/approve responded 204 in 0ms
+2026-07-07 15:21:51.487 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:21:51.502 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:21:51.503 +05:30 [INF] POST /api/quotations/9/approve responded 200 in 19ms
+2026-07-07 15:21:55.955 +05:30 [INF] OPTIONS /api/quotations/9 responded 204 in 0ms
+2026-07-07 15:21:55.970 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:21:55.983 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:21:55.984 +05:30 [INF] GET /api/quotations/9 responded 200 in 17ms
+2026-07-07 15:22:04.140 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:22:04.151 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:22:04.153 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:22:04.153 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-07 15:22:07.150 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:22:07.160 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:22:07.167 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:22:07.169 +05:30 [INF] GET /api/quotations responded 200 in 11ms
+2026-07-07 15:22:08.136 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:22:08.139 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:22:08.139 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:22:14.874 +05:30 [INF] OPTIONS /api/quotations/18 responded 204 in 0ms
+2026-07-07 15:22:14.886 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:22:14.890 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:22:14.892 +05:30 [INF] GET /api/quotations/18 responded 200 in 9ms
+2026-07-07 15:22:37.126 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:22:37.147 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:22:37.155 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:22:37.157 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 15ms
+2026-07-07 15:22:54.286 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:22:54.298 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:22:54.304 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:22:54.306 +05:30 [INF] GET /api/quotations responded 200 in 10ms
+2026-07-07 15:23:07.132 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:23:07.147 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:23:07.149 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:23:07.150 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 5ms
+2026-07-07 15:23:08.476 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-07 15:23:08.511 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-07 15:23:08.570 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-07 15:23:08.581 +05:30 [INF] GET /api/materials responded 200 in 96ms
+2026-07-07 15:23:11.233 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-07 15:23:11.257 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 15:23:11.434 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 15:23:11.442 +05:30 [INF] GET /api/skus responded 200 in 198ms
+2026-07-07 15:23:13.788 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-07 15:23:13.820 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-07 15:23:13.919 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-07 15:23:13.922 +05:30 [INF] POST /api/quotations/calculate responded 200 in 126ms
+2026-07-07 15:23:20.454 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:23:20.495 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-07 15:23:20.612 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-07 15:23:20.614 +05:30 [INF] POST /api/quotations responded 200 in 152ms
+2026-07-07 15:23:25.034 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:23:25.037 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:23:25.038 +05:30 [INF] GET /api/quotations responded 200 in 7ms
+2026-07-07 15:23:28.925 +05:30 [INF] OPTIONS /api/quotations/19/approve responded 204 in 0ms
+2026-07-07 15:23:28.937 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:23:28.947 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:23:28.949 +05:30 [INF] POST /api/quotations/19/approve responded 200 in 14ms
+2026-07-07 15:23:32.681 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 15:23:32.703 +05:30 [INF] Handling LogoutCommand
+2026-07-07 15:23:32.728 +05:30 [INF] Handled LogoutCommand
+2026-07-07 15:23:32.729 +05:30 [INF] POST /api/auth/logout responded 204 in 39ms
+2026-07-07 15:23:32.745 +05:30 [INF] GET /api/quotations responded 401 in 6ms
+2026-07-07 15:23:35.630 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 15:23:35.643 +05:30 [INF] Handling LoginCommand
+2026-07-07 15:23:35.713 +05:30 [INF] Handled LoginCommand
+2026-07-07 15:23:35.714 +05:30 [INF] POST /api/auth/login responded 200 in 72ms
+2026-07-07 15:23:37.645 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-07 15:23:37.664 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 15:23:37.699 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 15:23:37.701 +05:30 [INF] GET /api/skus responded 200 in 42ms
+2026-07-07 15:23:39.630 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-07 15:23:39.648 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-07 15:23:39.684 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-07 15:23:39.686 +05:30 [INF] POST /api/quotations/calculate responded 200 in 42ms
+2026-07-07 15:23:44.484 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:23:44.500 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-07 15:23:44.542 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-07 15:23:44.543 +05:30 [INF] POST /api/quotations responded 200 in 46ms
+2026-07-07 15:23:46.604 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:23:46.608 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:23:46.609 +05:30 [INF] GET /api/quotations responded 200 in 8ms
+2026-07-07 15:23:49.707 +05:30 [INF] OPTIONS /api/quotations/20 responded 204 in 0ms
+2026-07-07 15:23:49.718 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:23:49.728 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:23:49.729 +05:30 [INF] GET /api/quotations/20 responded 200 in 13ms
+2026-07-07 15:23:56.954 +05:30 [INF] OPTIONS /api/quotations/19 responded 204 in 0ms
+2026-07-07 15:23:56.965 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:23:56.967 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:23:56.968 +05:30 [INF] GET /api/quotations/19 responded 200 in 5ms
+2026-07-07 15:24:02.463 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 15:24:02.473 +05:30 [INF] Handling LogoutCommand
+2026-07-07 15:24:02.484 +05:30 [INF] Handled LogoutCommand
+2026-07-07 15:24:02.486 +05:30 [INF] POST /api/auth/logout responded 204 in 15ms
+2026-07-07 15:24:02.494 +05:30 [INF] GET /api/quotations responded 401 in 0ms
+2026-07-07 15:24:05.845 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 15:24:05.855 +05:30 [INF] Handling LoginCommand
+2026-07-07 15:24:05.925 +05:30 [INF] Handled LoginCommand
+2026-07-07 15:24:05.926 +05:30 [INF] POST /api/auth/login responded 200 in 73ms
+2026-07-07 15:24:11.296 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-07 15:24:11.310 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 15:24:11.347 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 15:24:11.349 +05:30 [INF] GET /api/skus responded 200 in 42ms
+2026-07-07 15:24:14.097 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-07 15:24:14.109 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-07 15:24:14.112 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-07 15:24:14.113 +05:30 [INF] POST /api/quotations/calculate responded 200 in 8ms
+2026-07-07 15:24:18.346 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:24:18.357 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-07 15:24:18.376 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-07 15:24:18.377 +05:30 [INF] POST /api/quotations responded 200 in 22ms
+2026-07-07 15:24:19.549 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:24:19.552 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:24:19.554 +05:30 [INF] GET /api/quotations responded 200 in 8ms
+2026-07-07 15:24:22.119 +05:30 [INF] OPTIONS /api/quotations/21 responded 204 in 0ms
+2026-07-07 15:24:22.127 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:24:22.130 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:24:22.130 +05:30 [INF] GET /api/quotations/21 responded 200 in 4ms
+2026-07-07 15:24:24.299 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-07 15:24:24.309 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-07 15:24:24.318 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-07 15:24:24.319 +05:30 [INF] GET /api/materials responded 200 in 12ms
+2026-07-07 15:24:26.124 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 15:24:26.136 +05:30 [INF] Handling LogoutCommand
+2026-07-07 15:24:26.141 +05:30 [INF] Handled LogoutCommand
+2026-07-07 15:24:26.142 +05:30 [INF] POST /api/auth/logout responded 204 in 9ms
+2026-07-07 15:24:26.152 +05:30 [INF] GET /api/materials responded 401 in 0ms
+2026-07-07 15:24:29.380 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 15:24:29.389 +05:30 [INF] Handling LoginCommand
+2026-07-07 15:24:29.416 +05:30 [INF] Handled LoginCommand
+2026-07-07 15:24:29.417 +05:30 [INF] POST /api/auth/login responded 200 in 28ms
+2026-07-07 15:24:31.377 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:24:31.385 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:24:31.387 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:24:31.388 +05:30 [INF] GET /api/quotations responded 200 in 3ms
+2026-07-07 15:24:36.440 +05:30 [INF] OPTIONS /api/quotations/21/approve responded 204 in 0ms
+2026-07-07 15:24:36.451 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:24:36.459 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:24:36.460 +05:30 [INF] POST /api/quotations/21/approve responded 200 in 11ms
+2026-07-07 15:24:41.706 +05:30 [INF] OPTIONS /api/quotations/20 responded 204 in 0ms
+2026-07-07 15:24:41.723 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:24:41.734 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:24:41.736 +05:30 [INF] GET /api/quotations/20 responded 200 in 18ms
+2026-07-07 15:24:43.088 +05:30 [INF] OPTIONS /api/quotations/20/approve responded 204 in 0ms
+2026-07-07 15:24:43.104 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:24:43.117 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:24:43.118 +05:30 [INF] POST /api/quotations/20/approve responded 200 in 18ms
+2026-07-07 15:24:52.990 +05:30 [INF] OPTIONS /api/quotations/20/approve responded 204 in 0ms
+2026-07-07 15:24:53.007 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:24:53.018 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:24:53.019 +05:30 [INF] POST /api/quotations/20/approve responded 200 in 16ms
+2026-07-07 15:24:56.208 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:24:56.214 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:24:56.219 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:24:56.219 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:24:56.801 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 15:24:56.811 +05:30 [INF] Handling LogoutCommand
+2026-07-07 15:24:56.822 +05:30 [INF] Handled LogoutCommand
+2026-07-07 15:24:56.824 +05:30 [INF] POST /api/auth/logout responded 204 in 14ms
+2026-07-07 15:24:56.831 +05:30 [INF] GET /api/quotations responded 401 in 0ms
+2026-07-07 15:25:00.529 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 15:25:00.538 +05:30 [INF] Handling LoginCommand
+2026-07-07 15:25:00.607 +05:30 [INF] Handled LoginCommand
+2026-07-07 15:25:00.608 +05:30 [INF] POST /api/auth/login responded 200 in 69ms
+2026-07-07 15:25:01.860 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:25:01.866 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:25:01.871 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:25:01.873 +05:30 [INF] GET /api/quotations responded 200 in 7ms
+2026-07-07 15:25:03.996 +05:30 [INF] OPTIONS /api/quotations/21 responded 204 in 0ms
+2026-07-07 15:25:04.006 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:25:04.015 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:25:04.016 +05:30 [INF] GET /api/quotations/21 responded 200 in 12ms
+2026-07-07 15:29:50.161 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 15:29:50.177 +05:30 [INF] Handling LogoutCommand
+2026-07-07 15:29:50.189 +05:30 [INF] Handled LogoutCommand
+2026-07-07 15:29:50.190 +05:30 [INF] POST /api/auth/logout responded 204 in 16ms
+2026-07-07 15:29:50.200 +05:30 [INF] GET /api/quotations responded 401 in 0ms
+2026-07-07 15:30:54.353 +05:30 [INF] GET / responded 404 in 42ms
+2026-07-07 15:31:02.075 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 3ms
+2026-07-07 15:31:02.970 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:31:02.972 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:31:03.968 +05:30 [INF] Handling LoginCommand
+2026-07-07 15:31:04.478 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 15:31:05.036 +05:30 [INF] Handled LoginCommand
+2026-07-07 15:31:05.055 +05:30 [INF] POST /api/auth/login responded 200 in 1173ms
+2026-07-07 15:31:29.059 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:31:29.171 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:31:29.195 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:31:29.199 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 108ms
+2026-07-07 15:31:29.299 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:31:29.321 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:31:29.354 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:31:29.380 +05:30 [INF] GET /api/quotations responded 200 in 73ms
+2026-07-07 15:31:31.862 +05:30 [INF] OPTIONS /api/quotations/18 responded 204 in 0ms
+2026-07-07 15:31:31.890 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:31:32.013 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:31:32.023 +05:30 [INF] GET /api/quotations/18 responded 200 in 148ms
+2026-07-07 15:31:36.850 +05:30 [INF] OPTIONS /api/quotations/18/approve responded 204 in 0ms
+2026-07-07 15:31:36.875 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:31:36.920 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:31:36.923 +05:30 [INF] POST /api/quotations/18/approve responded 200 in 63ms
+2026-07-07 15:31:43.958 +05:30 [INF] OPTIONS /api/quotations/3 responded 204 in 0ms
+2026-07-07 15:31:43.970 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:31:43.973 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:31:43.975 +05:30 [INF] GET /api/quotations/3 responded 200 in 9ms
+2026-07-07 15:31:45.486 +05:30 [INF] OPTIONS /api/quotations/3/approve responded 204 in 0ms
+2026-07-07 15:31:45.502 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:31:45.509 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:31:45.511 +05:30 [INF] POST /api/quotations/3/approve responded 200 in 12ms
+2026-07-07 15:31:59.055 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:31:59.064 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:31:59.065 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:31:59.066 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-07 15:32:03.155 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:32:03.165 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:32:03.169 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:32:03.178 +05:30 [INF] GET /api/quotations responded 200 in 16ms
+2026-07-07 15:32:04.140 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:32:04.154 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:32:04.157 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:32:04.158 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:32:07.317 +05:30 [INF] OPTIONS /api/quotations/5 responded 204 in 0ms
+2026-07-07 15:32:07.330 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:32:07.338 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:32:07.340 +05:30 [INF] GET /api/quotations/5 responded 200 in 14ms
+2026-07-07 15:32:33.145 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:32:33.167 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:32:33.171 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:32:33.173 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-07 15:32:55.979 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:32:55.988 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:32:55.995 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:32:55.996 +05:30 [INF] GET /api/quotations responded 200 in 11ms
+2026-07-07 15:32:56.956 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:32:56.964 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:32:56.966 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:32:56.967 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-07 15:32:57.717 +05:30 [INF] OPTIONS /api/quotations/21 responded 204 in 0ms
+2026-07-07 15:32:57.732 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:32:57.746 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:32:57.747 +05:30 [INF] GET /api/quotations/21 responded 200 in 18ms
+2026-07-07 15:33:00.799 +05:30 [INF] OPTIONS /api/quotations/18 responded 204 in 0ms
+2026-07-07 15:33:00.813 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:33:00.816 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:33:00.817 +05:30 [INF] GET /api/quotations/18 responded 200 in 7ms
+2026-07-07 15:33:04.268 +05:30 [INF] OPTIONS /api/quotations/17 responded 204 in 0ms
+2026-07-07 15:33:04.282 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:33:04.285 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:33:04.287 +05:30 [INF] GET /api/quotations/17 responded 200 in 7ms
+2026-07-07 15:33:07.729 +05:30 [INF] OPTIONS /api/quotations/12 responded 204 in 0ms
+2026-07-07 15:33:07.741 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:33:07.745 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:33:07.746 +05:30 [INF] GET /api/quotations/12 responded 200 in 7ms
+2026-07-07 15:33:13.030 +05:30 [INF] OPTIONS /api/quotations/17 responded 204 in 0ms
+2026-07-07 15:33:13.044 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:33:13.047 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:33:13.050 +05:30 [INF] GET /api/quotations/17 responded 200 in 8ms
+2026-07-07 15:33:16.970 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:33:16.979 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:33:16.981 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:33:16.982 +05:30 [INF] GET /api/quotations responded 200 in 5ms
+2026-07-07 15:33:17.955 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:33:17.966 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:33:17.968 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:33:17.971 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 7ms
+2026-07-07 15:33:18.694 +05:30 [INF] OPTIONS /api/quotations/17 responded 204 in 0ms
+2026-07-07 15:33:18.707 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:33:18.709 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:33:18.710 +05:30 [INF] GET /api/quotations/17 responded 200 in 5ms
+2026-07-07 15:33:24.126 +05:30 [INF] OPTIONS /api/quotations/3 responded 204 in 0ms
+2026-07-07 15:33:24.140 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:33:24.143 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:33:24.144 +05:30 [INF] GET /api/quotations/3 responded 200 in 7ms
+2026-07-07 15:33:28.289 +05:30 [INF] OPTIONS /api/quotations/8 responded 204 in 0ms
+2026-07-07 15:33:28.310 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:33:28.321 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:33:28.322 +05:30 [INF] GET /api/quotations/8 responded 200 in 19ms
+2026-07-07 15:33:39.825 +05:30 [INF] OPTIONS /api/quotations/3 responded 204 in 0ms
+2026-07-07 15:33:39.880 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:33:39.891 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:33:39.892 +05:30 [INF] GET /api/quotations/3 responded 200 in 17ms
+2026-07-07 15:33:46.188 +05:30 [INF] OPTIONS /api/quotations/4 responded 204 in 0ms
+2026-07-07 15:33:46.200 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:33:46.203 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:33:46.204 +05:30 [INF] GET /api/quotations/4 responded 200 in 7ms
+2026-07-07 15:33:46.948 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:33:46.958 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:33:46.962 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:33:46.962 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:33:49.117 +05:30 [INF] OPTIONS /api/quotations/5 responded 204 in 0ms
+2026-07-07 15:33:49.130 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:33:49.133 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:33:49.135 +05:30 [INF] GET /api/quotations/5 responded 200 in 7ms
+2026-07-07 15:34:12.938 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:34:12.952 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:34:12.958 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:34:12.959 +05:30 [INF] GET /api/quotations responded 200 in 8ms
+2026-07-07 15:34:13.916 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:34:13.925 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:34:13.926 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:34:13.927 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-07 15:34:14.713 +05:30 [INF] OPTIONS /api/quotations/17 responded 204 in 0ms
+2026-07-07 15:34:14.727 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:34:14.731 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:34:14.733 +05:30 [INF] GET /api/quotations/17 responded 200 in 8ms
+2026-07-07 15:34:42.917 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:34:42.937 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:34:42.940 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:34:42.941 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-07 15:35:12.917 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:35:12.930 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:35:12.932 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:35:12.932 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-07 15:35:42.915 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:35:42.934 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:35:42.938 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:35:42.939 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-07 15:36:12.915 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:36:12.929 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:36:12.931 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:36:12.931 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 7ms
+2026-07-07 15:36:42.928 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:36:42.948 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:36:42.951 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:36:42.952 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-07 15:37:12.927 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:37:12.955 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:37:12.961 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:37:12.968 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 19ms
+2026-07-07 15:37:43.595 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:37:43.603 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:37:43.605 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:37:43.606 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-07 15:38:13.595 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:38:13.620 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:38:13.625 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:38:13.626 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 15ms
+2026-07-07 15:38:48.597 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:38:48.604 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:38:48.605 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:38:48.605 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-07 15:39:48.602 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:39:48.701 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:39:48.705 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:39:48.706 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 18ms
+2026-07-07 15:40:48.600 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:40:48.625 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:40:48.629 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:40:48.630 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-07 15:41:48.597 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:41:48.624 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:41:48.628 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:41:48.629 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-07 15:42:48.595 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:42:48.617 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:42:48.622 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:42:48.623 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-07 15:43:48.588 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:43:48.608 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:43:48.611 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:43:48.612 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:44:48.599 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:44:48.623 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:44:48.627 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:44:48.628 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-07 15:45:48.598 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:45:48.632 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:45:48.637 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:45:48.638 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-07 15:46:48.593 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:46:48.625 +05:30 [INF] GET /api/quotations/pending-count responded 401 in 8ms
+2026-07-07 15:46:48.641 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-07 15:46:48.661 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-07 15:46:48.679 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 15:46:48.780 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-07 15:46:48.781 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 133ms
+2026-07-07 15:46:48.793 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:46:48.798 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:46:48.799 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 8ms
+2026-07-07 15:47:48.599 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:47:48.626 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:47:48.634 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:47:48.642 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 26ms
+2026-07-07 15:48:48.587 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:48:48.622 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:48:48.627 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:48:48.628 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 17ms
+2026-07-07 15:49:12.917 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:49:12.942 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:49:12.946 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:49:12.947 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-07 15:49:17.198 +05:30 [INF] OPTIONS /api/quotations/13 responded 204 in 0ms
+2026-07-07 15:49:17.210 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:49:17.227 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:49:17.229 +05:30 [INF] GET /api/quotations/13 responded 200 in 21ms
+2026-07-07 15:49:42.915 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:49:42.925 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:49:42.927 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:49:42.927 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-07 15:50:12.915 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:50:12.953 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:50:12.957 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:50:12.958 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 13ms
+2026-07-07 15:52:55.567 +05:30 [INF] GET / responded 404 in 48ms
+2026-07-07 15:53:22.407 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 8ms
+2026-07-07 15:53:23.357 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:53:23.359 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-07 15:53:24.566 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:53:24.611 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:53:24.624 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 449ms
+2026-07-07 15:53:51.387 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:53:51.433 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:53:51.438 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:53:51.440 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 20ms
+2026-07-07 15:54:03.307 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-07 15:54:03.355 +05:30 [INF] Handling LogoutCommand
+2026-07-07 15:54:03.543 +05:30 [INF] Handled LogoutCommand
+2026-07-07 15:54:03.544 +05:30 [INF] POST /api/auth/logout responded 204 in 226ms
+2026-07-07 15:54:07.499 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-07 15:54:07.538 +05:30 [INF] Handling LoginCommand
+2026-07-07 15:54:07.647 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-07 15:54:08.023 +05:30 [INF] Handled LoginCommand
+2026-07-07 15:54:08.035 +05:30 [INF] POST /api/auth/login responded 200 in 523ms
+2026-07-07 15:54:09.331 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:54:09.350 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:54:09.384 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:54:09.415 +05:30 [INF] GET /api/quotations responded 200 in 76ms
+2026-07-07 15:54:11.680 +05:30 [INF] OPTIONS /api/quotations/17 responded 204 in 0ms
+2026-07-07 15:54:11.706 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:54:11.823 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:54:11.834 +05:30 [INF] GET /api/quotations/17 responded 200 in 141ms
+2026-07-07 15:54:15.321 +05:30 [INF] OPTIONS /api/quotations/16 responded 204 in 0ms
+2026-07-07 15:54:15.336 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:54:15.340 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:54:15.342 +05:30 [INF] GET /api/quotations/16 responded 200 in 9ms
+2026-07-07 15:54:17.784 +05:30 [INF] OPTIONS /api/quotations/14 responded 204 in 0ms
+2026-07-07 15:54:17.818 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:54:17.838 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:54:17.840 +05:30 [INF] GET /api/quotations/14 responded 200 in 35ms
+2026-07-07 15:54:22.416 +05:30 [INF] OPTIONS /api/quotations/16 responded 204 in 0ms
+2026-07-07 15:54:22.453 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:54:22.470 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:54:22.472 +05:30 [INF] GET /api/quotations/16 responded 200 in 29ms
+2026-07-07 15:54:26.330 +05:30 [INF] OPTIONS /api/quotations/16/approve responded 204 in 0ms
+2026-07-07 15:54:26.360 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-07 15:54:26.413 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-07 15:54:26.415 +05:30 [INF] POST /api/quotations/16/approve responded 200 in 73ms
+2026-07-07 15:54:26.423 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:54:26.432 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:54:26.438 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:54:26.440 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-07 15:54:29.138 +05:30 [INF] OPTIONS /api/quotations/16 responded 204 in 0ms
+2026-07-07 15:54:29.154 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-07 15:54:29.159 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-07 15:54:29.161 +05:30 [INF] GET /api/quotations/16 responded 200 in 11ms
+2026-07-07 15:54:33.592 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-07 15:54:33.604 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-07 15:54:33.606 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-07 15:54:33.608 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-07 15:54:39.939 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-07 15:54:39.977 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-07 15:54:40.070 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-07 15:54:40.093 +05:30 [INF] GET /api/materials responded 200 in 147ms
+2026-07-07 15:54:41.225 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-07 15:54:41.225 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-07 15:54:41.276 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-07 15:54:41.284 +05:30 [INF] Handling GetSkusQuery
+2026-07-07 15:54:41.293 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-07 15:54:41.297 +05:30 [INF] GET /api/categories responded 200 in 28ms
+2026-07-07 15:54:41.496 +05:30 [INF] Handled GetSkusQuery
+2026-07-07 15:54:41.507 +05:30 [INF] GET /api/skus responded 200 in 235ms
+2026-07-07 15:54:42.480 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-07 15:54:42.480 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-07 15:54:42.501 +05:30 [INF] Handling GetUsersQuery
+2026-07-07 15:54:42.501 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-07 15:54:42.531 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-07 15:54:42.537 +05:30 [INF] GET /api/roles responded 200 in 47ms
+2026-07-07 15:54:42.540 +05:30 [INF] Handled GetUsersQuery
+2026-07-07 15:54:42.549 +05:30 [INF] GET /api/users responded 200 in 58ms
+2026-07-07 15:54:44.451 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-07 15:54:44.461 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-07 15:54:44.472 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-07 15:54:44.475 +05:30 [INF] GET /api/quotations responded 200 in 15ms

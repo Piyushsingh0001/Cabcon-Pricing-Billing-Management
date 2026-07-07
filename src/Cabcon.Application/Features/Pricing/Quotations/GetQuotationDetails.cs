@@ -31,6 +31,7 @@ public record QuotationDetailsDto
     public decimal TotalExGst { get; init; }
     public decimal TotalGst { get; init; }
     public decimal TotalGross { get; init; }
+    public Cabcon.Domain.Enums.ApprovalStatus ApprovalStatus { get; init; }
     public IReadOnlyList<QuotationLineDto> Lines { get; init; } = Array.Empty<QuotationLineDto>();
 }
 
@@ -84,6 +85,7 @@ public class GetQuotationDetailsQueryHandler : IRequestHandler<GetQuotationDetai
             TotalExGst = quotation.TotalExGst,
             TotalGst = quotation.TotalGst,
             TotalGross = quotation.TotalGross,
+            ApprovalStatus = quotation.ApprovalStatus,
             Lines = lines
         };
     }

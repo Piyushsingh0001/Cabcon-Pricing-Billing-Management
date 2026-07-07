@@ -15,6 +15,7 @@ public record QuotationSummaryDto
     public decimal TotalExGst { get; init; }
     public decimal TotalGst { get; init; }
     public decimal TotalGross { get; init; }
+    public Cabcon.Domain.Enums.ApprovalStatus ApprovalStatus { get; init; }
     public string? CreatedBy { get; init; }
 }
 
@@ -43,6 +44,7 @@ public class GetQuotationsQueryHandler : IRequestHandler<GetQuotationsQuery, IRe
                 TotalExGst = q.TotalExGst,
                 TotalGst = q.TotalGst,
                 TotalGross = q.TotalGross,
+                ApprovalStatus = q.ApprovalStatus,
                 CreatedBy = q.CreatedBy
             })
             .ToListAsync(cancellationToken);

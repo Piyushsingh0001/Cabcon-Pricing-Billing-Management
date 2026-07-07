@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 export interface PaginatedResult<T> {
   items: T[];
@@ -95,6 +95,7 @@ export interface QuotationSummary {
   totalExGst: number;
   totalGst: number;
   totalGross: number;
+  approvalStatus: number;
   createdBy?: string;
 }
 
@@ -111,8 +112,17 @@ export interface QuotationLine {
   lineOrder: number;
 }
 
-export interface QuotationDetails extends QuotationSummary {
+export interface QuotationDetails {
+  id: number;
+  quotationNumber: string;
+  quotationDate: string;
+  partyName: string;
+  validityDays: number;
   priceBasisNote: string;
+  totalExGst: number;
+  totalGst: number;
+  totalGross: number;
+  approvalStatus: number;
   lines: QuotationLine[];
 }
 
@@ -121,7 +131,8 @@ export interface QuotationDetails extends QuotationSummary {
 })
 export class PricingService {
   private http = inject(HttpClient);
-  // private readonly apiBase = 'https://localhost:55027/api';
+ // private readonly apiBase = 'https://localhost:55027/api';
+  public pendingApprovalUpdated = new Subject<void>();
   private readonly apiBase = 'https://skuquotation.runasp.net/api';
 
   // --- Categories ---
@@ -300,6 +311,14 @@ export class PricingService {
 
   public downloadQuotationPdf(id: number): Observable<Blob> {
     return this.http.get(`${this.apiBase}/quotations/${id}/pdf`, { responseType: 'blob' });
+  }
+
+  public getPendingApprovalsCount(): Observable<number> {
+    return this.http.get<number>(`${this.apiBase}/quotations/pending-count`);
+  }
+
+  public approveQuotation(id: number, status: number): Observable<number> {
+    return this.http.post<number>(`${this.apiBase}/quotations/${id}/approve`, status);
   }
 
   // --- Admin User / Role management ---

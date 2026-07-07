@@ -269,22 +269,7 @@ export class DashboardComponent implements OnInit {
 
         this.pricingService.saveQuotation(payload).subscribe({
           next: (res) => {
-            this.snackBar.open(`Quotation saved successfully: ${res.quotationNumber}`, 'Close', { duration: 5000 });
-            
-            // Download PDF
-            this.pricingService.downloadQuotationPdf(res.id).subscribe({
-              next: (blob) => {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `Quotation_${res.quotationNumber}.pdf`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-              },
-              error: () => this.snackBar.open('Failed to download PDF.', 'Close', { duration: 3000 })
-            });
+            this.snackBar.open(`Quotation sent for approval: ${res.quotationNumber}`, 'Close', { duration: 5000 });
 
             // Clear sheet and draft
             this.overridesMap.clear();

@@ -7,7 +7,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
 import { AuthService } from './core/auth.service';
+import { PricingService } from './core/pricing.service';
 
 
 
@@ -25,16 +27,39 @@ import { AuthService } from './core/auth.service';
     MatListModule,
     MatButtonModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatBadgeModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   private authService = inject(AuthService);
+  private pricingService = inject(PricingService);
 
   public isAuthenticated = this.authService.isAuthenticated;
   public currentUser = this.authService.currentUser;
+  
+  public pendingApprovalsCount = 0;
+
+  constructor() {
+    // Check pending count periodically or once if super admin
+    setInterval(() => this.checkPendingApprovals(), 30000); // Check every 30s
+    setTimeout(() => this.checkPendingApprovals(), 1000);
+    
+    this.pricingService.pendingApprovalUpdated.subscribe(() => {
+      this.checkPendingApprovals();
+    });
+  }
+
+  private checkPendingApprovals() {
+    if (this.isAuthenticated() && (this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin'))) {
+      this.pricingService.getPendingApprovalsCount().subscribe({
+        next: (count) => this.pendingApprovalsCount = count,
+        error: () => {} // ignore
+      });
+    }
+  }
 
   public hasPermission(permission: string): boolean {
     return this.authService.hasPermission(permission);

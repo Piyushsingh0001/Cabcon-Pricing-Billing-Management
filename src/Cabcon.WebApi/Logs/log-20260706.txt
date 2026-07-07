@@ -869,3 +869,208 @@
 2026-07-06 16:29:40.430 +05:30 [INF] Handling LoginCommand
 2026-07-06 16:29:40.509 +05:30 [INF] Handled LoginCommand
 2026-07-06 16:29:40.511 +05:30 [INF] POST /api/auth/login responded 200 in 81ms
+2026-07-06 16:32:38.703 +05:30 [INF] GET / responded 404 in 44ms
+2026-07-06 16:32:48.744 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 3ms
+2026-07-06 16:32:49.648 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-06 16:32:49.649 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-06 16:32:50.782 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-06 16:32:51.240 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-06 16:32:51.254 +05:30 [INF] Handling LogoutCommand
+2026-07-06 16:32:51.289 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-06 16:32:51.322 +05:30 [INF] GET /api/quotations responded 200 in 436ms
+2026-07-06 16:32:51.464 +05:30 [INF] Handled LogoutCommand
+2026-07-06 16:32:51.466 +05:30 [INF] POST /api/auth/logout responded 204 in 699ms
+2026-07-06 16:32:51.485 +05:30 [INF] GET /api/quotations responded 401 in 7ms
+2026-07-06 16:32:56.081 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-06 16:32:56.124 +05:30 [INF] Handling LoginCommand
+2026-07-06 16:32:56.259 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-06 16:32:56.549 +05:30 [INF] Handled LoginCommand
+2026-07-06 16:32:56.555 +05:30 [INF] POST /api/auth/login responded 200 in 462ms
+2026-07-06 16:32:58.022 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-06 16:32:58.062 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-06 16:32:58.154 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-06 16:32:58.172 +05:30 [INF] GET /api/materials responded 200 in 141ms
+2026-07-06 16:58:06.971 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-06 16:58:07.051 +05:30 [INF] POST /api/auth/logout responded 401 in 8ms
+2026-07-06 16:58:07.060 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-06 16:58:07.079 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-06 16:58:07.098 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-06 16:58:07.169 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-06 16:58:07.171 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 103ms
+2026-07-06 16:58:07.182 +05:30 [INF] Handling LogoutCommand
+2026-07-06 16:58:07.194 +05:30 [INF] Handled LogoutCommand
+2026-07-06 16:58:07.196 +05:30 [INF] POST /api/auth/logout responded 204 in 18ms
+2026-07-06 16:58:07.208 +05:30 [INF] GET /api/materials responded 401 in 0ms
+2026-07-06 16:58:59.460 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-06 16:58:59.477 +05:30 [INF] Handling LoginCommand
+2026-07-06 16:58:59.552 +05:30 [INF] Handled LoginCommand
+2026-07-06 16:58:59.554 +05:30 [INF] POST /api/auth/login responded 200 in 78ms
+2026-07-06 16:59:09.547 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-06 16:59:09.567 +05:30 [INF] Handling LogoutCommand
+2026-07-06 16:59:09.582 +05:30 [INF] Handled LogoutCommand
+2026-07-06 16:59:09.583 +05:30 [INF] POST /api/auth/logout responded 204 in 22ms
+2026-07-06 17:02:40.393 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-06 17:02:40.393 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-06 17:02:40.450 +05:30 [INF] GET /api/roles responded 401 in 1ms
+2026-07-06 17:02:40.450 +05:30 [INF] GET /api/users responded 401 in 0ms
+2026-07-06 17:02:40.496 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-06 17:02:40.505 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-06 17:02:40.783 +05:30 [ERR] Unhandled exception for RefreshTokenCommand
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Refresh token has already been used. All sessions have been revoked for security - please log in again.
+   at Cabcon.Application.Features.Authentication.Commands.RefreshToken.RefreshTokenCommandHandler.Handle(RefreshTokenCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\RefreshToken\RefreshTokenCommandHandler.cs:line 69
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+2026-07-06 17:02:43.924 +05:30 [WRN] AuthenticationFailedException processing POST /api/auth/refresh-token: Refresh token has already been used. All sessions have been revoked for security - please log in again.
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Refresh token has already been used. All sessions have been revoked for security - please log in again.
+   at Cabcon.Application.Features.Authentication.Commands.RefreshToken.RefreshTokenCommandHandler.Handle(RefreshTokenCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\RefreshToken\RefreshTokenCommandHandler.cs:line 69
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.AuthController.Refresh(RefreshRequest request, CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\AuthController.cs:line 51
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+2026-07-06 17:02:43.999 +05:30 [INF] GET /api/users responded 401 in 0ms
+2026-07-06 17:02:43.999 +05:30 [INF] GET /api/roles responded 401 in 0ms
+2026-07-06 17:02:48.870 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-06 17:02:48.884 +05:30 [INF] Handling LoginCommand
+2026-07-06 17:02:48.960 +05:30 [INF] Handled LoginCommand
+2026-07-06 17:02:48.962 +05:30 [INF] POST /api/auth/login responded 200 in 81ms
+2026-07-06 17:02:50.740 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-06 17:02:50.740 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-06 17:02:50.789 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-06 17:02:50.789 +05:30 [INF] Handling GetUsersQuery
+2026-07-06 17:02:50.816 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-06 17:02:50.821 +05:30 [INF] GET /api/roles responded 200 in 42ms
+2026-07-06 17:02:50.834 +05:30 [INF] Handled GetUsersQuery
+2026-07-06 17:02:50.844 +05:30 [INF] GET /api/users responded 200 in 65ms
+2026-07-06 17:31:24.499 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-06 17:31:24.539 +05:30 [INF] GET /api/quotations responded 401 in 1ms
+2026-07-06 17:31:24.545 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-06 17:31:24.553 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-06 17:31:24.616 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-06 17:31:24.618 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 69ms
+2026-07-06 17:31:24.627 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-06 17:31:24.634 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-06 17:31:24.636 +05:30 [INF] GET /api/quotations responded 200 in 11ms
+2026-07-06 17:57:13.484 +05:30 [INF] GET / responded 404 in 65ms
+2026-07-06 17:57:27.932 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 3ms
+2026-07-06 17:57:28.812 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-06 17:57:28.814 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-06 17:57:36.470 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-06 17:57:36.642 +05:30 [INF] GET /api/quotations responded 401 in 76ms
+2026-07-06 17:57:36.669 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-06 17:57:36.776 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-06 17:57:37.185 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-06 17:57:37.617 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-06 17:57:37.635 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 955ms
+2026-07-06 17:57:37.682 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-06 17:57:37.707 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-06 17:57:37.714 +05:30 [INF] GET /api/quotations responded 200 in 66ms
+2026-07-06 17:57:39.043 +05:30 [INF] OPTIONS /api/quotations/13 responded 204 in 0ms
+2026-07-06 17:57:39.074 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-06 17:57:39.183 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-06 17:57:39.188 +05:30 [INF] GET /api/quotations/13 responded 200 in 134ms
+2026-07-06 17:57:47.027 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-06 17:57:47.068 +05:30 [INF] Handling GetSkusQuery
+2026-07-06 17:57:47.285 +05:30 [INF] Handled GetSkusQuery
+2026-07-06 17:57:47.295 +05:30 [INF] GET /api/skus responded 200 in 257ms
+2026-07-06 17:57:50.177 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-06 17:57:50.212 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-06 17:57:50.303 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-06 17:57:50.306 +05:30 [INF] POST /api/quotations/calculate responded 200 in 119ms
+2026-07-06 17:57:57.109 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-06 17:57:57.147 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-06 17:57:57.340 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-06 17:57:57.344 +05:30 [INF] POST /api/quotations responded 200 in 228ms
+2026-07-06 17:57:57.354 +05:30 [INF] OPTIONS /api/quotations/14/pdf responded 204 in 0ms
+2026-07-06 17:57:57.367 +05:30 [INF] Handling GenerateQuotationPdfQuery
+2026-07-06 17:57:57.379 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-06 17:57:57.382 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-06 17:57:57.679 +05:30 [INF] Handled GenerateQuotationPdfQuery
+2026-07-06 17:57:57.703 +05:30 [INF] GET /api/quotations/14/pdf responded 200 in 341ms
+2026-07-06 17:58:42.039 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-06 17:58:42.061 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-06 17:58:42.067 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-06 17:58:42.068 +05:30 [INF] GET /api/quotations responded 200 in 14ms
+2026-07-06 17:58:43.299 +05:30 [INF] OPTIONS /api/quotations/14 responded 204 in 0ms
+2026-07-06 17:58:43.312 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-06 17:58:43.325 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-06 17:58:43.326 +05:30 [INF] GET /api/quotations/14 responded 200 in 17ms
+2026-07-06 17:59:24.038 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-06 17:59:24.072 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-06 17:59:24.079 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-06 17:59:24.080 +05:30 [INF] GET /api/quotations responded 200 in 20ms
+2026-07-06 17:59:24.991 +05:30 [INF] OPTIONS /api/quotations/14 responded 204 in 0ms
+2026-07-06 17:59:25.018 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-06 17:59:25.030 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-06 17:59:25.032 +05:30 [INF] GET /api/quotations/14 responded 200 in 20ms
+2026-07-06 17:59:46.264 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-06 17:59:46.279 +05:30 [INF] POST /api/auth/logout responded 401 in 3ms
+2026-07-06 17:59:46.288 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-06 17:59:46.298 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-06 17:59:46.351 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-06 17:59:46.352 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 56ms
+2026-07-06 17:59:46.369 +05:30 [INF] Handling LogoutCommand
+2026-07-06 17:59:46.418 +05:30 [INF] Handled LogoutCommand
+2026-07-06 17:59:46.420 +05:30 [INF] POST /api/auth/logout responded 204 in 64ms
+2026-07-06 17:59:59.745 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-06 17:59:59.773 +05:30 [INF] Handling LoginCommand
+2026-07-06 17:59:59.789 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-06 17:59:59.986 +05:30 [ERR] Unhandled exception for LoginCommand
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Invalid username or password.
+   at Cabcon.Application.Features.Authentication.Commands.Login.LoginCommandHandler.Handle(LoginCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\Login\LoginCommandHandler.cs:line 64
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+2026-07-06 18:00:03.564 +05:30 [WRN] AuthenticationFailedException processing POST /api/auth/login: Invalid username or password.
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Invalid username or password.
+   at Cabcon.Application.Features.Authentication.Commands.Login.LoginCommandHandler.Handle(LoginCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\Login\LoginCommandHandler.cs:line 64
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.AuthController.Login(LoginRequest request, CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\AuthController.cs:line 42
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+2026-07-06 18:00:09.491 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-06 18:00:09.503 +05:30 [INF] Handling LoginCommand
+2026-07-06 18:00:09.560 +05:30 [INF] Handled LoginCommand
+2026-07-06 18:00:09.561 +05:30 [INF] POST /api/auth/login responded 200 in 59ms
+2026-07-06 18:00:14.368 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-06 18:00:14.381 +05:30 [INF] Handling GetSkusQuery
+2026-07-06 18:00:14.427 +05:30 [INF] Handled GetSkusQuery
+2026-07-06 18:00:14.429 +05:30 [INF] GET /api/skus responded 200 in 50ms
+2026-07-06 18:00:16.256 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-06 18:00:16.266 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-06 18:00:16.289 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-06 18:00:16.290 +05:30 [INF] POST /api/quotations/calculate responded 200 in 26ms
+2026-07-06 18:00:22.054 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-06 18:00:22.066 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-06 18:00:22.088 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-06 18:00:22.089 +05:30 [INF] POST /api/quotations responded 200 in 26ms
+2026-07-06 18:00:22.096 +05:30 [INF] OPTIONS /api/quotations/15/pdf responded 204 in 0ms
+2026-07-06 18:00:22.102 +05:30 [INF] Handling GenerateQuotationPdfQuery
+2026-07-06 18:00:22.103 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-06 18:00:22.111 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-06 18:00:22.124 +05:30 [INF] Handled GenerateQuotationPdfQuery
+2026-07-06 18:00:22.126 +05:30 [INF] GET /api/quotations/15/pdf responded 200 in 25ms

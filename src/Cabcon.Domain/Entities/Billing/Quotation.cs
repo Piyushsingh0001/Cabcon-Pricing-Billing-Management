@@ -1,4 +1,5 @@
 using Cabcon.Domain.Common;
+using Cabcon.Domain.Enums;
 
 namespace Cabcon.Domain.Entities.Billing;
 
@@ -18,6 +19,8 @@ public class Quotation : BaseEntity
     public decimal TotalExGst { get; set; }
     public decimal TotalGst { get; set; }
     public decimal TotalGross { get; set; }
+
+    public ApprovalStatus ApprovalStatus { get; set; } = ApprovalStatus.Pending;
 
     public ICollection<QuotationLine> Lines { get; set; } = new List<QuotationLine>();
 }
