@@ -1,0 +1,283 @@
+2026-07-08 11:02:45.665 +05:30 [INF] GET / responded 404 in 72ms
+2026-07-08 11:27:23.033 +05:30 [INF] GET / responded 404 in 46ms
+2026-07-08 11:27:49.473 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 8ms
+2026-07-08 11:27:50.379 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 11:27:50.381 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 11:27:51.501 +05:30 [INF] GET /api/quotations/pending-count responded 401 in 68ms
+2026-07-08 11:27:51.566 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-08 11:27:51.669 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-08 11:27:52.022 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-08 11:27:52.411 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-08 11:27:52.430 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 844ms
+2026-07-08 11:27:52.477 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 11:27:52.509 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 11:27:52.511 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 68ms
+2026-07-08 11:27:56.085 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 11:27:56.114 +05:30 [INF] Handling LogoutCommand
+2026-07-08 11:27:56.199 +05:30 [INF] Handled LogoutCommand
+2026-07-08 11:27:56.201 +05:30 [INF] POST /api/auth/logout responded 204 in 104ms
+2026-07-08 11:30:22.684 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 11:30:22.720 +05:30 [INF] Handling LoginCommand
+2026-07-08 11:30:22.746 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-08 11:30:22.903 +05:30 [INF] Handled LoginCommand
+2026-07-08 11:30:22.904 +05:30 [INF] POST /api/auth/login responded 200 in 198ms
+2026-07-08 11:30:24.393 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 11:30:24.424 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 11:30:24.457 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 11:30:24.483 +05:30 [INF] GET /api/quotations responded 200 in 75ms
+2026-07-08 11:30:26.255 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 11:30:26.276 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 11:30:26.283 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 11:30:26.284 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 13ms
+2026-07-08 11:30:29.219 +05:30 [INF] OPTIONS /api/quotations/15 responded 204 in 0ms
+2026-07-08 11:30:29.246 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 11:30:29.349 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 11:30:29.355 +05:30 [INF] GET /api/quotations/15 responded 200 in 122ms
+2026-07-08 11:30:38.559 +05:30 [INF] OPTIONS /api/quotations/17 responded 204 in 0ms
+2026-07-08 11:30:38.573 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 11:30:38.578 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 11:30:38.580 +05:30 [INF] GET /api/quotations/17 responded 200 in 10ms
+2026-07-08 11:30:44.183 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 11:30:44.196 +05:30 [INF] Handling LogoutCommand
+2026-07-08 11:30:44.211 +05:30 [INF] Handled LogoutCommand
+2026-07-08 11:30:44.213 +05:30 [INF] POST /api/auth/logout responded 204 in 19ms
+2026-07-08 11:30:44.225 +05:30 [INF] GET /api/quotations responded 401 in 0ms
+2026-07-08 11:30:51.091 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 11:30:51.103 +05:30 [INF] Handling LoginCommand
+2026-07-08 11:30:51.190 +05:30 [INF] Handled LoginCommand
+2026-07-08 11:30:51.191 +05:30 [INF] POST /api/auth/login responded 200 in 89ms
+2026-07-08 11:31:11.396 +05:30 [INF] OPTIONS /api/auth/change-password responded 204 in 0ms
+2026-07-08 11:31:11.424 +05:30 [INF] Handling ChangePasswordCommand
+2026-07-08 11:31:11.605 +05:30 [ERR] Unhandled exception for ChangePasswordCommand
+Cabcon.Shared.Exceptions.ValidationException: One or more validation failures occurred.
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 36
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+2026-07-08 11:31:15.737 +05:30 [WRN] ValidationException processing POST /api/auth/change-password: One or more validation failures occurred.
+Cabcon.Shared.Exceptions.ValidationException: One or more validation failures occurred.
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 36
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.AuthController.ChangePassword(ChangePasswordRequest request, CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\AuthController.cs:line 75
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+2026-07-08 11:31:29.770 +05:30 [INF] OPTIONS /api/auth/change-password responded 204 in 0ms
+2026-07-08 11:31:29.793 +05:30 [INF] Handling ChangePasswordCommand
+2026-07-08 11:31:29.889 +05:30 [INF] Handled ChangePasswordCommand
+2026-07-08 11:31:29.890 +05:30 [INF] POST /api/auth/change-password responded 204 in 104ms
+2026-07-08 11:31:34.807 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 11:31:34.825 +05:30 [INF] POST /api/auth/logout responded 401 in 6ms
+2026-07-08 11:31:34.832 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-08 11:31:34.842 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-08 11:31:34.978 +05:30 [ERR] Unhandled exception for RefreshTokenCommand
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Refresh token has already been used. All sessions have been revoked for security - please log in again.
+   at Cabcon.Application.Features.Authentication.Commands.RefreshToken.RefreshTokenCommandHandler.Handle(RefreshTokenCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\RefreshToken\RefreshTokenCommandHandler.cs:line 69
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+2026-07-08 11:31:38.157 +05:30 [WRN] AuthenticationFailedException processing POST /api/auth/refresh-token: Refresh token has already been used. All sessions have been revoked for security - please log in again.
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Refresh token has already been used. All sessions have been revoked for security - please log in again.
+   at Cabcon.Application.Features.Authentication.Commands.RefreshToken.RefreshTokenCommandHandler.Handle(RefreshTokenCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\RefreshToken\RefreshTokenCommandHandler.cs:line 69
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.AuthController.Refresh(RefreshRequest request, CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\AuthController.cs:line 51
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+2026-07-08 11:31:46.151 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 11:31:46.163 +05:30 [INF] Handling LoginCommand
+2026-07-08 11:31:46.249 +05:30 [INF] Handled LoginCommand
+2026-07-08 11:31:46.252 +05:30 [INF] POST /api/auth/login responded 200 in 91ms
+2026-07-08 12:02:28.283 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 12:02:28.327 +05:30 [INF] GET /api/skus responded 401 in 1ms
+2026-07-08 12:02:28.334 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-08 12:02:28.345 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-08 12:02:28.418 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-08 12:02:28.420 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 78ms
+2026-07-08 12:02:28.457 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 12:02:28.639 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 12:02:28.648 +05:30 [INF] GET /api/skus responded 200 in 221ms
+2026-07-08 12:05:10.102 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 12:05:10.126 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 12:05:10.136 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 12:05:10.139 +05:30 [INF] GET /api/quotations responded 200 in 20ms
+2026-07-08 12:05:14.485 +05:30 [INF] OPTIONS /api/quotations/15 responded 204 in 0ms
+2026-07-08 12:05:14.501 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 12:05:14.517 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 12:05:14.520 +05:30 [INF] GET /api/quotations/15 responded 200 in 22ms
+2026-07-08 12:05:31.948 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 12:05:31.978 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 12:05:32.013 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 12:05:32.014 +05:30 [INF] GET /api/skus responded 200 in 45ms
+2026-07-08 12:05:36.911 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 12:05:36.924 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 12:05:36.933 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 12:05:36.935 +05:30 [INF] GET /api/quotations responded 200 in 14ms
+2026-07-08 12:05:42.796 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 12:05:42.806 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 12:05:42.809 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 12:05:42.811 +05:30 [INF] GET /api/quotations responded 200 in 7ms
+2026-07-08 12:05:45.934 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 12:05:45.944 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 12:05:45.954 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 12:05:45.955 +05:30 [INF] GET /api/skus responded 200 in 14ms
+2026-07-08 12:05:49.147 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-08 12:05:49.198 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-08 12:05:49.281 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-08 12:05:49.283 +05:30 [INF] POST /api/quotations/calculate responded 200 in 127ms
+2026-07-08 12:05:51.277 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 12:05:51.288 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 12:05:51.292 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 12:05:51.293 +05:30 [INF] GET /api/quotations responded 200 in 7ms
+2026-07-08 12:05:55.358 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-08 12:05:55.370 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-08 12:05:55.374 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-08 12:05:55.376 +05:30 [INF] POST /api/quotations/calculate responded 200 in 9ms
+2026-07-08 12:06:38.347 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 12:06:38.418 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-08 12:06:38.575 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-08 12:06:38.577 +05:30 [INF] POST /api/quotations responded 200 in 205ms
+2026-07-08 12:07:53.742 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 12:07:53.778 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 12:07:53.819 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 12:07:53.821 +05:30 [INF] GET /api/skus responded 200 in 52ms
+2026-07-08 12:07:55.588 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-08 12:07:55.605 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-08 12:07:55.633 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-08 12:07:55.645 +05:30 [INF] GET /api/materials responded 200 in 51ms
+2026-07-08 12:07:56.142 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 12:07:56.152 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 12:07:56.158 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 12:07:56.159 +05:30 [INF] GET /api/quotations responded 200 in 8ms
+2026-07-08 12:08:00.812 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 12:08:00.827 +05:30 [INF] Handling LogoutCommand
+2026-07-08 12:08:00.845 +05:30 [INF] Handled LogoutCommand
+2026-07-08 12:08:00.847 +05:30 [INF] POST /api/auth/logout responded 204 in 24ms
+2026-07-08 12:08:00.858 +05:30 [INF] GET /api/quotations responded 401 in 0ms
+2026-07-08 12:08:05.460 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 12:08:05.470 +05:30 [INF] Handling LoginCommand
+2026-07-08 12:08:05.545 +05:30 [INF] Handled LoginCommand
+2026-07-08 12:08:05.546 +05:30 [INF] POST /api/auth/login responded 200 in 77ms
+2026-07-08 12:08:06.924 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 12:08:06.931 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 12:08:06.933 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 12:08:06.935 +05:30 [INF] GET /api/quotations responded 200 in 5ms
+2026-07-08 12:08:09.614 +05:30 [INF] OPTIONS /api/quotations/22 responded 204 in 0ms
+2026-07-08 12:08:09.626 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 12:08:09.639 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 12:08:09.640 +05:30 [INF] GET /api/quotations/22 responded 200 in 17ms
+2026-07-08 12:08:30.955 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 12:08:30.967 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:08:30.972 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:08:30.973 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 7ms
+2026-07-08 12:09:00.960 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 12:09:00.981 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:09:00.986 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:09:00.987 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-08 12:09:30.969 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 12:09:30.980 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:09:30.982 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:09:30.990 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-08 12:10:01.951 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 12:10:01.975 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:10:01.981 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:10:01.982 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-08 12:10:31.950 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 12:10:31.960 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:10:31.963 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:10:31.964 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-08 12:11:01.946 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 12:11:01.972 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:11:01.978 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:11:01.980 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-08 12:11:45.861 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 12:11:45.873 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:11:45.875 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:11:45.875 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-08 12:11:51.705 +05:30 [INF] OPTIONS /api/quotations/22 responded 204 in 0ms
+2026-07-08 12:11:51.716 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 12:11:51.727 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 12:11:51.734 +05:30 [INF] GET /api/quotations/22 responded 200 in 19ms
+2026-07-08 12:12:00.959 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 12:12:00.970 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:12:00.972 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:12:00.972 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-08 12:12:03.727 +05:30 [INF] OPTIONS /api/quotations/22/approve responded 204 in 0ms
+2026-07-08 12:12:03.765 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-08 12:12:03.798 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-08 12:12:03.800 +05:30 [INF] POST /api/quotations/22/approve responded 200 in 50ms
+2026-07-08 12:12:03.815 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:12:03.823 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:12:03.824 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 15ms
+2026-07-08 12:12:06.715 +05:30 [INF] OPTIONS /api/quotations/22 responded 204 in 0ms
+2026-07-08 12:12:06.732 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 12:12:06.747 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 12:12:06.749 +05:30 [INF] GET /api/quotations/22 responded 200 in 22ms
+2026-07-08 12:12:30.958 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 12:12:30.963 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:12:30.966 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:12:30.967 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-08 12:12:39.499 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 12:12:39.509 +05:30 [INF] GET /api/skus responded 401 in 1ms
+2026-07-08 12:12:39.516 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-08 12:12:39.522 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-08 12:12:39.584 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-08 12:12:39.586 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 64ms
+2026-07-08 12:12:39.593 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 12:12:39.635 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 12:12:39.637 +05:30 [INF] GET /api/skus responded 200 in 46ms
+2026-07-08 12:12:42.550 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-08 12:12:42.560 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-08 12:12:42.593 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-08 12:12:42.595 +05:30 [INF] POST /api/quotations/calculate responded 200 in 38ms
+2026-07-08 12:12:50.894 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 12:12:50.903 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-08 12:12:50.944 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-08 12:12:50.946 +05:30 [INF] POST /api/quotations responded 200 in 45ms
+2026-07-08 12:12:58.477 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 12:12:58.484 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 12:12:58.489 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 12:12:58.492 +05:30 [INF] GET /api/quotations responded 200 in 9ms
+2026-07-08 12:12:59.458 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 12:12:59.466 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:12:59.467 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:12:59.468 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-08 12:13:00.608 +05:30 [INF] OPTIONS /api/quotations/23 responded 204 in 0ms
+2026-07-08 12:13:00.618 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 12:13:00.620 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 12:13:00.620 +05:30 [INF] GET /api/quotations/23 responded 200 in 4ms
+2026-07-08 12:13:02.022 +05:30 [INF] OPTIONS /api/quotations/23/approve responded 204 in 0ms
+2026-07-08 12:13:02.034 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-08 12:13:02.043 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-08 12:13:02.044 +05:30 [INF] POST /api/quotations/23/approve responded 200 in 12ms
+2026-07-08 12:13:02.049 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:13:02.051 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:13:02.051 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-08 12:13:04.215 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 12:13:04.218 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 12:13:04.220 +05:30 [INF] GET /api/quotations/23 responded 200 in 7ms
+2026-07-08 12:13:09.380 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 12:13:09.403 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 12:13:09.410 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 12:13:09.412 +05:30 [INF] GET /api/quotations responded 200 in 14ms

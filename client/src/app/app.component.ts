@@ -8,8 +8,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from './core/auth.service';
 import { PricingService } from './core/pricing.service';
+import { ChangePasswordDialogComponent } from './features/auth/change-password-dialog/change-password-dialog.component';
 
 
 
@@ -28,7 +31,9 @@ import { PricingService } from './core/pricing.service';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatDialogModule,
+    MatDividerModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
@@ -36,6 +41,7 @@ import { PricingService } from './core/pricing.service';
 export class App {
   private authService = inject(AuthService);
   private pricingService = inject(PricingService);
+  private dialog = inject(MatDialog);
 
   public isAuthenticated = this.authService.isAuthenticated;
   public currentUser = this.authService.currentUser;
@@ -112,6 +118,15 @@ getModuleIcon(module: string): string {
       return 'check_circle';
   }
 }
+  
+  public openChangePasswordDialog() {
+    this.dialog.open(ChangePasswordDialogComponent, {
+      width: '520px',
+      maxWidth: '95vw',
+      disableClose: true
+    });
+  }
+
   public logout() {
     this.authService.logout().subscribe();
   }

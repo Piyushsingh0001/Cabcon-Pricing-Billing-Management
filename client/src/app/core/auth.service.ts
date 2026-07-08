@@ -21,7 +21,7 @@ export interface UserSession {
 })
 export class AuthService {
   private http = inject(HttpClient);
-  //private readonly apiBase = 'https://localhost:55027/api/auth'; // Matches WebApi launchSettings.json
+ //private readonly apiBase = 'https://localhost:55027/api/auth'; // Matches WebApi launchSettings.json
     private readonly apiBase = `${environment.apiBase}/auth`;
   // Signals
   private sessionSignal = signal<UserSession | null>(null);
@@ -79,6 +79,10 @@ export class AuthService {
     return this.http.post<UserSession>(`${this.apiBase}/login`, { userNameOrEmail, password }).pipe(
       tap(session => this.setSession(session))
     );
+  }
+
+  public changePassword(currentPassword: string, newPassword: string): Observable<void> {
+    return this.http.post<void>(`${this.apiBase}/change-password`, { currentPassword, newPassword });
   }
 
   public logout(): Observable<void> {

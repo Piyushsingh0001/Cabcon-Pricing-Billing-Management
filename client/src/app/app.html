@@ -52,6 +52,11 @@
               </div>
             </div> -->
           </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item class="logout-btn" (click)="openChangePasswordDialog()">
+            <mat-icon>vpn_key</mat-icon>
+            <span>Change Password</span>
+          </button>
           <button mat-menu-item class="logout-btn" (click)="logout()">
             <mat-icon>logout</mat-icon>
             <span>Sign Out</span>
