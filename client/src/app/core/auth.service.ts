@@ -22,7 +22,7 @@ export interface UserSession {
 export class AuthService {
   private http = inject(HttpClient);
  //private readonly apiBase = 'https://localhost:55027/api/auth'; // Matches WebApi launchSettings.json
-    private readonly apiBase = `${environment.apiBase}/auth`;
+   private readonly apiBase = `${environment.apiBase}/auth`;
   // Signals
   private sessionSignal = signal<UserSession | null>(null);
   
@@ -66,7 +66,7 @@ export class AuthService {
     const user = this.sessionSignal();
     if (!user) return false;
     // Admins bypass all checks
-    if (user.roles.includes('Admin')) return true;
+    if (user.roles.includes('Admin') || user.roles.includes('Super Admin')) return true;
     return user.permissions.includes(permission);
   }
 

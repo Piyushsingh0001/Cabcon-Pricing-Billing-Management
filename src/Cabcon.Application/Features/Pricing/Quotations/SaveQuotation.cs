@@ -1,6 +1,7 @@
 using Cabcon.Application.Common.Interfaces;
 using Cabcon.Domain.Entities.Billing;
 using Cabcon.Domain.Entities.Pricing;
+using Cabcon.Domain.Enums;
 using Cabcon.Shared.Wrappers;
 using FluentValidation;
 using MediatR;
@@ -54,11 +55,13 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IDateTime _dateTime;
+    private readonly ICurrentUserService _currentUser;
 
-    public SaveQuotationCommandHandler(IUnitOfWork unitOfWork, IDateTime dateTime)
+    public SaveQuotationCommandHandler(IUnitOfWork unitOfWork, IDateTime dateTime, ICurrentUserService currentUser)
     {
         _unitOfWork = unitOfWork;
         _dateTime = dateTime;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<SaveQuotationResponse>> Handle(SaveQuotationCommand request, CancellationToken cancellationToken)
@@ -98,7 +101,8 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
             PriceBasisNote = request.PriceBasisNote,
             TotalExGst = totalExGst,
             TotalGst = totalGst,
-            TotalGross = totalGross
+            TotalGross = totalGross,
+            ApprovalStatus = _currentUser.Roles.Contains("Super Admin") ? ApprovalStatus.Approved : ApprovalStatus.Pending
         };
 
         int order = 0;

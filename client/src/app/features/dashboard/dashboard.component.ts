@@ -13,6 +13,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { PricingService, CalculatedQuotationItem, Sku, Material } from '../../core/pricing.service';
 import { ProductSelectDialogComponent } from './product-select-dialog/product-select-dialog.component';
 import { QuotationSaveDialogComponent } from './quotation-save-dialog/quotation-save-dialog.component';
+import { QuotationPreviewDialogComponent } from './quotation-preview-dialog/quotation-preview-dialog.component';
 
 interface CalculatorRow {
   skuId: number;
@@ -252,33 +253,65 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(formValue => {
       if (formValue) {
-        const payload = {
-          partyName: formValue.partyName,
-          validityDays: parseInt(formValue.validityDays),
-          priceBasisNote: formValue.priceBasisNote,
-          lines: this.rows.map(r => ({
-            skuId: r.skuId,
-            rmCostSnapshot: r.rmCost,
-            mfgCostSnapshot: r.mfgCost,
-            offerExGst: r.offerExGst,
-            gstPercent: r.gstPercent,
-            gstAmount: r.gstAmount,
-            grossRate: r.grossRate
-          }))
-        };
+        
+        // Calculate totals for preview
+        const totalExGst = this.rows.reduce((sum, r) => sum + r.offerExGst, 0);
+        const totalGst = this.rows.reduce((sum, r) => sum + r.gstAmount, 0);
+        const totalGross = this.rows.reduce((sum, r) => sum + r.grossRate, 0);
 
-        this.pricingService.saveQuotation(payload).subscribe({
-          next: (res) => {
-            this.snackBar.open(`Quotation sent for approval: ${res.quotationNumber}`, 'Close', { duration: 5000 });
+        // Open preview dialog
+        const previewRef = this.dialog.open(QuotationPreviewDialogComponent, {
+          width: '750px',
+          data: {
+            partyName: formValue.partyName,
+            validityDays: parseInt(formValue.validityDays),
+            priceBasisNote: formValue.priceBasisNote,
+            totalExGst,
+            totalGst,
+            totalGross,
+            lines: this.rows.map(r => ({
+              description: `${r.categoryName} - ${r.skuName} ${r.spec}`,
+              unit: r.unit,
+              offerExGst: r.offerExGst,
+              gstPercent: r.gstPercent,
+              gstAmount: r.gstAmount,
+              grossRate: r.grossRate
+            }))
+          }
+        });
 
-            // Clear sheet and draft
-            this.overridesMap.clear();
-            this.rows = [];
-            localStorage.removeItem('cabcon_draft_quotation');
-            this.hasDraft = false;
-          },
-          error: () => {
-            this.snackBar.open('Failed to save quotation.', 'Close', { duration: 3000 });
+        previewRef.afterClosed().subscribe(confirmed => {
+          if (confirmed) {
+            const payload = {
+              partyName: formValue.partyName,
+              validityDays: parseInt(formValue.validityDays),
+              priceBasisNote: formValue.priceBasisNote,
+              lines: this.rows.map(r => ({
+                skuId: r.skuId,
+                rmCostSnapshot: r.rmCost,
+                mfgCostSnapshot: r.mfgCost,
+                offerExGst: r.offerExGst,
+                gstPercent: r.gstPercent,
+                gstAmount: r.gstAmount,
+                grossRate: r.grossRate
+              }))
+            };
+
+            this.pricingService.saveQuotation(payload).subscribe({
+              next: (res) => {
+                this.snackBar.open(`Quotation sent: ${res.quotationNumber}`, 'Close', { duration: 5000 });
+
+                // Clear sheet and draft
+                this.overridesMap.clear();
+                this.rows = [];
+                localStorage.removeItem('cabcon_draft_quotation');
+                this.hasDraft = false;
+                this.cdr.detectChanges();
+              },
+              error: () => {
+                this.snackBar.open('Failed to save quotation.', 'Close', { duration: 3000 });
+              }
+            });
           }
         });
       }

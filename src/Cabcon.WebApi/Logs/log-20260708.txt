@@ -281,3 +281,861 @@ Cabcon.Shared.Exceptions.AuthenticationFailedException: Refresh token has alread
 2026-07-08 12:13:09.403 +05:30 [INF] Handling GetQuotationsQuery
 2026-07-08 12:13:09.410 +05:30 [INF] Handled GetQuotationsQuery
 2026-07-08 12:13:09.412 +05:30 [INF] GET /api/quotations responded 200 in 14ms
+2026-07-08 12:28:12.773 +05:30 [INF] GET / responded 404 in 43ms
+2026-07-08 12:28:19.661 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 1ms
+2026-07-08 12:28:20.537 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 12:28:20.538 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 12:28:21.660 +05:30 [INF] GET /api/quotations/pending-count responded 401 in 86ms
+2026-07-08 12:28:21.725 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 12:28:21.738 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-08 12:28:21.763 +05:30 [INF] POST /api/auth/logout responded 401 in 9ms
+2026-07-08 12:28:21.854 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-08 12:28:22.286 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-08 12:28:22.763 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-08 12:28:22.792 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 1026ms
+2026-07-08 12:28:22.850 +05:30 [INF] Handling LogoutCommand
+2026-07-08 12:28:22.851 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 12:28:22.892 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 12:28:22.898 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 92ms
+2026-07-08 12:28:22.915 +05:30 [INF] Handled LogoutCommand
+2026-07-08 12:28:22.917 +05:30 [INF] POST /api/auth/logout responded 204 in 111ms
+2026-07-08 12:28:26.405 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 12:28:26.437 +05:30 [INF] Handling LoginCommand
+2026-07-08 12:28:26.469 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-08 12:28:26.653 +05:30 [INF] Handled LoginCommand
+2026-07-08 12:28:26.655 +05:30 [INF] POST /api/auth/login responded 200 in 237ms
+2026-07-08 12:35:12.547 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 12:35:12.661 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 12:35:12.733 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 12:35:12.804 +05:30 [INF] GET /api/quotations responded 200 in 172ms
+2026-07-08 12:35:13.975 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-08 12:35:14.050 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-08 12:35:14.197 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-08 12:35:14.225 +05:30 [INF] GET /api/materials responded 200 in 232ms
+2026-07-08 12:35:18.594 +05:30 [INF] OPTIONS /api/materials/2/history responded 204 in 0ms
+2026-07-08 12:35:18.630 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-08 12:35:18.665 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-08 12:35:18.673 +05:30 [INF] GET /api/materials/2/history responded 200 in 62ms
+2026-07-08 12:35:38.026 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-08 12:35:38.048 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-08 12:35:38.101 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-08 12:35:38.104 +05:30 [INF] GET /api/materials responded 200 in 62ms
+2026-07-08 12:35:40.687 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-08 12:35:40.707 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-08 12:35:40.715 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-08 12:35:40.717 +05:30 [INF] GET /api/materials responded 200 in 16ms
+2026-07-08 12:39:53.576 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 12:39:53.636 +05:30 [INF] Handling LogoutCommand
+2026-07-08 12:39:53.669 +05:30 [INF] Handled LogoutCommand
+2026-07-08 12:39:53.673 +05:30 [INF] POST /api/auth/logout responded 204 in 50ms
+2026-07-08 15:23:35.368 +05:30 [INF] GET / responded 404 in 98ms
+2026-07-08 15:25:01.005 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 11ms
+2026-07-08 15:25:01.892 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 15:25:01.894 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 15:25:03.070 +05:30 [INF] Handling LoginCommand
+2026-07-08 15:25:03.522 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-08 15:25:04.051 +05:30 [INF] Handled LoginCommand
+2026-07-08 15:25:04.067 +05:30 [INF] POST /api/auth/login responded 200 in 1124ms
+2026-07-08 15:25:07.313 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 15:25:07.422 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 15:25:07.452 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 15:25:07.470 +05:30 [INF] GET /api/quotations responded 200 in 135ms
+2026-07-08 15:25:12.863 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 15:25:12.907 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 15:25:13.092 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 15:25:13.102 +05:30 [INF] GET /api/skus responded 200 in 229ms
+2026-07-08 15:25:17.037 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-08 15:25:17.081 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-08 15:25:17.192 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-08 15:25:17.197 +05:30 [INF] POST /api/quotations/calculate responded 200 in 145ms
+2026-07-08 15:25:58.825 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 15:25:58.885 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-08 15:25:59.117 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-08 15:25:59.121 +05:30 [INF] POST /api/quotations responded 200 in 282ms
+2026-07-08 15:26:01.142 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 15:26:01.156 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 15:26:01.191 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 15:26:01.192 +05:30 [INF] GET /api/skus responded 200 in 38ms
+2026-07-08 15:26:03.809 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 15:26:03.816 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 15:26:03.827 +05:30 [INF] GET /api/quotations responded 200 in 22ms
+2026-07-08 15:26:05.959 +05:30 [INF] OPTIONS /api/quotations/24 responded 204 in 0ms
+2026-07-08 15:26:05.982 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:26:06.025 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:26:06.035 +05:30 [INF] GET /api/quotations/24 responded 200 in 65ms
+2026-07-08 15:26:13.493 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 15:26:13.515 +05:30 [INF] Handling LogoutCommand
+2026-07-08 15:26:13.541 +05:30 [INF] Handled LogoutCommand
+2026-07-08 15:26:13.543 +05:30 [INF] POST /api/auth/logout responded 204 in 39ms
+2026-07-08 15:26:13.560 +05:30 [INF] GET /api/quotations responded 401 in 6ms
+2026-07-08 15:26:17.073 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 15:26:17.083 +05:30 [INF] Handling LoginCommand
+2026-07-08 15:26:17.168 +05:30 [INF] Handled LoginCommand
+2026-07-08 15:26:17.170 +05:30 [INF] POST /api/auth/login responded 200 in 88ms
+2026-07-08 15:26:18.791 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 15:26:18.814 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 15:26:18.822 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 15:26:18.824 +05:30 [INF] GET /api/quotations responded 200 in 18ms
+2026-07-08 15:26:20.797 +05:30 [INF] OPTIONS /api/quotations/24 responded 204 in 0ms
+2026-07-08 15:26:20.821 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:26:20.834 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:26:20.836 +05:30 [INF] GET /api/quotations/24 responded 200 in 22ms
+2026-07-08 15:26:39.475 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 15:26:39.496 +05:30 [INF] Handling LogoutCommand
+2026-07-08 15:26:39.511 +05:30 [INF] Handled LogoutCommand
+2026-07-08 15:26:39.513 +05:30 [INF] POST /api/auth/logout responded 204 in 22ms
+2026-07-08 15:26:39.524 +05:30 [INF] GET /api/quotations responded 401 in 0ms
+2026-07-08 15:26:42.041 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 15:26:42.054 +05:30 [INF] Handling LoginCommand
+2026-07-08 15:26:42.120 +05:30 [INF] Handled LoginCommand
+2026-07-08 15:26:42.123 +05:30 [INF] POST /api/auth/login responded 200 in 71ms
+2026-07-08 15:26:50.932 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 15:26:50.944 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 15:26:50.981 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 15:26:50.983 +05:30 [INF] GET /api/skus responded 200 in 40ms
+2026-07-08 15:26:57.773 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-08 15:26:57.784 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-08 15:26:57.817 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-08 15:26:57.819 +05:30 [INF] POST /api/quotations/calculate responded 200 in 36ms
+2026-07-08 15:29:17.566 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 15:29:17.600 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 15:29:17.607 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 15:29:17.608 +05:30 [INF] GET /api/quotations responded 200 in 15ms
+2026-07-08 15:31:03.069 +05:30 [INF] GET / responded 404 in 41ms
+2026-07-08 15:31:18.894 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 3ms
+2026-07-08 15:31:19.946 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 15:31:19.951 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 15:31:21.590 +05:30 [INF] Handling LogoutCommand
+2026-07-08 15:31:21.766 +05:30 [ERR] An error occurred using the connection to database 'CabconBillingManagement' on server 'localhost\SQLEXPRESS'.
+2026-07-08 15:31:22.033 +05:30 [ERR] Unhandled exception for LogoutCommand
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Cabcon.Persistence.Context.CabconDbContext.SaveChangesAsync(CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Persistence\Context\CabconDbContext.cs:line 290
+   at Cabcon.Application.Features.Authentication.Commands.Logout.LogoutCommandHandler.Handle(LogoutCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\Logout\LogoutCommandHandler.cs:line 49
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 25
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+2026-07-08 15:31:24.738 +05:30 [ERR] Unhandled exception processing POST /api/auth/logout
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransactionAsync(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Cabcon.Persistence.Context.CabconDbContext.SaveChangesAsync(CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Persistence\Context\CabconDbContext.cs:line 290
+   at Cabcon.Application.Features.Authentication.Commands.Logout.LogoutCommandHandler.Handle(LogoutCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\Logout\LogoutCommandHandler.cs:line 49
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 25
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.AuthController.Logout(RefreshRequest request, CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\AuthController.cs:line 59
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+2026-07-08 15:31:30.704 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 15:31:30.751 +05:30 [INF] Handling LogoutCommand
+2026-07-08 15:31:30.765 +05:30 [INF] Handled LogoutCommand
+2026-07-08 15:31:30.767 +05:30 [INF] POST /api/auth/logout responded 204 in 25ms
+2026-07-08 15:31:34.775 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 15:31:34.817 +05:30 [INF] Handling LoginCommand
+2026-07-08 15:31:34.972 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-08 15:31:35.334 +05:30 [INF] Handled LoginCommand
+2026-07-08 15:31:35.351 +05:30 [INF] POST /api/auth/login responded 200 in 566ms
+2026-07-08 15:31:38.671 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 15:31:38.715 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 15:31:38.967 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 15:31:38.988 +05:30 [INF] GET /api/skus responded 200 in 304ms
+2026-07-08 15:31:42.393 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-08 15:31:42.440 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-08 15:31:42.545 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-08 15:31:42.551 +05:30 [INF] POST /api/quotations/calculate responded 200 in 145ms
+2026-07-08 15:32:04.326 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 15:32:04.394 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-08 15:32:04.640 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-08 15:32:04.643 +05:30 [INF] POST /api/quotations responded 200 in 296ms
+2026-07-08 15:32:06.277 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 15:32:06.303 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 15:32:06.324 +05:30 [INF] GET /api/quotations responded 200 in 56ms
+2026-07-08 15:32:08.036 +05:30 [INF] OPTIONS /api/quotations/25 responded 204 in 0ms
+2026-07-08 15:32:08.059 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:32:08.102 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:32:08.112 +05:30 [INF] GET /api/quotations/25 responded 200 in 65ms
+2026-07-08 15:32:15.982 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 15:32:15.996 +05:30 [INF] Handling LogoutCommand
+2026-07-08 15:32:16.019 +05:30 [INF] Handled LogoutCommand
+2026-07-08 15:32:16.020 +05:30 [INF] POST /api/auth/logout responded 204 in 27ms
+2026-07-08 15:32:16.037 +05:30 [INF] GET /api/quotations responded 401 in 6ms
+2026-07-08 15:32:18.596 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 15:32:18.611 +05:30 [INF] Handling LoginCommand
+2026-07-08 15:32:18.687 +05:30 [INF] Handled LoginCommand
+2026-07-08 15:32:18.689 +05:30 [INF] POST /api/auth/login responded 200 in 80ms
+2026-07-08 15:32:19.907 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 15:32:19.919 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 15:32:19.924 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 15:32:19.925 +05:30 [INF] GET /api/quotations responded 200 in 8ms
+2026-07-08 15:32:26.049 +05:30 [INF] OPTIONS /api/quotations/25 responded 204 in 0ms
+2026-07-08 15:32:26.063 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:32:26.067 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:32:26.069 +05:30 [INF] GET /api/quotations/25 responded 200 in 9ms
+2026-07-08 15:32:27.089 +05:30 [INF] OPTIONS /api/quotations/25/approve responded 204 in 0ms
+2026-07-08 15:32:27.117 +05:30 [INF] Handling ApproveQuotationCommand
+2026-07-08 15:32:27.155 +05:30 [INF] Handled ApproveQuotationCommand
+2026-07-08 15:32:27.158 +05:30 [INF] POST /api/quotations/25/approve responded 200 in 57ms
+2026-07-08 15:32:27.164 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:32:27.182 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:32:27.195 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:32:27.197 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 25ms
+2026-07-08 15:32:32.455 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 15:32:32.469 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 15:32:32.506 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 15:32:32.507 +05:30 [INF] GET /api/skus responded 200 in 41ms
+2026-07-08 15:32:36.457 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-08 15:32:36.470 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-08 15:32:36.501 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-08 15:32:36.503 +05:30 [INF] POST /api/quotations/calculate responded 200 in 36ms
+2026-07-08 15:32:46.070 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:32:46.080 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:32:46.082 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:32:46.082 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-08 15:32:49.808 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:32:49.814 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:32:49.816 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-08 15:33:18.799 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:33:18.871 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:33:18.879 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:33:18.880 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 54ms
+2026-07-08 15:33:48.801 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:33:48.812 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:33:48.813 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:33:48.814 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-08 15:33:55.113 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 15:33:55.122 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 15:33:55.151 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 15:33:55.152 +05:30 [INF] GET /api/skus responded 200 in 32ms
+2026-07-08 15:33:57.349 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-08 15:33:57.361 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-08 15:33:57.388 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-08 15:33:57.389 +05:30 [INF] POST /api/quotations/calculate responded 200 in 30ms
+2026-07-08 15:34:00.544 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-08 15:34:00.589 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-08 15:34:00.591 +05:30 [INF] POST /api/quotations/calculate responded 200 in 63ms
+2026-07-08 15:34:07.905 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 15:34:07.933 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 15:34:07.942 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 15:34:07.945 +05:30 [INF] GET /api/quotations responded 200 in 20ms
+2026-07-08 15:34:09.233 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 15:34:09.233 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 15:34:09.251 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 15:34:09.252 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 15:34:09.285 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 15:34:09.290 +05:30 [INF] GET /api/roles responded 200 in 46ms
+2026-07-08 15:34:09.312 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 15:34:09.323 +05:30 [INF] GET /api/users responded 200 in 81ms
+2026-07-08 15:34:18.945 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:34:18.959 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:34:18.965 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:34:18.966 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-08 15:34:48.953 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:34:48.961 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:34:48.963 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:34:48.964 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-08 15:35:18.951 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:35:18.968 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:35:18.972 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:35:18.972 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-08 15:35:48.942 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:35:48.955 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:35:48.958 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:35:48.959 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 7ms
+2026-07-08 15:39:59.715 +05:30 [INF] GET / responded 404 in 46ms
+2026-07-08 15:40:06.984 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 1ms
+2026-07-08 15:40:08.035 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 15:40:08.036 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 15:40:09.515 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:40:09.575 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:40:09.595 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 546ms
+2026-07-08 15:40:17.415 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 15:40:17.415 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 15:40:17.468 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 15:40:17.468 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 15:40:17.543 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 15:40:17.551 +05:30 [INF] GET /api/roles responded 200 in 95ms
+2026-07-08 15:40:17.575 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 15:40:17.589 +05:30 [INF] GET /api/users responded 200 in 145ms
+2026-07-08 15:40:35.969 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:40:35.989 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:40:35.994 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:40:35.995 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-08 15:40:47.650 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 15:40:47.713 +05:30 [INF] Handling CreateRoleCommand
+2026-07-08 15:40:47.841 +05:30 [INF] Handled CreateRoleCommand
+2026-07-08 15:40:47.847 +05:30 [INF] POST /api/roles responded 200 in 182ms
+2026-07-08 15:40:47.950 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 15:40:47.964 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 15:40:47.966 +05:30 [INF] GET /api/roles responded 200 in 18ms
+2026-07-08 15:41:05.982 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:41:05.996 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:41:06.001 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:41:06.002 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-08 15:41:35.962 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:41:35.979 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:41:35.981 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:41:35.983 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 7ms
+2026-07-08 15:41:37.666 +05:30 [INF] OPTIONS /api/auth/register responded 204 in 0ms
+2026-07-08 15:41:37.699 +05:30 [INF] Handling RegisterCommand
+2026-07-08 15:41:38.002 +05:30 [INF] [DEV EMAIL] To: deepaktest1@mail.com | Subject: Confirm your Cabcon account | Body: <p>Hi Deepak,</p><p>Please confirm your email address by clicking the link below:</p><p><a href="https://localhost:4200/confirm-email?token=JOsarl6uvvLeBrfLEwClIPUQb0JaiuHwwnFBNVJLSZk&email=deepaktest1%40mail.com">Confirm Email</a></p><p>This link expires in 24 hours.</p>
+2026-07-08 15:41:38.004 +05:30 [INF] Handled RegisterCommand
+2026-07-08 15:41:38.006 +05:30 [INF] POST /api/auth/register responded 200 in 326ms
+2026-07-08 15:41:38.100 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 15:41:38.115 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 15:41:38.130 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 15:41:38.132 +05:30 [INF] GET /api/users responded 200 in 20ms
+2026-07-08 15:41:46.281 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 15:41:46.314 +05:30 [INF] Handling LogoutCommand
+2026-07-08 15:41:46.433 +05:30 [INF] Handled LogoutCommand
+2026-07-08 15:41:46.434 +05:30 [INF] POST /api/auth/logout responded 204 in 138ms
+2026-07-08 15:41:46.451 +05:30 [INF] GET /api/roles responded 401 in 5ms
+2026-07-08 15:41:46.451 +05:30 [INF] GET /api/users responded 401 in 5ms
+2026-07-08 15:41:52.964 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 15:41:52.985 +05:30 [INF] Handling LoginCommand
+2026-07-08 15:41:53.021 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-08 15:41:53.148 +05:30 [INF] Handled LoginCommand
+2026-07-08 15:41:53.154 +05:30 [INF] POST /api/auth/login responded 200 in 178ms
+2026-07-08 15:42:03.112 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 15:42:03.124 +05:30 [INF] Handling LogoutCommand
+2026-07-08 15:42:03.131 +05:30 [INF] Handled LogoutCommand
+2026-07-08 15:42:03.132 +05:30 [INF] POST /api/auth/logout responded 204 in 10ms
+2026-07-08 15:42:05.945 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 15:42:05.957 +05:30 [INF] Handling LoginCommand
+2026-07-08 15:42:05.999 +05:30 [INF] Handled LoginCommand
+2026-07-08 15:42:06.001 +05:30 [INF] POST /api/auth/login responded 200 in 45ms
+2026-07-08 15:42:11.965 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 15:42:11.976 +05:30 [INF] Handling LogoutCommand
+2026-07-08 15:42:11.983 +05:30 [INF] Handled LogoutCommand
+2026-07-08 15:42:11.984 +05:30 [INF] POST /api/auth/logout responded 204 in 11ms
+2026-07-08 15:42:17.984 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 15:42:17.999 +05:30 [INF] Handling LoginCommand
+2026-07-08 15:42:18.025 +05:30 [INF] Handled LoginCommand
+2026-07-08 15:42:18.027 +05:30 [INF] POST /api/auth/login responded 200 in 31ms
+2026-07-08 15:42:42.110 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:42:42.128 +05:30 [INF] GET /api/quotations/pending-count responded 403 in 5ms
+2026-07-08 15:43:12.113 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:43:12.136 +05:30 [INF] GET /api/quotations/pending-count responded 403 in 3ms
+2026-07-08 15:43:18.476 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 15:43:18.491 +05:30 [INF] Handling LogoutCommand
+2026-07-08 15:43:18.505 +05:30 [INF] Handled LogoutCommand
+2026-07-08 15:43:18.507 +05:30 [INF] POST /api/auth/logout responded 204 in 19ms
+2026-07-08 15:43:21.682 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 15:43:21.693 +05:30 [INF] Handling LoginCommand
+2026-07-08 15:43:21.822 +05:30 [INF] Handled LoginCommand
+2026-07-08 15:43:21.824 +05:30 [INF] POST /api/auth/login responded 200 in 131ms
+2026-07-08 15:43:25.352 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 15:43:25.352 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 15:43:25.360 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 15:43:25.362 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 15:43:25.369 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 15:43:25.369 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 15:43:25.370 +05:30 [INF] GET /api/roles responded 200 in 9ms
+2026-07-08 15:43:25.407 +05:30 [INF] GET /api/users responded 200 in 49ms
+2026-07-08 15:43:36.178 +05:30 [INF] OPTIONS /api/roles/users/4/roles responded 204 in 0ms
+2026-07-08 15:43:36.251 +05:30 [INF] Handling AssignRolesToUserCommand
+2026-07-08 15:43:36.345 +05:30 [INF] Handled AssignRolesToUserCommand
+2026-07-08 15:43:36.347 +05:30 [INF] PUT /api/roles/users/4/roles responded 204 in 115ms
+2026-07-08 15:43:36.439 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 15:43:36.449 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 15:43:36.452 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 15:43:36.454 +05:30 [INF] GET /api/users responded 200 in 6ms
+2026-07-08 15:43:45.801 +05:30 [INF] OPTIONS /api/quotations/4 responded 204 in 0ms
+2026-07-08 15:43:45.821 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:43:45.915 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:43:45.929 +05:30 [INF] GET /api/quotations/4 responded 200 in 117ms
+2026-07-08 15:43:46.628 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:43:46.631 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:43:46.632 +05:30 [INF] GET /api/quotations/4 responded 200 in 5ms
+2026-07-08 15:43:46.834 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:43:46.838 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:43:46.840 +05:30 [INF] GET /api/quotations/4 responded 200 in 10ms
+2026-07-08 15:43:47.016 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:43:47.019 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:43:47.021 +05:30 [INF] GET /api/quotations/4 responded 200 in 8ms
+2026-07-08 15:43:47.178 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:43:47.181 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:43:47.182 +05:30 [INF] GET /api/quotations/4 responded 200 in 7ms
+2026-07-08 15:43:47.347 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:43:47.351 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:43:47.352 +05:30 [INF] GET /api/quotations/4 responded 200 in 7ms
+2026-07-08 15:43:48.569 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:43:48.582 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:43:48.587 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:43:48.589 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-08 15:54:25.319 +05:30 [INF] GET / responded 404 in 47ms
+2026-07-08 15:54:31.334 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 2ms
+2026-07-08 15:54:32.257 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 15:54:32.259 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 15:54:33.755 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:54:33.810 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:54:33.829 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 556ms
+2026-07-08 15:54:33.840 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 15:54:33.840 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 15:54:33.896 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 15:54:33.897 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 15:54:33.953 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 15:54:33.959 +05:30 [INF] GET /api/roles responded 200 in 70ms
+2026-07-08 15:54:33.993 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 15:54:34.006 +05:30 [INF] GET /api/users responded 200 in 127ms
+2026-07-08 15:54:37.606 +05:30 [INF] OPTIONS /api/quotations/1 responded 204 in 0ms
+2026-07-08 15:54:37.636 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:54:37.814 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:54:37.832 +05:30 [INF] GET /api/quotations/1 responded 200 in 214ms
+2026-07-08 15:54:48.346 +05:30 [INF] OPTIONS /api/quotations/1 responded 204 in 0ms
+2026-07-08 15:54:48.363 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:54:48.368 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:54:48.370 +05:30 [INF] GET /api/quotations/1 responded 200 in 11ms
+2026-07-08 15:55:00.325 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:55:00.341 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:55:00.347 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:55:00.347 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-08 15:55:30.321 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:55:30.336 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:55:30.339 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:55:30.339 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 5ms
+2026-07-08 15:55:51.854 +05:30 [INF] OPTIONS /api/quotations/1 responded 204 in 0ms
+2026-07-08 15:55:51.875 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 15:55:51.887 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 15:55:51.888 +05:30 [INF] GET /api/quotations/1 responded 200 in 17ms
+2026-07-08 15:56:00.326 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:56:00.343 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:56:00.348 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:56:00.350 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-08 15:56:30.319 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 15:56:30.335 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:56:30.336 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:56:30.337 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 5ms
+2026-07-08 15:58:59.377 +05:30 [INF] GET / responded 404 in 41ms
+2026-07-08 15:59:07.285 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 2ms
+2026-07-08 15:59:08.135 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 15:59:08.137 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 15:59:09.213 +05:30 [INF] GET /api/quotations/pending-count responded 401 in 89ms
+2026-07-08 15:59:09.306 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-08 15:59:09.420 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-08 15:59:09.757 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 15:59:09.780 +05:30 [INF] Handling LoginCommand
+2026-07-08 15:59:09.836 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-08 15:59:09.836 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-08 15:59:10.217 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-08 15:59:10.231 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 900ms
+2026-07-08 15:59:10.276 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 15:59:10.279 +05:30 [INF] Handled LoginCommand
+2026-07-08 15:59:10.281 +05:30 [INF] POST /api/auth/login responded 200 in 516ms
+2026-07-08 15:59:10.304 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 15:59:10.306 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 66ms
+2026-07-08 15:59:12.302 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 15:59:12.302 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 15:59:12.329 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 15:59:12.329 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 15:59:12.360 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 15:59:12.367 +05:30 [INF] GET /api/roles responded 200 in 55ms
+2026-07-08 15:59:12.372 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 15:59:12.382 +05:30 [INF] GET /api/users responded 200 in 70ms
+2026-07-08 15:59:16.426 +05:30 [INF] OPTIONS /api/roles/1 responded 204 in 0ms
+2026-07-08 15:59:16.452 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 15:59:16.484 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 15:59:16.492 +05:30 [INF] GET /api/roles/1 responded 200 in 55ms
+2026-07-08 15:59:16.502 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-08 15:59:16.517 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 15:59:16.533 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 15:59:16.539 +05:30 [INF] GET /api/permissions responded 200 in 31ms
+2026-07-08 15:59:20.975 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 15:59:20.984 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 15:59:20.986 +05:30 [INF] GET /api/roles/1 responded 200 in 18ms
+2026-07-08 15:59:21.000 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 15:59:21.007 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 15:59:21.008 +05:30 [INF] GET /api/permissions responded 200 in 11ms
+2026-07-08 15:59:31.046 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 15:59:31.069 +05:30 [INF] Handling LogoutCommand
+2026-07-08 15:59:31.092 +05:30 [INF] Handled LogoutCommand
+2026-07-08 15:59:31.094 +05:30 [INF] POST /api/auth/logout responded 204 in 37ms
+2026-07-08 15:59:31.106 +05:30 [INF] GET /api/roles responded 401 in 0ms
+2026-07-08 15:59:31.106 +05:30 [INF] GET /api/users responded 401 in 0ms
+2026-07-08 15:59:42.438 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 15:59:42.453 +05:30 [INF] POST /api/auth/logout responded 401 in 1ms
+2026-07-08 15:59:42.462 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-08 15:59:42.471 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-08 15:59:42.522 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-08 15:59:42.524 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 55ms
+2026-07-08 15:59:42.532 +05:30 [INF] Handling LogoutCommand
+2026-07-08 15:59:42.537 +05:30 [INF] Handled LogoutCommand
+2026-07-08 15:59:42.538 +05:30 [INF] POST /api/auth/logout responded 204 in 8ms
+2026-07-08 15:59:53.452 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 15:59:53.465 +05:30 [INF] Handling LoginCommand
+2026-07-08 15:59:53.684 +05:30 [ERR] Unhandled exception for LoginCommand
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Invalid username or password.
+   at Cabcon.Application.Features.Authentication.Commands.Login.LoginCommandHandler.Handle(LoginCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\Login\LoginCommandHandler.cs:line 99
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+2026-07-08 15:59:56.090 +05:30 [WRN] AuthenticationFailedException processing POST /api/auth/login: Invalid username or password.
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Invalid username or password.
+   at Cabcon.Application.Features.Authentication.Commands.Login.LoginCommandHandler.Handle(LoginCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\Login\LoginCommandHandler.cs:line 99
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.AuthController.Login(LoginRequest request, CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\AuthController.cs:line 42
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+2026-07-08 16:00:01.724 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 16:00:01.737 +05:30 [INF] Handling LoginCommand
+2026-07-08 16:00:01.897 +05:30 [ERR] Unhandled exception for LoginCommand
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Invalid username or password.
+   at Cabcon.Application.Features.Authentication.Commands.Login.LoginCommandHandler.Handle(LoginCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\Login\LoginCommandHandler.cs:line 99
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+2026-07-08 16:00:03.624 +05:30 [WRN] AuthenticationFailedException processing POST /api/auth/login: Invalid username or password.
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Invalid username or password.
+   at Cabcon.Application.Features.Authentication.Commands.Login.LoginCommandHandler.Handle(LoginCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\Login\LoginCommandHandler.cs:line 99
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.AuthController.Login(LoginRequest request, CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\AuthController.cs:line 42
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+2026-07-08 16:00:18.089 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 16:00:18.131 +05:30 [INF] Handling LoginCommand
+2026-07-08 16:00:18.169 +05:30 [INF] Handled LoginCommand
+2026-07-08 16:00:18.171 +05:30 [INF] POST /api/auth/login responded 200 in 71ms
+2026-07-08 16:00:20.134 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 16:00:20.134 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 16:00:20.149 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 16:00:20.149 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 16:00:20.161 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 16:00:20.162 +05:30 [INF] GET /api/roles responded 200 in 18ms
+2026-07-08 16:00:20.163 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 16:00:20.165 +05:30 [INF] GET /api/users responded 200 in 20ms
+2026-07-08 16:00:24.717 +05:30 [INF] OPTIONS /api/roles/1 responded 204 in 0ms
+2026-07-08 16:00:24.733 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:00:24.739 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:00:24.741 +05:30 [INF] GET /api/roles/1 responded 200 in 12ms
+2026-07-08 16:00:24.748 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-08 16:00:24.756 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:00:24.763 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:00:24.764 +05:30 [INF] GET /api/permissions responded 200 in 10ms
+2026-07-08 16:00:42.603 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:00:42.612 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:00:42.618 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:00:42.619 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-08 16:00:54.460 +05:30 [INF] OPTIONS /api/roles/2 responded 204 in 0ms
+2026-07-08 16:00:54.474 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:00:54.478 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:00:54.480 +05:30 [INF] GET /api/roles/2 responded 200 in 8ms
+2026-07-08 16:00:54.486 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-08 16:00:54.495 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:00:54.497 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:00:54.500 +05:30 [INF] GET /api/permissions responded 200 in 6ms
+2026-07-08 16:00:56.313 +05:30 [INF] OPTIONS /api/roles/1 responded 204 in 0ms
+2026-07-08 16:00:56.324 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:00:56.327 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:00:56.329 +05:30 [INF] GET /api/roles/1 responded 200 in 6ms
+2026-07-08 16:00:56.338 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:00:56.341 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:00:56.342 +05:30 [INF] GET /api/permissions responded 200 in 6ms
+2026-07-08 16:00:57.631 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:00:57.635 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:00:57.636 +05:30 [INF] GET /api/roles/1 responded 200 in 8ms
+2026-07-08 16:00:57.646 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:00:57.650 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:00:57.651 +05:30 [INF] GET /api/permissions responded 200 in 6ms
+2026-07-08 16:00:57.816 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:00:57.820 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:00:57.821 +05:30 [INF] GET /api/roles/1 responded 200 in 8ms
+2026-07-08 16:00:57.830 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:00:57.833 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:00:57.834 +05:30 [INF] GET /api/permissions responded 200 in 6ms
+2026-07-08 16:00:57.993 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:00:57.996 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:00:57.998 +05:30 [INF] GET /api/roles/1 responded 200 in 8ms
+2026-07-08 16:00:58.008 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:00:58.011 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:00:58.012 +05:30 [INF] GET /api/permissions responded 200 in 6ms
+2026-07-08 16:00:58.161 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:00:58.164 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:00:58.165 +05:30 [INF] GET /api/roles/1 responded 200 in 7ms
+2026-07-08 16:00:58.176 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:00:58.179 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:00:58.180 +05:30 [INF] GET /api/permissions responded 200 in 6ms
+2026-07-08 16:00:58.322 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:00:58.325 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:00:58.326 +05:30 [INF] GET /api/roles/1 responded 200 in 7ms
+2026-07-08 16:00:58.339 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:00:58.341 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:00:58.342 +05:30 [INF] GET /api/permissions responded 200 in 5ms
+2026-07-08 16:00:58.515 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:00:58.519 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:00:58.521 +05:30 [INF] GET /api/roles/1 responded 200 in 9ms
+2026-07-08 16:00:58.531 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:00:58.534 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:00:58.535 +05:30 [INF] GET /api/permissions responded 200 in 6ms
+2026-07-08 16:00:59.823 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 16:00:59.823 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 16:00:59.833 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 16:00:59.833 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 16:00:59.843 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 16:00:59.845 +05:30 [INF] GET /api/roles responded 200 in 14ms
+2026-07-08 16:00:59.846 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 16:00:59.848 +05:30 [INF] GET /api/users responded 200 in 17ms
+2026-07-08 16:01:00.801 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:01:00.811 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:01:00.813 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:01:00.815 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-08 16:01:29.802 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:01:29.819 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:01:29.825 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:01:29.826 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-08 16:01:55.785 +05:30 [INF] OPTIONS /api/roles/1 responded 204 in 0ms
+2026-07-08 16:01:55.799 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:01:55.807 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:01:55.808 +05:30 [INF] GET /api/roles/1 responded 200 in 11ms
+2026-07-08 16:01:55.814 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-08 16:01:55.821 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:01:55.825 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:01:55.826 +05:30 [INF] GET /api/permissions responded 200 in 6ms
+2026-07-08 16:01:59.806 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:01:59.817 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:01:59.820 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:01:59.820 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 5ms
+2026-07-08 16:02:29.798 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:02:29.810 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:02:29.812 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:02:29.813 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-08 16:02:59.803 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:02:59.819 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:02:59.823 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:02:59.824 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 8ms
+2026-07-08 16:03:29.804 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:03:29.813 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:03:29.814 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:03:29.814 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-08 16:03:39.926 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 16:03:39.938 +05:30 [INF] Handling LoginCommand
+2026-07-08 16:03:40.005 +05:30 [INF] Handled LoginCommand
+2026-07-08 16:03:40.007 +05:30 [INF] POST /api/auth/login responded 200 in 70ms
+2026-07-08 16:03:41.173 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 16:03:41.173 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 16:03:41.185 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 16:03:41.185 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 16:03:41.192 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 16:03:41.193 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 16:03:41.194 +05:30 [INF] GET /api/roles responded 200 in 11ms
+2026-07-08 16:03:41.199 +05:30 [INF] GET /api/users responded 200 in 16ms
+2026-07-08 16:03:43.555 +05:30 [INF] OPTIONS /api/roles/1 responded 204 in 0ms
+2026-07-08 16:03:43.572 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:03:43.578 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:03:43.579 +05:30 [INF] GET /api/roles/1 responded 200 in 12ms
+2026-07-08 16:03:43.587 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-08 16:03:43.593 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:03:43.597 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:03:43.599 +05:30 [INF] GET /api/permissions responded 200 in 6ms
+2026-07-08 16:03:48.075 +05:30 [INF] OPTIONS /api/roles/3 responded 204 in 0ms
+2026-07-08 16:03:48.086 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:03:48.089 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:03:48.090 +05:30 [INF] GET /api/roles/3 responded 200 in 6ms
+2026-07-08 16:03:48.099 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:03:48.101 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:03:48.102 +05:30 [INF] GET /api/permissions responded 200 in 4ms
+2026-07-08 16:05:31.744 +05:30 [INF] GET / responded 404 in 41ms
+2026-07-08 16:05:37.287 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 1ms
+2026-07-08 16:05:38.237 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 16:05:38.239 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 16:05:39.552 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:05:39.603 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:05:39.615 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 494ms
+2026-07-08 16:05:49.955 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 16:05:50.022 +05:30 [INF] Handling LoginCommand
+2026-07-08 16:05:50.143 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-08 16:05:50.616 +05:30 [INF] Handled LoginCommand
+2026-07-08 16:05:50.622 +05:30 [INF] POST /api/auth/login responded 200 in 636ms
+2026-07-08 16:05:50.662 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 16:05:50.662 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 16:05:50.689 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 16:05:50.698 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 16:05:50.725 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 16:05:50.730 +05:30 [INF] GET /api/roles responded 200 in 45ms
+2026-07-08 16:05:50.731 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 16:05:50.740 +05:30 [INF] GET /api/users responded 200 in 66ms
+2026-07-08 16:05:56.049 +05:30 [INF] OPTIONS /api/roles/1 responded 204 in 0ms
+2026-07-08 16:05:56.084 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:05:56.120 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:05:56.125 +05:30 [INF] GET /api/roles/1 responded 200 in 57ms
+2026-07-08 16:05:56.136 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-08 16:05:56.150 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:05:56.167 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:05:56.172 +05:30 [INF] GET /api/permissions responded 200 in 29ms
+2026-07-08 16:06:00.646 +05:30 [INF] OPTIONS /api/roles/1/permissions responded 204 in 0ms
+2026-07-08 16:06:00.677 +05:30 [INF] Handling AssignPermissionsToRoleCommand
+2026-07-08 16:06:00.749 +05:30 [INF] Handled AssignPermissionsToRoleCommand
+2026-07-08 16:06:00.750 +05:30 [INF] PUT /api/roles/1/permissions responded 204 in 91ms
+2026-07-08 16:06:00.861 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 16:06:00.875 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 16:06:00.884 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 16:06:00.886 +05:30 [INF] GET /api/roles responded 200 in 13ms
+2026-07-08 16:06:08.339 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 16:06:08.364 +05:30 [INF] Handling LogoutCommand
+2026-07-08 16:06:08.394 +05:30 [INF] Handled LogoutCommand
+2026-07-08 16:06:08.395 +05:30 [INF] POST /api/auth/logout responded 204 in 45ms
+2026-07-08 16:06:08.415 +05:30 [INF] GET /api/users responded 401 in 3ms
+2026-07-08 16:06:08.416 +05:30 [INF] GET /api/roles responded 401 in 4ms
+2026-07-08 16:06:16.731 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 16:06:16.746 +05:30 [INF] Handling LoginCommand
+2026-07-08 16:06:16.827 +05:30 [INF] Handled LoginCommand
+2026-07-08 16:06:16.827 +05:30 [INF] POST /api/auth/login responded 200 in 82ms
+2026-07-08 16:06:23.750 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 16:06:23.766 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 16:06:23.782 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 16:06:23.809 +05:30 [INF] GET /api/quotations responded 200 in 49ms
+2026-07-08 16:06:31.601 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-08 16:06:31.638 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-08 16:06:31.692 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-08 16:06:31.704 +05:30 [INF] GET /api/materials responded 200 in 95ms
+2026-07-08 16:06:33.014 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 16:06:33.014 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-08 16:06:33.030 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-08 16:06:33.033 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 16:06:33.044 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-08 16:06:33.047 +05:30 [INF] GET /api/categories responded 200 in 24ms
+2026-07-08 16:06:33.164 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 16:06:33.170 +05:30 [INF] GET /api/skus responded 200 in 147ms
+2026-07-08 16:06:34.965 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 16:06:34.965 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 16:06:34.976 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 16:06:34.976 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 16:06:34.980 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 16:06:34.981 +05:30 [INF] GET /api/roles responded 200 in 7ms
+2026-07-08 16:06:34.988 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 16:06:34.989 +05:30 [INF] GET /api/users responded 200 in 15ms
+2026-07-08 16:06:37.131 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 16:06:37.146 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 16:06:37.153 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 16:06:37.155 +05:30 [INF] GET /api/skus responded 200 in 11ms
+2026-07-08 16:06:38.472 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:06:38.484 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:06:38.490 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:06:38.491 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-08 16:06:40.740 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-08 16:06:40.770 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-08 16:06:40.819 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-08 16:06:40.824 +05:30 [INF] POST /api/quotations/calculate responded 200 in 73ms
+2026-07-08 16:07:06.622 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-08 16:07:06.669 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-08 16:07:06.874 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-08 16:07:06.875 +05:30 [INF] POST /api/quotations responded 200 in 244ms
+2026-07-08 16:07:08.470 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:07:08.478 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:07:08.482 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:07:08.483 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-08 16:07:08.891 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-08 16:07:08.897 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-08 16:07:08.899 +05:30 [INF] GET /api/quotations responded 200 in 10ms
+2026-07-08 16:07:15.040 +05:30 [INF] OPTIONS /api/quotations/26 responded 204 in 0ms
+2026-07-08 16:07:15.056 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-08 16:07:15.086 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-08 16:07:15.094 +05:30 [INF] GET /api/quotations/26 responded 200 in 44ms
+2026-07-08 16:07:21.481 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 16:07:21.493 +05:30 [INF] Handling LogoutCommand
+2026-07-08 16:07:21.504 +05:30 [INF] Handled LogoutCommand
+2026-07-08 16:07:21.505 +05:30 [INF] POST /api/auth/logout responded 204 in 14ms
+2026-07-08 16:07:31.685 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:07:31.691 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:07:31.692 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:07:31.692 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-08 16:07:35.538 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 16:07:35.552 +05:30 [INF] Handling LoginCommand
+2026-07-08 16:07:35.613 +05:30 [INF] Handled LoginCommand
+2026-07-08 16:07:35.614 +05:30 [INF] POST /api/auth/login responded 200 in 66ms
+2026-07-08 16:07:36.697 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 16:07:36.697 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 16:07:36.705 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 16:07:36.707 +05:30 [INF] GET /api/roles responded 403 in 3ms
+2026-07-08 16:07:36.717 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 16:07:36.718 +05:30 [INF] GET /api/users responded 200 in 15ms
+2026-07-08 16:07:40.532 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 16:07:40.544 +05:30 [INF] Handling LogoutCommand
+2026-07-08 16:07:40.549 +05:30 [INF] Handled LogoutCommand
+2026-07-08 16:07:40.550 +05:30 [INF] POST /api/auth/logout responded 204 in 8ms
+2026-07-08 16:07:40.558 +05:30 [INF] GET /api/roles responded 401 in 0ms
+2026-07-08 16:07:40.558 +05:30 [INF] GET /api/users responded 401 in 0ms
+2026-07-08 16:07:43.466 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-08 16:07:43.475 +05:30 [INF] Handling LoginCommand
+2026-07-08 16:07:43.506 +05:30 [INF] Handled LoginCommand
+2026-07-08 16:07:43.508 +05:30 [INF] POST /api/auth/login responded 200 in 33ms
+2026-07-08 16:07:44.557 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-08 16:07:44.557 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-08 16:07:44.565 +05:30 [INF] Handling GetUsersQuery
+2026-07-08 16:07:44.566 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-08 16:07:44.567 +05:30 [INF] Handled GetUsersQuery
+2026-07-08 16:07:44.569 +05:30 [INF] GET /api/users responded 200 in 7ms
+2026-07-08 16:07:44.574 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-08 16:07:44.575 +05:30 [INF] GET /api/roles responded 200 in 11ms
+2026-07-08 16:07:47.962 +05:30 [INF] OPTIONS /api/roles/3 responded 204 in 0ms
+2026-07-08 16:07:47.974 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-08 16:07:47.980 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-08 16:07:47.982 +05:30 [INF] GET /api/roles/3 responded 200 in 10ms
+2026-07-08 16:07:47.988 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-08 16:07:47.995 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-08 16:07:47.999 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-08 16:07:48.001 +05:30 [INF] GET /api/permissions responded 200 in 8ms
+2026-07-08 16:07:59.180 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-08 16:07:59.193 +05:30 [INF] Handling LogoutCommand
+2026-07-08 16:07:59.198 +05:30 [INF] Handled LogoutCommand
+2026-07-08 16:07:59.200 +05:30 [INF] POST /api/auth/logout responded 204 in 9ms
+2026-07-08 16:07:59.207 +05:30 [INF] GET /api/users responded 401 in 0ms
+2026-07-08 16:07:59.207 +05:30 [INF] GET /api/roles responded 401 in 0ms

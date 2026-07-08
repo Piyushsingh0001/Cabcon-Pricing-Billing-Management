@@ -92,8 +92,8 @@ export class ResetPasswordComponent implements OnInit {
       newPassword: this.resetForm.value.newPassword
     };
 
-    this.http.post('https://localhost:55027/api/auth/reset-password', payload).subscribe({
-   // this.http.post('https://skuquotation.runasp.net/api/auth/reset-password', payload).subscribe({
+    //this.http.post('https://localhost:55027/api/auth/reset-password', payload).subscribe({
+      this.http.post('https://skuquotation.runasp.net/api/auth/reset-password', payload).subscribe({
       next: () => {
         this.isLoading.set(false);
         this.isSuccess.set(true);

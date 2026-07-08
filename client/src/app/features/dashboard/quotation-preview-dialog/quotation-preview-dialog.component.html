@@ -1,0 +1,139 @@
+<div class="print-header-actions" mat-dialog-title style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px;">
+  <h2>Quotation Preview</h2>
+</div>
+
+<mat-dialog-content>
+  <div class="print-sheet-content" id="print-section">
+    <!-- Header -->
+    <div class="company-header">
+      <div class="logo-container" style="margin-right: 20px;">
+        <img src="/Images/Logo.jpg" alt="CABCON INDIA LTD" style="max-height: 80px;">
+      </div>
+      <div class="company-info">
+        <h1 class="company-name">CABCON INDIA LIMITED</h1>
+        <p class="company-address">Sector 5, Salt Lake, Kolkata, West Bengal</p>
+        <p class="company-contact">Phone: +91 33 2367 3302 | Email: info@cabconindia.com</p>
+        <p class="company-gst">GSTIN: 19AABCC1234D1Z5</p>
+      </div>
+    </div>
+
+    <div class="quotation-title-banner">
+      <h2>QUOTATION</h2>
+    </div>
+
+    <div class="quotation-meta">
+      <div class="meta-left">
+        <div class="meta-row">
+          <span class="meta-label">Quotation No:</span>
+          <span class="meta-value" style="font-style: italic; color: #666;">(Generated on Save)</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Date:</span>
+          <span class="meta-value">{{today | date:'dd-MMM-yyyy'}}</span>
+        </div>
+      </div>
+      <div class="meta-right">
+        <div class="meta-row">
+          <span class="meta-label">Valid Until:</span>
+          <span class="meta-value">{{data.validityDays}} Days</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="client-details">
+      <h3>Customer Details</h3>
+      <div class="party-name"><strong>Party Name:</strong> {{data.partyName}}</div>
+      <div class="price-basis"><strong>Price Basis:</strong> {{data.priceBasisNote}}</div>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="data.lines" class="mat-elevation-z0 pdf-table">
+        <!-- S.No Column -->
+        <ng-container matColumnDef="sno">
+          <th mat-header-cell *matHeaderCellDef class="compact-cell"> S.No </th>
+          <td mat-cell *matCellDef="let element; let i = index" class="compact-cell"> {{i + 1}} </td>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let element"> 
+            <strong>{{element.description}}</strong>
+          </td>
+        </ng-container>
+
+        <!-- Unit Column -->
+        <ng-container matColumnDef="unit">
+          <th mat-header-cell *matHeaderCellDef class="compact-cell"> Unit </th>
+          <td mat-cell *matCellDef="let element" class="compact-cell"> {{element.unit}} </td>
+        </ng-container>
+
+        <!-- Offer Ex-GST Column -->
+        <ng-container matColumnDef="offerExGst">
+          <th mat-header-cell *matHeaderCellDef class="number-cell"> Ex-GST </th>
+          <td mat-cell *matCellDef="let element" class="number-cell"> {{element.offerExGst | currency:'INR':'symbol':'1.2-2'}} </td>
+        </ng-container>
+
+        <!-- GST % Column -->
+        <ng-container matColumnDef="gstPercent">
+          <th mat-header-cell *matHeaderCellDef class="compact-cell number-cell"> GST % </th>
+          <td mat-cell *matCellDef="let element" class="compact-cell number-cell"> {{(element.gstPercent * 100) | number:'1.0-1'}}% </td>
+        </ng-container>
+
+        <!-- GST Amount Column -->
+        <ng-container matColumnDef="gstAmount">
+          <th mat-header-cell *matHeaderCellDef class="number-cell"> GST Amt </th>
+          <td mat-cell *matCellDef="let element" class="number-cell"> {{element.gstAmount | currency:'INR':'symbol':'1.2-2'}} </td>
+        </ng-container>
+
+        <!-- Gross Rate Column -->
+        <ng-container matColumnDef="grossRate">
+          <th mat-header-cell *matHeaderCellDef class="number-cell"> Gross Rate </th>
+          <td mat-cell *matCellDef="let element" class="number-cell"> <strong>{{element.grossRate | currency:'INR':'symbol':'1.2-2'}}</strong> </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <div class="totals-section">
+      <div class="totals-box">
+        <div class="total-row">
+          <span class="total-label">Total Ex-GST:</span>
+          <span class="total-value">{{data.totalExGst | currency:'INR':'symbol':'1.2-2'}}</span>
+        </div>
+        <div class="total-row">
+          <span class="total-label">Total GST:</span>
+          <span class="total-value">{{data.totalGst | currency:'INR':'symbol':'1.2-2'}}</span>
+        </div>
+        <div class="total-row grand-total">
+          <span class="total-label">Total Gross:</span>
+          <span class="total-value">{{data.totalGross | currency:'INR':'symbol':'1.2-2'}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-terms">
+      <h4>Terms & Conditions</h4>
+      <ul>
+        <li>This quotation is valid for {{data.validityDays}} days from the date of issue.</li>
+        <li>Prices are subject to change if raw material costs fluctuate significantly.</li>
+        <li>Delivery timeline will be confirmed upon receipt of PO.</li>
+      </ul>
+      <div class="signature-block">
+        <div class="sig-line">Authorized Signatory</div>
+        <div class="sig-company">For CABCON INDIA LIMITED</div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSend()">
+    {{ isSuperAdmin ? 'Save Quotation' : 'Generate Quotation' }}
+  </button>
+</mat-dialog-actions>

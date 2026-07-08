@@ -128,16 +128,7 @@ export class AdminComponent implements OnInit {
 
   public manageRolePermissions(role: RoleSummary) {
     // Load full role detail to get checked permissions
-    this.pricingService.getQuotation(role.id).subscribe({ // Wait, getRole endpoint? 
-      // Roles getById endpoint: GET /api/roles/{id:int}
-      // Let's call roles endpoint directly or write pricingService wrapper
-    });
-    
-    // We can call getRole Details via custom request
-    const http = inject(this.pricingService['http'].constructor as any) as any;
-    // http.get(`https://localhost:55027/api/roles/${role.id}`).subscribe({
-    //   private readonly apiBase = 'https://skuquotation.runasp.net/api/auth';
-     http.get(`https://skuquotation.runasp.net/api/roles/${role.id}`).subscribe({
+    this.pricingService.getRole(role.id).subscribe({
       next: (roleDetail: any) => {
         this.pricingService.getPermissions().subscribe(allPerms => {
           const dialogRef = this.dialog.open(RolePermissionsDialogComponent, {
@@ -145,7 +136,9 @@ export class AdminComponent implements OnInit {
             data: {
               role,
               allPermissions: allPerms,
-              assignedPermissionCodes: roleDetail.permissions.map((p: any) => p.code)
+              assignedPermissionCodes: (roleDetail.permissionIds || [])
+                .map((id: number) => allPerms.find(p => p.id === id)?.code)
+                .filter(Boolean)
             }
           });
           this.cdr.detectChanges();
@@ -155,7 +148,6 @@ export class AdminComponent implements OnInit {
             }
           });
         });
-
       },
       error: () => this.snackBar.open('Failed to load role permissions.', 'Close', { duration: 3000 })
     });

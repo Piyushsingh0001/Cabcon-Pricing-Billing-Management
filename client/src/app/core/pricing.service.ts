@@ -131,7 +131,7 @@ export interface QuotationDetails {
 })
 export class PricingService {
   private http = inject(HttpClient);
- // private readonly apiBase = 'https://localhost:55027/api';
+ //private readonly apiBase = 'https://localhost:55027/api';
   public pendingApprovalUpdated = new Subject<void>();
   private readonly apiBase = 'https://skuquotation.runasp.net/api';
 
@@ -343,6 +343,10 @@ export class PricingService {
 
   public getRoles(): Observable<RoleSummary[]> {
     return this.http.get<RoleSummary[]>(`${this.apiBase}/roles`);
+  }
+
+  public getRole(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiBase}/roles/${id}`);
   }
 
   public createRole(payload: { name: string; description?: string }): Observable<{ roleId: number }> {

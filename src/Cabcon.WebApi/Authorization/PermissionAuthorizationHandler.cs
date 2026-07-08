@@ -17,9 +17,10 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionReq
 {
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
     {
+        var isSuperAdmin = context.User.HasClaim(System.Security.Claims.ClaimTypes.Role, "Super Admin");
         var hasPermission = context.User.Claims.Any(c => c.Type == "permission" && c.Value == requirement.Permission);
 
-        if (hasPermission)
+        if (isSuperAdmin || hasPermission)
             context.Succeed(requirement);
 
         return Task.CompletedTask;

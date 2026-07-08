@@ -12,4 +12,5 @@ public interface ICurrentUserService
     string? UserName { get; }
     string? IpAddress { get; }
     IReadOnlyCollection<string> Permissions { get; }
+    IReadOnlyCollection<string> Roles { get; }
 }

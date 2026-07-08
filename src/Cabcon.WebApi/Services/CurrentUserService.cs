@@ -34,4 +34,7 @@ public class CurrentUserService : ICurrentUserService
 
     public IReadOnlyCollection<string> Permissions =>
         Principal?.FindAll("permission").Select(c => c.Value).ToList() ?? new List<string>();
+
+    public IReadOnlyCollection<string> Roles =>
+        Principal?.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList() ?? new List<string>();
 }
