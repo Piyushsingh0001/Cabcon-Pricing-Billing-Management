@@ -31,7 +31,7 @@ export class QuotationDetailDialogComponent {
   private snackBar = inject(MatSnackBar);
   private dialogRef = inject(MatDialogRef<QuotationDetailDialogComponent>);
 
-  public canApprove = this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
+  public canApprove = this.authService.hasRole('Super Admin');
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public quote: QuotationDetails
