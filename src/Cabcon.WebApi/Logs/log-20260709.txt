@@ -345,3 +345,378 @@
 2026-07-09 11:07:43.497 +05:30 [INF] Handling CalculateQuotationCommand
 2026-07-09 11:07:43.498 +05:30 [INF] Handled CalculateQuotationCommand
 2026-07-09 11:07:43.499 +05:30 [INF] POST /api/quotations/calculate responded 200 in 3ms
+2026-07-09 15:15:51.985 +05:30 [INF] GET / responded 404 in 55ms
+2026-07-09 15:18:28.496 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 7ms
+2026-07-09 15:18:29.243 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-09 15:18:29.245 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-09 15:18:30.166 +05:30 [INF] GET /api/quotations/pending-count responded 401 in 59ms
+2026-07-09 15:18:30.243 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-09 15:18:30.336 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-09 15:18:30.698 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-09 15:18:31.076 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-09 15:18:31.100 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 834ms
+2026-07-09 15:18:31.142 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:18:31.181 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:18:31.184 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 73ms
+2026-07-09 15:18:31.552 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-09 15:18:31.584 +05:30 [INF] Handling LogoutCommand
+2026-07-09 15:18:31.660 +05:30 [INF] Handled LogoutCommand
+2026-07-09 15:18:31.662 +05:30 [INF] POST /api/auth/logout responded 204 in 98ms
+2026-07-09 15:18:43.925 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-09 15:18:43.963 +05:30 [INF] Handling LoginCommand
+2026-07-09 15:18:43.992 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-09 15:18:44.211 +05:30 [INF] Handled LoginCommand
+2026-07-09 15:18:44.214 +05:30 [INF] POST /api/auth/login responded 200 in 267ms
+2026-07-09 15:18:57.290 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-09 15:18:57.339 +05:30 [INF] Handling GetSkusQuery
+2026-07-09 15:18:57.574 +05:30 [INF] Handled GetSkusQuery
+2026-07-09 15:18:57.594 +05:30 [INF] GET /api/skus responded 200 in 292ms
+2026-07-09 15:19:01.722 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:19:01.731 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:19:01.739 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:19:01.740 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-09 15:19:04.969 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-09 15:19:04.989 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-09 15:19:05.008 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-09 15:19:05.019 +05:30 [INF] GET /api/materials responded 200 in 40ms
+2026-07-09 15:19:29.753 +05:30 [INF] OPTIONS /api/materials/2/history responded 204 in 0ms
+2026-07-09 15:19:29.775 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-09 15:19:29.798 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-09 15:19:29.802 +05:30 [INF] GET /api/materials/2/history responded 200 in 37ms
+2026-07-09 15:19:31.715 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:19:31.727 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:19:31.730 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:19:31.731 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-09 15:20:01.711 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:20:01.770 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:20:01.776 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:20:01.777 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 14ms
+2026-07-09 15:20:31.716 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:20:31.728 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:20:31.733 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:20:31.734 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 8ms
+2026-07-09 15:20:43.987 +05:30 [INF] OPTIONS /api/materials/2/history responded 204 in 0ms
+2026-07-09 15:20:44.005 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-09 15:20:44.014 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-09 15:20:44.016 +05:30 [INF] GET /api/materials/2/history responded 200 in 14ms
+2026-07-09 15:21:01.716 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:21:01.750 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:21:01.758 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:21:01.759 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 19ms
+2026-07-09 15:21:31.715 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:21:31.733 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:21:31.735 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:21:31.736 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 5ms
+2026-07-09 15:21:40.803 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-09 15:21:40.815 +05:30 [INF] Handling LogoutCommand
+2026-07-09 15:21:40.833 +05:30 [INF] Handled LogoutCommand
+2026-07-09 15:21:40.834 +05:30 [INF] POST /api/auth/logout responded 204 in 22ms
+2026-07-09 15:21:40.846 +05:30 [INF] GET /api/materials responded 401 in 1ms
+2026-07-09 15:22:39.417 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-09 15:22:39.463 +05:30 [INF] Handling LoginCommand
+2026-07-09 15:22:39.548 +05:30 [INF] Handled LoginCommand
+2026-07-09 15:22:39.550 +05:30 [INF] POST /api/auth/login responded 200 in 87ms
+2026-07-09 15:22:40.929 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:22:40.940 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:22:40.947 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:22:40.948 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-09 15:22:43.588 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-09 15:22:43.597 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-09 15:22:43.606 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-09 15:22:43.608 +05:30 [INF] GET /api/materials responded 200 in 13ms
+2026-07-09 15:23:10.926 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:23:10.957 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:23:10.966 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:23:10.967 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 18ms
+2026-07-09 15:23:22.894 +05:30 [INF] OPTIONS /api/materials/2/history responded 204 in 0ms
+2026-07-09 15:23:22.905 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-09 15:23:22.913 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-09 15:23:22.914 +05:30 [INF] GET /api/materials/2/history responded 200 in 11ms
+2026-07-09 15:23:40.926 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:23:40.934 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:23:40.935 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:23:40.936 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 2ms
+2026-07-09 15:24:10.920 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:24:10.942 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:24:10.948 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:24:10.949 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 13ms
+2026-07-09 15:24:40.922 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:24:40.948 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:24:40.956 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:24:40.957 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 19ms
+2026-07-09 15:25:10.921 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:25:10.937 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:25:10.940 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:25:10.941 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-09 15:25:40.926 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:25:41.013 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:25:41.018 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:25:41.019 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-09 15:25:49.635 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-09 15:25:49.635 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-09 15:25:49.647 +05:30 [INF] Handling GetSkusQuery
+2026-07-09 15:25:49.652 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-09 15:25:49.678 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-09 15:25:49.682 +05:30 [INF] GET /api/categories responded 200 in 39ms
+2026-07-09 15:25:49.686 +05:30 [INF] Handled GetSkusQuery
+2026-07-09 15:25:49.688 +05:30 [INF] GET /api/skus responded 200 in 43ms
+2026-07-09 15:25:57.125 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-09 15:25:57.138 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-09 15:25:57.141 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-09 15:25:57.143 +05:30 [INF] GET /api/categories responded 200 in 7ms
+2026-07-09 15:26:02.805 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-09 15:26:02.817 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-09 15:26:02.821 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-09 15:26:02.822 +05:30 [INF] GET /api/categories responded 200 in 7ms
+2026-07-09 15:26:07.503 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-09 15:26:07.506 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-09 15:26:07.509 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-09 15:26:07.510 +05:30 [INF] GET /api/categories responded 200 in 6ms
+2026-07-09 15:26:07.548 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-09 15:26:07.559 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-09 15:26:07.560 +05:30 [INF] GET /api/materials responded 200 in 16ms
+2026-07-09 15:26:10.932 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:26:10.944 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:26:10.946 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:26:10.947 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 5ms
+2026-07-09 15:26:38.761 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-09 15:26:38.761 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-09 15:26:38.829 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-09 15:26:38.833 +05:30 [INF] Handling GetUsersQuery
+2026-07-09 15:26:38.854 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-09 15:26:38.858 +05:30 [INF] GET /api/roles responded 200 in 40ms
+2026-07-09 15:26:38.860 +05:30 [INF] Handled GetUsersQuery
+2026-07-09 15:26:38.868 +05:30 [INF] GET /api/users responded 200 in 50ms
+2026-07-09 15:26:40.934 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:26:40.943 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:26:40.950 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:26:40.951 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-09 15:26:56.152 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-09 15:26:56.152 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-09 15:26:56.202 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-09 15:26:56.203 +05:30 [INF] Handling GetSkusQuery
+2026-07-09 15:26:56.208 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-09 15:26:56.210 +05:30 [INF] GET /api/categories responded 200 in 51ms
+2026-07-09 15:26:56.242 +05:30 [INF] Handled GetSkusQuery
+2026-07-09 15:26:56.244 +05:30 [INF] GET /api/skus responded 200 in 43ms
+2026-07-09 15:26:58.903 +05:30 [INF] OPTIONS /api/skus/9 responded 204 in 0ms
+2026-07-09 15:26:58.920 +05:30 [INF] Handling GetSkuDetailsQuery
+2026-07-09 15:26:58.961 +05:30 [INF] Handled GetSkuDetailsQuery
+2026-07-09 15:26:58.970 +05:30 [INF] GET /api/skus/9 responded 200 in 60ms
+2026-07-09 15:26:58.981 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-09 15:26:58.983 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-09 15:26:58.984 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-09 15:26:58.985 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-09 15:26:58.986 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-09 15:26:58.993 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-09 15:26:58.994 +05:30 [INF] GET /api/materials responded 200 in 8ms
+2026-07-09 15:27:04.178 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-09 15:27:04.192 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 15:27:04.209 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 15:27:04.225 +05:30 [INF] GET /api/quotations responded 200 in 39ms
+2026-07-09 15:27:08.664 +05:30 [INF] OPTIONS /api/quotations/26 responded 204 in 0ms
+2026-07-09 15:27:08.682 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-09 15:27:08.780 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-09 15:27:08.789 +05:30 [INF] GET /api/quotations/26 responded 200 in 115ms
+2026-07-09 15:27:10.932 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:27:10.943 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:27:10.945 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:27:10.946 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-09 15:27:35.199 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-09 15:27:35.223 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 15:27:35.231 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 15:27:35.234 +05:30 [INF] GET /api/quotations responded 200 in 16ms
+2026-07-09 15:27:40.920 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:27:40.927 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:27:40.932 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:27:40.933 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-09 15:28:03.678 +05:30 [INF] OPTIONS /api/quotations/26 responded 204 in 0ms
+2026-07-09 15:28:03.689 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-09 15:28:03.702 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-09 15:28:03.703 +05:30 [INF] GET /api/quotations/26 responded 200 in 15ms
+2026-07-09 15:28:10.919 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:28:10.927 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:28:10.930 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:28:10.931 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-09 15:28:13.300 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-09 15:28:13.311 +05:30 [INF] Handling GetSkusQuery
+2026-07-09 15:28:13.355 +05:30 [INF] Handled GetSkusQuery
+2026-07-09 15:28:13.357 +05:30 [INF] GET /api/skus responded 200 in 48ms
+2026-07-09 15:28:40.928 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:28:40.954 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:28:40.959 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:28:40.961 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-09 15:28:42.207 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-09 15:28:42.218 +05:30 [INF] Handling GetSkusQuery
+2026-07-09 15:28:42.260 +05:30 [INF] Handled GetSkusQuery
+2026-07-09 15:28:42.262 +05:30 [INF] GET /api/skus responded 200 in 46ms
+2026-07-09 15:28:49.849 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-09 15:28:49.882 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-09 15:28:49.980 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-09 15:28:49.986 +05:30 [INF] POST /api/quotations/calculate responded 200 in 127ms
+2026-07-09 15:29:10.927 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:29:10.936 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:29:10.938 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:29:10.938 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-09 15:29:40.210 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-09 15:29:40.233 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 15:29:40.244 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 15:29:40.246 +05:30 [INF] GET /api/quotations responded 200 in 20ms
+2026-07-09 15:29:40.920 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:29:40.936 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:29:40.941 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:29:40.942 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-09 15:30:10.926 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:30:10.941 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:30:10.945 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:30:10.946 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 8ms
+2026-07-09 15:30:33.662 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-09 15:30:33.662 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-09 15:30:33.671 +05:30 [INF] Handling GetUsersQuery
+2026-07-09 15:30:33.672 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-09 15:30:33.682 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-09 15:30:33.683 +05:30 [INF] GET /api/roles responded 200 in 13ms
+2026-07-09 15:30:33.684 +05:30 [INF] Handled GetUsersQuery
+2026-07-09 15:30:33.695 +05:30 [INF] GET /api/users responded 200 in 26ms
+2026-07-09 15:30:38.309 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-09 15:30:38.322 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-09 15:30:38.357 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-09 15:30:38.361 +05:30 [INF] POST /api/quotations/calculate responded 200 in 41ms
+2026-07-09 15:30:40.924 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:30:40.933 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:30:40.935 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:30:40.936 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-09 15:30:48.190 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-09 15:30:48.208 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-09 15:30:48.219 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-09 15:30:48.221 +05:30 [INF] GET /api/materials responded 200 in 19ms
+2026-07-09 15:30:50.223 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-09 15:30:50.223 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-09 15:30:50.241 +05:30 [INF] Handling GetSkusQuery
+2026-07-09 15:30:50.241 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-09 15:30:50.247 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-09 15:30:50.248 +05:30 [INF] GET /api/categories responded 200 in 11ms
+2026-07-09 15:30:50.272 +05:30 [INF] Handled GetSkusQuery
+2026-07-09 15:30:50.276 +05:30 [INF] GET /api/skus responded 200 in 39ms
+2026-07-09 15:30:51.078 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-09 15:30:51.079 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-09 15:30:51.090 +05:30 [INF] Handling GetUsersQuery
+2026-07-09 15:30:51.090 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-09 15:30:51.099 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-09 15:30:51.100 +05:30 [INF] GET /api/roles responded 200 in 12ms
+2026-07-09 15:30:51.102 +05:30 [INF] Handled GetUsersQuery
+2026-07-09 15:30:51.104 +05:30 [INF] GET /api/users responded 200 in 16ms
+2026-07-09 15:30:54.992 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-09 15:30:54.993 +05:30 [INF] Handling GetSkusQuery
+2026-07-09 15:30:54.995 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-09 15:30:54.998 +05:30 [INF] GET /api/categories responded 200 in 8ms
+2026-07-09 15:30:55.002 +05:30 [INF] Handled GetSkusQuery
+2026-07-09 15:30:55.004 +05:30 [INF] GET /api/skus responded 200 in 14ms
+2026-07-09 15:31:00.722 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-09 15:31:00.745 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-09 15:31:00.752 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-09 15:31:00.753 +05:30 [INF] GET /api/materials responded 200 in 11ms
+2026-07-09 15:31:08.275 +05:30 [INF] OPTIONS /api/materials/2/history responded 204 in 0ms
+2026-07-09 15:31:08.285 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-09 15:31:08.292 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-09 15:31:08.293 +05:30 [INF] GET /api/materials/2/history responded 200 in 10ms
+2026-07-09 15:31:10.920 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:31:10.927 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:31:10.932 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:31:10.933 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-09 15:31:40.931 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:31:40.943 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:31:40.950 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:31:40.951 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-09 15:32:11.271 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:32:11.380 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:32:11.387 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:32:11.389 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-09 15:32:41.270 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:32:41.279 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:32:41.280 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:32:41.281 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 2ms
+2026-07-09 15:33:42.259 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:33:42.278 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:33:42.283 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:33:42.284 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-09 15:34:43.258 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:34:43.272 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:34:43.280 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:34:43.281 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 15ms
+2026-07-09 15:35:44.268 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:35:44.289 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:35:44.296 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:35:44.297 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 13ms
+2026-07-09 15:36:45.257 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:36:45.277 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:36:45.282 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:36:45.283 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-09 15:37:45.262 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:37:45.285 +05:30 [INF] GET /api/quotations/pending-count responded 401 in 3ms
+2026-07-09 15:37:45.290 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-09 15:37:45.294 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-09 15:37:45.359 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-09 15:37:45.360 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 66ms
+2026-07-09 15:37:45.372 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:37:45.377 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:37:45.378 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-09 15:38:45.268 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:38:45.296 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:38:45.301 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:38:45.302 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 15ms
+2026-07-09 15:39:45.265 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:39:45.294 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:39:45.299 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:39:45.299 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-09 15:40:45.259 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:40:45.285 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:40:45.291 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:40:45.292 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 13ms
+2026-07-09 15:41:10.927 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:41:10.936 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:41:10.937 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:41:10.938 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-09 15:41:12.429 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-09 15:41:12.439 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 15:41:12.447 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 15:41:12.448 +05:30 [INF] GET /api/quotations responded 200 in 11ms
+2026-07-09 15:45:43.305 +05:30 [INF] GET / responded 404 in 39ms
+2026-07-09 15:45:54.855 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 2ms
+2026-07-09 15:45:55.707 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-09 15:45:55.709 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-09 15:45:56.703 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-09 15:45:57.102 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 15:45:57.102 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:45:57.141 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 15:45:57.144 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:45:57.159 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 501ms
+2026-07-09 15:45:57.164 +05:30 [INF] GET /api/quotations responded 200 in 376ms
+2026-07-09 15:46:23.845 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:46:23.875 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:46:23.882 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:46:23.882 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 17ms
+2026-07-09 15:46:53.845 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:46:53.858 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:46:53.861 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:46:53.863 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 8ms
+2026-07-09 15:47:23.846 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:47:23.879 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:47:23.885 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:47:23.885 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-09 15:47:24.260 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-09 15:47:24.275 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 15:47:24.283 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 15:47:24.285 +05:30 [INF] GET /api/quotations responded 200 in 13ms
+2026-07-09 15:47:53.843 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:47:53.856 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:47:53.858 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:47:53.859 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-09 15:48:17.931 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-09 15:48:17.970 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 15:48:17.983 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 15:48:17.985 +05:30 [INF] GET /api/quotations responded 200 in 29ms
+2026-07-09 15:48:23.843 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 15:48:23.869 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 15:48:23.876 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 15:48:23.877 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 14ms

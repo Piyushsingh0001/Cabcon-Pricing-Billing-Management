@@ -59,7 +59,7 @@ export class App {
   }
 
   private checkPendingApprovals() {
-    if (this.isAuthenticated() && (this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin'))) {
+    if (this.isAuthenticated() && (this.authService.hasRole('Super Admin'))) {
       this.pricingService.getPendingApprovalsCount().subscribe({
         next: (count) => this.pendingApprovalsCount = count,
         error: () => {} // ignore

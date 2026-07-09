@@ -8,14 +8,14 @@
       <span class="spacer"></span>
       
       <!-- Notifications for Super Admin -->
-      <button mat-icon-button [matMenuTriggerFor]="notificationMenu" *ngIf="(hasPermission('Quotation.Generate') || hasPermission('Quotation.View')) && pendingApprovalsCount > 0" title="Pending Approvals">
+      <!-- <button mat-icon-button [matMenuTriggerFor]="notificationMenu" *ngIf="(hasPermission('Quotation.Generate') || hasPermission('Quotation.View')) && pendingApprovalsCount > 0" title="Pending Approvals">
         <mat-icon [matBadge]="pendingApprovalsCount" matBadgeColor="warn">notifications</mat-icon>
       </button>
       <mat-menu #notificationMenu="matMenu">
         <button mat-menu-item routerLink="/quotations">
           <span>There are {{pendingApprovalsCount}} Quotations pending for approvable.</span>
         </button>
-      </mat-menu>
+      </mat-menu> -->
 
       <!-- User profile info -->
       <div class="user-profile" *ngIf="currentUser() as user">
@@ -84,10 +84,10 @@
             <mat-icon matListItemIcon>inventory_2</mat-icon>
             <span matListItemTitle>SKUs & BOMs</span>
           </a>
-          <a mat-list-item routerLink="/admin" routerLinkActive="active-link" *ngIf="hasPermission('Users.View')">
+          <!-- <a mat-list-item routerLink="/admin" routerLinkActive="active-link" *ngIf="hasPermission('Users.View')">
             <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
             <span matListItemTitle>Admin Panel</span>
-          </a>
+          </a> -->
         </mat-nav-list>
       </mat-sidenav>
 

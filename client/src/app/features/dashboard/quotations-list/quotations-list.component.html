@@ -1,13 +1,18 @@
 
     <div class="quotations-container animated-view">
-      <div class="header-section">
+      <div class="header-section" style="display: flex; justify-content: space-between; align-items: center;">
         <div>
           <h1>Saved Quotations History</h1>
           <p class="subtitle">View and audit previously generated quotation snapshots</p>
         </div>
+        <mat-form-field appearance="outline" class="search-field" style="width: 350px;">
+          <mat-label>Search Quotations</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput (keyup)="applyFilter($event)" placeholder="By Quote #, Customer, Created By, Date...">
+        </mat-form-field>
       </div>
-     <div class="table-container glass-card"  *ngIf="dataSource.length > 0; else noQuotations">
-        <table mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0">
+     <div class="table-container glass-card"  *ngIf="dataSource.data.length > 0; else noQuotations">
+        <table mat-table [dataSource]="dataSource" *ngIf="dataSource.data.length > 0">
           <!-- Quote Number Column -->
           <ng-container matColumnDef="quoteNumber">
             <th mat-header-cell *matHeaderCellDef>Quotation Number</th>

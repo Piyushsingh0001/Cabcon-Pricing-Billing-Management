@@ -6,9 +6,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { PricingService, QuotationSummary, QuotationDetails, QuotationLine } from '../../../core/pricing.service';
 import { AuthService } from '../../../core/auth.service';
 import { QuotationDetailDialogComponent } from '../quotation-detail-dialog/quotation-detail-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-quotations-list',
@@ -20,8 +24,11 @@ import { QuotationDetailDialogComponent } from '../quotation-detail-dialog/quota
     MatIconModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
+  providers: [DatePipe],
     templateUrl: './quotations-list.component.html',
     styleUrls: ['./quotations-list.component.scss']
 })
@@ -31,20 +38,35 @@ export class QuotationsListComponent implements OnInit {
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
   private cdr = inject(ChangeDetectorRef);
+  private datePipe = inject(DatePipe);
 
   public displayedColumns = ['quoteNumber', 'partyName', 'date', 'totalExGst', 'totalGross', 'createdBy', 'actions'];
-  public dataSource: QuotationSummary[] = [];
-  public canApprove = this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
+  public dataSource = new MatTableDataSource<QuotationSummary>([]);
+  public canApprove = this.authService.hasRole('Super Admin');
 
   ngOnInit() {
+    // Custom filter predicate to match formatted date and selected columns
+    this.dataSource.filterPredicate = (data: QuotationSummary, filter: string) => {
+      const searchStr = filter.toLowerCase();
+      const dateStr = this.datePipe.transform(data.quotationDate, 'mediumDate')?.toLowerCase() || '';
+      return (data.quotationNumber?.toLowerCase() || '').includes(searchStr) ||
+             (data.partyName?.toLowerCase() || '').includes(searchStr) ||
+             (data.createdBy?.toLowerCase() || '').includes(searchStr) ||
+             dateStr.includes(searchStr);
+    };
     this.loadQuotations();
+  }
+
+  public applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 private loadQuotations() {
   this.pricingService.getQuotations().subscribe({
     next: (res) => {
 
-      this.dataSource = res ?? [];
+      this.dataSource.data = res ?? [];
 
       this.cdr.detectChanges();
 
@@ -69,7 +91,7 @@ private loadQuotations() {
         dialogRef.afterClosed().subscribe((newStatus: number | undefined | string) => {
           if (typeof newStatus === 'number') {
             quote.approvalStatus = newStatus;
-            this.dataSource = [...this.dataSource];
+            this.dataSource.data = [...this.dataSource.data];
             this.cdr.detectChanges();
           }
         });
@@ -84,7 +106,7 @@ private loadQuotations() {
     this.pricingService.approveQuotation(quote.id, status).subscribe({
       next: () => {
         quote.approvalStatus = status;
-        this.dataSource = [...this.dataSource];
+        this.dataSource.data = [...this.dataSource.data];
         this.pricingService.pendingApprovalUpdated.next();
         this.snackBar.open(status === 1 ? 'Quotation Approved' : 'Quotation Rejected', 'Close', { duration: 3000 });
         this.cdr.detectChanges();
