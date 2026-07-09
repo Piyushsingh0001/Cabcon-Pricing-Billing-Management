@@ -1139,3 +1139,59 @@ Cabcon.Shared.Exceptions.AuthenticationFailedException: Invalid username or pass
 2026-07-08 16:07:59.200 +05:30 [INF] POST /api/auth/logout responded 204 in 9ms
 2026-07-08 16:07:59.207 +05:30 [INF] GET /api/users responded 401 in 0ms
 2026-07-08 16:07:59.207 +05:30 [INF] GET /api/roles responded 401 in 0ms
+2026-07-08 16:26:14.622 +05:30 [INF] GET / responded 404 in 54ms
+2026-07-08 16:26:27.667 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 3ms
+2026-07-08 16:26:28.584 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 16:26:28.586 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-08 16:26:29.678 +05:30 [INF] Handling LoginCommand
+2026-07-08 16:26:30.205 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-08 16:26:30.802 +05:30 [INF] Handled LoginCommand
+2026-07-08 16:26:30.825 +05:30 [INF] POST /api/auth/login responded 200 in 1223ms
+2026-07-08 16:26:33.839 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-08 16:26:33.992 +05:30 [INF] Handling GetSkusQuery
+2026-07-08 16:26:34.190 +05:30 [INF] Handled GetSkusQuery
+2026-07-08 16:26:34.208 +05:30 [INF] GET /api/skus responded 200 in 336ms
+2026-07-08 16:26:36.814 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-08 16:26:36.869 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-08 16:26:36.986 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-08 16:26:36.990 +05:30 [INF] POST /api/quotations/calculate responded 200 in 163ms
+2026-07-08 16:26:54.954 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:26:54.980 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:26:54.992 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:26:54.994 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 27ms
+2026-07-08 16:27:24.948 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:27:24.963 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:27:24.966 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:27:24.967 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 7ms
+2026-07-08 16:27:54.948 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:27:54.968 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:27:54.979 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:27:54.980 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 19ms
+2026-07-08 16:28:24.943 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:28:24.960 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:28:24.962 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:28:24.963 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 6ms
+2026-07-08 16:28:54.944 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:28:54.959 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:28:54.963 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:28:54.964 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 9ms
+2026-07-08 16:29:24.944 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:29:24.962 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:29:24.968 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:29:24.969 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-08 16:29:54.941 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:29:54.965 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:29:54.970 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:29:54.972 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-08 16:30:46.956 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:30:47.008 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:30:47.013 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:30:47.014 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-08 16:31:46.952 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:31:46.968 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:31:46.972 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:31:46.973 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-08 16:32:37.534 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-08 16:32:37.580 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-08 16:32:37.584 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-08 16:32:37.585 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
