@@ -11,7 +11,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, of, switchMap } from 'rxjs';
 import { PricingService, Material, MaterialPriceHistory } from '../../../core/pricing.service';
 import { AuthService } from '../../../core/auth.service';
 import { MaterialsComponent } from '../materials.component';
@@ -106,11 +106,9 @@ export class MaterialCreateEditDialogComponent {
         directRateInrPerKg: formValues.directRateInrPerKg
       };
 
-      // 3. Chain streams via forkJoin to complete updates simultaneously
-      forkJoin({
-        meta: this.pricingService.updateMaterial(this.material.id, metaPayload),
-        price: this.pricingService.updateMaterialPrice(pricePayload)
-      }).subscribe({
+      this.pricingService.updateMaterial(this.material.id, metaPayload).pipe(
+        switchMap(() => this.pricingService.updateMaterialPrice(pricePayload))
+      ).subscribe({
         next: () => {
           this.loading.set(false);
           this.snackBar.open('Material definitions and rates saved.', 'Close', { duration: 3000 });

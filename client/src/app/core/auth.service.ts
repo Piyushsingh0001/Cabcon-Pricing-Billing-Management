@@ -21,8 +21,8 @@ export interface UserSession {
 })
 export class AuthService {
   private http = inject(HttpClient);
- //private readonly apiBase = 'https://localhost:55027/api/auth'; // Matches WebApi launchSettings.json
-   private readonly apiBase = `${environment.apiBase}/auth`;
+ private readonly apiBase = 'https://localhost:55027/api/auth'; // Matches WebApi launchSettings.json
+ //  private readonly apiBase = `${environment.apiBase}/auth`;
   // Signals
   private sessionSignal = signal<UserSession | null>(null);
   

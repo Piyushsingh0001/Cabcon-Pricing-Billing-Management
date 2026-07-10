@@ -72,4 +72,12 @@ public class QuotationsController : ControllerBase
         var result = await _mediator.Send(new ApproveQuotationCommand(id, status), ct);
         return result.Succeeded ? Ok(result.Data) : BadRequest(result.Errors);
     }
+
+    [HttpDelete("{id}")]
+    [HasPermission(AppPermissions.Quotation.Generate)]
+    public async Task<IActionResult> DeleteQuotation(int id, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new DeleteQuotationCommand(id), ct);
+        return result.Succeeded ? Ok(result.Data) : BadRequest(result.Errors);
+    }
 }

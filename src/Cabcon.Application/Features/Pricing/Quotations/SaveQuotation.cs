@@ -15,6 +15,7 @@ public record SaveQuotationLineInput
     public decimal RmCostSnapshot { get; init; }
     public decimal MfgCostSnapshot { get; init; }
     public decimal OfferExGst { get; init; }
+    public decimal Profit { get; init; }
     public decimal GstPercent { get; init; }
     public decimal GstAmount { get; init; }
     public decimal GrossRate { get; init; }
@@ -44,6 +45,7 @@ public class SaveQuotationCommandValidator : AbstractValidator<SaveQuotationComm
             line.RuleFor(l => l.RmCostSnapshot).GreaterThanOrEqualTo(0);
             line.RuleFor(l => l.MfgCostSnapshot).GreaterThanOrEqualTo(0);
             line.RuleFor(l => l.OfferExGst).GreaterThanOrEqualTo(0);
+            line.RuleFor(l => l.Profit).GreaterThanOrEqualTo(0);
             line.RuleFor(l => l.GstPercent).GreaterThanOrEqualTo(0).LessThanOrEqualTo(1);
             line.RuleFor(l => l.GstAmount).GreaterThanOrEqualTo(0);
             line.RuleFor(l => l.GrossRate).GreaterThanOrEqualTo(0);
@@ -117,6 +119,7 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
                 RmCostSnapshot = lineInput.RmCostSnapshot,
                 MfgCostSnapshot = lineInput.MfgCostSnapshot,
                 OfferExGst = lineInput.OfferExGst,
+                Profit = lineInput.Profit,
                 GstPercent = lineInput.GstPercent,
                 GstAmount = lineInput.GstAmount,
                 GrossRate = lineInput.GrossRate,

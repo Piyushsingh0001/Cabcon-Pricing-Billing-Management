@@ -17,22 +17,44 @@ public record QuotationSummaryDto
     public decimal TotalGross { get; init; }
     public Cabcon.Domain.Enums.ApprovalStatus ApprovalStatus { get; init; }
     public string? CreatedBy { get; init; }
+    public bool IsActive { get; init; }
 }
 
 public record GetQuotationsQuery : IRequest<IReadOnlyList<QuotationSummaryDto>>;
 
 public class GetQuotationsQueryHandler : IRequestHandler<GetQuotationsQuery, IReadOnlyList<QuotationSummaryDto>>
 {
-    private readonly IRepository<Quotation> _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetQuotationsQueryHandler(IRepository<Quotation> repository)
+    public GetQuotationsQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<IReadOnlyList<QuotationSummaryDto>> Handle(GetQuotationsQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.Query()
+        var quotationRepo = _unitOfWork.Repository<Quotation>();
+        var now = DateTime.UtcNow;
+
+        var activeQuotations = await quotationRepo.Query()
+            .Where(q => q.IsActive)
+            .ToListAsync(cancellationToken);
+
+        var expired = activeQuotations
+            .Where(q => q.QuotationDate.AddDays(q.ValidityDays) < now)
+            .ToList();
+
+        if (expired.Any())
+        {
+            foreach (var q in expired)
+            {
+                q.IsActive = false;
+                quotationRepo.Update(q);
+            }
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+        }
+
+        return await quotationRepo.Query()
             .OrderByDescending(q => q.QuotationDate)
             .Select(q => new QuotationSummaryDto
             {
@@ -45,7 +67,8 @@ public class GetQuotationsQueryHandler : IRequestHandler<GetQuotationsQuery, IRe
                 TotalGst = q.TotalGst,
                 TotalGross = q.TotalGross,
                 ApprovalStatus = q.ApprovalStatus,
-                CreatedBy = q.CreatedBy
+                CreatedBy = q.CreatedBy,
+                IsActive = q.IsActive
             })
             .ToListAsync(cancellationToken);
     }

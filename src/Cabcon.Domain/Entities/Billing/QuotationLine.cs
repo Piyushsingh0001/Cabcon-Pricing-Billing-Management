@@ -22,6 +22,7 @@ public class QuotationLine : BaseEntity
     public decimal RmCostSnapshot { get; set; }
     public decimal MfgCostSnapshot { get; set; }
     public decimal OfferExGst { get; set; }
+    public decimal Profit { get; set; }
     public decimal GstPercent { get; set; }
     public decimal GstAmount { get; set; }
     public decimal GrossRate { get; set; }

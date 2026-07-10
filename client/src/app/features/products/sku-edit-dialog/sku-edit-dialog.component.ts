@@ -18,6 +18,8 @@ import { CategoryManageDialogComponent } from '../category-manage-dialog/categor
 
 
 
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+
 @Component({
   selector: 'app-sku-edit',
   standalone: true,
@@ -31,13 +33,14 @@ import { CategoryManageDialogComponent } from '../category-manage-dialog/categor
     MatIconModule,
     MatSelectModule
   ],
-    templateUrl: './sku-edit-dialog.component.html',
-    styleUrls: ['./sku-edit-dialog.component.scss']
+  templateUrl: './sku-edit-dialog.component.html',
+  styleUrls: ['./sku-edit-dialog.component.scss']
 })
 export class SkuEditDialogComponent implements OnInit {
   private fb = inject(FormBuilder);
   private pricingService = inject(PricingService);
   private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
   public loading = signal(false);
 
   public form: FormGroup;
@@ -48,14 +51,19 @@ export class SkuEditDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<SkuEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public sku: any // SkuDetails
   ) {
+    const isGstPct = sku ? Math.round(sku.gstRate * 100) : 18;
+    const isMfgDisplay = sku
+      ? (sku.conversionType === 0 ? sku.conversionValue * 100 : sku.conversionValue)
+      : 8;
+
     this.form = this.fb.group({
-      categoryId: [sku?.categoryId || '', Validators.required],
+      categoryName: [sku?.categoryName || 'New category', Validators.required],
       name: [sku?.name || '', Validators.required],
       spec: [sku?.spec || '', Validators.required],
-      unit: [sku?.unit || 'Coil', Validators.required],
+      unit: [sku?.unit || 'coil', Validators.required],
       conversionType: [sku?.conversionType || 0, Validators.required],
-      conversionValue: [sku?.conversionValue || 0.08, [Validators.required, Validators.min(0)]],
-      gstRate: [sku?.gstRate || 0.18, [Validators.required, Validators.min(0), Validators.max(1)]],
+      conversionValue: [isMfgDisplay, [Validators.required, Validators.min(0)]],
+      gstPercent: [isGstPct, [Validators.required, Validators.min(0)]],
       bomLines: this.fb.array([], Validators.required)
     });
   }
@@ -68,11 +76,22 @@ export class SkuEditDialogComponent implements OnInit {
     return this.form.get('bomLines') as FormArray;
   }
 
+  public existingSkus: Sku[] = [];
+  public errorMessage = signal<string | null>(null);
+  public nameExistsError = false;
+  public categoryDuplicateError = false;
+
   private loadDropdowns() {
     this.pricingService.getCategories().subscribe(res => this.categories = res);
+    this.pricingService.getSkus(undefined, undefined, undefined, false, 1, 1000).subscribe(res => {
+      this.existingSkus = res.items;
+      if (this.sku) {
+        this.checkUniqueness();
+      }
+    });
     this.pricingService.getMaterials(undefined, undefined, undefined, false, 1, 100).subscribe(res => {
       this.materials = res.items;
-      
+
       // Populate form lines if editing
       if (this.sku && this.sku.bomLines) {
         this.sku.bomLines.forEach((line: any) => {
@@ -82,21 +101,120 @@ export class SkuEditDialogComponent implements OnInit {
           }));
         });
       } else {
-        // Add one initial empty line
         this.addBomLine();
       }
     });
   }
 
   public addBomLine() {
+    const avail = this.getAvailableMaterials(-1);
+    const defaultMaterialId = avail.length > 0 ? avail[0].id : '';
     this.bomLines.push(this.fb.group({
-      materialId: ['', Validators.required],
+      materialId: [defaultMaterialId, Validators.required],
       weightKg: [0.1, [Validators.required, Validators.min(0.0001)]]
     }));
   }
 
   public removeBomLine(idx: number) {
     this.bomLines.removeAt(idx);
+    this.checkUniqueness();
+  }
+
+  public getLandedCost(materialId: any): number {
+    if (!materialId) return 0;
+    const mat = this.materials.find(m => m.id === Number(materialId));
+    if (!mat) return 0;
+    if (mat.type === 0) {
+      const lme = Number(mat.lmeUsdPerMt || 0);
+      const premium = Number(mat.premiumUsdPerMt || 0);
+      const fx = Number(mat.fxRate || 0);
+      const freight = Number(mat.freightInrPerMt || 0);
+      return ((lme + premium) * fx + freight) / 1000;
+    } else {
+      return Number(mat.directRateInrPerKg || 0);
+    }
+  }
+
+  public getAvailableMaterials(idx: number): Material[] {
+    const selectedIds = this.bomLines.controls
+      .map((ctrl, i) => i !== idx ? Number(ctrl.get('materialId')?.value) : null)
+      .filter(id => id !== null && !isNaN(id));
+
+    return this.materials.filter(m => !selectedIds.includes(m.id));
+  }
+
+  public checkUniqueness() {
+    const formVal = this.form.value;
+    const catName = (formVal.categoryName || '').trim().toLowerCase();
+    const prodName = (formVal.name || '').trim().toLowerCase();
+    const spec = (formVal.spec || '').trim().toLowerCase();
+    const unit = (formVal.unit || '').trim().toLowerCase();
+
+    // 1. Check if Category Name textbox input matches an existing name in the Categories database table
+    if (catName) {
+      const catMatch = this.categories.find(
+        c => c.name.trim().toLowerCase() === catName
+      );
+      
+      const isEditMode = this.sku && this.sku.id;
+      if (isEditMode && this.sku.categoryName?.trim().toLowerCase() === catName) {
+        this.categoryDuplicateError = false;
+      } else {
+        this.categoryDuplicateError = !!catMatch;
+      }
+    } else {
+      this.categoryDuplicateError = false;
+    }
+
+    // 2. Check if Product Name + Spec + Unit combination already exists in that category
+    if (!catName || !prodName || !spec) {
+      this.nameExistsError = false;
+      return;
+    }
+
+    const match = this.existingSkus.find(s =>
+      s.categoryName?.trim().toLowerCase() === catName &&
+      s.name?.trim().toLowerCase() === prodName &&
+      s.spec?.trim().toLowerCase() === spec &&
+      s.unit?.trim().toLowerCase() === unit &&
+      (!this.sku || !this.sku.id || s.id !== this.sku.id)
+    );
+
+    this.nameExistsError = !!match;
+  }
+
+  public deleteProduct() {
+    if (!this.sku) return;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '450px',
+      data: {
+        title: 'Delete Product',
+        message: `Are you sure you want to delete product "${this.sku.name}"? This action cannot be undone.`,
+        type: 'confirm',
+        confirmText: 'Delete',
+        cancelText: 'Cancel'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.loading.set(true);
+        this.errorMessage.set(null);
+        this.pricingService.deleteSku(this.sku.id).subscribe({
+          next: () => {
+            this.loading.set(false);
+            this.snackBar.open('Product removed successfully.', 'Close', { duration: 3000 });
+            this.dialogRef.close(true);
+          },
+          error: (err: any) => {
+            this.loading.set(false);
+            const msg = `Failed to delete product: ${err.error?.message || 'Error occurred.'}`;
+            this.errorMessage.set(msg);
+            this.snackBar.open(msg, 'Close', { duration: 3000 });
+          }
+        });
+      }
+    });
   }
 
   public onCancel() {
@@ -104,29 +222,74 @@ export class SkuEditDialogComponent implements OnInit {
   }
 
   public onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid || this.nameExistsError || this.categoryDuplicateError) return;
 
     this.loading.set(true);
-    const body = {
-      ...this.form.value,
-      id: this.sku?.id
+    this.errorMessage.set(null);
+    const formVal = this.form.value;
+    const categoryNameInput = formVal.categoryName?.trim() || '';
+
+    if (!categoryNameInput) {
+      this.errorMessage.set('Category name is required.');
+      this.loading.set(false);
+      return;
+    }
+
+    const existingCat = this.categories.find(c => c.name.toLowerCase() === categoryNameInput.toLowerCase());
+
+    const saveSkuWithCategoryId = (categoryId: number) => {
+      const body = {
+        id: this.sku?.id,
+        categoryId: categoryId,
+        name: formVal.name,
+        spec: formVal.spec,
+        unit: formVal.unit,
+        conversionType: Number(formVal.conversionType),
+        conversionValue: Number(formVal.conversionType) === 0
+          ? Number(formVal.conversionValue) / 100
+          : Number(formVal.conversionValue),
+        gstRate: Number(formVal.gstPercent) / 100,
+        bomLines: formVal.bomLines.map((line: any, index: number) => ({
+          materialId: Number(line.materialId),
+          weightKg: Number(line.weightKg || 0),
+          lineOrder: index + 1
+        }))
+      };
+
+      const action$ = this.sku && this.sku.id
+        ? this.pricingService.updateSku(this.sku.id, body)
+        : this.pricingService.createSku(body);
+
+      (action$ as any).subscribe({
+        next: () => {
+          this.loading.set(false);
+          this.snackBar.open(this.sku && this.sku.id ? 'Product updated successfully.' : 'Product created successfully.', 'Close', { duration: 3000 });
+          this.dialogRef.close(true);
+        },
+        error: (err: any) => {
+          this.loading.set(false);
+          const errDetails = err.error?.errors ? Object.values(err.error.errors).flat().join(' ') : '';
+          const msg = `Error: ${err.error?.message || 'Failed to save product.'} ${errDetails}`;
+          this.errorMessage.set(msg);
+          this.snackBar.open(msg, 'Close', { duration: 5000 });
+        }
+      });
     };
 
-    const action$ = this.sku 
-      ? this.pricingService.updateSku(this.sku.id, body)
-      : this.pricingService.createSku(body);
-
-    (action$ as any).subscribe({
-      next: () => {
-        this.loading.set(false);
-        this.snackBar.open(this.sku ? 'Product updated successfully.' : 'Product created successfully.', 'Close', { duration: 3000 });
-        this.dialogRef.close(true);
-      },
-      error: (err: any) => {
-        this.loading.set(false);
-        const errDetails = err.error?.errors ? Object.values(err.error.errors).flat().join(' ') : '';
-        this.snackBar.open(`Error: ${err.error?.message || 'Failed to save product.'} ${errDetails}`, 'Close', { duration: 5000 });
-      }
-    });
+    if (existingCat) {
+      saveSkuWithCategoryId(existingCat.id);
+    } else {
+      this.pricingService.createCategory(categoryNameInput).subscribe({
+        next: (newCategoryId) => {
+          saveSkuWithCategoryId(newCategoryId);
+        },
+        error: (err: any) => {
+          this.loading.set(false);
+          const msg = `Failed to create new category: ${err.error?.message || 'Error occurred.'}`;
+          this.errorMessage.set(msg);
+          this.snackBar.open(msg, 'Close', { duration: 3000 });
+        }
+      });
+    }
   }
 }

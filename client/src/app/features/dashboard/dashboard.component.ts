@@ -1,18 +1,15 @@
-import { Component, Inject, OnInit, inject, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject, signal, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatTableModule } from '@angular/material/table';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { PricingService, CalculatedQuotationItem, Sku, Material } from '../../core/pricing.service';
-import { ProductSelectDialogComponent } from './product-select-dialog/product-select-dialog.component';
-import { QuotationSaveDialogComponent } from './quotation-save-dialog/quotation-save-dialog.component';
+import { RouterModule } from '@angular/router';
+import { PricingService, Sku, Material } from '../../core/pricing.service';
 import { QuotationPreviewDialogComponent } from './quotation-preview-dialog/quotation-preview-dialog.component';
 
 interface CalculatorRow {
@@ -28,6 +25,7 @@ interface CalculatorRow {
   rowAmtOverride?: number;
   rowOfferOverride?: number;
   offerExGst: number;
+  profit: number;
   gstPercent: number;
   gstAmount: number;
   grossRate: number;
@@ -38,8 +36,9 @@ interface CalculatorRow {
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
-    MatTableModule,
+    RouterModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -48,8 +47,8 @@ interface CalculatorRow {
     MatSnackBarModule,
     MatDialogModule
   ],
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.scss']
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   private pricingService = inject(PricingService);
@@ -57,8 +56,8 @@ export class DashboardComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   private cdr = inject(ChangeDetectorRef);
 
-  public columns = ['product', 'rmCost', 'mfgOverride', 'markupOverride', 'offerOverride', 'effectiveRate', 'gst', 'netOffer'];
   public rows: CalculatorRow[] = [];
+  public skus: Sku[] = [];
 
   // Global settings
   public loadingMode = signal<number>(0);
@@ -69,12 +68,17 @@ export class DashboardComponent implements OnInit {
   public globalPacking = signal<number>(2);
   public globalFreight = signal<number>(3);
 
+  // Footer inputs
+  public partyName: string = '';
+  public validityDays: number = 7;
+
   // Selected SKUs to hold overrides state
-  private overridesMap = new Map<number, {
+  public overridesMap = new Map<number, {
     rowMfgOverride?: number;
     rowPctOverride?: number;
     rowAmtOverride?: number;
     rowOfferOverride?: number;
+    rowProfit?: number;
   }>();
 
   public hasDraft = false;
@@ -84,7 +88,37 @@ export class DashboardComponent implements OnInit {
     if (savedDraft) {
       this.hasDraft = true;
     }
-    this.recalculate();
+    this.loadSkusAndRecalculate();
+  }
+
+  private loadSkusAndRecalculate() {
+    this.pricingService.getSkus(undefined, undefined, undefined, false, 1, 100).subscribe({
+      next: (res) => {
+        this.skus = res.items;
+
+        // Initialize overridesMap with selected SKUs from PricingService
+        const selectedIds = Array.from(this.pricingService.selectedSkuIds);
+        if (selectedIds.length > 0) {
+          const newMap = new Map<number, any>();
+          selectedIds.forEach(id => {
+            newMap.set(id, this.overridesMap.get(id) || {});
+          });
+          this.overridesMap = newMap;
+        }
+
+        this.recalculate();
+      }
+    });
+  }
+
+  public getSkuConversionType(skuId: number): number {
+    const sku = this.skus.find(s => s.id === skuId);
+    return sku ? sku.conversionType : 0;
+  }
+
+  public getSkuConversionValue(skuId: number): number {
+    const sku = this.skus.find(s => s.id === skuId);
+    return sku ? sku.conversionValue : 0;
   }
 
   public loadDraft() {
@@ -99,8 +133,15 @@ export class DashboardComponent implements OnInit {
         this.globalMarginPct.set(parsed.globalMarginPct || 0.05);
         this.globalPacking.set(parsed.globalPacking || 2);
         this.globalFreight.set(parsed.globalFreight || 3);
+        
         if (parsed.overridesMap) {
           this.overridesMap = new Map<number, any>(parsed.overridesMap);
+          
+          // Sync service selectedSkuIds with draft overrides
+          this.pricingService.selectedSkuIds.clear();
+          this.overridesMap.forEach((_, id) => {
+            this.pricingService.selectedSkuIds.add(id);
+          });
         }
         this.hasDraft = false;
         this.recalculate();
@@ -113,6 +154,9 @@ export class DashboardComponent implements OnInit {
   public deleteDraft() {
     localStorage.removeItem('cabcon_draft_quotation');
     this.hasDraft = false;
+    this.overridesMap.clear();
+    this.pricingService.selectedSkuIds.clear();
+    this.recalculate();
   }
 
   public onModeChange(value: number) {
@@ -120,30 +164,85 @@ export class DashboardComponent implements OnInit {
     this.recalculate();
   }
 
-  public updateGlobalParam(type: string, event: Event) {
-    const val = parseFloat((event.target as HTMLInputElement).value) || 0;
+  public updateGlobalParam(type: string, value: number) {
     switch (type) {
-      case 'pct': this.globalPct.set(val); break;
-      case 'amt': this.globalAmt.set(val); break;
-      case 'overhead': this.globalOverheadPct.set(val); break;
-      case 'margin': this.globalMarginPct.set(val); break;
-      case 'packing': this.globalPacking.set(val); break;
-      case 'freight': this.globalFreight.set(val); break;
+      case 'pct': this.globalPct.set(value / 100); break;
+      case 'amt': this.globalAmt.set(value); break;
+      case 'overhead': this.globalOverheadPct.set(value / 100); break;
+      case 'margin': this.globalMarginPct.set(value / 100); break;
+      case 'packing': this.globalPacking.set(value); break;
+      case 'freight': this.globalFreight.set(value); break;
     }
     this.recalculate();
   }
 
-  public updateRowOverride(skuId: number, type: 'mfg' | 'pct' | 'amt' | 'offer', event: Event) {
-    const valStr = (event.target as HTMLInputElement).value;
-    const val = valStr === '' ? undefined : parseFloat(valStr);
+  public getMfgDisplayValue(skuId: number): number {
+    const overrides = this.overridesMap.get(skuId);
+    const val = (overrides && overrides.rowMfgOverride !== undefined) 
+      ? overrides.rowMfgOverride 
+      : this.getSkuConversionValue(skuId);
+    return this.getSkuConversionType(skuId) === 0 ? val * 100 : val;
+  }
 
+  public onMfgOverrideChange(skuId: number, val: any) {
     const override = this.overridesMap.get(skuId) || {};
-    if (type === 'mfg') override.rowMfgOverride = val;
-    else if (type === 'pct') override.rowPctOverride = val;
-    else if (type === 'amt') override.rowAmtOverride = val;
-    else if (type === 'offer') override.rowOfferOverride = val;
-
+    if (val === null || val === undefined || val === '') {
+      override.rowMfgOverride = undefined;
+    } else {
+      const numVal = Number(val);
+      override.rowMfgOverride = this.getSkuConversionType(skuId) === 0 ? numVal / 100 : numVal;
+    }
     this.overridesMap.set(skuId, override);
+    this.recalculate();
+  }
+
+  public getRowLoadingDisplayValue(skuId: number): number {
+    const overrides = this.overridesMap.get(skuId);
+    if (this.loadingMode() === 0) {
+      const val = (overrides && overrides.rowPctOverride !== undefined) 
+        ? overrides.rowPctOverride 
+        : this.globalPct();
+      return Math.round(val * 100);
+    } else {
+      const val = (overrides && overrides.rowAmtOverride !== undefined) 
+        ? overrides.rowAmtOverride 
+        : this.globalAmt();
+      return val;
+    }
+  }
+
+  public onRowLoadingChange(skuId: number, val: any) {
+    const override = this.overridesMap.get(skuId) || {};
+    if (val === null || val === undefined || val === '') {
+      override.rowPctOverride = undefined;
+      override.rowAmtOverride = undefined;
+    } else {
+      const numVal = Number(val);
+      if (this.loadingMode() === 0) {
+        override.rowPctOverride = numVal / 100;
+      } else {
+        override.rowAmtOverride = numVal;
+      }
+    }
+    this.overridesMap.set(skuId, override);
+    this.recalculate();
+  }
+
+  public onRowOfferChange(skuId: number, val: any) {
+    const override = this.overridesMap.get(skuId) || {};
+    if (val === null || val === undefined || val === '') {
+      override.rowOfferOverride = undefined;
+    } else {
+      override.rowOfferOverride = Number(val);
+    }
+    this.overridesMap.set(skuId, override);
+    this.recalculate();
+  }
+
+  public clearAllOverrides() {
+    this.overridesMap.forEach((val, key) => {
+      this.overridesMap.set(key, {});
+    });
     this.recalculate();
   }
 
@@ -188,6 +287,18 @@ export class DashboardComponent implements OnInit {
       next: (res) => {
         this.rows = res.map(item => {
           const overrides = this.overridesMap.get(item.skuId);
+          const profit = overrides?.rowProfit || 0;
+          
+          let offerExGst = item.offerExGst;
+          if (overrides?.rowOfferOverride !== undefined) {
+            offerExGst = overrides.rowOfferOverride;
+          } else {
+            offerExGst = item.offerExGst + profit;
+          }
+
+          const gstAmount = offerExGst * item.gstPercent;
+          const grossRate = offerExGst + gstAmount;
+
           return {
             skuId: item.skuId,
             categoryName: item.categoryName,
@@ -200,10 +311,11 @@ export class DashboardComponent implements OnInit {
             rowPctOverride: overrides?.rowPctOverride,
             rowAmtOverride: overrides?.rowAmtOverride,
             rowOfferOverride: overrides?.rowOfferOverride,
-            offerExGst: item.offerExGst,
+            offerExGst: offerExGst,
+            profit: profit,
             gstPercent: item.gstPercent,
-            gstAmount: item.gstAmount,
-            grossRate: item.grossRate
+            gstAmount: gstAmount,
+            grossRate: grossRate
           };
         });
         this.cdr.detectChanges();
@@ -214,107 +326,101 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  public selectProducts() {
-    this.pricingService.getSkus(undefined, undefined, undefined, false, 1, 100).subscribe({
-      next: (res) => {
-        const dialogRef = this.dialog.open(ProductSelectDialogComponent, {
-          width: '550px',
-          data: {
-            skus: res.items,
-            selectedIds: Array.from(this.overridesMap.keys())
-          }
-        });
-
-        dialogRef.afterClosed().subscribe((selectedIds: number[] | null) => {
-          if (selectedIds !== null) {
-            // Rebuild map preserving existing overrides
-            const newMap = new Map<number, any>();
-            selectedIds.forEach(id => {
-              newMap.set(id, this.overridesMap.get(id) || {});
-            });
-            this.overridesMap = newMap;
-            this.recalculate();
-          }
-        });
-      }
-    });
+  public onRowProfitChange(skuId: number, val: any) {
+    const override = this.overridesMap.get(skuId) || {};
+    if (val === null || val === undefined || val === '') {
+      override.rowProfit = undefined;
+    } else {
+      override.rowProfit = Number(val);
+    }
+    this.overridesMap.set(skuId, override);
+    this.recalculate();
   }
 
-  public saveQuotation() {
-    // Generate description basis basis details
+  public get totalOfferExGst(): number {
+    return this.rows.reduce((sum, r) => sum + r.offerExGst, 0);
+  }
+
+  public get totalProfit(): number {
+    return this.rows.reduce((sum, r) => sum + r.profit, 0);
+  }
+
+  public get totalGstAmount(): number {
+    return this.rows.reduce((sum, r) => sum + r.gstAmount, 0);
+  }
+
+  public get totalGrossRate(): number {
+    return this.rows.reduce((sum, r) => sum + r.grossRate, 0);
+  }
+
+  public generateQuotation() {
+    if (!this.partyName.trim()) {
+      this.snackBar.open('Please enter Customer / Party Name.', 'Close', { duration: 3000 });
+      return;
+    }
+
     const priceBasis = this.rows.map(r => `${r.skuName} (${r.spec}) ex-GST: ₹${r.offerExGst}/unit`).slice(0, 3).join(', ') + (this.rows.length > 3 ? '...' : '');
-    
-    const dialogRef = this.dialog.open(QuotationSaveDialogComponent, {
-      width: '500px',
+    const priceBasisNote = `Pricing Mode: ${this.loadingMode() === 0 ? 'Percentage' : this.loadingMode() === 1 ? 'Amount' : 'Itemised'} Basis: ${priceBasis}`;
+
+    // Open preview dialog directly
+    const previewRef = this.dialog.open(QuotationPreviewDialogComponent, {
+      width: '750px',
       data: {
-        priceBasisNote: `Pricing Mode: ${this.loadingMode() === 0 ? 'Percentage' : this.loadingMode() === 1 ? 'Amount' : 'Itemised'} Basis: ${priceBasis}`
+        partyName: this.partyName,
+        validityDays: this.validityDays,
+        priceBasisNote: priceBasisNote,
+        totalExGst: this.totalOfferExGst,
+        totalGst: this.totalGstAmount,
+        totalGross: this.totalGrossRate,
+        lines: this.rows.map(r => ({
+          description: `${r.categoryName} - ${r.skuName} ${r.spec}`,
+          unit: r.unit,
+          offerExGst: r.offerExGst,
+          gstPercent: r.gstPercent,
+          gstAmount: r.gstAmount,
+          grossRate: r.grossRate
+        }))
       }
     });
 
-    dialogRef.afterClosed().subscribe(formValue => {
-      if (formValue) {
-        
-        // Calculate totals for preview
-        const totalExGst = this.rows.reduce((sum, r) => sum + r.offerExGst, 0);
-        const totalGst = this.rows.reduce((sum, r) => sum + r.gstAmount, 0);
-        const totalGross = this.rows.reduce((sum, r) => sum + r.grossRate, 0);
+    previewRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        const payload = {
+          partyName: this.partyName,
+          validityDays: this.validityDays,
+          priceBasisNote: priceBasisNote,
+          lines: this.rows.map(r => ({
+            skuId: r.skuId,
+            rmCostSnapshot: r.rmCost,
+            mfgCostSnapshot: r.mfgCost,
+            offerExGst: r.offerExGst,
+            profit: r.profit,
+            gstPercent: r.gstPercent,
+            gstAmount: r.gstAmount,
+            grossRate: r.grossRate
+          }))
+        };
 
-        // Open preview dialog
-        const previewRef = this.dialog.open(QuotationPreviewDialogComponent, {
-          width: '750px',
-          data: {
-            partyName: formValue.partyName,
-            validityDays: parseInt(formValue.validityDays),
-            priceBasisNote: formValue.priceBasisNote,
-            totalExGst,
-            totalGst,
-            totalGross,
-            lines: this.rows.map(r => ({
-              description: `${r.categoryName} - ${r.skuName} ${r.spec}`,
-              unit: r.unit,
-              offerExGst: r.offerExGst,
-              gstPercent: r.gstPercent,
-              gstAmount: r.gstAmount,
-              grossRate: r.grossRate
-            }))
-          }
-        });
+        this.pricingService.saveQuotation(payload).subscribe({
+          next: (res) => {
+            this.snackBar.open(`Quotation generated: ${res.quotationNumber}`, 'Close', { duration: 5000 });
 
-        previewRef.afterClosed().subscribe(confirmed => {
-          if (confirmed) {
-            const payload = {
-              partyName: formValue.partyName,
-              validityDays: parseInt(formValue.validityDays),
-              priceBasisNote: formValue.priceBasisNote,
-              lines: this.rows.map(r => ({
-                skuId: r.skuId,
-                rmCostSnapshot: r.rmCost,
-                mfgCostSnapshot: r.mfgCost,
-                offerExGst: r.offerExGst,
-                gstPercent: r.gstPercent,
-                gstAmount: r.gstAmount,
-                grossRate: r.grossRate
-              }))
-            };
-
-            this.pricingService.saveQuotation(payload).subscribe({
-              next: (res) => {
-                this.snackBar.open(`Quotation sent: ${res.quotationNumber}`, 'Close', { duration: 5000 });
-
-                // Clear sheet and draft
-                this.overridesMap.clear();
-                this.rows = [];
-                localStorage.removeItem('cabcon_draft_quotation');
-                this.hasDraft = false;
-                this.cdr.detectChanges();
-              },
-              error: () => {
-                this.snackBar.open('Failed to save quotation.', 'Close', { duration: 3000 });
-              }
-            });
+            // Clear state and draft
+            this.overridesMap.clear();
+            this.pricingService.selectedSkuIds.clear();
+            this.rows = [];
+            this.partyName = '';
+            this.validityDays = 7;
+            localStorage.removeItem('cabcon_draft_quotation');
+            this.hasDraft = false;
+            this.cdr.detectChanges();
+          },
+          error: () => {
+            this.snackBar.open('Failed to save quotation.', 'Close', { duration: 3000 });
           }
         });
       }
     });
   }
 }
+

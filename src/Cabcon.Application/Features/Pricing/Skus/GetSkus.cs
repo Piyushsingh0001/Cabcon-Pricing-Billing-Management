@@ -8,6 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cabcon.Application.Features.Pricing.Skus;
 
+public record SkuBomSummaryDto
+{
+    public int MaterialId { get; init; }
+    public string MaterialName { get; init; } = string.Empty;
+    public decimal WeightKg { get; init; }
+}
+
 public record SkuDto
 {
     public int Id { get; init; }
@@ -26,6 +33,7 @@ public record SkuDto
     public decimal ManufacturingCost { get; init; }
     public decimal TotalWeight { get; init; }
     public string? UpdatedBy { get; init; }
+    public IReadOnlyList<SkuBomSummaryDto> BomLines { get; init; } = Array.Empty<SkuBomSummaryDto>();
 }
 
 public record GetSkusQuery : IRequest<PaginatedList<SkuDto>>
@@ -106,7 +114,13 @@ public class GetSkusQueryHandler : IRequestHandler<GetSkusQuery, PaginatedList<S
             RawMaterialCost = _pricingService.RawMaterialCost(s),
             ManufacturingCost = _pricingService.ManufacturingCost(s),
             TotalWeight = _pricingService.TotalBomWeight(s),
-            UpdatedBy = s.UpdatedBy ?? s.CreatedBy
+            UpdatedBy = s.UpdatedBy ?? s.CreatedBy,
+            BomLines = s.BomLines.Select(b => new SkuBomSummaryDto
+            {
+                MaterialId = b.MaterialId,
+                MaterialName = b.Material.Name,
+                WeightKg = b.WeightKg
+            }).ToList()
         }).ToList();
 
         return new PaginatedList<SkuDto>(dtos, count, request.PageNumber, request.PageSize);

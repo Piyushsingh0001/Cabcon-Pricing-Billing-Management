@@ -15,6 +15,7 @@ public record MaterialPriceHistoryDto
     public decimal? DirectRateInrPerKg { get; init; }
     public decimal LandedCostInrPerKg { get; init; }
     public DateTime EffectiveDate { get; init; }
+    public string? UpdatedBy { get; init; }
 }
 
 public record GetMaterialPriceHistoryQuery(int MaterialId) : IRequest<IReadOnlyList<MaterialPriceHistoryDto>>;
@@ -42,7 +43,8 @@ public class GetMaterialPriceHistoryQueryHandler : IRequestHandler<GetMaterialPr
                 FreightInrPerMt = x.FreightInrPerMt,
                 DirectRateInrPerKg = x.DirectRateInrPerKg,
                 LandedCostInrPerKg = x.LandedCostInrPerKg,
-                EffectiveDate = x.EffectiveDate
+                EffectiveDate = x.EffectiveDate,
+                UpdatedBy = x.UpdatedBy ?? x.CreatedBy
             })
             .ToListAsync(cancellationToken);
     }

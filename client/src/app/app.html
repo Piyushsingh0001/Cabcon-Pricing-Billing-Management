@@ -69,17 +69,17 @@
         <mat-nav-list>
           <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.Generate')">
             <mat-icon matListItemIcon>dashboard</mat-icon>
-            <span matListItemTitle>Calculator Dashboard</span>
+            <span matListItemTitle>Offer & Send</span>
           </a>
           <a mat-list-item routerLink="/quotations" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
             <mat-icon matListItemIcon>receipt</mat-icon>
             <span matListItemTitle>Quotation History</span>
           </a>
-          <a mat-list-item routerLink="/materials" routerLinkActive="active-link" *ngIf="hasPermission('Pricing.View')">
+          <a mat-list-item routerLink="/materials" routerLinkActive="active-link" *ngIf="hasPermission('Pricing.View')" (click)="onMaterialPricesClick()">
             <mat-icon matListItemIcon>category</mat-icon>
             <span matListItemTitle>Material Prices</span>
           </a>
-          <a mat-list-item routerLink="/skus" routerLinkActive="active-link" *ngIf="hasPermission('Sku.View')">
+          <a mat-list-item routerLink="/skus" routerLinkActive="active-link" *ngIf="hasPermission('Sku.View')" (click)="onSkusClick()">
             <mat-icon matListItemIcon>inventory_2</mat-icon>
             <span matListItemTitle>SKUs & BOMs</span>
           </a>

@@ -18,6 +18,8 @@ import { SkuEditDialogComponent } from '../sku-edit-dialog/sku-edit-dialog.compo
 
 
 
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+
 @Component({
   selector: 'app-category-manage',
   standalone: true,
@@ -31,14 +33,15 @@ import { SkuEditDialogComponent } from '../sku-edit-dialog/sku-edit-dialog.compo
     MatIconModule,
     MatTableModule
   ],
-    templateUrl: './category-manage-dialog.component.html',
-    styleUrls: ['./category-manage-dialog.component.scss']
+  templateUrl: './category-manage-dialog.component.html',
+  styleUrls: ['./category-manage-dialog.component.scss']
 })
 export class CategoryManageDialogComponent implements OnInit {
   private pricingService = inject(PricingService);
   private snackBar = inject(MatSnackBar);
   private fb = inject(FormBuilder);
   private cdr = inject(ChangeDetectorRef);
+  private dialog = inject(MatDialog);
   
   public categories: Category[] = [];
   public displayedColumns = ['name', 'actions'];
@@ -82,18 +85,31 @@ export class CategoryManageDialogComponent implements OnInit {
   }
 
   public deleteCategory(category: Category) {
-    if (confirm(`Are you sure you want to delete the category "${category.name}"?`)) {
-      this.loading.set(true);
-      this.pricingService.deleteCategory(category.id).subscribe({
-        next: () => {
-          this.snackBar.open('Category deleted successfully.', 'Close', { duration: 3000 });
-          this.loadCategories();
-        },
-        error: (err: any) => {
-          this.loading.set(false);
-          this.snackBar.open(`Error: ${err.error?.message || 'Failed to delete category.'}`, 'Close', { duration: 5000 });
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '450px',
+      data: {
+        title: 'Delete Category',
+        message: `Are you sure you want to delete category "${category.name}"? This action cannot be undone.`,
+        type: 'confirm',
+        confirmText: 'Delete',
+        cancelText: 'Cancel'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.loading.set(true);
+        this.pricingService.deleteCategory(category.id).subscribe({
+          next: () => {
+            this.snackBar.open('Category deleted successfully.', 'Close', { duration: 3000 });
+            this.loadCategories();
+          },
+          error: (err: any) => {
+            this.loading.set(false);
+            this.snackBar.open(`Error: ${err.error?.message || 'Failed to delete category.'}`, 'Close', { duration: 5000 });
+          }
+        });
+      }
+    });
   }
 }

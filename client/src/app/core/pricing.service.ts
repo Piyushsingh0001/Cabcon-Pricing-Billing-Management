@@ -40,6 +40,7 @@ export interface MaterialPriceHistory {
   directRateInrPerKg?: number;
   landedCostInrPerKg: number;
   effectiveDate: string;
+  updatedBy?: string;
 }
 
 export interface Sku {
@@ -57,6 +58,7 @@ export interface Sku {
   manufacturingCost: number;
   totalWeight: number;
   updatedBy?: string;
+  bomLines?: { materialId: number; materialName: string; weightKg: number }[];
 }
 
 export interface SkuBomLine {
@@ -97,6 +99,7 @@ export interface QuotationSummary {
   totalGross: number;
   approvalStatus: number;
   createdBy?: string;
+  isActive: boolean;
 }
 
 export interface QuotationLine {
@@ -131,9 +134,12 @@ export interface QuotationDetails {
 })
 export class PricingService {
   private http = inject(HttpClient);
- //private readonly apiBase = 'https://localhost:55027/api';
+ private readonly apiBase = 'https://localhost:55027/api';
   public pendingApprovalUpdated = new Subject<void>();
-  private readonly apiBase = 'https://skuquotation.runasp.net/api';
+  public refreshMaterials = new Subject<void>();
+  public refreshSkus = new Subject<void>();
+  public selectedSkuIds = new Set<number>();
+  //private readonly apiBase = 'https://skuquotation.runasp.net/api';
 
   // --- Categories ---
   public getCategories(): Observable<Category[]> {
@@ -293,6 +299,7 @@ export class PricingService {
       rmCostSnapshot: number;
       mfgCostSnapshot: number;
       offerExGst: number;
+      profit: number;
       gstPercent: number;
       gstAmount: number;
       grossRate: number;
@@ -303,6 +310,10 @@ export class PricingService {
 
   public getQuotations(): Observable<QuotationSummary[]> {
     return this.http.get<QuotationSummary[]>(`${this.apiBase}/quotations`);
+  }
+
+  public deleteQuotation(id: number): Observable<number> {
+    return this.http.delete<number>(`${this.apiBase}/quotations/${id}`);
   }
 
   public getQuotation(id: number): Observable<QuotationDetails> {

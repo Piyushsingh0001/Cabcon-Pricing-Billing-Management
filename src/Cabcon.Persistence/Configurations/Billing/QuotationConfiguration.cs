@@ -18,6 +18,8 @@ public class QuotationConfiguration : IEntityTypeConfiguration<Quotation>
         foreach (var prop in new[] { nameof(Quotation.TotalExGst), nameof(Quotation.TotalGst), nameof(Quotation.TotalGross) })
             b.Property(prop).HasColumnType("decimal(18,2)");
 
+        b.Property(x => x.IsActive).HasDefaultValue(true);
+
         b.HasIndex(x => x.QuotationNumber).IsUnique();
         b.HasIndex(x => x.QuotationDate);
 

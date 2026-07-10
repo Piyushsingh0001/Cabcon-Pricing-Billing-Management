@@ -1,190 +1,179 @@
-
-    <div class="dashboard-container animated-view">
-      <div class="header-section">
-        <div>
-          <h1>Pricing Calculation Sheet</h1>
-          <p class="subtitle">Stateless interactive cost estimator & quotation generator</p>
-        </div>
-        <div class="action-buttons">
-          <button mat-stroked-button color="primary" (click)="selectProducts()">
-            <mat-icon>add_shopping_cart</mat-icon>
-            Add/Remove SKUs ({{rows.length}})
-          </button>
-          <button mat-flat-button class="btn-secondary" (click)="saveQuotation()" [disabled]="rows.length === 0">
-            <mat-icon>send</mat-icon>
-            Generate Quotation
-          </button>
-        </div>
-      </div>
-
-      <!-- Draft Alert Card -->
-      <div class="glass-card draft-alert-card" *ngIf="hasDraft">
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <mat-icon color="accent">restore_page</mat-icon>
-            <span style="font-weight: 500;">You have an unsaved Draft Quotation.</span>
-          </div>
-          <div class="action-buttons">
-            <button mat-stroked-button color="warn" (click)="deleteDraft()">
-              <mat-icon>delete</mat-icon> Discard
-            </button>
-            <button mat-flat-button class="btn-primary" (click)="loadDraft()">
-              <mat-icon>file_download</mat-icon> Load Draft
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Global Parameters Card -->
-      <div class="glass-card parameters-card">
-        <h3>Global Loadings & Markups</h3>
-        <div class="row">
-          <mat-form-field appearance="outline" class="loading-mode-select">
-            <mat-label>Loading Mode</mat-label>
-            <mat-select [value]="loadingMode()" (selectionChange)="onModeChange($event.value)">
-              <mat-option [value]="0">Simple Percentage (%)</mat-option>
-              <mat-option [value]="1">Simple Amount (₹/kg)</mat-option>
-              <mat-option [value]="2">Itemised Loadings</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div class="row parameters-grid">
-          <!-- Simple Percentage Inputs -->
-          <ng-container *ngIf="loadingMode() === 0">
-            <mat-form-field appearance="outline">
-              <mat-label>Global Percentage Markup (e.g. 0.05 for 5%)</mat-label>
-              <input matInput type="number" step="0.01" [value]="globalPct()" (change)="updateGlobalParam('pct', $event)">
-            </mat-form-field>
-          </ng-container>
-
-          <!-- Simple Amount Inputs -->
-          <ng-container *ngIf="loadingMode() === 1">
-            <mat-form-field appearance="outline">
-              <mat-label>Global Fixed Markup (₹/kg)</mat-label>
-              <input matInput type="number" step="1" [value]="globalAmt()" (change)="updateGlobalParam('amt', $event)">
-            </mat-form-field>
-          </ng-container>
-
-          <!-- Itemised Inputs -->
-          <ng-container *ngIf="loadingMode() === 2">
-            <mat-form-field appearance="outline">
-              <mat-label>Overhead (%)</mat-label>
-              <input matInput type="number" step="0.01" [value]="globalOverheadPct()" (change)="updateGlobalParam('overhead', $event)">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Margin (%)</mat-label>
-              <input matInput type="number" step="0.01" [value]="globalMarginPct()" (change)="updateGlobalParam('margin', $event)">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Packing (₹/kg)</mat-label>
-              <input matInput type="number" step="0.5" [value]="globalPacking()" (change)="updateGlobalParam('packing', $event)">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Freight (₹/kg)</mat-label>
-              <input matInput type="number" step="0.5" [value]="globalFreight()" (change)="updateGlobalParam('freight', $event)">
-            </mat-form-field>
-          </ng-container>
-        </div>
-      </div>
-
-      <!-- Spreadsheet Table Card -->
-      <div class="table-container glass-card" *ngIf="rows.length > 0; else noProducts">
-        <table mat-table [dataSource]="rows">
-          <!-- Description -->
-          <ng-container matColumnDef="product">
-            <th mat-header-cell *matHeaderCellDef>Product Spec</th>
-            <td mat-cell *matCellDef="let element">
-              <div class="desc-cell">
-                <span class="cat">{{element.categoryName}}</span>
-                <span class="name">{{element.skuName}}</span>
-                <span class="spec">{{element.spec}} ({{element.unit}})</span>
-              </div>
-            </td>
-          </ng-container>
-
-          <!-- RM Cost -->
-          <ng-container matColumnDef="rmCost">
-            <th mat-header-cell *matHeaderCellDef>RM Cost</th>
-            <td mat-cell *matCellDef="let element">₹{{element.rmCost | number:'1.2-2'}}</td>
-          </ng-container>
-
-          <!-- Mfg Override -->
-          <ng-container matColumnDef="mfgOverride">
-            <th mat-header-cell *matHeaderCellDef>Mfg Cost (Override)</th>
-            <td mat-cell *matCellDef="let element">
-              <div class="override-cell">
-                <span class="base-val">₹{{element.mfgCost | number:'1.2-2'}}</span>
-                <input class="table-input" type="number" step="0.01" placeholder="Override ₹"
-                       [value]="element.rowMfgOverride ?? ''"
-                       (change)="updateRowOverride(element.skuId, 'mfg', $event)">
-              </div>
-            </td>
-          </ng-container>
-
-          <!-- Markup Override -->
-          <ng-container matColumnDef="markupOverride">
-            <th mat-header-cell *matHeaderCellDef>Markup Override</th>
-            <td mat-cell *matCellDef="let element">
-              <!-- Percentage loading mode -->
-              <input *ngIf="loadingMode() === 0" class="table-input" type="number" step="0.01" placeholder="Override %"
-                     [value]="element.rowPctOverride !== undefined ? element.rowPctOverride : ''"
-                     (change)="updateRowOverride(element.skuId, 'pct', $event)">
-              
-              <!-- Fixed amount loading mode -->
-              <input *ngIf="loadingMode() === 1" class="table-input" type="number" step="1" placeholder="Override ₹/kg"
-                     [value]="element.rowAmtOverride !== undefined ? element.rowAmtOverride : ''"
-                     (change)="updateRowOverride(element.skuId, 'amt', $event)">
-              
-              <span *ngIf="loadingMode() === 2" class="muted-text">Itemised</span>
-            </td>
-          </ng-container>
-
-          <!-- Final Offer Override -->
-          <ng-container matColumnDef="offerOverride">
-            <th mat-header-cell *matHeaderCellDef>Offer Override (ex-GST)</th>
-            <td mat-cell *matCellDef="let element">
-              <input class="table-input" type="number" step="1" placeholder="Final ex-GST ₹"
-                     [value]="element.rowOfferOverride ?? ''"
-                     (change)="updateRowOverride(element.skuId, 'offer', $event)">
-            </td>
-          </ng-container>
-
-          <!-- Effective Rate -->
-          <ng-container matColumnDef="effectiveRate">
-            <th mat-header-cell *matHeaderCellDef>Offer Ex-GST</th>
-            <td mat-cell *matCellDef="let element" class="ex-gst-cell">₹{{element.offerExGst | number:'1.2-2'}}</td>
-          </ng-container>
-
-          <!-- GST details -->
-          <ng-container matColumnDef="gst">
-            <th mat-header-cell *matHeaderCellDef>GST</th>
-            <td mat-cell *matCellDef="let element">
-              <div class="gst-cell">
-                <span class="pct">{{element.gstPercent * 100 | number}}%</span>
-                <span class="amt">₹{{element.gstAmount | number:'1.2-2'}}</span>
-              </div>
-            </td>
-          </ng-container>
-
-          <!-- Net Offer -->
-          <ng-container matColumnDef="netOffer">
-            <th mat-header-cell *matHeaderCellDef>Net Rate (incl-GST)</th>
-            <td mat-cell *matCellDef="let element" class="gross-cell">₹{{element.grossRate | number:'1.2-2'}}</td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="columns"></tr>
-          <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-        </table>
-      </div>
-
-      <ng-template #noProducts>
-        <div class="no-products-placeholder glass-card animated-view">
-          <mat-icon>shopping_basket</mat-icon>
-          <h3>Your Pricing Sheet is Empty</h3>
-          <p>Click "Add/Remove SKUs" above to select products and start estimating rates.</p>
-          <button mat-flat-button class="btn-primary" (click)="selectProducts()">Select Products</button>
-        </div>
-      </ng-template>
+<div class="dashboard-container animated-view">
+  <div class="header-section">
+    <div>
+      <h1 class="sh-t">Offer & send</h1>
+      <p class="subtitle">Enter MFG per product, then a loading, to reach the offer price. Override any cell directly for final control.</p>
     </div>
-  
+  </div>
+
+  <!-- Draft Alert Card -->
+  <div class="glass-card draft-alert-card" *ngIf="hasDraft">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <mat-icon color="accent">restore_page</mat-icon>
+        <span style="font-weight: 500;">You have an unsaved Draft Quotation.</span>
+      </div>
+      <div class="action-buttons">
+        <button class="btn-ghost-mini" style="color: var(--accent-color); border-color: var(--accent-color);" (click)="deleteDraft()">
+          Discard
+        </button>
+        <button class="btn-save-product" (click)="loadDraft()">
+          Load Draft
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Parameters Controls Card -->
+  <div class="card params-card" *ngIf="rows.length > 0">
+    <div class="controls-row">
+      <div class="control-group">
+        <div class="lbl">Loading method</div>
+        <select class="sel" [ngModel]="loadingMode()" (ngModelChange)="onModeChange($event)">
+          <option [ngValue]="0">Margin %</option>
+          <option [ngValue]="1">₹ per unit</option>
+          <option [ngValue]="2">Itemised</option>
+        </select>
+      </div>
+
+      <!-- Margin % (mode 0) -->
+      <div class="control-group" *ngIf="loadingMode() === 0">
+        <div class="lbl">Margin %</div>
+        <input class="in" style="width: 80px;" type="number" [ngModel]="globalPct() * 100" (ngModelChange)="updateGlobalParam('pct', $event)">
+      </div>
+
+      <!-- ₹ / unit (mode 1) -->
+      <div class="control-group" *ngIf="loadingMode() === 1">
+        <div class="lbl">₹ / unit</div>
+        <input class="in" style="width: 90px;" type="number" [ngModel]="globalAmt()" (ngModelChange)="updateGlobalParam('amt', $event)">
+      </div>
+
+      <!-- Itemised (mode 2) -->
+      <ng-container *ngIf="loadingMode() === 2">
+        <div class="control-group">
+          <div class="lbl">Overhead %</div>
+          <input class="in" style="width: 74px;" type="number" [ngModel]="globalOverheadPct() * 100" (ngModelChange)="updateGlobalParam('overhead', $event)">
+        </div>
+        <div class="control-group">
+          <div class="lbl">Margin %</div>
+          <input class="in" style="width: 74px;" type="number" [ngModel]="globalMarginPct() * 100" (ngModelChange)="updateGlobalParam('margin', $event)">
+        </div>
+        <div class="control-group">
+          <div class="lbl">Packing ₹/unit</div>
+          <input class="in" style="width: 74px;" type="number" [ngModel]="globalPacking()" (ngModelChange)="updateGlobalParam('packing', $event)">
+        </div>
+        <div class="control-group">
+          <div class="lbl">Freight ₹/unit</div>
+          <input class="in" style="width: 74px;" type="number" [ngModel]="globalFreight()" (ngModelChange)="updateGlobalParam('freight', $event)">
+        </div>
+      </ng-container>
+
+      <button class="linkbtn-clear" (click)="clearAllOverrides()">clear overrides</button>
+    </div>
+  </div>
+
+  <!-- Spreadsheet Table Card -->
+  <div class="card table-card" style="padding: 0; overflow: hidden; margin-bottom: 14px;" *ngIf="rows.length > 0; else noProducts">
+    <div class="table-scroll-wrapper">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th style="text-align: left;">Product</th>
+            <th>Unit</th>
+            <th style="text-align: right;">RM ₹</th>
+            <th>MFG<br><span style="font-size: 9px; font-weight: 400;">% or ₹/kg</span></th>
+            <th style="text-align: right;">Mfg cost</th>
+            <th>Loading</th>
+            <th>Offer ₹/unit<br><span style="font-size: 9px; font-weight: 400;">ex-GST</span></th>
+            <th>Profit<br><span style="font-size: 9px; font-weight: 400;">₹/unit</span></th>
+            <th style="text-align: right;">GST</th>
+            <th style="text-align: right;">Gross ₹/unit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of rows">
+            <td style="text-align: left; font-weight: 600;">
+              {{ element.categoryName }} &middot; {{ element.skuName }} {{ element.spec }}
+            </td>
+            <td>{{ element.unit }}</td>
+            <td style="text-align: right;">{{ element.rmCost | number:'1.2-2' }}</td>
+            <td>
+              <ng-container *ngIf="getSkuConversionType(element.skuId) === 0">
+                <input class="in text-right" style="width: 50px;" type="number" 
+                       [ngModel]="getMfgDisplayValue(element.skuId)" 
+                       (ngModelChange)="onMfgOverrideChange(element.skuId, $event)"> %
+              </ng-container>
+              <ng-container *ngIf="getSkuConversionType(element.skuId) === 1">
+                <input class="in text-right" style="width: 65px;" type="number" 
+                       [ngModel]="getMfgDisplayValue(element.skuId)" 
+                       (ngModelChange)="onMfgOverrideChange(element.skuId, $event)"> ₹/kg
+              </ng-container>
+            </td>
+            <td style="font-weight: 600; text-align: right;">{{ element.mfgCost | number:'1.2-2' }}</td>
+            <td>
+              <span *ngIf="loadingMode() === 2" class="mute-text">Itemised</span>
+              <ng-container *ngIf="loadingMode() === 0">
+                <input class="in text-right" style="width: 60px;" type="number" 
+                       [ngModel]="getRowLoadingDisplayValue(element.skuId)" 
+                       (ngModelChange)="onRowLoadingChange(element.skuId, $event)"> %
+              </ng-container>
+              <ng-container *ngIf="loadingMode() === 1">
+                <input class="in text-right" style="width: 60px;" type="number" 
+                       [ngModel]="getRowLoadingDisplayValue(element.skuId)" 
+                       (ngModelChange)="onRowLoadingChange(element.skuId, $event)"> ₹
+              </ng-container>
+            </td>
+            <td>
+              <input class="in text-right" style="width: 85px;" type="number" 
+                     [ngModel]="element.rowOfferOverride" 
+                     (ngModelChange)="onRowOfferChange(element.skuId, $event)">
+            </td>
+            <td>
+              <input class="in text-right" style="width: 75px;" type="number" 
+                     [ngModel]="element.profit" 
+                     (ngModelChange)="onRowProfitChange(element.skuId, $event)"
+                     placeholder="0.00">
+            </td>
+            <td style="text-align: right;">{{ element.gstAmount | number:'1.2-2' }}</td>
+            <td style="font-weight: 700; text-align: right;">{{ element.grossRate | number:'1.2-2' }}</td>
+          </tr>
+          <!-- Totals Row -->
+          <tr style="background: #fafafa; font-weight: 700;">
+            <td colspan="6" style="text-align: right;">Total</td>
+            <td style="text-align: right;">{{ totalOfferExGst | number:'1.2-2' }}</td>
+            <td style="text-align: right;">{{ totalProfit | number:'1.2-2' }}</td>
+            <td style="text-align: right;">{{ totalGstAmount | number:'1.2-2' }}</td>
+            <td style="text-align: right;">{{ totalGrossRate | number:'1.2-2' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Footer Generation Card -->
+  <div class="card footer-card" *ngIf="rows.length > 0">
+    <div class="footer-row">
+      <div class="footer-inputs">
+        <div class="control-group">
+          <div class="lbl">Customer / Party</div>
+          <input class="in" style="width: 280px;" placeholder="e.g. ABC Electricals, Kolkata" [(ngModel)]="partyName">
+        </div>
+        <div class="control-group">
+          <div class="lbl">Validity (days)</div>
+          <input class="in" style="width: 80px;" type="number" [(ngModel)]="validityDays">
+        </div>
+      </div>
+      <button class="btn-generate-quotation" (click)="generateQuotation()">
+        Generate quotation &rarr;
+      </button>
+    </div>
+  </div>
+
+  <ng-template #noProducts>
+    <div class="no-products-placeholder glass-card animated-view">
+      <mat-icon style="font-size: 48px; width: 48px; height: 48px; color: var(--text-secondary);">shopping_basket</mat-icon>
+      <h3>Your Pricing Sheet is Empty</h3>
+      <p>Go to the <a routerLink="/skus" style="color: var(--primary-color); font-weight: 600; text-decoration: underline;">SKUs & BOMs</a> page to select products for quotation estimation.</p>
+    </div>
+  </ng-template>
+</div>

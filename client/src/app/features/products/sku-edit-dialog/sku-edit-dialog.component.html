@@ -1,98 +1,86 @@
+<div class="edit-dialog-container">
+  <div class="dialog-header">
+    <h2 class="dialog-title">{{ sku && sku.id ? 'Edit Product' : 'Add Product' }}</h2>
+  </div>
 
-    <h2 mat-dialog-title>{{ sku ? 'Edit SKU & BOM' : 'Create New SKU' }}</h2>
-    <mat-dialog-content class="dialog-content">
-      <form [formGroup]="form">
-        <div class="row">
-          <mat-form-field appearance="outline">
-            <mat-label>Category</mat-label>
-            <mat-select formControlName="categoryId">
-              <mat-option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="form.get('categoryId')?.hasError('required')">Category is required</mat-error>
-          </mat-form-field>
+  <div class="dialog-content">
+    <div class="error-banner" *ngIf="errorMessage()">
+      {{ errorMessage() }}
+    </div>
+
+    <form [formGroup]="form">
+      <div class="form-row">
+        <div class="input-group">
+          <div class="lbl">Category</div>
+          <input class="in" formControlName="categoryName" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+        </div>
+        
+        <div class="input-group">
+          <div class="lbl">Variant</div>
+          <input class="in" formControlName="name" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+        </div>
+        
+        <div class="input-group">
+          <div class="lbl">Spec</div>
+          <input class="in" formControlName="spec" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+        </div>
+        
+        <div class="input-group">
+          <div class="lbl">Unit</div>
+          <select class="sel" formControlName="unit" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+            <option value="coil">coil</option>
+            <option value="100m">100m</option>
+            <option value="km">km</option>
+            <option value="MT">MT</option>
+          </select>
+        </div>
+        
+        <div class="input-group">
+          <div class="lbl">MFG method</div>
+          <select class="sel" formControlName="conversionType">
+            <option [value]="0">% of RM</option>
+            <option [value]="1">₹/kg</option>
+          </select>
+        </div>
+        
+        <div class="input-group">
+          <div class="lbl">GST %</div>
+          <input class="in" style="width: 70px;" type="number" formControlName="gstPercent">
+        </div>
+      </div>
+
+      <div class="warning-banner" *ngIf="nameExistsError">
+        Product Name already Exists! Give Different name.
+      </div>
+
+      <div class="bom-section-title">Bill of materials (kg per {{ form.get('unit')?.value }})</div>
+      
+      <div formArrayName="bomLines" class="bom-lines-list">
+        <div class="bom-line-row" *ngFor="let line of bomLines.controls; let idx = index; let isLast = last" [formGroupName]="idx">
+          <select class="sel" formControlName="materialId" (change)="checkUniqueness()">
+            <option *ngFor="let mat of getAvailableMaterials(idx)" [value]="mat.id">{{ mat.name }}</option>
+          </select>
           
-          <mat-form-field appearance="outline">
-            <mat-label>Product Name (e.g. FR, FRLSH)</mat-label>
-            <input matInput formControlName="name">
-            <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
-          </mat-form-field>
+          <input class="in" style="width: 90px; text-align: right;" type="number" formControlName="weightKg">
+          
+          <span class="bom-mult-text">
+            kg x ₹{{ getLandedCost(line.get('materialId')?.value) | number:'1.2-2' }} = ₹{{ ((line.get('weightKg')?.value || 0) * getLandedCost(line.get('materialId')?.value)) | number:'1.2-2' }}
+          </span>
+          
+          <button class="linkbtn-remove" type="button" (click)="removeBomLine(idx)">remove</button>
+          
+          <button class="btn-ghost-mini" style="margin-left: 8px;" type="button" (click)="addBomLine()" *ngIf="isLast">+ material line</button>
         </div>
+      </div>
+    </form>
+  </div>
 
-        <div class="row">
-          <mat-form-field appearance="outline">
-            <mat-label>Specification (e.g. 1.5 sq.mm)</mat-label>
-            <input matInput formControlName="spec">
-            <mat-error *ngIf="form.get('spec')?.hasError('required')">Specification is required</mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Unit (e.g. Coil, km, m)</mat-label>
-            <input matInput formControlName="unit">
-            <mat-error *ngIf="form.get('unit')?.hasError('required')">Unit is required</mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="row">
-          <mat-form-field appearance="outline">
-            <mat-label>Conversion Type</mat-label>
-            <mat-select formControlName="conversionType">
-              <mat-option [value]="0">Percentage (%) of RM</mat-option>
-              <mat-option [value]="1">Fixed Amount (₹/kg)</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Conversion Value (e.g. 0.08 or 10.0)</mat-label>
-            <input matInput formControlName="conversionValue" type="number" step="0.001">
-            <mat-error *ngIf="form.get('conversionValue')?.hasError('required')">Value is required</mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>GST Rate (e.g. 0.18 for 18%)</mat-label>
-            <input matInput formControlName="gstRate" type="number" step="0.01">
-            <mat-error *ngIf="form.get('gstRate')?.hasError('required')">GST is required</mat-error>
-          </mat-form-field>
-        </div>
-
-        <!-- BOM Section -->
-        <div class="bom-section">
-          <div class="bom-header">
-            <h3>Bill of Materials (BOM) Weights</h3>
-            <button type="button" mat-stroked-button color="primary" (click)="addBomLine()">
-              <mat-icon>add</mat-icon> Add Raw Material
-            </button>
-          </div>
-
-          <div formArrayName="bomLines" class="bom-list">
-            <div *ngFor="let line of bomLines.controls; let idx = index" [formGroupName]="idx" class="bom-line-row">
-              
-              <mat-form-field appearance="outline" class="material-select">
-                <mat-label>Material</mat-label>
-                <mat-select formControlName="materialId">
-                  <mat-option *ngFor="let mat of materials" [value]="mat.id">{{mat.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline" class="weight-input">
-                <mat-label>Weight (kg per Unit)</mat-label>
-                <input matInput formControlName="weightKg" type="number" step="0.0001">
-              </mat-form-field>
-
-              <button type="button" mat-icon-button color="warn" (click)="removeBomLine(idx)" [disabled]="bomLines.length <= 1">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-          <div class="bom-error" *ngIf="bomLines.hasError('required') || bomLines.invalid">
-            All raw material lines must have valid material selections and weight greater than 0 kg.
-          </div>
-        </div>
-      </form>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-flat-button class="btn-primary" [disabled]="form.invalid || loading()" (click)="onSubmit()">
-        {{ sku ? 'Save Changes' : 'Create Product' }}
+  <div class="panel-actions-row">
+    <div class="actions-left">
+      <button class="btn-save-product" type="button" (click)="onSubmit()" [disabled]="form.invalid || nameExistsError || loading()">
+        {{ sku && sku.id ? 'Save Product' : 'Create Product' }}
       </button>
-    </mat-dialog-actions>
-  
+      <button class="btn-cancel" type="button" (click)="onCancel()">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -131,4 +131,11 @@ getModuleIcon(module: string): string {
     this.authService.logout().subscribe();
   }
   
+  public onMaterialPricesClick() {
+    this.pricingService.refreshMaterials.next();
+  }
+
+  public onSkusClick() {
+    this.pricingService.refreshSkus.next();
+  }
 }

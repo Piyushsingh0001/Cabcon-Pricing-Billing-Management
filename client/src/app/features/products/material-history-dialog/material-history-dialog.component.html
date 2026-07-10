@@ -9,6 +9,11 @@
             <td mat-cell *matCellDef="let log">{{log.effectiveDate | date:'medium'}}</td>
           </ng-container>
 
+          <ng-container matColumnDef="updatedBy">
+            <th mat-header-cell *matHeaderCellDef>Updated By</th>
+            <td mat-cell *matCellDef="let log">{{log.updatedBy || 'System'}}</td>
+          </ng-container>
+
           <ng-container matColumnDef="rateDetails">
             <th mat-header-cell *matHeaderCellDef>Rate Details</th>
             <td mat-cell *matCellDef="let log">

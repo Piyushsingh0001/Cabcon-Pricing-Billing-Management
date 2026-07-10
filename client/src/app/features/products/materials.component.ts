@@ -1,59 +1,50 @@
-import { ChangeDetectorRef, Component, Inject, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { forkJoin, of } from 'rxjs';
-import { PricingService, Material, MaterialPriceHistory } from '../../core/pricing.service';
+import { forkJoin, switchMap } from 'rxjs';
+import { PricingService, Material } from '../../core/pricing.service';
 import { AuthService } from '../../core/auth.service';
 import { MaterialCreateEditDialogComponent } from './material-create-edit-dialog/material-create-edit-dialog.component';
 import { MaterialHistoryDialogComponent } from './material-history-dialog/material-history-dialog.component';
-
-
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-materials',
   standalone: true,
   imports: [
     CommonModule,
-    MatTableModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatPaginatorModule,
-    MatSortModule,
     MatSelectModule,
+    MatMenuModule,
     MatSnackBarModule,
     MatDialogModule
   ],
-    templateUrl: './materials.component.html',
-    styleUrls: ['./materials.component.scss']
+  templateUrl: './materials.component.html',
+  styleUrls: ['./materials.component.scss']
 })
 export class MaterialsComponent implements OnInit {
   private pricingService = inject(PricingService);
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
+  private cdr = inject(ChangeDetectorRef);
 
-  public displayedColumns = ['name', 'type', 'asOnDate', 'landedCost', 'updatedBy', 'actions'];
-  public dataSource = new MatTableDataSource<Material>();
-  
+  public materials: Material[] = [];
   public totalCount = 0;
-  public pageIndex = 0;
-  public pageSize = 10;
-  private search = '';
-  private typeFilter: number | null = null;
-  private sortBy = '';
-  private sortDesc = false;
+  public loading = signal(false);
 
   ngOnInit() {
     this.loadMaterials();
@@ -63,49 +54,28 @@ export class MaterialsComponent implements OnInit {
     return this.authService.hasPermission('Pricing.Update');
   }
 
-  private loadMaterials() {
+  public loadMaterials() {
+    this.loading.set(true);
+    // Request up to 100 materials on page 1 sorted by name (asc) to ensure all display together
     this.pricingService.getMaterials(
-      this.search,
-      this.typeFilter ?? undefined,
-      this.sortBy,
-      this.sortDesc,
-      this.pageIndex + 1,
-      this.pageSize
+      undefined,
+      undefined,
+      'name',
+      false,
+      1,
+      100
     ).subscribe({
       next: (res) => {
-        console.log("GRID API RESPONSE:", res.items);
-        this.dataSource.data = res.items;
+        this.materials = res.items;
         this.totalCount = res.totalCount;
+        this.loading.set(false);
+        this.cdr.detectChanges();
       },
       error: () => {
         this.snackBar.open('Failed to load materials data.', 'Close', { duration: 3000 });
+        this.loading.set(false);
       }
     });
-  }
-
-  public applySearch(event: Event) {
-    this.search = (event.target as HTMLInputElement).value;
-    this.pageIndex = 0;
-    this.loadMaterials();
-  }
-
-  public applyTypeFilter(value: number | null) {
-    this.typeFilter = value;
-    this.pageIndex = 0;
-    this.loadMaterials();
-  }
-
-  public sortData(event: any) {
-    this.sortBy = event.active;
-    this.sortDesc = event.direction === 'desc';
-    this.pageIndex = 0;
-    this.loadMaterials();
-  }
-
-  public onPageChange(event: any) {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.loadMaterials();
   }
 
   public addMaterial() {
@@ -125,17 +95,30 @@ export class MaterialsComponent implements OnInit {
   }
 
   public deleteMaterial(material: Material) {
-    if (confirm(`Are you sure you want to delete ${material.name}?`)) {
-      this.pricingService.deleteMaterial(material.id).subscribe({
-        next: () => {
-          this.snackBar.open('Material deleted successfully.', 'Close', { duration: 3000 });
-          this.loadMaterials();
-        },
-        error: (err) => {
-          this.snackBar.open(err.error?.message || 'Failed to delete material.', 'Close', { duration: 3000 });
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '450px',
+      data: {
+        title: 'Delete Material',
+        message: `Are you sure you want to delete material "${material.name}"? This action cannot be undone.`,
+        type: 'confirm',
+        confirmText: 'Delete',
+        cancelText: 'Cancel'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.pricingService.deleteMaterial(material.id).subscribe({
+          next: () => {
+            this.snackBar.open('Material deleted successfully.', 'Close', { duration: 3000 });
+            this.loadMaterials();
+          },
+          error: (err) => {
+            this.snackBar.open(err.error?.message || 'Failed to delete material.', 'Close', { duration: 3000 });
+          }
+        });
+      }
+    });
   }
 
   public viewHistory(material: Material) {
@@ -144,4 +127,52 @@ export class MaterialsComponent implements OnInit {
       data: material
     });
   }
+
+  public calculateLandedCost(material: Material): number {
+    if (material.type === 0) {
+      const lme = Number(material.lmeUsdPerMt || 0);
+      const premium = Number(material.premiumUsdPerMt || 0);
+      const fx = Number(material.fxRate || 0);
+      const freight = Number(material.freightInrPerMt || 0);
+      return ((lme + premium) * fx + freight) / 1000;
+    } else {
+      return Number(material.directRateInrPerKg || 0);
+    }
+  }
+
+  public updatePrice(material: Material) {
+    if (!this.canUpdate()) {
+      this.snackBar.open('You do not have permission to update pricing.', 'Close', { duration: 3000 });
+      return;
+    }
+
+    const metaPayload = {
+      name: material.name,
+      type: material.type
+    };
+
+    const pricePayload = material.type === 0 ? {
+      materialId: material.id,
+      lmeUsdPerMt: Number(material.lmeUsdPerMt || 0),
+      premiumUsdPerMt: Number(material.premiumUsdPerMt || 0),
+      fxRate: Number(material.fxRate || 0),
+      freightInrPerMt: Number(material.freightInrPerMt || 0)
+    } : {
+      materialId: material.id,
+      directRateInrPerKg: Number(material.directRateInrPerKg || 0)
+    };
+
+    this.pricingService.updateMaterial(material.id, metaPayload).pipe(
+      switchMap(() => this.pricingService.updateMaterialPrice(pricePayload))
+    ).subscribe({
+      next: () => {
+        this.snackBar.open(`${material.name} updated successfully.`, 'Close', { duration: 3000 });
+        this.loadMaterials();
+      },
+      error: (err) => {
+        this.snackBar.open(err.error?.message || 'Failed to update material.', 'Close', { duration: 3000 });
+      }
+    });
+  }
 }
+

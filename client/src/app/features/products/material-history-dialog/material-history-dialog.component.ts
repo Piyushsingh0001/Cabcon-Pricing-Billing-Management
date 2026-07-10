@@ -36,7 +36,7 @@ export class MaterialHistoryDialogComponent implements OnInit {
   private pricingService = inject(PricingService);
   
   public historyData = new MatTableDataSource<MaterialPriceHistory>();
-  public columns = ['effectiveDate', 'rateDetails', 'landedCost'];
+  public columns = ['effectiveDate', 'updatedBy', 'rateDetails', 'landedCost'];
   private cdr = inject(ChangeDetectorRef);
   constructor(
     @Inject(MAT_DIALOG_DATA) public material: Material
