@@ -720,3 +720,139 @@
 2026-07-09 15:48:23.869 +05:30 [INF] Handling GetPendingApprovalsCountQuery
 2026-07-09 15:48:23.876 +05:30 [INF] Handled GetPendingApprovalsCountQuery
 2026-07-09 15:48:23.877 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 14ms
+2026-07-09 16:08:17.124 +05:30 [INF] GET / responded 404 in 45ms
+2026-07-09 16:09:33.601 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 12ms
+2026-07-09 16:09:34.058 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-09 16:09:34.059 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-09 16:09:34.645 +05:30 [INF] POST /api/auth/logout responded 401 in 34ms
+2026-07-09 16:09:34.684 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-09 16:09:34.744 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-09 16:09:34.952 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-09 16:09:35.195 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-09 16:09:35.206 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 508ms
+2026-07-09 16:09:35.239 +05:30 [INF] Handling LogoutCommand
+2026-07-09 16:09:35.280 +05:30 [INF] Handled LogoutCommand
+2026-07-09 16:09:35.282 +05:30 [INF] POST /api/auth/logout responded 204 in 67ms
+2026-07-09 16:09:38.957 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-09 16:09:38.975 +05:30 [INF] Handling LoginCommand
+2026-07-09 16:09:38.989 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-09 16:09:39.096 +05:30 [INF] Handled LoginCommand
+2026-07-09 16:09:39.098 +05:30 [INF] POST /api/auth/login responded 200 in 130ms
+2026-07-09 16:09:40.405 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-09 16:09:40.422 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 16:09:40.443 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 16:09:40.455 +05:30 [INF] GET /api/quotations responded 200 in 42ms
+2026-07-09 16:09:43.775 +05:30 [INF] OPTIONS /api/quotations/24 responded 204 in 0ms
+2026-07-09 16:09:43.791 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-09 16:09:43.847 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-09 16:09:43.853 +05:30 [INF] GET /api/quotations/24 responded 200 in 68ms
+2026-07-09 16:09:49.617 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-09 16:09:49.638 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-09 16:09:49.684 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-09 16:09:49.692 +05:30 [INF] GET /api/materials responded 200 in 68ms
+2026-07-09 16:09:50.931 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-09 16:09:50.931 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-09 16:09:50.980 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-09 16:09:50.988 +05:30 [INF] Handling GetSkusQuery
+2026-07-09 16:09:50.993 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-09 16:09:50.995 +05:30 [INF] GET /api/categories responded 200 in 25ms
+2026-07-09 16:09:51.087 +05:30 [INF] Handled GetSkusQuery
+2026-07-09 16:09:51.094 +05:30 [INF] GET /api/skus responded 200 in 113ms
+2026-07-09 16:09:54.599 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-09 16:09:54.638 +05:30 [INF] Handling LogoutCommand
+2026-07-09 16:09:54.649 +05:30 [INF] Handled LogoutCommand
+2026-07-09 16:09:54.651 +05:30 [INF] POST /api/auth/logout responded 204 in 14ms
+2026-07-09 16:09:58.255 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-09 16:09:58.264 +05:30 [INF] Handling LoginCommand
+2026-07-09 16:09:58.284 +05:30 [INF] Handled LoginCommand
+2026-07-09 16:09:58.286 +05:30 [INF] POST /api/auth/login responded 200 in 23ms
+2026-07-09 16:10:00.523 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-09 16:10:00.533 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 16:10:00.538 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 16:10:00.539 +05:30 [INF] GET /api/quotations responded 200 in 7ms
+2026-07-09 16:10:03.350 +05:30 [INF] OPTIONS /api/quotations/24 responded 204 in 0ms
+2026-07-09 16:10:03.360 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-09 16:10:03.362 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-09 16:10:03.364 +05:30 [INF] GET /api/quotations/24 responded 200 in 5ms
+2026-07-09 16:10:24.712 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 16:10:24.745 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 16:10:24.762 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 16:10:24.764 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 30ms
+2026-07-09 16:10:54.715 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 16:10:54.725 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 16:10:54.727 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 16:10:54.728 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-09 16:11:24.714 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 16:11:24.768 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 16:11:24.774 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 16:11:24.775 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 15ms
+2026-07-09 16:11:55.266 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 16:11:55.279 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 16:11:55.281 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 16:11:55.282 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 4ms
+2026-07-09 16:11:57.130 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-09 16:11:57.140 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 16:11:57.149 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 16:11:57.150 +05:30 [INF] GET /api/quotations responded 200 in 11ms
+2026-07-09 16:12:00.544 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 16:12:00.547 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 16:12:00.548 +05:30 [INF] GET /api/quotations responded 200 in 5ms
+2026-07-09 16:12:01.143 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-09 16:12:01.143 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-09 16:12:01.154 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-09 16:12:01.154 +05:30 [INF] Handling GetUsersQuery
+2026-07-09 16:12:01.175 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-09 16:12:01.178 +05:30 [INF] GET /api/roles responded 200 in 29ms
+2026-07-09 16:12:01.184 +05:30 [INF] Handled GetUsersQuery
+2026-07-09 16:12:01.189 +05:30 [INF] GET /api/users responded 200 in 40ms
+2026-07-09 16:12:01.527 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-09 16:12:01.533 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-09 16:12:01.535 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-09 16:12:01.535 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 3ms
+2026-07-09 16:12:05.243 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-09 16:12:05.253 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-09 16:12:05.255 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-09 16:12:05.256 +05:30 [INF] GET /api/quotations responded 200 in 4ms
+2026-07-09 16:12:06.887 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-09 16:12:06.895 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-09 16:12:06.905 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-09 16:12:06.906 +05:30 [INF] GET /api/materials responded 200 in 13ms
+2026-07-09 16:12:07.449 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-09 16:12:07.449 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-09 16:12:07.457 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-09 16:12:07.460 +05:30 [INF] Handling GetSkusQuery
+2026-07-09 16:12:07.463 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-09 16:12:07.464 +05:30 [INF] GET /api/categories responded 200 in 8ms
+2026-07-09 16:12:07.494 +05:30 [INF] Handled GetSkusQuery
+2026-07-09 16:12:07.496 +05:30 [INF] GET /api/skus responded 200 in 37ms
+2026-07-09 16:12:07.846 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-09 16:12:07.846 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-09 16:12:07.855 +05:30 [INF] Handling GetUsersQuery
+2026-07-09 16:12:07.855 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-09 16:12:07.858 +05:30 [INF] Handled GetUsersQuery
+2026-07-09 16:12:07.859 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-09 16:12:07.859 +05:30 [INF] GET /api/users responded 200 in 5ms
+2026-07-09 16:12:07.862 +05:30 [INF] GET /api/roles responded 200 in 8ms
+2026-07-09 16:12:13.082 +05:30 [INF] OPTIONS /api/roles/4 responded 204 in 0ms
+2026-07-09 16:12:13.097 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-09 16:12:13.111 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-09 16:12:13.114 +05:30 [INF] GET /api/roles/4 responded 200 in 22ms
+2026-07-09 16:12:13.120 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-09 16:12:13.130 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-09 16:12:13.139 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-09 16:12:13.142 +05:30 [INF] GET /api/permissions responded 200 in 16ms
+2026-07-09 16:12:20.529 +05:30 [INF] OPTIONS /api/roles/4 responded 204 in 0ms
+2026-07-09 16:12:20.539 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-09 16:12:20.541 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-09 16:12:20.543 +05:30 [INF] GET /api/roles/4 responded 200 in 5ms
+2026-07-09 16:12:20.548 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-09 16:12:20.553 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-09 16:12:20.556 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-09 16:12:20.557 +05:30 [INF] GET /api/permissions responded 200 in 4ms
+2026-07-09 16:12:23.033 +05:30 [INF] OPTIONS /api/roles/3 responded 204 in 0ms
+2026-07-09 16:12:23.040 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-09 16:12:23.042 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-09 16:12:23.044 +05:30 [INF] GET /api/roles/3 responded 200 in 5ms
+2026-07-09 16:12:23.050 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-09 16:12:23.052 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-09 16:12:23.054 +05:30 [INF] GET /api/permissions responded 200 in 5ms

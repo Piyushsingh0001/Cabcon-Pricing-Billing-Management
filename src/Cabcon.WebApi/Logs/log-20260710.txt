@@ -1,0 +1,253 @@
+2026-07-10 11:21:47.883 +05:30 [INF] GET / responded 404 in 51ms
+2026-07-10 11:25:03.352 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 41ms
+2026-07-10 11:25:03.853 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 11:25:03.855 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 11:25:04.512 +05:30 [INF] Handling LoginCommand
+2026-07-10 11:25:04.761 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-10 11:25:05.067 +05:30 [INF] Handled LoginCommand
+2026-07-10 11:25:05.082 +05:30 [INF] POST /api/auth/login responded 200 in 615ms
+2026-07-10 11:25:20.916 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 11:25:20.983 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 11:25:21.005 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 11:25:21.007 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 71ms
+2026-07-10 11:25:50.916 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 11:25:50.953 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 11:25:50.964 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 11:25:50.965 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 23ms
+2026-07-10 12:37:18.622 +05:30 [INF] GET / responded 404 in 47ms
+2026-07-10 12:37:25.273 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 6ms
+2026-07-10 12:37:27.356 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 12:37:27.363 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 12:37:30.585 +05:30 [INF] GET /api/quotations/pending-count responded 401 in 180ms
+2026-07-10 12:37:30.748 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-10 12:37:30.959 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-10 12:37:31.763 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-10 12:37:32.065 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-10 12:37:32.138 +05:30 [INF] POST /api/auth/logout responded 401 in 5ms
+2026-07-10 12:37:32.476 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-10 12:37:32.522 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 1722ms
+2026-07-10 12:37:32.623 +05:30 [INF] Handling LogoutCommand
+2026-07-10 12:37:32.623 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:37:32.710 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:37:32.717 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 175ms
+2026-07-10 12:37:32.749 +05:30 [INF] Handled LogoutCommand
+2026-07-10 12:37:32.754 +05:30 [INF] POST /api/auth/logout responded 204 in 213ms
+2026-07-10 12:45:26.741 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-10 12:45:26.915 +05:30 [INF] Handling LoginCommand
+2026-07-10 12:45:26.966 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-10 12:45:27.336 +05:30 [INF] Handled LoginCommand
+2026-07-10 12:45:27.340 +05:30 [INF] POST /api/auth/login responded 200 in 451ms
+2026-07-10 12:45:52.599 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:45:52.679 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:45:52.694 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:45:52.697 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 30ms
+2026-07-10 12:46:22.618 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:46:22.674 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:46:22.681 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:46:22.683 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 16ms
+2026-07-10 12:46:52.595 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:46:52.701 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:46:52.713 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:46:52.716 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 30ms
+2026-07-10 12:47:22.604 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:47:22.667 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:47:22.672 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:47:22.674 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-10 12:47:52.608 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:47:52.705 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:47:52.719 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:47:52.721 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 32ms
+2026-07-10 12:48:22.600 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:48:22.652 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:48:22.656 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:48:22.658 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 10ms
+2026-07-10 12:48:52.599 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:48:52.651 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:48:52.666 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:48:52.670 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 35ms
+2026-07-10 12:49:43.598 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:49:43.650 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:49:43.655 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:49:43.659 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 12ms
+2026-07-10 12:50:43.598 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:50:43.695 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:50:43.711 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:50:43.713 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 40ms
+2026-07-10 12:51:43.607 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:51:43.685 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:51:43.697 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:51:43.699 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 28ms
+2026-07-10 12:52:19.962 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:52:20.018 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:52:20.033 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:52:20.036 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 33ms
+2026-07-10 12:52:24.355 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:52:24.361 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:52:24.364 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 49ms
+2026-07-10 12:52:25.597 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-10 12:52:25.636 +05:30 [INF] Handling LogoutCommand
+2026-07-10 12:52:25.665 +05:30 [INF] Handled LogoutCommand
+2026-07-10 12:52:25.668 +05:30 [INF] POST /api/auth/logout responded 204 in 37ms
+2026-07-10 12:57:13.639 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-10 12:57:13.728 +05:30 [INF] Handling LoginCommand
+2026-07-10 12:57:13.865 +05:30 [INF] Handled LoginCommand
+2026-07-10 12:57:13.872 +05:30 [INF] POST /api/auth/login responded 200 in 145ms
+2026-07-10 12:57:25.521 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:57:25.574 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:57:25.584 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:57:25.586 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 18ms
+2026-07-10 12:57:33.396 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-10 12:57:33.459 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-10 12:57:33.527 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-10 12:57:33.581 +05:30 [INF] GET /api/quotations responded 200 in 155ms
+2026-07-10 12:57:35.152 +05:30 [INF] OPTIONS /api/quotations/26 responded 204 in 0ms
+2026-07-10 12:57:35.229 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-10 12:57:35.413 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-10 12:57:35.441 +05:30 [INF] GET /api/quotations/26 responded 200 in 241ms
+2026-07-10 12:57:42.777 +05:30 [INF] OPTIONS /api/quotations/22 responded 204 in 0ms
+2026-07-10 12:57:42.815 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-10 12:57:42.823 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-10 12:57:42.825 +05:30 [INF] GET /api/quotations/22 responded 200 in 14ms
+2026-07-10 12:57:54.677 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 12:57:54.758 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 12:57:55.167 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 12:57:55.205 +05:30 [INF] GET /api/skus responded 200 in 493ms
+2026-07-10 12:57:55.505 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 12:57:55.546 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 12:57:55.558 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 12:57:55.561 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 17ms
+2026-07-10 12:57:59.235 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-10 12:57:59.341 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-10 12:57:59.546 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-10 12:57:59.559 +05:30 [INF] POST /api/quotations/calculate responded 200 in 286ms
+2026-07-10 13:05:49.188 +05:30 [INF] GET / responded 404 in 65ms
+2026-07-10 13:06:24.553 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 13ms
+2026-07-10 13:06:26.279 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 13:06:26.287 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 13:06:29.049 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-10 13:06:29.203 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 13:06:29.229 +05:30 [INF] Handling LogoutCommand
+2026-07-10 13:06:29.337 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 13:06:29.396 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 1177ms
+2026-07-10 13:06:29.651 +05:30 [INF] Handled LogoutCommand
+2026-07-10 13:06:29.654 +05:30 [INF] POST /api/auth/logout responded 204 in 555ms
+2026-07-10 13:07:17.720 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-10 13:07:17.810 +05:30 [INF] Handling LoginCommand
+2026-07-10 13:07:18.075 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-10 13:07:18.717 +05:30 [INF] Handled LoginCommand
+2026-07-10 13:07:18.739 +05:30 [INF] POST /api/auth/login responded 200 in 979ms
+2026-07-10 13:07:23.038 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-10 13:07:23.110 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-10 13:07:23.173 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-10 13:07:23.225 +05:30 [INF] GET /api/quotations responded 200 in 148ms
+2026-07-10 13:07:26.626 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 13:07:26.735 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 13:07:27.131 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 13:07:27.160 +05:30 [INF] GET /api/skus responded 200 in 491ms
+2026-07-10 13:07:30.328 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-10 13:07:30.401 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-10 13:07:30.614 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-10 13:07:30.623 +05:30 [INF] POST /api/quotations/calculate responded 200 in 282ms
+2026-07-10 13:07:39.888 +05:30 [INF] OPTIONS /api/quotations/pending-count responded 204 in 0ms
+2026-07-10 13:07:39.939 +05:30 [INF] Handling GetPendingApprovalsCountQuery
+2026-07-10 13:07:39.954 +05:30 [INF] Handled GetPendingApprovalsCountQuery
+2026-07-10 13:07:39.959 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 25ms
+2026-07-10 13:07:52.884 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-10 13:07:52.905 +05:30 [INF] Handling LogoutCommand
+2026-07-10 13:07:52.933 +05:30 [INF] Handled LogoutCommand
+2026-07-10 13:07:52.935 +05:30 [INF] POST /api/auth/logout responded 204 in 35ms
+2026-07-10 13:07:56.646 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-10 13:07:56.686 +05:30 [INF] Handling LoginCommand
+2026-07-10 13:07:56.896 +05:30 [INF] Handled LoginCommand
+2026-07-10 13:07:56.899 +05:30 [INF] POST /api/auth/login responded 200 in 215ms
+2026-07-10 13:08:00.575 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 13:08:00.602 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 13:08:00.648 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 13:08:00.650 +05:30 [INF] GET /api/skus responded 200 in 58ms
+2026-07-10 13:08:05.093 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-10 13:08:05.110 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-10 13:08:05.116 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-10 13:08:05.118 +05:30 [INF] POST /api/quotations/calculate responded 200 in 12ms
+2026-07-10 13:13:12.954 +05:30 [INF] GET / responded 404 in 125ms
+2026-07-10 13:13:21.972 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 5ms
+2026-07-10 13:13:23.721 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 13:13:23.727 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 13:13:23.778 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 13:13:26.724 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 13:13:26.753 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-10 13:13:27.429 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-10 13:13:27.438 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 13:13:27.466 +05:30 [INF] POST /api/quotations/calculate responded 200 in 1728ms
+2026-07-10 13:13:27.472 +05:30 [INF] GET /api/skus responded 200 in 1733ms
+2026-07-10 13:13:27.496 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 13:13:27.520 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 13:13:27.523 +05:30 [INF] GET /api/skus responded 200 in 46ms
+2026-07-10 13:13:29.393 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-10 13:13:29.420 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-10 13:13:29.422 +05:30 [INF] POST /api/quotations/calculate responded 200 in 44ms
+2026-07-10 13:13:30.674 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-10 13:13:30.683 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-10 13:13:30.686 +05:30 [INF] POST /api/quotations/calculate responded 200 in 19ms
+2026-07-10 13:15:48.877 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-10 13:15:48.956 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-10 13:15:49.023 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-10 13:15:49.028 +05:30 [INF] POST /api/quotations/calculate responded 200 in 89ms
+2026-07-10 13:15:57.778 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-10 13:15:58.065 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-10 13:15:58.184 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-10 13:15:58.290 +05:30 [INF] GET /api/quotations responded 200 in 270ms
+2026-07-10 13:15:58.379 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-10 13:15:58.522 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 13:15:58.584 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 13:15:58.613 +05:30 [INF] GET /api/materials responded 200 in 134ms
+2026-07-10 13:15:59.772 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-10 13:15:59.783 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-10 13:15:59.786 +05:30 [INF] GET /api/quotations responded 200 in 22ms
+2026-07-10 13:16:01.761 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 13:16:01.773 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 13:16:01.776 +05:30 [INF] GET /api/materials responded 200 in 19ms
+2026-07-10 13:16:02.411 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 13:16:02.411 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 13:16:02.431 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 13:16:02.442 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 13:16:02.467 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 13:16:02.473 +05:30 [INF] GET /api/categories responded 200 in 49ms
+2026-07-10 13:16:02.482 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 13:16:02.485 +05:30 [INF] GET /api/skus responded 200 in 58ms
+2026-07-10 13:16:17.019 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-10 13:16:17.139 +05:30 [INF] Handling LogoutCommand
+2026-07-10 13:16:17.443 +05:30 [INF] Handled LogoutCommand
+2026-07-10 13:16:17.446 +05:30 [INF] POST /api/auth/logout responded 204 in 364ms
+2026-07-10 13:16:21.745 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-10 13:16:21.815 +05:30 [INF] Handling LoginCommand
+2026-07-10 13:16:21.974 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-10 13:16:22.435 +05:30 [INF] Handled LoginCommand
+2026-07-10 13:16:22.446 +05:30 [INF] POST /api/auth/login responded 200 in 666ms
+2026-07-10 13:16:24.000 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-10 13:16:24.018 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-10 13:16:24.030 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-10 13:16:24.034 +05:30 [INF] GET /api/quotations responded 200 in 21ms
+2026-07-10 13:16:27.907 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 13:16:27.946 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 13:16:28.012 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 13:16:28.015 +05:30 [INF] GET /api/skus responded 200 in 74ms
+2026-07-10 13:16:31.075 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-10 13:16:31.113 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-10 13:16:31.156 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-10 13:16:31.159 +05:30 [INF] POST /api/quotations/calculate responded 200 in 50ms
+2026-07-10 13:16:39.982 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-10 13:16:40.025 +05:30 [INF] Handling LogoutCommand
+2026-07-10 13:16:40.035 +05:30 [INF] Handled LogoutCommand
+2026-07-10 13:16:40.037 +05:30 [INF] POST /api/auth/logout responded 204 in 17ms
+2026-07-10 13:16:43.405 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-10 13:16:43.441 +05:30 [INF] Handling LoginCommand
+2026-07-10 13:16:43.608 +05:30 [INF] Handled LoginCommand
+2026-07-10 13:16:43.611 +05:30 [INF] POST /api/auth/login responded 200 in 172ms
+2026-07-10 13:16:45.871 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 13:16:45.887 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 13:16:45.900 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 13:16:45.903 +05:30 [INF] GET /api/skus responded 200 in 19ms
+2026-07-10 13:16:47.792 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-10 13:16:47.829 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-10 13:16:47.837 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-10 13:16:47.839 +05:30 [INF] POST /api/quotations/calculate responded 200 in 14ms

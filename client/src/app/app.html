@@ -4,19 +4,18 @@
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <img src="images/logo.jpg" alt="Cabcon Logo" class="toolbar-logo">
+      <img src="Images\Logo.jpg.png" alt="Cabcon Logo" class="toolbar-logo">
       <span class="spacer"></span>
-      
+
       <!-- Notifications for Super Admin -->
       <!-- <button mat-icon-button [matMenuTriggerFor]="notificationMenu" *ngIf="(hasPermission('Quotation.Generate') || hasPermission('Quotation.View')) && pendingApprovalsCount > 0" title="Pending Approvals">
-        <mat-icon [matBadge]="pendingApprovalsCount" matBadgeColor="warn">notifications</mat-icon>
-      </button>
-      <mat-menu #notificationMenu="matMenu">
-        <button mat-menu-item routerLink="/quotations">
-          <span>There are {{pendingApprovalsCount}} Quotations pending for approvable.</span>
-        </button>
-      </mat-menu> -->
-
+    <mat-icon [matBadge]="pendingApprovalsCount" matBadgeColor="warn">notifications</mat-icon>
+  </button>
+  <mat-menu #notificationMenu="matMenu">
+    <button mat-menu-item routerLink="/quotations">
+      <span>There are {{pendingApprovalsCount}} Quotations pending for approvable.</span>
+    </button>
+  </mat-menu> -->
       <!-- User profile info -->
       <div class="user-profile" *ngIf="currentUser() as user">
         <span class="user-name">{{ user.fullName }}</span>
@@ -26,31 +25,31 @@
         </button>
         <mat-menu #profileMenu="matMenu" xPosition="before">
           <div style="padding: 16px; min-width: 250px; max-width: 380px; outline: none; border-bottom: 1px solid rgba(255,255,255,0.1); cursor: default;" (click)="$event.stopPropagation()">
-           <div class="profile-header">
+            <div class="profile-header">
 
-                      <div class="profile-avatar">  <mat-icon>account_circle</mat-icon> </div>
-                           <div class="profile-info">
-                             <div class="profile-name">    {{ user.fullName }}    </div>
-                            <div class="profile-email">  <mat-icon>mail</mat-icon>  {{ user.email }}  </div>
-                           <div class="profile-role">    <mat-icon>verified_user</mat-icon> {{ user.roles.join(', ') }}    </div>
-                            </div>
-                            </div>
-            
-            <!-- <div style="font-size: 13px;">
-              <div style="color: #080808; margin-bottom: 4px;font-weight: 600; font-size: 14px; ">Permissions:</div>
-              <div class="permission-section">
-
-               <div class="permission-group" *ngFor="let group of groupedPermissions">
-                    <div class="module-title">
-                        <mat-icon class="module-icon"> {{ getModuleIcon(group.module) }}  </mat-icon>
-                       <span>{{ group.module }}</span>
-                        </div>
-                      <div class="permission-chips">
-                      <span class="permission-chip" *ngFor="let action of group.actions">  {{ action }} </span>
-                        </div>
-                </div>
+              <div class="profile-avatar">  <mat-icon>account_circle</mat-icon> </div>
+              <div class="profile-info">
+                <div class="profile-name">    {{ user.fullName }}    </div>
+                <div class="profile-email">  <mat-icon>mail</mat-icon>  {{ user.email }}  </div>
+                <div class="profile-role">    <mat-icon>verified_user</mat-icon> {{ user.roles.join(', ') }}    </div>
               </div>
-            </div> -->
+            </div>
+
+            <!-- <div style="font-size: 13px;">
+          <div style="color: #080808; margin-bottom: 4px;font-weight: 600; font-size: 14px; ">Permissions:</div>
+          <div class="permission-section">
+
+           <div class="permission-group" *ngFor="let group of groupedPermissions">
+                <div class="module-title">
+                    <mat-icon class="module-icon"> {{ getModuleIcon(group.module) }}  </mat-icon>
+                   <span>{{ group.module }}</span>
+                    </div>
+                  <div class="permission-chips">
+                  <span class="permission-chip" *ngFor="let action of group.actions">  {{ action }} </span>
+                    </div>
+            </div>
+          </div>
+        </div> -->
           </div>
           <mat-divider></mat-divider>
           <button mat-menu-item class="logout-btn" (click)="openChangePasswordDialog()">
@@ -85,9 +84,9 @@
             <span matListItemTitle>SKUs & BOMs</span>
           </a>
           <!-- <a mat-list-item routerLink="/admin" routerLinkActive="active-link" *ngIf="hasPermission('Users.View')">
-            <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-            <span matListItemTitle>Admin Panel</span>
-          </a> -->
+    <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
+    <span matListItemTitle>Admin Panel</span>
+  </a> -->
         </mat-nav-list>
       </mat-sidenav>
 
