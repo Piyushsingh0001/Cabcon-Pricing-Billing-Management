@@ -7231,3 +7231,258 @@ Cabcon.Shared.Exceptions.AuthenticationFailedException: Refresh token has alread
 2026-07-10 18:23:48.022 +05:30 [INF] Handling GetPendingApprovalsCountQuery
 2026-07-10 18:23:48.029 +05:30 [INF] Handled GetPendingApprovalsCountQuery
 2026-07-10 18:23:48.030 +05:30 [INF] GET /api/quotations/pending-count responded 200 in 11ms
+2026-07-10 18:44:17.319 +05:30 [INF] GET / responded 404 in 142ms
+2026-07-10 18:45:08.034 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 18:45:08.066 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 18:45:49.990 +05:30 [INF] GET / responded 404 in 110ms
+2026-07-10 18:46:42.853 +05:30 [INF] OPTIONS /api/skus responded 204 in 55ms
+2026-07-10 18:46:44.862 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 18:46:44.869 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-10 18:46:45.189 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-10 18:46:47.170 +05:30 [INF] GET /api/skus responded 401 in 131ms
+2026-07-10 18:46:47.170 +05:30 [INF] POST /api/auth/logout responded 401 in 152ms
+2026-07-10 18:46:47.348 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-10 18:46:47.545 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-10 18:46:48.462 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-10 18:46:48.632 +05:30 [ERR] An error occurred using the connection to database 'CabconBillingManagement' on server 'localhost\SQLEXPRESS'.
+2026-07-10 18:46:49.109 +05:30 [ERR] Unhandled exception for RefreshTokenCommand
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Cabcon.Application.Features.Authentication.Commands.RefreshToken.RefreshTokenCommandHandler.Handle(RefreshTokenCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\RefreshToken\RefreshTokenCommandHandler.cs:line 49
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+2026-07-10 18:46:49.116 +05:30 [INF] GET /api/skus responded 401 in 6ms
+2026-07-10 18:47:00.054 +05:30 [INF] GET /api/skus responded 401 in 51ms
+2026-07-10 18:47:00.099 +05:30 [INF] GET /api/skus responded 401 in 52ms
+2026-07-10 18:47:00.223 +05:30 [ERR] Unhandled exception processing POST /api/auth/refresh-token
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Cabcon.Application.Features.Authentication.Commands.RefreshToken.RefreshTokenCommandHandler.Handle(RefreshTokenCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\RefreshToken\RefreshTokenCommandHandler.cs:line 49
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.AuthController.Refresh(RefreshRequest request, CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\AuthController.cs:line 51
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+2026-07-10 18:47:00.250 +05:30 [INF] OPTIONS /api/categories responded 204 in 26ms
+2026-07-10 18:47:00.055 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-10 18:47:00.198 +05:30 [INF] GET /api/skus responded 401 in 123ms
+2026-07-10 18:47:00.220 +05:30 [INF] OPTIONS /api/categories responded 204 in 17ms
+2026-07-10 18:47:00.280 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-10 18:47:00.286 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:47:00.379 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-10 18:47:00.435 +05:30 [INF] GET /api/categories responded 401 in 2ms
+2026-07-10 18:47:00.435 +05:30 [INF] GET /api/quotations responded 401 in 2ms
+2026-07-10 18:47:00.443 +05:30 [INF] GET /api/materials responded 401 in 2ms
+2026-07-10 18:47:00.448 +05:30 [INF] GET /api/skus responded 401 in 2ms
+2026-07-10 18:47:00.461 +05:30 [INF] GET /api/categories responded 401 in 3ms
+2026-07-10 18:47:00.462 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-10 18:47:01.171 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-10 18:47:01.212 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 759ms
+2026-07-10 18:47:01.240 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:47:01.429 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:47:01.430 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-10 18:47:01.493 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:47:01.493 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:47:01.494 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 18:47:01.514 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:47:01.527 +05:30 [INF] GET /api/categories responded 200 in 288ms
+2026-07-10 18:47:01.538 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:47:01.550 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:47:01.554 +05:30 [INF] GET /api/categories responded 200 in 24ms
+2026-07-10 18:47:01.656 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-10 18:47:01.702 +05:30 [INF] GET /api/quotations responded 200 in 464ms
+2026-07-10 18:47:01.719 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 18:47:01.757 +05:30 [INF] GET /api/materials responded 200 in 518ms
+2026-07-10 18:47:01.859 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:47:01.859 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:47:01.882 +05:30 [INF] GET /api/skus responded 200 in 643ms
+2026-07-10 18:47:01.882 +05:30 [INF] GET /api/skus responded 200 in 603ms
+2026-07-10 18:47:06.501 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-10 18:47:06.545 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 18:47:06.561 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 18:47:06.564 +05:30 [INF] GET /api/materials responded 200 in 34ms
+2026-07-10 18:47:08.065 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:47:08.065 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 18:47:08.073 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 18:47:08.074 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 18:47:08.074 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:47:08.158 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 18:47:08.178 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:47:08.178 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:47:08.188 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 18:47:08.190 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:47:08.193 +05:30 [INF] GET /api/materials responded 200 in 119ms
+2026-07-10 18:47:08.195 +05:30 [INF] GET /api/categories responded 200 in 23ms
+2026-07-10 18:47:08.202 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:47:08.208 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:47:08.210 +05:30 [INF] GET /api/categories responded 200 in 13ms
+2026-07-10 18:47:08.217 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:47:08.221 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:47:08.226 +05:30 [INF] GET /api/categories responded 200 in 13ms
+2026-07-10 18:47:08.232 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:47:08.235 +05:30 [INF] GET /api/skus responded 200 in 63ms
+2026-07-10 18:47:08.243 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:47:08.260 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:47:08.266 +05:30 [INF] GET /api/skus responded 200 in 27ms
+2026-07-10 18:47:12.073 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-10 18:47:12.092 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 18:47:12.099 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 18:47:12.104 +05:30 [INF] GET /api/materials responded 200 in 16ms
+2026-07-10 18:47:15.893 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-10 18:47:15.917 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-10 18:47:15.935 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-10 18:47:15.939 +05:30 [INF] GET /api/quotations responded 200 in 26ms
+2026-07-10 18:47:18.335 +05:30 [INF] OPTIONS /api/quotations/26 responded 204 in 0ms
+2026-07-10 18:47:18.393 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-10 18:47:18.525 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-10 18:47:18.545 +05:30 [INF] GET /api/quotations/26 responded 200 in 172ms
+2026-07-10 18:47:26.317 +05:30 [INF] OPTIONS /api/quotations/26 responded 204 in 0ms
+2026-07-10 18:47:26.347 +05:30 [INF] Handling DeleteQuotationCommand
+2026-07-10 18:47:26.529 +05:30 [INF] Handled DeleteQuotationCommand
+2026-07-10 18:47:26.532 +05:30 [INF] DELETE /api/quotations/26 responded 200 in 200ms
+2026-07-10 18:47:28.014 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-10 18:47:28.031 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 18:47:28.036 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 18:47:28.039 +05:30 [INF] GET /api/materials responded 200 in 11ms
+2026-07-10 18:48:01.263 +05:30 [INF] OPTIONS /api/materials/6 responded 204 in 0ms
+2026-07-10 18:48:01.364 +05:30 [INF] Handling UpdateMaterialCommand
+2026-07-10 18:48:01.525 +05:30 [INF] Handled UpdateMaterialCommand
+2026-07-10 18:48:01.528 +05:30 [INF] PUT /api/materials/6 responded 204 in 218ms
+2026-07-10 18:48:01.541 +05:30 [INF] OPTIONS /api/materials/price responded 204 in 0ms
+2026-07-10 18:48:01.599 +05:30 [INF] Handling UpdateMaterialPriceCommand
+2026-07-10 18:48:01.775 +05:30 [INF] Handled UpdateMaterialPriceCommand
+2026-07-10 18:48:01.777 +05:30 [INF] PUT /api/materials/price responded 204 in 225ms
+2026-07-10 18:48:01.792 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-10 18:48:01.812 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 18:48:01.833 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 18:48:01.835 +05:30 [INF] GET /api/materials responded 200 in 30ms
+2026-07-10 18:48:17.528 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-10 18:48:17.557 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-10 18:48:17.575 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-10 18:48:17.579 +05:30 [INF] GET /api/quotations responded 200 in 31ms
+2026-07-10 18:48:18.892 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:48:18.916 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:48:18.964 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:48:18.967 +05:30 [INF] GET /api/skus responded 200 in 54ms
+2026-07-10 18:48:20.027 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 18:48:20.029 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 18:48:20.027 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:48:20.130 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:48:20.027 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:48:20.081 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 18:48:20.129 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 18:48:20.132 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-10 18:48:20.233 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:48:20.242 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:48:20.264 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:48:20.268 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 18:48:20.268 +05:30 [INF] GET /api/categories responded 200 in 40ms
+2026-07-10 18:48:20.277 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:48:20.281 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 18:48:20.281 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:48:20.290 +05:30 [INF] GET /api/categories responded 200 in 17ms
+2026-07-10 18:48:20.286 +05:30 [INF] GET /api/materials responded 200 in 25ms
+2026-07-10 18:48:20.299 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:48:20.304 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:48:20.310 +05:30 [INF] GET /api/categories responded 200 in 17ms
+2026-07-10 18:48:20.312 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:48:20.315 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:48:20.318 +05:30 [INF] GET /api/skus responded 200 in 82ms
+2026-07-10 18:48:20.323 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:48:20.326 +05:30 [INF] GET /api/categories responded 200 in 13ms
+2026-07-10 18:48:20.327 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:48:20.345 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:48:20.348 +05:30 [INF] GET /api/skus responded 200 in 27ms
+2026-07-10 18:48:20.356 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:48:20.367 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:48:20.371 +05:30 [INF] GET /api/skus responded 200 in 20ms
+2026-07-10 18:48:24.449 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:48:24.474 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:48:24.489 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:48:24.492 +05:30 [INF] GET /api/skus responded 200 in 21ms
+2026-07-10 18:48:24.502 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-10 18:48:24.559 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-10 18:48:24.795 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-10 18:48:24.805 +05:30 [INF] POST /api/quotations/calculate responded 200 in 292ms
+2026-07-10 18:48:44.779 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-10 18:48:44.884 +05:30 [INF] Handling SaveQuotationCommand
+2026-07-10 18:48:45.156 +05:30 [INF] Handled SaveQuotationCommand
+2026-07-10 18:48:45.163 +05:30 [INF] POST /api/quotations responded 200 in 343ms
+2026-07-10 18:48:48.135 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 18:48:48.136 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 18:48:48.136 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-10 18:48:48.136 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:48:48.168 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 18:48:48.168 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:48:48.175 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:48:48.178 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:48:48.180 +05:30 [INF] GET /api/categories responded 200 in 15ms
+2026-07-10 18:48:48.181 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 18:48:48.185 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:48:48.189 +05:30 [INF] GET /api/materials responded 200 in 25ms
+2026-07-10 18:48:48.194 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:48:48.198 +05:30 [INF] GET /api/categories responded 200 in 15ms
+2026-07-10 18:48:48.212 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:48:48.215 +05:30 [INF] GET /api/skus responded 200 in 43ms
+2026-07-10 18:48:50.993 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:48:50.996 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:48:50.993 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-10 18:48:51.000 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:48:51.005 +05:30 [INF] GET /api/categories responded 200 in 11ms
+2026-07-10 18:48:51.027 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 18:48:51.027 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:48:51.031 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 18:48:51.033 +05:30 [INF] GET /api/materials responded 200 in 9ms
+2026-07-10 18:48:51.082 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:48:51.084 +05:30 [INF] GET /api/skus responded 200 in 60ms
+2026-07-10 18:49:37.509 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 18:49:37.553 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-10 18:49:37.510 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-10 18:49:37.556 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-10 18:49:37.606 +05:30 [INF] Handling GetSkusQuery
+2026-07-10 18:49:37.606 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-10 18:49:37.607 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:49:37.619 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:49:37.621 +05:30 [INF] GET /api/categories responded 200 in 24ms
+2026-07-10 18:49:37.622 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-10 18:49:37.626 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-10 18:49:37.630 +05:30 [INF] GET /api/materials responded 200 in 31ms
+2026-07-10 18:49:37.639 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-10 18:49:37.644 +05:30 [INF] GET /api/categories responded 200 in 20ms
+2026-07-10 18:49:37.666 +05:30 [INF] Handled GetSkusQuery
+2026-07-10 18:49:37.671 +05:30 [INF] GET /api/skus responded 200 in 72ms
+2026-07-10 18:49:39.981 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-10 18:49:39.981 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-10 18:49:40.010 +05:30 [INF] GET /api/roles responded 403 in 7ms
+2026-07-10 18:49:40.015 +05:30 [INF] Handling GetUsersQuery
+2026-07-10 18:49:40.070 +05:30 [INF] Handled GetUsersQuery
+2026-07-10 18:49:40.094 +05:30 [INF] GET /api/users responded 200 in 91ms
