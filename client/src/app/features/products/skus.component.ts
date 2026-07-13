@@ -113,15 +113,15 @@ export class SkusComponent implements OnInit {
   }
 
   public canCreate(): boolean {
-    return this.authService.hasPermission('Sku.Create');
+    return this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
   }
 
   public canUpdate(): boolean {
-    return this.authService.hasPermission('Sku.Update');
+    return this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
   }
 
   public canDelete(): boolean {
-    return this.authService.hasPermission('Sku.Delete');
+    return this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
   }
 
   private loadCategories() {

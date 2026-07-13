@@ -28,7 +28,7 @@
           <button mat-icon-button class="header-icon-btn" (click)="toggleSelectAll(group.categoryName)" title="Select All / Deselect All">
             <mat-icon style="color: #cbd5e1; font-size: 20px; width: 20px; height: 20px;">select_all</mat-icon>
           </button>
-          <button mat-icon-button class="header-icon-btn" (click)="deleteCategoryByName(group.categoryName)" title="Delete Category">
+          <button mat-icon-button class="header-icon-btn" (click)="deleteCategoryByName(group.categoryName)" title="Delete Category" *ngIf="canDelete()">
             <mat-icon style="color: #fca5a5; font-size: 20px; width: 20px; height: 20px;">delete_forever</mat-icon>
           </button>
         </div>
@@ -74,10 +74,10 @@
                   {{ sku.updatedBy || 'System' }}
                 </td>
                 <td style="white-space: nowrap;">
-                  <button mat-icon-button class="row-icon-btn edit-btn" (click)="editSkuInline(sku)" title="Edit Product">
+                  <button mat-icon-button class="row-icon-btn edit-btn" (click)="editSkuInline(sku)" title="Edit Product" *ngIf="canUpdate()">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button mat-icon-button class="row-icon-btn delete-btn" (click)="deleteSku(sku.id, sku.name)" title="Delete Product">
+                  <button mat-icon-button class="row-icon-btn delete-btn" (click)="deleteSku(sku.id, sku.name)" title="Delete Product" *ngIf="canDelete()">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </td>

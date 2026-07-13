@@ -45,6 +45,7 @@ export class QuotationsListComponent implements OnInit {
   public displayedColumns = ['quoteNumber', 'partyName', 'date', 'totalExGst', 'totalGross', 'createdBy', 'actions'];
   public dataSource = new MatTableDataSource<QuotationSummary>([]);
   public canApprove = this.authService.hasRole('Super Admin');
+  public canDelete = this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
 
   ngOnInit() {
     // Custom filter predicate to match formatted date and selected columns

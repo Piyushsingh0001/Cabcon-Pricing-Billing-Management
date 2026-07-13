@@ -51,7 +51,7 @@ export class MaterialsComponent implements OnInit {
   }
 
   public canUpdate(): boolean {
-    return this.authService.hasPermission('Pricing.Update');
+    return this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
   }
 
   public loadMaterials() {

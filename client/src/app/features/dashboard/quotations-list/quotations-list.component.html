@@ -77,7 +77,7 @@
                 <mat-icon>visibility</mat-icon>
               </button>
               
-              <button mat-icon-button color="warn" (click)="deleteQuotation(element)" *ngIf="element.isActive" title="Remove Quotation" style="margin-left: 8px;">
+              <button mat-icon-button color="warn" (click)="deleteQuotation(element)" *ngIf="element.isActive && canDelete" title="Remove Quotation" style="margin-left: 8px;">
                 <mat-icon>delete</mat-icon>
               </button>
               

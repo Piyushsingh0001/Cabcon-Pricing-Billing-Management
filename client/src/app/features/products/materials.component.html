@@ -13,7 +13,7 @@
     <div class="card glass-card" *ngFor="let element of materials">
       <div class="card-header" style="justify-content: flex-end;">
         <div class="header-actions">
-          <select class="sel" [(ngModel)]="element.type">
+          <select class="sel" [(ngModel)]="element.type" [disabled]="!canUpdate()">
             <option [ngValue]="0">LME-linked</option>
             <option [ngValue]="1">Direct ₹/kg</option>
           </select>
