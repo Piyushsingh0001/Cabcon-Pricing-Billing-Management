@@ -21,6 +21,11 @@ export const routes: Routes = [
     canActivate: [authGuard, permissionGuard('Quotation.View')]
   },
   {
+    path: 'customers',
+    loadComponent: () => import('./features/dashboard/customers/customers.component').then(m => m.CustomersComponent),
+    canActivate: [authGuard, permissionGuard('Quotation.View')]
+  },
+  {
     path: 'materials',
     loadComponent: () => import('./features/products/materials.component').then(m => m.MaterialsComponent),
     canActivate: [authGuard, permissionGuard('Pricing.View')]

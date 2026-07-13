@@ -1,0 +1,222 @@
+<div class="customers-container animated-view">
+
+  <!-- Header -->
+  <div class="header-section">
+
+    <div class="title-section">
+      <div class="page-icon">
+        <mat-icon>groups</mat-icon>
+      </div>
+
+      <div>
+        <h1 class="sh-t">Customer Master</h1>
+        <p class="subtitle">
+          Manage customers, contact numbers, GST details and addresses.
+        </p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search Customers</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Search by Name, GST or Contact">
+      </mat-form-field>
+
+      <button
+        class="btn-ghost add-btn"
+        *ngIf="canEdit && !isAdding()"
+        (click)="showAddForm()">
+
+        <mat-icon>add</mat-icon>
+        Add Customer
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- Add Form -->
+
+  <div
+    class="add-card glass-card"
+    *ngIf="isAdding()">
+
+    <div class="card-title">
+
+      <mat-icon>person_add</mat-icon>
+
+      <span>Add New Customer</span>
+
+    </div>
+
+    <form
+      [formGroup]="addForm"
+      (ngSubmit)="submitAdd()"
+      class="customer-form">
+
+      <div class="form-grid">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Customer Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contact Number</mat-label>
+          <input matInput formControlName="contactNumber">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>GST Number</mat-label>
+          <input matInput formControlName="gstNumber">
+        </mat-form-field>
+
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Address</mat-label>
+        <textarea
+          matInput
+          rows="3"
+          formControlName="address">
+        </textarea>
+      </mat-form-field>
+
+      <div class="form-actions">
+
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="cancelAdd()">
+
+          Cancel
+
+        </button>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="addForm.invalid">
+
+          Save Customer
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- Table -->
+
+ <div class="table-container glass-card">
+
+ <table mat-table [dataSource]="dataSource">
+
+  <!-- Name -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Customer Name</th>
+    <td mat-cell *matCellDef="let element">
+      <strong>{{ element.name }}</strong>
+    </td>
+  </ng-container>
+
+  <!-- Contact -->
+  <ng-container matColumnDef="contactNumber">
+    <th mat-header-cell *matHeaderCellDef>Contact Number</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.contactNumber || '-' }}
+    </td>
+  </ng-container>
+
+  <!-- GST -->
+  <ng-container matColumnDef="gstNumber">
+    <th mat-header-cell *matHeaderCellDef>GST Number</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.gstNumber || '-' }}
+    </td>
+  </ng-container>
+
+  <!-- Address -->
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef>Address</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.address || '-' }}
+    </td>
+  </ng-container>
+
+  <!-- Updated By -->
+  <ng-container matColumnDef="updatedBy">
+    <th mat-header-cell *matHeaderCellDef>Updated By</th>
+    <td mat-cell *matCellDef="let element">
+      <div class="updated-user">
+        {{ element.updatedBy || 'System' }}
+        <small *ngIf="element.updatedDate">
+          {{ element.updatedDate | date:'short' }}
+        </small>
+      </div>
+    </td>
+  </ng-container>
+
+  <!-- Actions -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let element">
+
+      <button
+        mat-icon-button
+        color="warn"
+        *ngIf="canEdit"
+        (click)="deleteCustomer(element)"
+        matTooltip="Delete Customer">
+
+        <mat-icon>delete</mat-icon>
+
+      </button>
+
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+
+  </div>
+
+  <ng-template #noCustomers>
+
+   <div
+  class="empty-state glass-card"
+  *ngIf="dataSource.data.length === 0 && !isAdding()">
+
+      <mat-icon>groups</mat-icon>
+
+      <h2>No Customers Yet</h2>
+
+      <p>
+        Add your first customer to begin managing quotations.
+      </p>
+
+      <button
+        class="btn-ghost"
+        *ngIf="canEdit"
+        (click)="showAddForm()">
+
+        <mat-icon>add</mat-icon>
+            Add Customer
+      </button>
+
+    </div>
+
+  </ng-template>
+
+</div>

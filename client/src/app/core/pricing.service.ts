@@ -130,6 +130,16 @@ export interface QuotationDetails {
   lines: QuotationLine[];
 }
 
+export interface CustomerSummary {
+  id: number;
+  name: string;
+  contactNumber?: string;
+  gstNumber?: string;
+  address?: string;
+  updatedBy?: string;
+  updatedDate?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -269,6 +279,23 @@ export class PricingService {
 
   public deleteSku(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiBase}/skus/${id}`);
+  }
+
+  public deleteRole(roleId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiBase}/roles/${roleId}`);
+  }
+
+  // --- Customers ---
+  public getCustomers(): Observable<CustomerSummary[]> {
+    return this.http.get<CustomerSummary[]>(`${this.apiBase}/customers`);
+  }
+
+  public createCustomer(payload: any): Observable<number> {
+    return this.http.post<number>(`${this.apiBase}/customers`, payload);
+  }
+
+  public deleteCustomer(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiBase}/customers/${id}`);
   }
 
   // --- Quotations ---

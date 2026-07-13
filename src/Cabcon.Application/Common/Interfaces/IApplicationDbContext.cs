@@ -1,5 +1,7 @@
 using Cabcon.Domain.Entities.Audit;
 using Cabcon.Domain.Entities.Identity;
+using Cabcon.Domain.Entities.Billing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cabcon.Application.Common.Interfaces;
@@ -25,6 +27,7 @@ public interface IApplicationDbContext
     DbSet<PasswordResetToken> PasswordResetTokens { get; }
     DbSet<EmailVerificationToken> EmailVerificationTokens { get; }
     DbSet<LoginHistory> LoginHistory { get; }
+    DbSet<Customer> Customers { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

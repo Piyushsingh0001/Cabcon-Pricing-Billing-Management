@@ -45,7 +45,12 @@
     <div class="client-details">
       <h3>Customer Details</h3>
       <div class="party-name"><strong>Party Name:</strong> {{data.partyName}}</div>
-      <div class="price-basis"><strong>Price Basis:</strong> {{data.priceBasisNote}}</div>
+      <div *ngIf="data.customerDetails" style="margin-top: 4px;">
+        <div *ngIf="data.customerDetails.contactNumber"><strong>Contact:</strong> {{data.customerDetails.contactNumber}}</div>
+        <div *ngIf="data.customerDetails.gstNumber"><strong>GST No:</strong> {{data.customerDetails.gstNumber}}</div>
+        <div *ngIf="data.customerDetails.address"><strong>Address:</strong> {{data.customerDetails.address}}</div>
+      </div>
+      <div class="price-basis" style="margin-top: 8px;"><strong>Price Basis:</strong> {{data.priceBasisNote}}</div>
     </div>
 
     <div class="table-container">

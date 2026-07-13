@@ -75,6 +75,10 @@
             <mat-icon matListItemIcon>receipt</mat-icon>
             <span matListItemTitle>Quotation History</span>
           </a>
+          <a mat-list-item routerLink="/customers" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
+            <mat-icon matListItemIcon>groups</mat-icon>
+            <span matListItemTitle>Customer Master</span>
+          </a>
           <a mat-list-item routerLink="/materials" routerLinkActive="active-link" *ngIf="hasPermission('Pricing.View')" (click)="onMaterialPricesClick()">
             <mat-icon matListItemIcon>category</mat-icon>
             <span matListItemTitle>Material Prices</span>

@@ -55,6 +55,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
     // Billing
     public DbSet<Quotation> Quotations => Set<Quotation>();
     public DbSet<QuotationLine> QuotationLines => Set<QuotationLine>();
+    public DbSet<Customer> Customers => Set<Customer>();
 
     // Settings
     public DbSet<ApplicationSetting> ApplicationSettings => Set<ApplicationSetting>();
@@ -208,7 +209,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
             // Only audit tracked entities
             if (typeName != "Material" && typeName != "Sku" && typeName != "SkuBomLine" && 
                 typeName != "Role" && typeName != "UserRole" && typeName != "RolePermission" && 
-                typeName != "User" && typeName != "Quotation")
+                typeName != "User" && typeName != "Quotation" && typeName != "Customer")
             {
                 continue;
             }
@@ -244,6 +245,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
                     "RolePermission" => "Role",
                     "User" => "User",
                     "Quotation" => "Quotation",
+                    "Customer" => "Customer",
                     _ => "General"
                 }
             };

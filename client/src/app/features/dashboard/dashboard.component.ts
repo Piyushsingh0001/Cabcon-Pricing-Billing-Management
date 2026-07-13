@@ -9,7 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
-import { PricingService, Sku, Material } from '../../core/pricing.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { PricingService, Sku, Material, CustomerSummary } from '../../core/pricing.service';
 import { QuotationPreviewDialogComponent } from './quotation-preview-dialog/quotation-preview-dialog.component';
 
 interface CalculatorRow {
@@ -45,7 +46,8 @@ interface CalculatorRow {
     MatIconModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
@@ -70,7 +72,11 @@ export class DashboardComponent implements OnInit {
 
   // Footer inputs
   public partyName: string = '';
+  public selectedCustomer: CustomerSummary | null = null;
   public validityDays: number = 7;
+
+  public customers: CustomerSummary[] = [];
+  public filteredCustomers: CustomerSummary[] = [];
 
   // Selected SKUs to hold overrides state
   public overridesMap = new Map<number, {
@@ -88,7 +94,31 @@ export class DashboardComponent implements OnInit {
     if (savedDraft) {
       this.hasDraft = true;
     }
+    this.loadCustomers();
     this.loadSkusAndRecalculate();
+  }
+
+  private loadCustomers() {
+    this.pricingService.getCustomers().subscribe({
+      next: (res) => {
+        this.customers = res || [];
+        this.filteredCustomers = this.customers;
+      }
+    });
+  }
+
+  public filterCustomers(event: Event) {
+    const val = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredCustomers = this.customers.filter(c => c.name.toLowerCase().includes(val));
+    
+    // If they typed a name that exactly matches, select it, otherwise clear selectedCustomer
+    const match = this.customers.find(c => c.name.toLowerCase() === val);
+    this.selectedCustomer = match || null;
+  }
+
+  public onCustomerSelected(customer: CustomerSummary) {
+    this.selectedCustomer = customer;
+    this.partyName = customer.name;
   }
 
   private loadSkusAndRecalculate() {
@@ -367,6 +397,7 @@ export class DashboardComponent implements OnInit {
       width: '750px',
       data: {
         partyName: this.partyName,
+        customerDetails: this.selectedCustomer,
         validityDays: this.validityDays,
         priceBasisNote: priceBasisNote,
         totalExGst: this.totalOfferExGst,
