@@ -1,6 +1,7 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap, catchError, throwError, of, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 export interface UserSession {
@@ -21,8 +22,7 @@ export interface UserSession {
 })
 export class AuthService {
   private http = inject(HttpClient);
- private readonly apiBase = 'https://localhost:55027/api/auth'; // Matches WebApi launchSettings.json
- //  private readonly apiBase = `${environment.apiBase}/auth`;
+  private readonly apiBase = `${environment.apiBase}/auth`;
   // Signals
   private sessionSignal = signal<UserSession | null>(null);
   

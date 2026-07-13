@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface PaginatedResult<T> {
   items: T[];
@@ -134,7 +135,7 @@ export interface QuotationDetails {
 })
 export class PricingService {
   private http = inject(HttpClient);
- private readonly apiBase = 'https://localhost:55027/api';
+  private readonly apiBase = environment.apiBase;
   public pendingApprovalUpdated = new Subject<void>();
   public refreshMaterials = new Subject<void>();
   public refreshSkus = new Subject<void>();

@@ -13,6 +13,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../core/auth.service';
 import { PricingService } from '../../core/pricing.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -159,8 +160,7 @@ export class LoginComponent implements OnInit {
     };
 
     // Call public forgot-password API: POST /api/auth/forgot-password
-     this.http.post('https://localhost:55027/api/auth/forgot-password', payload).subscribe({
-      //this.http.post('https://skuquotation.runasp.net/api/auth/forgot-password', payload).subscribe({
+    this.http.post(`${environment.apiBase}/auth/forgot-password`, payload).subscribe({
       next: (res: any) => {
         this.isLoading.set(false);
         this.snackBar.open(res.message || 'Password reset link sent to your email.', 'Close', { duration: 5000 });
