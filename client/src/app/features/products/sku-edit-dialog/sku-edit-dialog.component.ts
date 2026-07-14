@@ -41,6 +41,7 @@ export class SkuEditDialogComponent implements OnInit {
   private pricingService = inject(PricingService);
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
+  private cdr = inject(ChangeDetectorRef);
   public loading = signal(false);
 
   public form: FormGroup;
@@ -95,7 +96,10 @@ export class SkuEditDialogComponent implements OnInit {
       // Populate form lines if editing
       if (this.sku && this.sku.bomLines) {
         this.sku.bomLines.forEach((line: any) => {
+          const mat = this.materials.find(m => m.id === line.materialId);
           this.bomLines.push(this.fb.group({
+            materialName: [mat ? mat.name : '', Validators.required],
+            vendorName: [{value: mat ? (mat.vendorName || 'Default') : '', disabled: !mat}, Validators.required],
             materialId: [line.materialId, Validators.required],
             weightKg: [line.weightKg, [Validators.required, Validators.min(0.0001)]]
           }));
@@ -103,21 +107,28 @@ export class SkuEditDialogComponent implements OnInit {
       } else {
         this.addBomLine();
       }
+      this.cdr.detectChanges();
     });
   }
 
+  public get uniqueMaterialNames(): string[] {
+    return Array.from(new Set(this.materials.map(m => m.name)));
+  }
+
   public addBomLine() {
-    const avail = this.getAvailableMaterials(-1);
-    const defaultMaterialId = avail.length > 0 ? avail[0].id : '';
     this.bomLines.push(this.fb.group({
-      materialId: [defaultMaterialId, Validators.required],
+      materialName: ['', Validators.required],
+      vendorName: [{value: '', disabled: true}, Validators.required],
+      materialId: [null, Validators.required],
       weightKg: [0.1, [Validators.required, Validators.min(0.0001)]]
     }));
+    this.cdr.detectChanges();
   }
 
   public removeBomLine(idx: number) {
     this.bomLines.removeAt(idx);
     this.checkUniqueness();
+    this.cdr.detectChanges();
   }
 
   public getLandedCost(materialId: any): number {
@@ -135,12 +146,46 @@ export class SkuEditDialogComponent implements OnInit {
     }
   }
 
-  public getAvailableMaterials(idx: number): Material[] {
-    const selectedIds = this.bomLines.controls
-      .map((ctrl, i) => i !== idx ? Number(ctrl.get('materialId')?.value) : null)
-      .filter(id => id !== null && !isNaN(id));
+  public getAvailableVendors(idx: number): string[] {
+    const line = this.bomLines.at(idx);
+    const matName = line.get('materialName')?.value;
+    if (!matName) return [];
+    const vendors = this.materials
+      .filter(m => m.name === matName)
+      .map(m => m.vendorName || 'Default');
+    return Array.from(new Set(vendors));
+  }
 
-    return this.materials.filter(m => !selectedIds.includes(m.id));
+  public onMaterialNameChange(idx: number) {
+    const line = this.bomLines.at(idx);
+    const vendorCtrl = line.get('vendorName');
+    
+    line.patchValue({ vendorName: '', materialId: null });
+    
+    if (line.get('materialName')?.value) {
+      vendorCtrl?.enable();
+    } else {
+      vendorCtrl?.disable();
+    }
+    
+    this.checkUniqueness();
+    this.cdr.detectChanges();
+  }
+
+  public onVendorNameChange(idx: number) {
+    const line = this.bomLines.at(idx);
+    const matName = line.get('materialName')?.value;
+    const vendName = line.get('vendorName')?.value;
+    if (matName && vendName) {
+      const mat = this.materials.find(m => m.name === matName && (m.vendorName || 'Default') === vendName);
+      if (mat) {
+        line.patchValue({ materialId: mat.id });
+      } else {
+        line.patchValue({ materialId: null });
+      }
+    }
+    this.checkUniqueness();
+    this.cdr.detectChanges();
   }
 
   public checkUniqueness() {

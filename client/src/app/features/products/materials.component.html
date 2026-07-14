@@ -5,9 +5,9 @@
       <p class="subtitle">Update inputs, then stamp the date. Exchange metals build up from LME; others are a direct ₹/kg.</p>
     </div>
     <div style="display: flex; gap: 8px;">
-      <button class="btn-ghost" (click)="toggleAverages()">
+      <!-- <button class="btn-ghost" (click)="toggleAverages()">
         <mat-icon style="vertical-align: middle;">calendar_month</mat-icon> Monthly Averages
-      </button>
+      </button> -->
       <button class="btn-ghost" (click)="addMaterial()" *ngIf="canUpdate()">
         + Add material
       </button>
@@ -56,10 +56,14 @@
     <div class="card glass-card" *ngFor="let group of materialGroups">
       <div class="card-header" style="justify-content: flex-end;">
         <div class="header-actions">
-          <select class="sel" [(ngModel)]="group.selectedVariant.type" [disabled]="!canUpdate()">
+          <select class="sel" [(ngModel)]="group.selectedVariant.type" (ngModelChange)="onTypeChange(group)" [disabled]="!canUpdate()">
             <option [ngValue]="0">LME-linked</option>
             <option [ngValue]="1">Direct ₹/kg</option>
           </select>
+          
+          <button mat-icon-button color="primary" (click)="openTrendChart(group)" title="View Trend Chart">
+            <mat-icon>trending_up</mat-icon>
+          </button>
           
           <button mat-icon-button color="accent" (click)="viewHistory(group)" title="View Price History">
             <mat-icon>history</mat-icon>
@@ -70,7 +74,7 @@
       <div class="material-name-row" style="margin-bottom: 4px;">
         <input class="bare" [value]="group.name" disabled placeholder="Material Name">
       </div>
-      <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; display: flex; align-items: center; gap: 4px;">
+      <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
         Vendor: 
         <select class="bare" style="width: auto; font-size: 12px; font-weight: normal; background: transparent; padding: 2px;" 
                 [(ngModel)]="group.selectedVariantId" 
@@ -79,6 +83,17 @@
             {{ variant.vendorName || 'Default Vendor' }}
           </option>
         </select>
+      </div>
+
+      <div class="avg-price-row" style="font-size: 12px; margin-bottom: 12px; display: flex; align-items: center; gap: 4px; color: var(--text-secondary);">
+        Avg Price:
+        <select class="bare" style="width: auto; font-size: 12px; font-weight: 500; background: transparent; padding: 2px; color: var(--text-primary);" 
+                [(ngModel)]="group.avgPriceRange" 
+                (ngModelChange)="calculateGroupAvg(group)">
+          <option value="this_month">This Month</option>
+          <option value="prev_month">Prev Month</option>
+        </select>
+        <span style="font-weight: 600; color: var(--text-primary);">₹{{ group.calculatedAvg | number:'1.2-2' }}</span>
       </div>
 
       <div class="badge-row" *ngIf="group.selectedVariant.isPlaceholder">

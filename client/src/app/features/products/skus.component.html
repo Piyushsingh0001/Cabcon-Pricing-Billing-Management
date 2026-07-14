@@ -5,6 +5,10 @@
       <p class="subtitle">Cost recalculates from current prices. Tick products to take into an offer.</p>
     </div>
     <div class="action-buttons-header">
+      <div class="search-container" style="position: relative; margin-right: 12px;">
+        <mat-icon style="position: absolute; left: 10px; top: 10px; color: var(--text-secondary);">search</mat-icon>
+        <input type="text" class="in" style="padding-left: 36px; width: 220px;" placeholder="Search products..." [(ngModel)]="searchQuery" (keyup)="onSearchChange()">
+      </div>
       <button class="btn-ghost" (click)="addSku()" *ngIf="canCreate()">
         + Add product
       </button>
@@ -27,6 +31,9 @@
         <div class="header-actions" (click)="$event.stopPropagation()" style="display: flex; align-items: center; gap: 4px;">
           <button mat-icon-button class="header-icon-btn" (click)="toggleSelectAll(group.categoryName)" title="Select All / Deselect All">
             <mat-icon style="color: #cbd5e1; font-size: 20px; width: 20px; height: 20px;">select_all</mat-icon>
+          </button>
+          <button mat-icon-button class="header-icon-btn" (click)="addSku(group.categoryName)" title="Add Product to Category" *ngIf="canCreate()">
+            <mat-icon style="color: #60a5fa; font-size: 20px; width: 20px; height: 20px;">add_circle</mat-icon>
           </button>
           <button mat-icon-button class="header-icon-btn" (click)="deleteCategoryByName(group.categoryName)" title="Delete Category" *ngIf="canDelete()">
             <mat-icon style="color: #fca5a5; font-size: 20px; width: 20px; height: 20px;">delete_forever</mat-icon>

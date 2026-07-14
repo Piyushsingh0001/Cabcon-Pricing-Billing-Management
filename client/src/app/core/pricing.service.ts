@@ -31,6 +31,12 @@ export interface Material {
   isPlaceholder: boolean;
   landedCost: number;
   updatedBy?: string;
+  missingDaysCountLme?: number;
+  missingDaysCountDirect?: number;
+  thisMonthAvgLme?: number;
+  prevMonthAvgLme?: number;
+  thisMonthAvgDirect?: number;
+  prevMonthAvgDirect?: number;
 }
 
 export interface MaterialPriceHistory {
@@ -181,8 +187,12 @@ export class PricingService {
     return this.http.get<PaginatedResult<Material>>(`${this.apiBase}/materials`, { params });
   }
 
-  public getMaterialHistory(materialId: number): Observable<MaterialPriceHistory[]> {
-    return this.http.get<MaterialPriceHistory[]>(`${this.apiBase}/materials/${materialId}/history`);
+  public getMaterialHistory(materialId: number, type?: number): Observable<MaterialPriceHistory[]> {
+    let url = `${this.apiBase}/materials/${materialId}/history`;
+    if (type !== undefined) {
+      url += `?type=${type}`;
+    }
+    return this.http.get<MaterialPriceHistory[]>(url);
   }
 
   public updateMaterialPrice(payload: any): Observable<void> {
@@ -197,8 +207,12 @@ export class PricingService {
     return this.http.post<void>(`${this.apiBase}/materials/${materialId}/backfill`, prices);
   }
 
-  public getMissingDates(materialId: number): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiBase}/materials/${materialId}/missing-dates`);
+  public getMissingDates(materialId: number, type?: number): Observable<string[]> {
+    let url = `${this.apiBase}/materials/${materialId}/missing-dates`;
+    if (type !== undefined && type !== null) {
+      url += `?type=${type}`;
+    }
+    return this.http.get<string[]>(url);
   }
 
   public getMonthlyAverage(month: number, year: number): Observable<any[]> {

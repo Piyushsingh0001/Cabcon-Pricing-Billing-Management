@@ -47,7 +47,7 @@ export class MaterialBackfillDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading.set(true);
-    this.pricingService.getMissingDates(this.material.id).subscribe({
+    this.pricingService.getMissingDates(this.material.id, this.material.type).subscribe({
       next: (dates) => {
         this.missingDates = dates.map(d => new Date(d));
         this.buildFormArray();
@@ -75,7 +75,7 @@ export class MaterialBackfillDialogComponent implements OnInit {
     const dateStr = date.toISOString().substring(0, 10);
     return this.fb.group({
       date: [dateStr],
-      type: [this.material.type],
+      type: [{ value: this.material.type, disabled: true }],
       lmeUsdPerMt: [this.material.lmeUsdPerMt || 0, [Validators.min(0)]],
       premiumUsdPerMt: [this.material.premiumUsdPerMt || 0, [Validators.min(0)]],
       fxRate: [this.material.fxRate || 0, [Validators.min(0)]],
@@ -96,8 +96,8 @@ export class MaterialBackfillDialogComponent implements OnInit {
 
     // Convert date string to actual Date object or leave as ISO string for backend
     const payload = formValues.map((p: any) => {
-      const result: any = { date: p.date, type: p.type };
-      if (p.type === 0) {
+      const result: any = { date: p.date, type: this.material.type };
+      if (this.material.type === 0) {
         result.lmeUsdPerMt = p.lmeUsdPerMt;
         result.premiumUsdPerMt = p.premiumUsdPerMt;
         result.fxRate = p.fxRate;

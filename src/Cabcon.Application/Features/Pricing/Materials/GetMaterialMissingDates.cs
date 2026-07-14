@@ -3,9 +3,11 @@ using Cabcon.Domain.Entities.Pricing;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
+using Cabcon.Domain.Enums;
+
 namespace Cabcon.Application.Features.Pricing.Materials;
 
-public record GetMaterialMissingDatesQuery(int MaterialId) : IRequest<IReadOnlyList<DateTime>>;
+public record GetMaterialMissingDatesQuery(int MaterialId, MaterialType? Type = null) : IRequest<IReadOnlyList<DateTime>>;
 
 public class GetMaterialMissingDatesQueryHandler : IRequestHandler<GetMaterialMissingDatesQuery, IReadOnlyList<DateTime>>
 {
@@ -30,8 +32,15 @@ public class GetMaterialMissingDatesQueryHandler : IRequestHandler<GetMaterialMi
         var end = DateTime.UtcNow.Date;
         var start = end.AddDays(-30);
         
-        var historyDates = await _historyRepository.Query()
-            .Where(h => h.MaterialId == request.MaterialId && h.EffectiveDate >= start && h.EffectiveDate < end)
+        var query = _historyRepository.Query()
+            .Where(h => h.MaterialId == request.MaterialId && h.EffectiveDate >= start && h.EffectiveDate < end);
+
+        if (request.Type.HasValue)
+        {
+            query = query.Where(h => h.Type == request.Type.Value);
+        }
+
+        var historyDates = await query
             .Select(h => h.EffectiveDate.Date)
             .Distinct()
             .ToListAsync(cancellationToken);

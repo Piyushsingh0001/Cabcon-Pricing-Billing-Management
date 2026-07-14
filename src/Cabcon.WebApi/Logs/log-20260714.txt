@@ -4068,3 +4068,1544 @@ Cabcon.Shared.Exceptions.AuthenticationFailedException: Invalid username or pass
 2026-07-14 16:30:00.144 +05:30 [INF] GET /api/materials responded 200 in 31ms
 2026-07-14 16:30:00.148 +05:30 [INF] Handled GetSkusQuery
 2026-07-14 16:30:00.149 +05:30 [INF] GET /api/skus responded 200 in 36ms
+2026-07-14 16:39:08.712 +05:30 [INF] GET / responded 404 in 57ms
+2026-07-14 16:39:43.736 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 8ms
+2026-07-14 16:39:44.641 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-14 16:39:44.643 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-14 16:39:45.663 +05:30 [INF] Handling LoginCommand
+2026-07-14 16:39:46.189 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-14 16:39:46.708 +05:30 [INF] Handled LoginCommand
+2026-07-14 16:39:46.730 +05:30 [INF] POST /api/auth/login responded 200 in 1142ms
+2026-07-14 16:39:46.780 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:39:46.780 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:39:46.780 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:39:46.780 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:39:46.986 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:39:46.999 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:39:46.999 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:39:47.007 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:39:47.010 +05:30 [INF] GET /api/categories responded 200 in 108ms
+2026-07-14 16:39:47.016 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:39:47.019 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:39:47.020 +05:30 [INF] GET /api/categories responded 200 in 8ms
+2026-07-14 16:39:47.128 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:39:47.139 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:39:47.148 +05:30 [INF] GET /api/skus responded 200 in 239ms
+2026-07-14 16:39:47.154 +05:30 [INF] GET /api/materials responded 200 in 243ms
+2026-07-14 16:39:51.258 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:39:51.259 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:39:51.267 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:39:51.271 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:39:51.273 +05:30 [INF] GET /api/categories responded 200 in 15ms
+2026-07-14 16:39:51.276 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:39:51.277 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:39:51.284 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:39:51.287 +05:30 [INF] GET /api/materials responded 200 in 15ms
+2026-07-14 16:39:51.353 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:39:51.356 +05:30 [INF] GET /api/skus responded 200 in 82ms
+2026-07-14 16:40:34.484 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:40:34.484 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:40:34.484 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:40:34.505 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:40:34.506 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:40:34.506 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:40:34.509 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:40:34.511 +05:30 [INF] GET /api/categories responded 200 in 11ms
+2026-07-14 16:40:34.531 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:40:34.533 +05:30 [INF] GET /api/materials responded 200 in 33ms
+2026-07-14 16:40:34.545 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:40:34.547 +05:30 [INF] GET /api/skus responded 200 in 47ms
+2026-07-14 16:40:46.533 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:40:46.533 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:40:46.533 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:40:46.545 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:40:46.545 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:40:46.545 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:40:46.548 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:40:46.550 +05:30 [INF] GET /api/categories responded 200 in 8ms
+2026-07-14 16:40:46.552 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:40:46.553 +05:30 [INF] GET /api/materials responded 200 in 11ms
+2026-07-14 16:40:46.554 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:40:46.556 +05:30 [INF] GET /api/skus responded 200 in 14ms
+2026-07-14 16:40:56.833 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:40:56.833 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:40:56.833 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:40:56.845 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:40:56.846 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:40:56.848 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:40:56.848 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:40:56.849 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 16:40:56.853 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:40:56.853 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:40:56.854 +05:30 [INF] GET /api/skus responded 200 in 10ms
+2026-07-14 16:40:56.854 +05:30 [INF] GET /api/materials responded 200 in 8ms
+2026-07-14 16:41:04.075 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:41:04.075 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:41:04.075 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:41:04.088 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:41:04.089 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:41:04.089 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:41:04.090 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:41:04.093 +05:30 [INF] GET /api/categories responded 200 in 6ms
+2026-07-14 16:41:04.095 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:41:04.097 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:41:04.097 +05:30 [INF] GET /api/materials responded 200 in 10ms
+2026-07-14 16:41:04.099 +05:30 [INF] GET /api/skus responded 200 in 12ms
+2026-07-14 16:42:00.989 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:42:00.989 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:42:00.990 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:42:01.019 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:42:01.019 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:42:01.047 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:42:01.052 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:42:01.053 +05:30 [INF] GET /api/categories responded 200 in 38ms
+2026-07-14 16:42:01.065 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:42:01.066 +05:30 [INF] GET /api/materials responded 200 in 51ms
+2026-07-14 16:42:01.077 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:42:01.079 +05:30 [INF] GET /api/skus responded 200 in 64ms
+2026-07-14 16:44:01.294 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:44:01.294 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:44:01.294 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:44:01.352 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:44:01.352 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:44:01.353 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:44:01.357 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:44:01.359 +05:30 [INF] GET /api/categories responded 200 in 10ms
+2026-07-14 16:44:01.370 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:44:01.372 +05:30 [INF] GET /api/materials responded 200 in 23ms
+2026-07-14 16:44:01.386 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:44:01.387 +05:30 [INF] GET /api/skus responded 200 in 37ms
+2026-07-14 16:44:13.677 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:44:13.677 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:44:13.678 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:44:13.687 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:44:13.688 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:44:13.688 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:44:13.689 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:44:13.692 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:44:13.692 +05:30 [INF] GET /api/categories responded 200 in 6ms
+2026-07-14 16:44:13.693 +05:30 [INF] GET /api/materials responded 200 in 7ms
+2026-07-14 16:44:13.694 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:44:13.697 +05:30 [INF] GET /api/skus responded 200 in 11ms
+2026-07-14 16:48:07.791 +05:30 [INF] GET / responded 404 in 46ms
+2026-07-14 16:48:09.869 +05:30 [INF] OPTIONS /api/categories responded 204 in 7ms
+2026-07-14 16:48:09.869 +05:30 [INF] OPTIONS /api/materials responded 204 in 7ms
+2026-07-14 16:48:09.869 +05:30 [INF] OPTIONS /api/skus responded 204 in 7ms
+2026-07-14 16:48:09.869 +05:30 [INF] OPTIONS /api/categories responded 204 in 7ms
+2026-07-14 16:48:10.763 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-14 16:48:10.764 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-14 16:48:12.349 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:12.351 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:48:12.354 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:12.375 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:12.387 +05:30 [INF] GET /api/categories responded 200 in 563ms
+2026-07-14 16:48:12.394 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:12.397 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:12.399 +05:30 [INF] GET /api/categories responded 200 in 10ms
+2026-07-14 16:48:12.545 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:48:12.565 +05:30 [INF] GET /api/materials responded 200 in 740ms
+2026-07-14 16:48:12.579 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:12.593 +05:30 [INF] GET /api/skus responded 200 in 768ms
+2026-07-14 16:48:14.745 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:14.745 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:48:14.751 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:14.755 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:14.757 +05:30 [INF] GET /api/categories responded 200 in 11ms
+2026-07-14 16:48:14.759 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:48:14.759 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:14.767 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:48:14.768 +05:30 [INF] GET /api/materials responded 200 in 12ms
+2026-07-14 16:48:14.834 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:14.837 +05:30 [INF] GET /api/skus responded 200 in 81ms
+2026-07-14 16:48:20.980 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:48:20.980 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:20.980 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:48:21.006 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:21.007 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:48:21.007 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:21.012 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:21.014 +05:30 [INF] GET /api/categories responded 200 in 16ms
+2026-07-14 16:48:21.033 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:48:21.035 +05:30 [INF] GET /api/materials responded 200 in 37ms
+2026-07-14 16:48:21.047 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:21.049 +05:30 [INF] GET /api/skus responded 200 in 51ms
+2026-07-14 16:48:29.045 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:29.045 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:48:29.045 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 16:48:29.066 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:29.066 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:29.066 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 16:48:29.070 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:29.072 +05:30 [INF] GET /api/categories responded 200 in 10ms
+2026-07-14 16:48:29.086 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 16:48:29.088 +05:30 [INF] GET /api/materials responded 200 in 27ms
+2026-07-14 16:48:29.099 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:29.102 +05:30 [INF] GET /api/skus responded 200 in 41ms
+2026-07-14 16:48:43.224 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:48:43.224 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:43.234 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:43.234 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:43.237 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:43.238 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 16:48:43.314 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:43.316 +05:30 [INF] GET /api/skus responded 200 in 83ms
+2026-07-14 16:48:47.386 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:47.389 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:47.392 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:47.393 +05:30 [INF] GET /api/categories responded 200 in 7ms
+2026-07-14 16:48:47.395 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:47.400 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:47.402 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-07-14 16:48:48.140 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:48.144 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:48.145 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:48.146 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 16:48:48.150 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:48.152 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:48.153 +05:30 [INF] GET /api/skus responded 200 in 3ms
+2026-07-14 16:48:48.526 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:48:48.526 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:48.536 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:48.536 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:48.538 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:48.538 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 16:48:48.540 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:48.542 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 16:48:50.209 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:50.209 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:50.213 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:50.213 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:50.214 +05:30 [INF] GET /api/categories responded 200 in 7ms
+2026-07-14 16:48:50.215 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-07-14 16:48:50.464 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:50.464 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:50.466 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:50.467 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 16:48:50.470 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:50.471 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-14 16:48:50.651 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:50.653 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:50.654 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:50.655 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 16:48:50.659 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:50.661 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:50.662 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 16:48:50.872 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:50.875 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:50.877 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:50.878 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 16:48:50.883 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:50.906 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:50.907 +05:30 [INF] GET /api/skus responded 200 in 26ms
+2026-07-14 16:48:54.429 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:48:54.429 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:54.439 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:54.439 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:54.441 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:54.442 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 16:48:54.444 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:54.445 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 16:48:54.855 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:54.857 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:54.859 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:54.860 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 16:48:54.862 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:54.891 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:54.892 +05:30 [INF] GET /api/skus responded 200 in 31ms
+2026-07-14 16:48:55.988 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:55.990 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:55.992 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:55.992 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 16:48:55.997 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:56.001 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:56.001 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 16:48:57.400 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:57.400 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:57.404 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:57.404 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:57.405 +05:30 [INF] GET /api/categories responded 200 in 7ms
+2026-07-14 16:48:57.406 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-14 16:48:57.632 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:57.632 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:57.633 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:57.634 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 16:48:57.636 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:57.636 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 16:48:57.841 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:48:57.843 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:57.845 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:57.845 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 16:48:57.849 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:57.851 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:57.852 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 16:48:58.076 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:58.077 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:58.080 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:58.081 +05:30 [INF] GET /api/categories responded 200 in 7ms
+2026-07-14 16:48:58.083 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:58.084 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-14 16:48:58.336 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:58.336 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:58.338 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:58.338 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 16:48:58.341 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:58.342 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-07-14 16:48:58.603 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:48:58.603 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:48:58.605 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:48:58.607 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 16:48:58.609 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:48:58.611 +05:30 [INF] GET /api/skus responded 200 in 10ms
+2026-07-14 16:49:04.254 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:49:04.255 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:49:04.276 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:49:04.277 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:49:04.283 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:49:04.283 +05:30 [INF] GET /api/categories responded 200 in 12ms
+2026-07-14 16:49:04.317 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:49:04.319 +05:30 [INF] GET /api/skus responded 200 in 47ms
+2026-07-14 16:49:04.701 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:49:04.705 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:49:04.710 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:49:04.711 +05:30 [INF] GET /api/categories responded 200 in 10ms
+2026-07-14 16:49:04.713 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:49:04.747 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:49:04.749 +05:30 [INF] GET /api/skus responded 200 in 36ms
+2026-07-14 16:49:05.426 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:49:05.429 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:49:05.433 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:49:05.433 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:49:05.434 +05:30 [INF] GET /api/categories responded 200 in 7ms
+2026-07-14 16:49:05.445 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:49:05.446 +05:30 [INF] GET /api/skus responded 200 in 15ms
+2026-07-14 16:49:16.042 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:49:16.042 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:49:16.050 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:49:16.050 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:49:16.051 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:49:16.051 +05:30 [INF] GET /api/categories responded 200 in 2ms
+2026-07-14 16:49:16.070 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:49:16.071 +05:30 [INF] GET /api/skus responded 200 in 22ms
+2026-07-14 16:49:24.350 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 16:49:24.350 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:49:24.359 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:49:24.359 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:49:24.361 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:49:24.362 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 16:49:24.363 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:49:24.364 +05:30 [INF] GET /api/skus responded 200 in 6ms
+2026-07-14 16:49:24.369 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:49:24.369 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:49:24.370 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:49:24.370 +05:30 [INF] GET /api/categories responded 200 in 2ms
+2026-07-14 16:49:24.372 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:49:24.373 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 16:49:24.904 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:49:24.907 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:49:24.909 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:49:24.910 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 16:49:24.913 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:49:24.916 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:49:24.917 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 16:49:25.657 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 16:49:25.663 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:49:25.666 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:49:25.667 +05:30 [INF] GET /api/categories responded 200 in 9ms
+2026-07-14 16:49:25.668 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:49:25.705 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:49:25.706 +05:30 [INF] GET /api/skus responded 200 in 39ms
+2026-07-14 16:49:27.221 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:49:27.226 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:49:27.227 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:49:27.228 +05:30 [INF] GET /api/categories responded 200 in 72ms
+2026-07-14 16:49:27.254 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:49:27.255 +05:30 [INF] GET /api/skus responded 200 in 98ms
+2026-07-14 16:49:27.364 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 16:49:27.364 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 16:49:27.370 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 16:49:27.371 +05:30 [INF] GET /api/categories responded 200 in 11ms
+2026-07-14 16:49:27.402 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 16:49:27.405 +05:30 [INF] GET /api/skus responded 200 in 45ms
+2026-07-14 17:02:53.293 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:02:53.294 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:02:53.293 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:02:53.388 +05:30 [INF] GET /api/skus responded 401 in 4ms
+2026-07-14 17:02:53.388 +05:30 [INF] GET /api/materials responded 401 in 10ms
+2026-07-14 17:02:53.388 +05:30 [INF] GET /api/categories responded 401 in 10ms
+2026-07-14 17:02:53.397 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-14 17:02:53.432 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-14 17:02:53.473 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-14 17:02:53.703 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-14 17:02:53.709 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 307ms
+2026-07-14 17:02:53.717 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:02:53.718 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:02:53.718 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:02:53.719 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:02:53.720 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:02:53.731 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:02:53.732 +05:30 [INF] GET /api/materials responded 200 in 17ms
+2026-07-14 17:02:53.746 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:02:53.747 +05:30 [INF] GET /api/skus responded 200 in 32ms
+2026-07-14 17:03:53.201 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:03:53.203 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:03:53.223 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:03:53.224 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:03:53.227 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:03:53.227 +05:30 [INF] GET /api/categories responded 200 in 9ms
+2026-07-14 17:03:53.236 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:03:53.237 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:03:53.238 +05:30 [INF] GET /api/categories responded 200 in 9ms
+2026-07-14 17:03:53.249 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:03:53.250 +05:30 [INF] GET /api/skus responded 200 in 32ms
+2026-07-14 17:03:53.252 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:03:53.254 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:03:53.255 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 17:03:53.397 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:03:53.397 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:03:53.399 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:03:53.400 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:03:53.400 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:03:53.401 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:03:53.419 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:03:53.419 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:03:53.421 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:03:53.421 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:03:53.421 +05:30 [INF] GET /api/skus responded 200 in 3ms
+2026-07-14 17:03:53.422 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:03:53.602 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:03:53.604 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:03:53.607 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:03:53.607 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:03:53.612 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:03:53.615 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:03:53.615 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 17:03:54.641 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:03:54.642 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:03:54.644 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:03:54.645 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:03:54.646 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:03:54.647 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 17:03:54.818 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:03:54.820 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:03:54.823 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:03:54.823 +05:30 [INF] GET /api/categories responded 200 in 6ms
+2026-07-14 17:03:54.826 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:03:54.847 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:03:54.848 +05:30 [INF] GET /api/skus responded 200 in 22ms
+2026-07-14 17:03:54.988 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:03:54.988 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:03:54.992 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:03:54.992 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:03:54.993 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 17:03:54.995 +05:30 [INF] GET /api/categories responded 200 in 8ms
+2026-07-14 17:03:55.192 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:03:55.192 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:03:55.194 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:03:55.196 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:03:55.197 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:03:55.199 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-14 17:04:20.480 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:04:20.481 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:20.489 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:20.490 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:20.491 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:20.491 +05:30 [INF] GET /api/categories responded 200 in 2ms
+2026-07-14 17:04:20.495 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:20.498 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-14 17:04:21.015 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:21.016 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:21.019 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:21.019 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:21.022 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:21.025 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:21.025 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 17:04:21.413 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:21.415 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:21.417 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:21.417 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:21.422 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:21.428 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:21.429 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-07-14 17:04:22.485 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:22.485 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:22.487 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:22.488 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:04:22.490 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:22.491 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 17:04:22.664 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:22.664 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:22.666 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:22.667 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 17:04:22.668 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:22.669 +05:30 [INF] GET /api/skus responded 200 in 6ms
+2026-07-14 17:04:22.808 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:22.810 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:22.811 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:22.811 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 17:04:22.815 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:22.818 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:22.818 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 17:04:23.000 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:23.000 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:23.001 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:23.003 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:23.005 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:23.006 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 17:04:24.141 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:24.142 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:24.144 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:24.144 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:24.149 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:24.152 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:24.153 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:04:24.596 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:24.597 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:24.600 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:24.601 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:04:24.605 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:24.610 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:24.612 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 17:04:26.037 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:04:26.039 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:26.042 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:26.043 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:04:26.045 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:26.047 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:26.048 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 17:04:26.227 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:26.228 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:26.233 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:26.234 +05:30 [INF] GET /api/categories responded 200 in 10ms
+2026-07-14 17:04:26.252 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:26.254 +05:30 [INF] GET /api/skus responded 200 in 31ms
+2026-07-14 17:04:26.427 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:26.427 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:26.430 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:26.432 +05:30 [INF] GET /api/categories responded 200 in 11ms
+2026-07-14 17:04:26.452 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:26.454 +05:30 [INF] GET /api/skus responded 200 in 32ms
+2026-07-14 17:04:29.179 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:29.183 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:29.187 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:29.187 +05:30 [INF] GET /api/categories responded 200 in 8ms
+2026-07-14 17:04:29.195 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:29.221 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:29.222 +05:30 [INF] GET /api/skus responded 200 in 32ms
+2026-07-14 17:04:29.409 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:29.410 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:29.412 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:29.412 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 17:04:29.414 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:29.417 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:29.418 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 17:04:29.748 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:29.749 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:29.751 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:29.752 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 17:04:29.756 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:29.759 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:29.760 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:04:35.325 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:04:35.325 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:35.338 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:35.339 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:35.342 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:35.343 +05:30 [INF] GET /api/categories responded 200 in 7ms
+2026-07-14 17:04:35.368 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:35.370 +05:30 [INF] GET /api/skus responded 200 in 34ms
+2026-07-14 17:04:35.484 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:35.486 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:35.489 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:35.489 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:04:35.492 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:35.496 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:35.497 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:04:35.649 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:35.650 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:35.652 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:35.653 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:35.655 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:35.679 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:35.680 +05:30 [INF] GET /api/skus responded 200 in 26ms
+2026-07-14 17:04:36.580 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:36.580 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:36.582 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:36.584 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:04:36.587 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:36.588 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-14 17:04:37.398 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:37.399 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:37.402 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:37.403 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:04:37.407 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:37.409 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:37.409 +05:30 [INF] GET /api/skus responded 200 in 3ms
+2026-07-14 17:04:37.916 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:37.917 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:37.920 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:37.921 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:04:37.924 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:37.927 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:37.928 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:04:38.261 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:38.262 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:38.264 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:38.265 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:38.270 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:38.272 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:38.273 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 17:04:39.732 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:39.732 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:39.735 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:39.736 +05:30 [INF] GET /api/categories responded 200 in 6ms
+2026-07-14 17:04:39.738 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:39.738 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-07-14 17:04:39.921 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:39.921 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:39.923 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:39.923 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:39.926 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:39.926 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 17:04:40.098 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:40.099 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:40.100 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:40.101 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:40.102 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:40.103 +05:30 [INF] GET /api/skus responded 200 in 6ms
+2026-07-14 17:04:40.291 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:40.291 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:40.293 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:40.294 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:40.294 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:40.297 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 17:04:42.107 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:04:42.107 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:42.116 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:42.116 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:42.117 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:42.119 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:42.121 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:42.122 +05:30 [INF] GET /api/skus responded 200 in 6ms
+2026-07-14 17:04:42.612 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:42.614 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:42.616 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:42.616 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:42.620 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:42.622 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:42.623 +05:30 [INF] GET /api/skus responded 200 in 3ms
+2026-07-14 17:04:42.827 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:42.835 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:42.837 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:42.837 +05:30 [INF] GET /api/categories responded 200 in 10ms
+2026-07-14 17:04:42.840 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:42.844 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:42.844 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:04:43.081 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:43.082 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:43.084 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:43.085 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:43.088 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:43.090 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:43.090 +05:30 [INF] GET /api/skus responded 200 in 2ms
+2026-07-14 17:04:45.000 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:45.000 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:45.002 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:45.002 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:45.002 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 17:04:45.003 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 17:04:45.182 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:45.182 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:45.183 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:45.184 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:45.186 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:45.186 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:04:45.353 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:45.353 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:45.355 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:45.355 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:45.356 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:04:45.356 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:04:45.517 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:04:45.520 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:45.523 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:45.524 +05:30 [INF] GET /api/categories responded 200 in 7ms
+2026-07-14 17:04:45.525 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:45.529 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:45.530 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:04:45.990 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:04:45.990 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:04:45.992 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:04:45.993 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 17:04:45.993 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:04:45.994 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 17:05:03.414 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:05:03.414 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:05:03.429 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:05:03.429 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:05:03.433 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:05:03.434 +05:30 [INF] GET /api/categories responded 200 in 7ms
+2026-07-14 17:05:03.452 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:05:03.453 +05:30 [INF] GET /api/skus responded 200 in 27ms
+2026-07-14 17:05:03.954 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:05:03.956 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:05:03.958 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:05:03.959 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:05:03.962 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:05:03.966 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:05:03.967 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:05:04.374 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:05:04.376 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:05:04.378 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:05:04.379 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:05:04.382 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:05:04.385 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:05:04.386 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:05:13.793 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-14 17:05:13.812 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-14 17:05:13.888 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-14 17:05:13.898 +05:30 [INF] GET /api/quotations responded 200 in 97ms
+2026-07-14 17:05:17.105 +05:30 [INF] OPTIONS /api/quotations/24 responded 204 in 0ms
+2026-07-14 17:05:17.123 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-14 17:05:17.191 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-14 17:05:17.199 +05:30 [INF] GET /api/quotations/24 responded 200 in 84ms
+2026-07-14 17:05:17.220 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-14 17:05:17.221 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:05:17.226 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:05:17.230 +05:30 [INF] Handling GetCustomersQuery
+2026-07-14 17:05:17.242 +05:30 [INF] Handled GetCustomersQuery
+2026-07-14 17:05:17.248 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:05:17.249 +05:30 [INF] GET /api/skus responded 200 in 23ms
+2026-07-14 17:05:17.253 +05:30 [INF] GET /api/customers responded 200 in 28ms
+2026-07-14 17:05:17.254 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-14 17:05:17.276 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-14 17:05:17.318 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-14 17:05:17.320 +05:30 [INF] POST /api/quotations/calculate responded 200 in 62ms
+2026-07-14 17:05:24.890 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-14 17:05:24.902 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-14 17:05:24.905 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-14 17:05:24.907 +05:30 [INF] GET /api/quotations responded 200 in 7ms
+2026-07-14 17:05:29.672 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-14 17:05:29.672 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-14 17:05:29.690 +05:30 [INF] Handling GetUsersQuery
+2026-07-14 17:05:29.690 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-14 17:05:29.718 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-14 17:05:29.719 +05:30 [INF] Handled GetUsersQuery
+2026-07-14 17:05:29.720 +05:30 [INF] GET /api/roles responded 200 in 37ms
+2026-07-14 17:05:29.721 +05:30 [INF] GET /api/users responded 200 in 39ms
+2026-07-14 17:05:35.933 +05:30 [INF] OPTIONS /api/roles/1 responded 204 in 0ms
+2026-07-14 17:05:35.957 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-14 17:05:35.990 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-14 17:05:35.997 +05:30 [INF] GET /api/roles/1 responded 200 in 52ms
+2026-07-14 17:05:36.012 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-14 17:05:36.032 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-14 17:05:36.051 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-14 17:05:36.055 +05:30 [INF] GET /api/permissions responded 200 in 33ms
+2026-07-14 17:06:01.085 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:06:01.085 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:06:01.091 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:06:01.091 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:06:01.093 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:06:01.093 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:06:01.232 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:06:01.232 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:06:01.249 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:06:01.249 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:06:01.250 +05:30 [INF] GET /api/categories responded 200 in 110ms
+2026-07-14 17:06:01.255 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:06:01.259 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:06:01.261 +05:30 [INF] GET /api/categories responded 200 in 10ms
+2026-07-14 17:06:01.266 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:06:01.267 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:06:01.269 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:06:01.269 +05:30 [INF] GET /api/materials responded 200 in 25ms
+2026-07-14 17:06:01.270 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:06:01.299 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:06:01.300 +05:30 [INF] GET /api/categories responded 200 in 37ms
+2026-07-14 17:06:01.301 +05:30 [INF] GET /api/skus responded 200 in 160ms
+2026-07-14 17:06:01.325 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:06:01.326 +05:30 [INF] GET /api/skus responded 200 in 82ms
+2026-07-14 17:06:11.445 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:06:11.445 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:06:11.445 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:06:11.459 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:06:11.459 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:06:11.459 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:06:11.462 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:06:11.464 +05:30 [INF] GET /api/categories responded 200 in 9ms
+2026-07-14 17:06:11.478 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:06:11.480 +05:30 [INF] GET /api/materials responded 200 in 25ms
+2026-07-14 17:06:11.491 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:06:11.492 +05:30 [INF] GET /api/skus responded 200 in 37ms
+2026-07-14 17:06:14.053 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:06:14.053 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:06:14.053 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:06:14.058 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:06:14.059 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:06:14.059 +05:30 [INF] GET /api/categories responded 200 in 8ms
+2026-07-14 17:06:14.060 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:06:14.061 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-14 17:06:14.065 +05:30 [INF] GET /api/materials responded 200 in 14ms
+2026-07-14 17:06:19.786 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:06:19.786 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:06:19.787 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:06:19.797 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:06:19.797 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:06:19.798 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:06:19.799 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:06:19.801 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:06:19.803 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:06:19.803 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:06:19.804 +05:30 [INF] GET /api/materials responded 200 in 7ms
+2026-07-14 17:06:19.805 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-14 17:06:39.377 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:06:39.394 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:06:39.413 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:06:39.415 +05:30 [INF] GET /api/materials responded 200 in 25ms
+2026-07-14 17:06:41.944 +05:30 [INF] OPTIONS /api/materials/4/missing-dates responded 204 in 0ms
+2026-07-14 17:06:41.972 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-14 17:06:42.029 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-14 17:06:42.034 +05:30 [INF] GET /api/materials/4/missing-dates responded 200 in 75ms
+2026-07-14 17:07:19.994 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-14 17:07:20.018 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:07:20.036 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:07:20.041 +05:30 [INF] GET /api/materials/6/history responded 200 in 36ms
+2026-07-14 17:07:46.395 +05:30 [INF] OPTIONS /api/materials/1 responded 204 in 0ms
+2026-07-14 17:07:46.435 +05:30 [INF] Handling UpdateMaterialCommand
+2026-07-14 17:07:46.589 +05:30 [INF] Handled UpdateMaterialCommand
+2026-07-14 17:07:46.590 +05:30 [INF] PUT /api/materials/1 responded 204 in 183ms
+2026-07-14 17:07:46.595 +05:30 [INF] OPTIONS /api/materials/price responded 204 in 0ms
+2026-07-14 17:07:46.622 +05:30 [INF] Handling UpdateMaterialPriceCommand
+2026-07-14 17:07:46.704 +05:30 [INF] Handled UpdateMaterialPriceCommand
+2026-07-14 17:07:46.705 +05:30 [INF] PUT /api/materials/price responded 204 in 105ms
+2026-07-14 17:07:46.712 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:07:46.716 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:07:46.728 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:07:46.729 +05:30 [INF] GET /api/materials responded 200 in 13ms
+2026-07-14 17:07:55.291 +05:30 [INF] OPTIONS /api/materials/1 responded 204 in 0ms
+2026-07-14 17:07:55.310 +05:30 [INF] Handling UpdateMaterialCommand
+2026-07-14 17:07:55.333 +05:30 [INF] Handled UpdateMaterialCommand
+2026-07-14 17:07:55.335 +05:30 [INF] PUT /api/materials/1 responded 204 in 30ms
+2026-07-14 17:07:55.341 +05:30 [INF] OPTIONS /api/materials/price responded 204 in 0ms
+2026-07-14 17:07:55.351 +05:30 [INF] Handling UpdateMaterialPriceCommand
+2026-07-14 17:07:55.363 +05:30 [INF] Handled UpdateMaterialPriceCommand
+2026-07-14 17:07:55.364 +05:30 [INF] PUT /api/materials/price responded 204 in 16ms
+2026-07-14 17:07:55.371 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:07:55.377 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:07:55.395 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:07:55.397 +05:30 [INF] GET /api/materials responded 200 in 20ms
+2026-07-14 17:08:03.980 +05:30 [INF] OPTIONS /api/materials/13 responded 204 in 0ms
+2026-07-14 17:08:03.994 +05:30 [INF] Handling UpdateMaterialCommand
+2026-07-14 17:08:04.006 +05:30 [INF] Handled UpdateMaterialCommand
+2026-07-14 17:08:04.007 +05:30 [INF] PUT /api/materials/13 responded 204 in 18ms
+2026-07-14 17:08:04.014 +05:30 [INF] OPTIONS /api/materials/price responded 204 in 0ms
+2026-07-14 17:08:04.020 +05:30 [INF] Handling UpdateMaterialPriceCommand
+2026-07-14 17:08:04.032 +05:30 [INF] Handled UpdateMaterialPriceCommand
+2026-07-14 17:08:04.033 +05:30 [INF] PUT /api/materials/price responded 204 in 15ms
+2026-07-14 17:08:04.039 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:08:04.045 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:08:04.049 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:08:04.049 +05:30 [INF] GET /api/materials responded 200 in 5ms
+2026-07-14 17:08:47.011 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-14 17:08:47.023 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-14 17:08:47.035 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-14 17:08:47.036 +05:30 [INF] GET /api/quotations responded 200 in 17ms
+2026-07-14 17:08:49.493 +05:30 [INF] OPTIONS /api/quotations/17 responded 204 in 0ms
+2026-07-14 17:08:49.505 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-14 17:08:49.517 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-14 17:08:49.518 +05:30 [INF] GET /api/quotations/17 responded 200 in 15ms
+2026-07-14 17:08:49.525 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-14 17:08:49.525 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:08:49.531 +05:30 [INF] Handling GetCustomersQuery
+2026-07-14 17:08:49.532 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:08:49.536 +05:30 [INF] Handled GetCustomersQuery
+2026-07-14 17:08:49.537 +05:30 [INF] GET /api/customers responded 200 in 7ms
+2026-07-14 17:08:49.562 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:08:49.563 +05:30 [INF] GET /api/skus responded 200 in 32ms
+2026-07-14 17:08:49.568 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-14 17:08:49.572 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-14 17:08:49.597 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-14 17:08:49.598 +05:30 [INF] POST /api/quotations/calculate responded 200 in 27ms
+2026-07-14 17:08:59.793 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-14 17:08:59.812 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-14 17:08:59.820 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-14 17:08:59.823 +05:30 [INF] GET /api/quotations responded 200 in 16ms
+2026-07-14 17:09:02.530 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-14 17:09:02.534 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-14 17:09:02.536 +05:30 [INF] GET /api/quotations responded 200 in 7ms
+2026-07-14 17:09:03.743 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-14 17:09:03.743 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:09:03.754 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:09:03.754 +05:30 [INF] Handling GetCustomersQuery
+2026-07-14 17:09:03.761 +05:30 [INF] Handled GetCustomersQuery
+2026-07-14 17:09:03.762 +05:30 [INF] GET /api/customers responded 200 in 9ms
+2026-07-14 17:09:03.789 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:09:03.791 +05:30 [INF] GET /api/skus responded 200 in 37ms
+2026-07-14 17:09:03.797 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-14 17:09:03.802 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-14 17:09:03.833 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-14 17:09:03.836 +05:30 [INF] POST /api/quotations/calculate responded 200 in 35ms
+2026-07-14 17:09:18.194 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-14 17:09:18.213 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-14 17:09:18.222 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-14 17:09:18.224 +05:30 [INF] GET /api/quotations responded 200 in 15ms
+2026-07-14 17:09:19.740 +05:30 [INF] OPTIONS /api/quotations/24 responded 204 in 0ms
+2026-07-14 17:09:19.758 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-14 17:09:19.772 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-14 17:09:19.774 +05:30 [INF] GET /api/quotations/24 responded 200 in 21ms
+2026-07-14 17:09:23.258 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-14 17:09:23.258 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-14 17:09:23.266 +05:30 [INF] Handling GetUsersQuery
+2026-07-14 17:09:23.267 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-14 17:09:23.276 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-14 17:09:23.277 +05:30 [INF] GET /api/roles responded 200 in 11ms
+2026-07-14 17:09:23.278 +05:30 [INF] Handled GetUsersQuery
+2026-07-14 17:09:23.280 +05:30 [INF] GET /api/users responded 200 in 15ms
+2026-07-14 17:09:23.761 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:09:23.764 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:09:23.764 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:09:23.764 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:09:23.807 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:09:23.808 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:09:23.808 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:09:23.813 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:09:23.816 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:09:23.817 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:09:23.819 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:09:23.820 +05:30 [INF] GET /api/categories responded 200 in 50ms
+2026-07-14 17:09:23.821 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:09:23.824 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:09:23.825 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:09:23.827 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:09:23.828 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:09:23.829 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 17:09:23.833 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:09:23.833 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:09:23.834 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:09:23.834 +05:30 [INF] GET /api/materials responded 200 in 16ms
+2026-07-14 17:09:23.835 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:09:23.839 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:09:23.840 +05:30 [INF] GET /api/skus responded 200 in 25ms
+2026-07-14 17:09:23.842 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:09:23.845 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:09:23.845 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:09:23.846 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:09:23.847 +05:30 [INF] GET /api/skus responded 200 in 77ms
+2026-07-14 17:09:25.751 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:09:25.758 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:09:25.759 +05:30 [INF] GET /api/materials responded 200 in 10ms
+2026-07-14 17:10:02.744 +05:30 [INF] OPTIONS /api/materials/monthly-average responded 204 in 0ms
+2026-07-14 17:10:02.767 +05:30 [INF] Handling GetMonthlyAveragePricesQuery
+2026-07-14 17:10:02.807 +05:30 [INF] Handled GetMonthlyAveragePricesQuery
+2026-07-14 17:10:02.812 +05:30 [INF] GET /api/materials/monthly-average responded 200 in 55ms
+2026-07-14 17:12:56.739 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:12:56.740 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:12:56.739 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:12:56.761 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:12:56.747 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:12:56.753 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:12:56.757 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:12:56.761 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:12:56.766 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:12:56.794 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:12:56.807 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:12:56.807 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:12:56.808 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:12:56.811 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:12:56.817 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:12:56.817 +05:30 [INF] GET /api/categories responded 200 in 13ms
+2026-07-14 17:12:56.818 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:12:56.820 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:12:56.820 +05:30 [INF] GET /api/categories responded 200 in 2ms
+2026-07-14 17:12:56.823 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:12:56.825 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:12:56.826 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:12:56.828 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:12:56.829 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:12:56.829 +05:30 [INF] GET /api/categories responded 200 in 2ms
+2026-07-14 17:12:56.832 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:12:56.833 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:12:56.833 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:12:56.833 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:12:56.834 +05:30 [INF] GET /api/materials responded 200 in 23ms
+2026-07-14 17:12:56.834 +05:30 [INF] GET /api/skus responded 200 in 27ms
+2026-07-14 17:12:56.835 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:12:56.835 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:12:56.836 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:12:56.840 +05:30 [INF] GET /api/skus responded 200 in 34ms
+2026-07-14 17:12:56.844 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:12:56.845 +05:30 [INF] GET /api/skus responded 200 in 10ms
+2026-07-14 17:12:56.847 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:12:56.851 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:12:56.852 +05:30 [INF] GET /api/skus responded 200 in 6ms
+2026-07-14 17:13:01.858 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-14 17:13:01.858 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:13:01.870 +05:30 [INF] Handling GetCustomersQuery
+2026-07-14 17:13:01.870 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:13:01.873 +05:30 [INF] Handled GetCustomersQuery
+2026-07-14 17:13:01.874 +05:30 [INF] GET /api/customers responded 200 in 5ms
+2026-07-14 17:13:01.902 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:13:01.904 +05:30 [INF] GET /api/skus responded 200 in 35ms
+2026-07-14 17:13:01.911 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-14 17:13:01.918 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-14 17:13:01.949 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-14 17:13:01.950 +05:30 [INF] POST /api/quotations/calculate responded 200 in 33ms
+2026-07-14 17:13:10.477 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:13:10.477 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:13:10.484 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:13:10.483 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:13:10.536 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:13:10.483 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:13:10.482 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:13:10.482 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:13:10.482 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:13:10.482 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:13:10.484 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:13:10.481 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:13:10.536 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:13:10.482 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:13:10.585 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:13:10.588 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:13:10.588 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:13:10.593 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:13:10.594 +05:30 [INF] GET /api/skus responded 200 in 58ms
+2026-07-14 17:13:10.595 +05:30 [INF] GET /api/categories responded 200 in 66ms
+2026-07-14 17:13:10.597 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:13:10.597 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:13:10.598 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:13:10.599 +05:30 [INF] GET /api/materials responded 200 in 12ms
+2026-07-14 17:13:10.600 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:13:10.600 +05:30 [INF] GET /api/skus responded 200 in 12ms
+2026-07-14 17:13:10.602 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:13:10.602 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:13:10.603 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:13:10.605 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:13:10.605 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:13:10.606 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-14 17:13:10.606 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 17:13:10.607 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:13:10.607 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:13:10.610 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:13:10.611 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:13:10.611 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:13:10.612 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:13:10.614 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-07-14 17:13:10.616 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:13:10.616 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:13:10.617 +05:30 [INF] GET /api/categories responded 200 in 6ms
+2026-07-14 17:13:10.619 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:13:10.620 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:13:10.621 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:13:10.622 +05:30 [INF] GET /api/skus responded 200 in 6ms
+2026-07-14 17:13:10.622 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:13:12.998 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:13:12.999 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:13:13.005 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:13:13.010 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:13:13.012 +05:30 [INF] GET /api/categories responded 200 in 13ms
+2026-07-14 17:13:13.018 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:13:13.018 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:13:13.039 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:13:13.042 +05:30 [INF] GET /api/materials responded 200 in 28ms
+2026-07-14 17:13:13.054 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:13:13.055 +05:30 [INF] GET /api/skus responded 200 in 41ms
+2026-07-14 17:13:15.538 +05:30 [INF] OPTIONS /api/skus/1 responded 204 in 0ms
+2026-07-14 17:13:15.562 +05:30 [INF] Handling GetSkuDetailsQuery
+2026-07-14 17:13:15.603 +05:30 [INF] Handled GetSkuDetailsQuery
+2026-07-14 17:13:15.611 +05:30 [INF] GET /api/skus/1 responded 200 in 61ms
+2026-07-14 17:13:15.626 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:13:15.630 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:13:15.631 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:13:15.638 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:13:15.643 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:13:15.644 +05:30 [INF] GET /api/categories responded 200 in 10ms
+2026-07-14 17:13:15.652 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:13:15.654 +05:30 [INF] GET /api/materials responded 200 in 28ms
+2026-07-14 17:13:15.660 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:13:15.662 +05:30 [INF] GET /api/skus responded 200 in 36ms
+2026-07-14 17:13:37.130 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:13:37.149 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:13:37.169 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:13:37.171 +05:30 [INF] GET /api/materials responded 200 in 26ms
+2026-07-14 17:16:43.363 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-14 17:16:43.381 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-14 17:16:43.392 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-14 17:16:43.395 +05:30 [INF] GET /api/quotations responded 200 in 18ms
+2026-07-14 17:17:03.221 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-14 17:17:03.238 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-14 17:17:03.250 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-14 17:17:03.252 +05:30 [INF] GET /api/quotations responded 200 in 19ms
+2026-07-14 17:18:39.761 +05:30 [INF] OPTIONS /api/quotations/24 responded 204 in 0ms
+2026-07-14 17:18:39.778 +05:30 [INF] GET /api/quotations/24 responded 401 in 1ms
+2026-07-14 17:18:39.786 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-14 17:18:39.791 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-14 17:18:39.841 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-14 17:18:39.842 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 52ms
+2026-07-14 17:18:39.850 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-14 17:18:39.860 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-14 17:18:39.860 +05:30 [INF] GET /api/quotations/24 responded 200 in 13ms
+2026-07-14 17:20:53.131 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:20:53.134 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:20:53.134 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:20:53.244 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:20:53.303 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:20:53.196 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:20:53.165 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:20:53.196 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:20:53.201 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:20:53.205 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:20:53.244 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:20:53.303 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:20:53.303 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:20:53.309 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:20:53.453 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:20:53.453 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:20:53.455 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:20:53.466 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:20:53.471 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:20:53.519 +05:30 [INF] GET /api/categories responded 200 in 109ms
+2026-07-14 17:20:53.531 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:20:53.533 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:20:53.534 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:20:53.537 +05:30 [INF] GET /api/categories responded 200 in 15ms
+2026-07-14 17:20:53.539 +05:30 [INF] GET /api/skus responded 200 in 86ms
+2026-07-14 17:20:53.539 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:20:53.540 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:20:53.540 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:20:53.543 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:20:53.543 +05:30 [INF] GET /api/materials responded 200 in 77ms
+2026-07-14 17:20:53.544 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:20:53.545 +05:30 [INF] GET /api/skus responded 200 in 103ms
+2026-07-14 17:20:53.546 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:20:53.548 +05:30 [INF] GET /api/categories responded 200 in 9ms
+2026-07-14 17:20:53.550 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:20:53.550 +05:30 [INF] GET /api/skus responded 200 in 10ms
+2026-07-14 17:20:53.552 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:20:53.552 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:20:53.554 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:20:53.556 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:20:53.556 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:20:53.557 +05:30 [INF] GET /api/skus responded 200 in 6ms
+2026-07-14 17:20:53.558 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:20:53.558 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:20:53.560 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:20:53.561 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:20:53.563 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:20:53.563 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:20:53.563 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 17:20:53.564 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 17:20:53.565 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:20:53.566 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:20:53.568 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:20:53.569 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:20:53.570 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:20:53.571 +05:30 [INF] GET /api/skus responded 200 in 6ms
+2026-07-14 17:31:08.473 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:31:08.532 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:31:08.548 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:31:08.550 +05:30 [INF] GET /api/materials responded 200 in 22ms
+2026-07-14 17:31:14.818 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:31:14.821 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:31:14.822 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:31:14.891 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:31:14.923 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:31:14.964 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:31:14.898 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:31:14.891 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:31:14.891 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:31:14.898 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:31:14.907 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:31:14.919 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:31:14.924 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:31:14.957 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 17:31:14.964 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:31:14.973 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:31:14.992 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:31:15.040 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:31:15.075 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:31:15.087 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:31:15.089 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:31:15.096 +05:30 [INF] GET /api/categories responded 200 in 116ms
+2026-07-14 17:31:15.098 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:31:15.107 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:31:15.111 +05:30 [INF] GET /api/materials responded 200 in 24ms
+2026-07-14 17:31:15.141 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:31:15.141 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:31:15.141 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:31:15.143 +05:30 [INF] GET /api/skus responded 200 in 147ms
+2026-07-14 17:31:15.144 +05:30 [INF] GET /api/skus responded 200 in 70ms
+2026-07-14 17:31:15.144 +05:30 [INF] GET /api/categories responded 200 in 47ms
+2026-07-14 17:31:15.146 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:31:15.146 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:31:15.149 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:31:15.150 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:31:15.151 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:31:15.152 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:31:15.153 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:31:15.153 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-14 17:31:15.154 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-14 17:31:15.155 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:31:15.156 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:31:15.159 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:31:15.160 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:31:15.160 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:31:15.161 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:31:15.162 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 17:31:15.163 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:31:15.163 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:31:15.164 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:31:15.165 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:31:15.167 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:31:15.167 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:31:15.168 +05:30 [INF] GET /api/skus responded 200 in 6ms
+2026-07-14 17:31:15.169 +05:30 [INF] GET /api/categories responded 200 in 4ms
+2026-07-14 17:31:15.169 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:31:15.170 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:31:15.174 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:31:15.174 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-14 17:31:15.175 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:31:15.176 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-14 17:31:15.178 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:31:15.181 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:31:15.182 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-14 17:31:17.750 +05:30 [INF] OPTIONS /api/skus/1 responded 204 in 0ms
+2026-07-14 17:31:17.762 +05:30 [INF] Handling GetSkuDetailsQuery
+2026-07-14 17:31:17.781 +05:30 [INF] Handled GetSkuDetailsQuery
+2026-07-14 17:31:17.782 +05:30 [INF] GET /api/skus/1 responded 200 in 21ms
+2026-07-14 17:31:17.792 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-14 17:31:17.792 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:31:17.794 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 17:31:17.797 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 17:31:17.798 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 17:31:17.798 +05:30 [INF] GET /api/categories responded 200 in 6ms
+2026-07-14 17:31:17.798 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:31:17.805 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:31:17.806 +05:30 [INF] GET /api/materials responded 200 in 8ms
+2026-07-14 17:31:17.826 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 17:31:17.828 +05:30 [INF] GET /api/skus responded 200 in 31ms
+2026-07-14 17:34:20.434 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:34:20.455 +05:30 [INF] GET /api/materials responded 401 in 1ms
+2026-07-14 17:34:20.461 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-14 17:34:20.468 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-14 17:34:20.518 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-14 17:34:20.519 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 53ms
+2026-07-14 17:34:20.528 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:34:20.553 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:34:20.554 +05:30 [INF] GET /api/materials responded 200 in 29ms
+2026-07-14 17:34:30.481 +05:30 [INF] OPTIONS /api/materials/1/missing-dates responded 204 in 0ms
+2026-07-14 17:34:30.491 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-14 17:34:30.502 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-14 17:34:30.503 +05:30 [INF] GET /api/materials/1/missing-dates responded 200 in 14ms
+2026-07-14 17:47:45.789 +05:30 [INF] GET / responded 404 in 43ms
+2026-07-14 17:48:01.894 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 3ms
+2026-07-14 17:48:02.798 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-14 17:48:02.801 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-14 17:48:03.953 +05:30 [INF] Handling LoginCommand
+2026-07-14 17:48:04.474 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-14 17:48:04.967 +05:30 [INF] Handled LoginCommand
+2026-07-14 17:48:04.989 +05:30 [INF] POST /api/auth/login responded 200 in 1114ms
+2026-07-14 17:48:05.039 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:48:05.189 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:48:05.362 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:48:05.380 +05:30 [INF] GET /api/materials responded 200 in 317ms
+2026-07-14 17:48:08.568 +05:30 [INF] OPTIONS /api/materials/1/history responded 204 in 0ms
+2026-07-14 17:48:08.600 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:48:08.637 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:48:08.644 +05:30 [INF] GET /api/materials/1/history responded 200 in 61ms
+2026-07-14 17:48:29.028 +05:30 [INF] OPTIONS /api/materials/2/history responded 204 in 0ms
+2026-07-14 17:48:29.049 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:48:29.053 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:48:29.099 +05:30 [INF] GET /api/materials/2/history responded 200 in 56ms
+2026-07-14 17:48:50.343 +05:30 [INF] OPTIONS /api/materials/14/history responded 204 in 0ms
+2026-07-14 17:48:50.363 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:48:50.372 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:48:50.374 +05:30 [INF] GET /api/materials/14/history responded 200 in 18ms
+2026-07-14 17:48:55.910 +05:30 [INF] OPTIONS /api/materials/1/history responded 204 in 0ms
+2026-07-14 17:48:55.923 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:48:55.927 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:48:55.928 +05:30 [INF] GET /api/materials/1/history responded 200 in 8ms
+2026-07-14 17:48:58.052 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:48:58.057 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:48:58.060 +05:30 [INF] GET /api/materials/1/history responded 200 in 12ms
+2026-07-14 17:49:08.460 +05:30 [INF] OPTIONS /api/materials/13/history responded 204 in 0ms
+2026-07-14 17:49:08.481 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:49:08.489 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:49:08.491 +05:30 [INF] GET /api/materials/13/history responded 200 in 16ms
+2026-07-14 17:49:11.912 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:49:11.915 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:49:11.916 +05:30 [INF] GET /api/materials/13/history responded 200 in 6ms
+2026-07-14 17:49:16.892 +05:30 [INF] OPTIONS /api/materials/4/history responded 204 in 0ms
+2026-07-14 17:49:16.905 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:49:16.908 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:49:16.910 +05:30 [INF] GET /api/materials/4/history responded 200 in 7ms
+2026-07-14 17:49:32.475 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-14 17:49:32.488 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:49:32.492 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:49:32.495 +05:30 [INF] GET /api/materials/6/history responded 200 in 9ms
+2026-07-14 17:49:34.312 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:49:34.316 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:49:34.319 +05:30 [INF] GET /api/materials/6/history responded 200 in 11ms
+2026-07-14 17:49:40.208 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-14 17:49:40.221 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:49:40.225 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:49:40.227 +05:30 [INF] GET /api/materials/6/history responded 200 in 8ms
+2026-07-14 17:49:52.841 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-14 17:49:52.862 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:49:52.869 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:49:52.871 +05:30 [INF] GET /api/materials/6/history responded 200 in 15ms
+2026-07-14 17:49:58.874 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-14 17:49:58.886 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:49:58.891 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:49:58.892 +05:30 [INF] GET /api/materials/6/history responded 200 in 8ms
+2026-07-14 17:50:07.539 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-14 17:50:07.557 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:50:07.566 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:50:07.567 +05:30 [INF] GET /api/materials/6/history responded 200 in 17ms
+2026-07-14 17:50:31.607 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-14 17:50:31.632 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:50:31.639 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:50:31.640 +05:30 [INF] GET /api/materials/6/history responded 200 in 14ms
+2026-07-14 17:50:37.022 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-14 17:50:37.035 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:50:37.037 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:50:37.039 +05:30 [INF] GET /api/materials/6/history responded 200 in 7ms
+2026-07-14 17:50:41.054 +05:30 [INF] OPTIONS /api/materials/13/history responded 204 in 0ms
+2026-07-14 17:50:41.069 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:50:41.073 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:50:41.074 +05:30 [INF] GET /api/materials/13/history responded 200 in 8ms
+2026-07-14 17:51:02.457 +05:30 [INF] OPTIONS /api/materials/13/history responded 204 in 0ms
+2026-07-14 17:51:02.476 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:51:02.481 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:51:02.482 +05:30 [INF] GET /api/materials/13/history responded 200 in 11ms
+2026-07-14 17:51:09.024 +05:30 [INF] OPTIONS /api/materials/13/history responded 204 in 0ms
+2026-07-14 17:51:09.037 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:51:09.039 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:51:09.041 +05:30 [INF] GET /api/materials/13/history responded 200 in 6ms
+2026-07-14 17:51:11.523 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:51:11.526 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:51:11.528 +05:30 [INF] GET /api/materials/13/history responded 200 in 8ms
+2026-07-14 17:51:24.620 +05:30 [INF] OPTIONS /api/materials/13/history responded 204 in 0ms
+2026-07-14 17:51:24.637 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:51:24.644 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:51:24.646 +05:30 [INF] GET /api/materials/13/history responded 200 in 13ms
+2026-07-14 17:51:31.656 +05:30 [INF] OPTIONS /api/materials/13/history responded 204 in 0ms
+2026-07-14 17:51:31.667 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:51:31.670 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:51:31.671 +05:30 [INF] GET /api/materials/13/history responded 200 in 6ms
+2026-07-14 17:51:44.768 +05:30 [INF] OPTIONS /api/materials/14/history responded 204 in 0ms
+2026-07-14 17:51:44.778 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:51:44.781 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:51:44.783 +05:30 [INF] GET /api/materials/14/history responded 200 in 6ms
+2026-07-14 17:51:46.893 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:51:46.896 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:51:46.898 +05:30 [INF] GET /api/materials/14/history responded 200 in 8ms
+2026-07-14 17:51:53.734 +05:30 [INF] OPTIONS /api/materials/14/history responded 204 in 0ms
+2026-07-14 17:51:53.746 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:51:53.749 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:51:53.751 +05:30 [INF] GET /api/materials/14/history responded 200 in 6ms
+2026-07-14 17:51:59.202 +05:30 [INF] OPTIONS /api/materials/2/history responded 204 in 0ms
+2026-07-14 17:51:59.219 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:51:59.226 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:51:59.227 +05:30 [INF] GET /api/materials/2/history responded 200 in 13ms
+2026-07-14 17:52:03.856 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:52:03.860 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:52:03.862 +05:30 [INF] GET /api/materials/2/history responded 200 in 9ms
+2026-07-14 17:52:07.559 +05:30 [INF] OPTIONS /api/materials/2/missing-dates responded 204 in 0ms
+2026-07-14 17:52:07.580 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-14 17:52:07.638 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-14 17:52:07.642 +05:30 [INF] GET /api/materials/2/missing-dates responded 200 in 72ms
+2026-07-14 17:52:21.602 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-14 17:52:21.621 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:52:21.628 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:52:21.630 +05:30 [INF] GET /api/materials/6/history responded 200 in 14ms
+2026-07-14 17:52:23.573 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:52:23.582 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:52:23.584 +05:30 [INF] GET /api/materials/6/history responded 200 in 18ms
+2026-07-14 17:52:40.331 +05:30 [INF] OPTIONS /api/materials/2/missing-dates responded 204 in 0ms
+2026-07-14 17:52:40.351 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-14 17:52:40.364 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-14 17:52:40.365 +05:30 [INF] GET /api/materials/2/missing-dates responded 200 in 19ms
+2026-07-14 17:53:56.646 +05:30 [INF] OPTIONS /api/materials/4/missing-dates responded 204 in 0ms
+2026-07-14 17:53:56.693 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-14 17:53:56.705 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-14 17:53:56.706 +05:30 [INF] GET /api/materials/4/missing-dates responded 200 in 39ms
+2026-07-14 17:54:17.061 +05:30 [INF] OPTIONS /api/materials/5 responded 204 in 0ms
+2026-07-14 17:54:17.105 +05:30 [INF] Handling UpdateMaterialCommand
+2026-07-14 17:54:17.178 +05:30 [INF] Handled UpdateMaterialCommand
+2026-07-14 17:54:17.181 +05:30 [INF] PUT /api/materials/5 responded 204 in 107ms
+2026-07-14 17:54:17.188 +05:30 [INF] OPTIONS /api/materials/price responded 204 in 0ms
+2026-07-14 17:54:17.218 +05:30 [INF] Handling UpdateMaterialPriceCommand
+2026-07-14 17:54:17.316 +05:30 [INF] Handled UpdateMaterialPriceCommand
+2026-07-14 17:54:17.317 +05:30 [INF] PUT /api/materials/price responded 204 in 123ms
+2026-07-14 17:54:17.328 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:54:17.336 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:54:17.353 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:54:17.354 +05:30 [INF] GET /api/materials responded 200 in 20ms
+2026-07-14 17:54:19.695 +05:30 [INF] OPTIONS /api/materials/5/missing-dates responded 204 in 0ms
+2026-07-14 17:54:19.703 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-14 17:54:19.712 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-14 17:54:19.714 +05:30 [INF] GET /api/materials/5/missing-dates responded 200 in 12ms
+2026-07-14 17:54:26.774 +05:30 [INF] OPTIONS /api/materials/5/backfill responded 204 in 0ms
+2026-07-14 17:54:26.804 +05:30 [INF] Handling BackfillMaterialPricesCommand
+2026-07-14 17:54:26.903 +05:30 [INF] Handled BackfillMaterialPricesCommand
+2026-07-14 17:54:26.904 +05:30 [INF] POST /api/materials/5/backfill responded 200 in 119ms
+2026-07-14 17:54:27.000 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:54:27.011 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:54:27.016 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:54:27.017 +05:30 [INF] GET /api/materials responded 200 in 7ms
+2026-07-14 17:54:33.695 +05:30 [INF] OPTIONS /api/materials/5/history responded 204 in 0ms
+2026-07-14 17:54:33.711 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:54:33.718 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:54:33.720 +05:30 [INF] GET /api/materials/5/history responded 200 in 13ms
+2026-07-14 17:54:39.030 +05:30 [INF] OPTIONS /api/materials/5/history responded 204 in 0ms
+2026-07-14 17:54:39.047 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:54:39.054 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:54:39.056 +05:30 [INF] GET /api/materials/5/history responded 200 in 13ms
+2026-07-14 17:55:15.898 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 17:55:15.918 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 17:55:15.934 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 17:55:15.935 +05:30 [INF] GET /api/materials responded 200 in 22ms
+2026-07-14 17:55:18.928 +05:30 [INF] OPTIONS /api/materials/5/history responded 204 in 0ms
+2026-07-14 17:55:18.946 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:55:18.953 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:55:18.955 +05:30 [INF] GET /api/materials/5/history responded 200 in 13ms
+2026-07-14 17:55:21.332 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:55:21.335 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:55:21.337 +05:30 [INF] GET /api/materials/5/history responded 200 in 7ms
+2026-07-14 17:55:29.361 +05:30 [INF] OPTIONS /api/materials/5/history responded 204 in 0ms
+2026-07-14 17:55:29.370 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:55:29.373 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:55:29.376 +05:30 [INF] GET /api/materials/5/history responded 200 in 7ms
+2026-07-14 17:55:42.109 +05:30 [INF] OPTIONS /api/materials/5/history responded 204 in 0ms
+2026-07-14 17:55:42.121 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:55:42.125 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:55:42.126 +05:30 [INF] GET /api/materials/5/history responded 200 in 6ms
+2026-07-14 17:56:05.141 +05:30 [INF] OPTIONS /api/materials/2/history responded 204 in 0ms
+2026-07-14 17:56:05.157 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:56:05.159 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:56:05.161 +05:30 [INF] GET /api/materials/2/history responded 200 in 6ms
+2026-07-14 17:56:09.874 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 17:56:09.877 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 17:56:09.880 +05:30 [INF] GET /api/materials/2/history responded 200 in 7ms
+2026-07-14 17:58:55.045 +05:30 [INF] OPTIONS /api/materials/2/missing-dates responded 204 in 0ms
+2026-07-14 17:58:55.064 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-14 17:58:55.074 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-14 17:58:55.075 +05:30 [INF] GET /api/materials/2/missing-dates responded 200 in 14ms
+2026-07-14 18:06:54.226 +05:30 [INF] GET / responded 404 in 144ms
+2026-07-14 18:07:10.737 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 6ms
+2026-07-14 18:07:12.570 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-14 18:07:12.575 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-14 18:07:14.719 +05:30 [INF] Handling LoginCommand
+2026-07-14 18:07:15.666 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-14 18:07:16.714 +05:30 [INF] Handled LoginCommand
+2026-07-14 18:07:16.756 +05:30 [INF] POST /api/auth/login responded 200 in 2196ms
+2026-07-14 18:07:16.848 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 18:07:17.116 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 18:07:17.478 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 18:07:17.532 +05:30 [INF] GET /api/materials responded 200 in 637ms
+2026-07-14 18:07:22.458 +05:30 [INF] OPTIONS /api/materials/2/history responded 204 in 0ms
+2026-07-14 18:07:22.517 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 18:07:22.579 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 18:07:22.588 +05:30 [INF] GET /api/materials/2/history responded 200 in 105ms
+2026-07-14 18:07:28.035 +05:30 [INF] OPTIONS /api/materials/2/history responded 204 in 0ms
+2026-07-14 18:07:28.074 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 18:07:28.091 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 18:07:28.096 +05:30 [INF] GET /api/materials/2/history responded 200 in 34ms
+2026-07-14 18:19:54.877 +05:30 [INF] OPTIONS /api/materials/1/history responded 204 in 0ms
+2026-07-14 18:19:54.948 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 18:19:54.962 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 18:19:54.965 +05:30 [INF] GET /api/materials/1/history responded 200 in 25ms
+2026-07-14 18:19:59.256 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 18:19:59.261 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 18:19:59.263 +05:30 [INF] GET /api/materials/1/history responded 200 in 11ms
+2026-07-14 18:20:12.054 +05:30 [INF] OPTIONS /api/materials/1/history responded 204 in 0ms
+2026-07-14 18:20:12.096 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 18:20:12.101 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 18:20:12.104 +05:30 [INF] GET /api/materials/1/history responded 200 in 12ms
+2026-07-14 18:20:15.956 +05:30 [INF] OPTIONS /api/materials/1/history responded 204 in 0ms
+2026-07-14 18:20:15.987 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 18:20:15.993 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 18:20:15.995 +05:30 [INF] GET /api/materials/1/history responded 200 in 18ms
+2026-07-14 18:20:43.673 +05:30 [INF] OPTIONS /api/materials/5/history responded 204 in 0ms
+2026-07-14 18:20:43.728 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 18:20:43.738 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 18:20:43.741 +05:30 [INF] GET /api/materials/5/history responded 200 in 20ms
+2026-07-14 18:21:24.835 +05:30 [INF] OPTIONS /api/materials/5/history responded 204 in 0ms
+2026-07-14 18:21:24.877 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 18:21:24.893 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 18:21:24.897 +05:30 [INF] GET /api/materials/5/history responded 200 in 25ms
+2026-07-14 18:21:27.869 +05:30 [INF] OPTIONS /api/materials/5/history responded 204 in 0ms
+2026-07-14 18:21:27.909 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 18:21:27.928 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 18:21:27.932 +05:30 [INF] GET /api/materials/5/history responded 200 in 26ms
+2026-07-14 18:21:31.093 +05:30 [INF] OPTIONS /api/materials/5/missing-dates responded 204 in 0ms
+2026-07-14 18:21:31.150 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-14 18:21:31.242 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-14 18:21:31.252 +05:30 [INF] GET /api/materials/5/missing-dates responded 200 in 121ms
+2026-07-14 18:21:40.041 +05:30 [INF] OPTIONS /api/materials/5/history responded 204 in 0ms
+2026-07-14 18:21:40.086 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 18:21:40.095 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 18:21:40.099 +05:30 [INF] GET /api/materials/5/history responded 200 in 21ms
+2026-07-14 18:22:11.434 +05:30 [INF] OPTIONS /api/materials/5/history responded 204 in 0ms
+2026-07-14 18:22:11.475 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-14 18:22:11.484 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-14 18:22:11.491 +05:30 [INF] GET /api/materials/5/history responded 200 in 22ms
+2026-07-14 18:25:47.982 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 18:25:48.037 +05:30 [INF] GET /api/materials responded 401 in 20ms
+2026-07-14 18:25:48.055 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-14 18:25:48.089 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-14 18:25:48.130 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-14 18:25:48.243 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-14 18:25:48.245 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 179ms
+2026-07-14 18:25:48.267 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 18:25:48.345 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 18:25:48.352 +05:30 [INF] GET /api/materials responded 200 in 90ms
+2026-07-14 18:26:12.975 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-14 18:26:12.975 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-14 18:26:13.053 +05:30 [INF] Handling GetUsersQuery
+2026-07-14 18:26:13.054 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-14 18:26:13.098 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-14 18:26:13.106 +05:30 [INF] GET /api/roles responded 200 in 84ms
+2026-07-14 18:26:13.113 +05:30 [INF] Handled GetUsersQuery
+2026-07-14 18:26:13.131 +05:30 [INF] GET /api/users responded 200 in 110ms
+2026-07-14 18:26:40.704 +05:30 [INF] OPTIONS /api/roles/1 responded 204 in 0ms
+2026-07-14 18:26:40.758 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-14 18:26:40.827 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-14 18:26:40.840 +05:30 [INF] GET /api/roles/1 responded 200 in 98ms
+2026-07-14 18:26:40.890 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-14 18:26:40.921 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-14 18:26:40.944 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-14 18:26:40.950 +05:30 [INF] GET /api/permissions responded 200 in 46ms
+2026-07-14 18:30:25.231 +05:30 [INF] OPTIONS /api/roles/1 responded 204 in 25ms
+2026-07-14 18:30:25.265 +05:30 [INF] Handling GetRoleWithPermissionsQuery
+2026-07-14 18:30:25.277 +05:30 [INF] Handled GetRoleWithPermissionsQuery
+2026-07-14 18:30:25.279 +05:30 [INF] GET /api/roles/1 responded 200 in 23ms
+2026-07-14 18:30:25.301 +05:30 [INF] OPTIONS /api/permissions responded 204 in 0ms
+2026-07-14 18:30:25.316 +05:30 [INF] Handling GetAllPermissionsQuery
+2026-07-14 18:30:25.324 +05:30 [INF] Handled GetAllPermissionsQuery
+2026-07-14 18:30:25.326 +05:30 [INF] GET /api/permissions responded 200 in 13ms
+2026-07-14 18:30:46.520 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 18:30:46.522 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-14 18:30:46.520 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-14 18:30:46.598 +05:30 [INF] OPTIONS /api/skus responded 204 in 31ms
+2026-07-14 18:30:46.646 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 18:30:46.659 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 18:30:46.668 +05:30 [INF] Handling GetSkusQuery
+2026-07-14 18:30:46.682 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 18:30:46.688 +05:30 [INF] GET /api/categories responded 200 in 51ms
+2026-07-14 18:30:46.691 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 18:30:46.694 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-14 18:30:46.696 +05:30 [INF] GET /api/materials responded 200 in 59ms
+2026-07-14 18:30:46.744 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-14 18:30:46.777 +05:30 [INF] GET /api/categories responded 200 in 87ms
+2026-07-14 18:30:47.006 +05:30 [INF] Handled GetSkusQuery
+2026-07-14 18:30:47.036 +05:30 [INF] GET /api/skus responded 200 in 394ms
+2026-07-14 18:30:48.390 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 18:30:48.399 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 18:30:48.402 +05:30 [INF] GET /api/materials responded 200 in 16ms
+2026-07-14 18:30:49.132 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-14 18:30:49.184 +05:30 [INF] Handling GetCustomersQuery
+2026-07-14 18:30:49.206 +05:30 [INF] Handled GetCustomersQuery
+2026-07-14 18:30:49.215 +05:30 [INF] GET /api/customers responded 200 in 50ms
+2026-07-14 18:30:50.005 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-14 18:30:50.016 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-14 18:30:50.020 +05:30 [INF] GET /api/materials responded 200 in 20ms

@@ -46,6 +46,7 @@ export class SkusComponent implements OnInit {
   public materials: Material[] = [];
   public totalCount = 0;
   public loading = signal(false);
+  public searchQuery = '';
 
   // Inline editing state
   public editingSkuId: number | null = null;
@@ -140,7 +141,7 @@ export class SkusComponent implements OnInit {
     this.loadCategories();
     this.loading.set(true);
     this.pricingService.getSkus(
-      undefined,
+      this.searchQuery || undefined,
       undefined,
       'categoryName',
       false,
@@ -184,9 +185,9 @@ export class SkusComponent implements OnInit {
     }));
   }
 
-  public addSku() {
+  public addSku(categoryName?: string) {
     const defaultData = {
-      categoryName: 'New category',
+      categoryName: categoryName || 'New category',
       name: 'Item',
       spec: 'spec',
       unit: 'km',
@@ -311,6 +312,10 @@ export class SkusComponent implements OnInit {
         this.pricingService.selectedSkuIds.delete(s.id);
       }
     });
+  }
+
+  public onSearchChange() {
+    this.loadSkus();
   }
 }
 

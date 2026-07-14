@@ -16,6 +16,7 @@ import { MaterialCreateEditDialogComponent } from './material-create-edit-dialog
 import { MaterialHistoryDialogComponent } from './material-history-dialog/material-history-dialog.component';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { MaterialBackfillDialogComponent } from './material-backfill-dialog/material-backfill-dialog.component';
+import { MaterialTrendDialogComponent } from './material-trend-dialog/material-trend-dialog.component';
 
 @Component({
   selector: 'app-materials',
@@ -74,6 +75,22 @@ export class MaterialsComponent implements OnInit {
   private updateGroupSelectedVariant(group: any) {
     const selected = group.variants.find((v: any) => v.id === group.selectedVariantId) || group.variants[0];
     group.selectedVariant = selected;
+    this.calculateGroupAvg(group);
+  }
+
+  public calculateGroupAvg(group: any) {
+    if (!group.selectedVariant) return;
+    const isLme = group.selectedVariant.type === 0;
+    
+    if (group.avgPriceRange === 'prev_month') {
+      group.calculatedAvg = isLme ? (group.selectedVariant.prevMonthAvgLme || 0) : (group.selectedVariant.prevMonthAvgDirect || 0);
+    } else {
+      group.calculatedAvg = isLme ? (group.selectedVariant.thisMonthAvgLme || 0) : (group.selectedVariant.thisMonthAvgDirect || 0);
+    }
+  }
+
+  public onTypeChange(group: any) {
+    this.calculateGroupAvg(group);
   }
 
   public toggleAverages() {
@@ -96,7 +113,9 @@ export class MaterialsComponent implements OnInit {
   }
 
   public getMissingDays(group: any): number {
-    return group.selectedVariant?.missingDaysCount || 0;
+    if (!group.selectedVariant) return 0;
+    const isLme = group.selectedVariant.type === 0;
+    return isLme ? (group.selectedVariant.missingDaysCountLme || 0) : (group.selectedVariant.missingDaysCountDirect || 0);
   }
 
   public openBackfill(material: Material) {
@@ -143,7 +162,9 @@ export class MaterialsComponent implements OnInit {
             groupsMap.set(m.name, {
               name: m.name,
               variants: [],
-              selectedVariantId: currentSelections.get(m.name) || m.id // Preserve selection or default
+              selectedVariantId: currentSelections.get(m.name) || m.id, // Preserve selection or default
+              avgPriceRange: 'this_month',
+              calculatedAvg: 0
             });
           }
           groupsMap.get(m.name).variants.push(m);
@@ -189,6 +210,15 @@ export class MaterialsComponent implements OnInit {
     if (!material) return;
     this.dialog.open(MaterialHistoryDialogComponent, {
       width: '700px',
+      data: material
+    });
+  }
+
+  public openTrendChart(group: any) {
+    const material = group.selectedVariant;
+    if (!material) return;
+    this.dialog.open(MaterialTrendDialogComponent, {
+      width: '800px',
       data: material
     });
   }

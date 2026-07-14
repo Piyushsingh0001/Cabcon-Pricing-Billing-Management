@@ -23,7 +23,12 @@ public record MaterialDto
     public decimal LandedCost { get; init; }
     public string? UpdatedBy { get; init; }
     public string? VendorName { get; init; }
-    public int MissingDaysCount { get; init; }
+    public int MissingDaysCountLme { get; init; }
+    public int MissingDaysCountDirect { get; init; }
+    public decimal ThisMonthAvgLme { get; init; }
+    public decimal PrevMonthAvgLme { get; init; }
+    public decimal ThisMonthAvgDirect { get; init; }
+    public decimal PrevMonthAvgDirect { get; init; }
 }
 
 public record GetMaterialsQuery : IRequest<PaginatedList<MaterialDto>>
@@ -86,28 +91,43 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             .ToListAsync(cancellationToken);
 
         var materialIds = items.Select(x => x.Id).ToList();
-        var thirtyDaysAgo = DateTime.UtcNow.Date.AddDays(-30);
+        var today = DateTime.UtcNow.Date;
+        var thirtyDaysAgo = today.AddDays(-30);
+        var startOfThisMonth = new DateTime(today.Year, today.Month, 1);
+        var startOfPrevMonth = startOfThisMonth.AddMonths(-1);
+        
+        var earliestDate = new[] { thirtyDaysAgo, startOfPrevMonth }.Min();
         
         var histories = await _historyRepo.Query()
-            .Where(h => materialIds.Contains(h.MaterialId) && h.EffectiveDate >= thirtyDaysAgo)
-            .Select(h => new { h.MaterialId, Date = h.EffectiveDate.Date })
+            .Where(h => materialIds.Contains(h.MaterialId) && h.EffectiveDate >= earliestDate)
+            .Select(h => new { h.MaterialId, Date = h.EffectiveDate.Date, h.LandedCostInrPerKg, h.Type })
             .ToListAsync(cancellationToken);
 
         var dtos = items.Select(m => {
-            var mHistories = histories.Where(h => h.MaterialId == m.Id).Select(h => h.Date).Distinct().ToList();
+            var mHistories = histories.Where(h => h.MaterialId == m.Id).ToList();
+            
+            var mHistoriesLme = mHistories.Where(h => h.Type == MaterialType.Exchange).ToList();
+            var mHistoriesDirect = mHistories.Where(h => h.Type == MaterialType.Direct).ToList();
+
+            var mHistoryDatesLme = mHistoriesLme.Where(h => h.Date >= thirtyDaysAgo).Select(h => h.Date).Distinct().ToList();
+            var mHistoryDatesDirect = mHistoriesDirect.Where(h => h.Date >= thirtyDaysAgo).Select(h => h.Date).Distinct().ToList();
             
             // Calculate missing days in the last 30 days (or since creation)
             var startDate = m.CreatedDate.Date > thirtyDaysAgo ? m.CreatedDate.Date : thirtyDaysAgo;
-            var today = DateTime.UtcNow.Date;
-            int missingCount = 0;
+            int missingCountLme = 0;
+            int missingCountDirect = 0;
             
             for (var d = startDate; d <= today; d = d.AddDays(1))
             {
-                if (!mHistories.Contains(d))
-                {
-                    missingCount++;
-                }
+                if (!mHistoryDatesLme.Contains(d)) missingCountLme++;
+                if (!mHistoryDatesDirect.Contains(d)) missingCountDirect++;
             }
+
+            var thisMonthAvgLme = mHistoriesLme.Where(h => h.Date >= startOfThisMonth && h.Date <= today).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+            var prevMonthAvgLme = mHistoriesLme.Where(h => h.Date >= startOfPrevMonth && h.Date < startOfThisMonth).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+
+            var thisMonthAvgDirect = mHistoriesDirect.Where(h => h.Date >= startOfThisMonth && h.Date <= today).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+            var prevMonthAvgDirect = mHistoriesDirect.Where(h => h.Date >= startOfPrevMonth && h.Date < startOfThisMonth).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
 
             return new MaterialDto
             {
@@ -124,7 +144,12 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                 LandedCost = _pricingService.LandedCost(m),
                 UpdatedBy = m.UpdatedBy ?? m.CreatedBy,
                 VendorName = m.VendorName,
-                MissingDaysCount = missingCount
+                MissingDaysCountLme = missingCountLme,
+                MissingDaysCountDirect = missingCountDirect,
+                ThisMonthAvgLme = thisMonthAvgLme,
+                PrevMonthAvgLme = prevMonthAvgLme,
+                ThisMonthAvgDirect = thisMonthAvgDirect,
+                PrevMonthAvgDirect = prevMonthAvgDirect
             };
         }).ToList();
 

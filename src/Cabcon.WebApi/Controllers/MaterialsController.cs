@@ -38,9 +38,9 @@ public class MaterialsController : ControllerBase
 
     [HttpGet("{id}/history")]
     [HasPermission(AppPermissions.Pricing.View)]
-    public async Task<IActionResult> GetHistory(int id, CancellationToken ct)
+    public async Task<IActionResult> GetHistory(int id, [FromQuery] MaterialType? type, CancellationToken ct)
     {
-        var result = await _mediator.Send(new GetMaterialPriceHistoryQuery(id), ct);
+        var result = await _mediator.Send(new GetMaterialPriceHistoryQuery(id, type), ct);
         return Ok(result);
     }
 
@@ -103,9 +103,9 @@ public class MaterialsController : ControllerBase
 
     [HttpGet("{id:int}/missing-dates")]
     [HasPermission(AppPermissions.Pricing.View)]
-    public async Task<IActionResult> GetMissingDates(int id, CancellationToken ct)
+    public async Task<IActionResult> GetMissingDates(int id, [FromQuery] MaterialType? type, CancellationToken ct)
     {
-        var result = await _mediator.Send(new GetMaterialMissingDatesQuery(id), ct);
+        var result = await _mediator.Send(new GetMaterialMissingDatesQuery(id, type), ct);
         return Ok(result);
     }
 }

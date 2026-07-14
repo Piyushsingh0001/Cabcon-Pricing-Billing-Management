@@ -57,8 +57,13 @@
       
       <div formArrayName="bomLines" class="bom-lines-list">
         <div class="bom-line-row" *ngFor="let line of bomLines.controls; let idx = index; let isLast = last" [formGroupName]="idx">
-          <select class="sel" formControlName="materialId" (change)="checkUniqueness()">
-            <option *ngFor="let mat of getAvailableMaterials(idx)" [value]="mat.id">{{ mat.name }}</option>
+          <select class="sel" formControlName="materialName" (change)="onMaterialNameChange(idx)">
+            <option value="" disabled>Select Material</option>
+            <option *ngFor="let name of uniqueMaterialNames" [value]="name">{{ name }}</option>
+          </select>
+          <select class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)">
+            <option value="" disabled>Select Vendor</option>
+            <option *ngFor="let vendor of getAvailableVendors(idx)" [value]="vendor">{{ vendor }}</option>
           </select>
           
           <input class="in" style="width: 90px; text-align: right;" type="number" formControlName="weightKg">

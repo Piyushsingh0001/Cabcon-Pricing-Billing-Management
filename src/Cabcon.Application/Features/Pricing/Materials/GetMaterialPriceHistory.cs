@@ -19,7 +19,7 @@ public record MaterialPriceHistoryDto
     public Cabcon.Domain.Enums.MaterialType Type { get; init; }
 }
 
-public record GetMaterialPriceHistoryQuery(int MaterialId) : IRequest<IReadOnlyList<MaterialPriceHistoryDto>>;
+public record GetMaterialPriceHistoryQuery(int MaterialId, Cabcon.Domain.Enums.MaterialType? Type = null) : IRequest<IReadOnlyList<MaterialPriceHistoryDto>>;
 
 public class GetMaterialPriceHistoryQueryHandler : IRequestHandler<GetMaterialPriceHistoryQuery, IReadOnlyList<MaterialPriceHistoryDto>>
 {
@@ -32,8 +32,15 @@ public class GetMaterialPriceHistoryQueryHandler : IRequestHandler<GetMaterialPr
 
     public async Task<IReadOnlyList<MaterialPriceHistoryDto>> Handle(GetMaterialPriceHistoryQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.Query()
-            .Where(x => x.MaterialId == request.MaterialId)
+        var query = _repository.Query()
+            .Where(x => x.MaterialId == request.MaterialId);
+
+        if (request.Type.HasValue)
+        {
+            query = query.Where(x => x.Type == request.Type.Value);
+        }
+
+        return await query
             .OrderByDescending(x => x.EffectiveDate)
             .Select(x => new MaterialPriceHistoryDto
             {
