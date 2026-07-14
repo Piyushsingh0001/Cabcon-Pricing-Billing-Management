@@ -1,5 +1,6 @@
 using Cabcon.Application.Features.Billing.Customers.Commands.CreateCustomer;
 using Cabcon.Application.Features.Billing.Customers.Commands.DeleteCustomer;
+using Cabcon.Application.Features.Billing.Customers.Commands.UpdateCustomer;
 using Cabcon.Application.Features.Billing.Customers.Queries.GetCustomers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -38,6 +39,15 @@ public class CustomersController : ControllerBase
     public async Task<ActionResult> Delete(int id)
     {
         await _mediator.Send(new DeleteCustomerCommand(id));
+        return NoContent();
+    }
+
+    [HttpPut("{id}")]
+    [Authorize(Roles = "Admin,Super Admin")]
+    public async Task<ActionResult> Update(int id, [FromBody] UpdateCustomerCommand command)
+    {
+        if (id != command.Id) return BadRequest();
+        await _mediator.Send(command);
         return NoContent();
     }
 }
