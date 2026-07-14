@@ -9,6 +9,11 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
+          <mat-label>Vendor Name (Optional)</mat-label>
+          <input matInput formControlName="vendorName" placeholder="e.g. Vendor A">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-label>Material Type</mat-label>
           <mat-select formControlName="type" (selectionChange)="onTypeChange($event.value)">
             <mat-option [value]="0">Exchange-linked</mat-option>

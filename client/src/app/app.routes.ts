@@ -21,6 +21,12 @@ export const routes: Routes = [
     canActivate: [authGuard, permissionGuard('Quotation.View')]
   },
   {
+    path: 'pending-approvals',
+    loadComponent: () => import('./features/dashboard/quotations-list/quotations-list.component').then(m => m.QuotationsListComponent),
+    canActivate: [authGuard, permissionGuard('Quotation.View')],
+    data: { pendingOnly: true }
+  },
+  {
     path: 'customers',
     loadComponent: () => import('./features/dashboard/customers/customers.component').then(m => m.CustomersComponent),
     canActivate: [authGuard, permissionGuard('Quotation.View')]

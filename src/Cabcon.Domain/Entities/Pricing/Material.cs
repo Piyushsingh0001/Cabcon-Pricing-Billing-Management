@@ -11,6 +11,7 @@ namespace Cabcon.Domain.Entities.Pricing;
 public class Material : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
+    public string? VendorName { get; set; }
     public MaterialType Type { get; set; }
 
     // Exchange-linked fields (used when Type == Exchange)

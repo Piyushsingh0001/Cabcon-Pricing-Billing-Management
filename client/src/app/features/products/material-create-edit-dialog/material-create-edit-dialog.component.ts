@@ -48,6 +48,7 @@ export class MaterialCreateEditDialogComponent {
   ) {
     this.form = this.fb.group({
       name: [material?.name || '', Validators.required],
+      vendorName: [material?.vendorName || ''],
       type: [material?.type !== undefined ? material.type : 0, Validators.required],
       lmeUsdPerMt: [material?.lmeUsdPerMt || 0],
       premiumUsdPerMt: [material?.premiumUsdPerMt || 0],
@@ -92,7 +93,7 @@ export class MaterialCreateEditDialogComponent {
 
     if (this.material) {
       // 1. Prepare Base updates
-      const metaPayload = { name: formValues.name, type: formValues.type };
+      const metaPayload = { name: formValues.name, vendorName: formValues.vendorName, type: formValues.type };
       
       // 2. Prepare Price updates conditional layout parameters
       const pricePayload = formValues.type === 0 ? {

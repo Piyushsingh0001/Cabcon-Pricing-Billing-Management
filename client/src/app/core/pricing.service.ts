@@ -20,6 +20,7 @@ export interface Category {
 export interface Material {
   id: number;
   name: string;
+  vendorName?: string;
   type: number; // 0 = Exchange, 1 = Direct
   lmeUsdPerMt?: number;
   premiumUsdPerMt?: number;
@@ -41,6 +42,7 @@ export interface MaterialPriceHistory {
   directRateInrPerKg?: number;
   landedCostInrPerKg: number;
   effectiveDate: string;
+  vendorName?: string;
   updatedBy?: string;
 }
 
@@ -194,15 +196,25 @@ export class PricingService {
     return this.http.get<MaterialPriceHistory[]>(`${this.apiBase}/materials/${materialId}/history`);
   }
 
-  public updateMaterialPrice(payload: {
-    materialId: number;
-    lmeUsdPerMt?: number;
-    premiumUsdPerMt?: number;
-    fxRate?: number;
-    freightInrPerMt?: number;
-    directRateInrPerKg?: number;
-  }): Observable<void> {
+  public updateMaterialPrice(payload: any): Observable<void> {
     return this.http.put<void>(`${this.apiBase}/materials/price`, payload);
+  }
+
+  public bulkStampMaterials(): Observable<number> {
+    return this.http.post<number>(`${this.apiBase}/materials/bulk-stamp`, {});
+  }
+
+  public backfillMaterialPrices(materialId: number, prices: any[]): Observable<void> {
+    return this.http.post<void>(`${this.apiBase}/materials/${materialId}/backfill`, prices);
+  }
+
+  public getMissingDates(materialId: number): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiBase}/materials/${materialId}/missing-dates`);
+  }
+
+  public getMonthlyAverage(month: number, year: number): Observable<any[]> {
+    let params = new HttpParams().set('month', month).set('year', year);
+    return this.http.get<any[]>(`${this.apiBase}/materials/monthly-average`, { params });
   }
 
   public createMaterial(payload: {

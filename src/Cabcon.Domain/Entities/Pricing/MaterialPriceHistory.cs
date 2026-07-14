@@ -10,6 +10,7 @@ public class MaterialPriceHistory : BaseEntity
     public int MaterialId { get; set; }
     public Material Material { get; set; } = null!;
 
+    public string? VendorName { get; set; }
     public MaterialType Type { get; set; }
     public decimal? LmeUsdPerMt { get; set; }
     public decimal? PremiumUsdPerMt { get; set; }

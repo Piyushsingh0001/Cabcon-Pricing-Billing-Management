@@ -39,32 +39,14 @@ import { ChangePasswordDialogComponent } from './features/auth/change-password-d
   styleUrl: './app.css'
 })
 export class App {
-  private authService = inject(AuthService);
+  public authService = inject(AuthService);
   private pricingService = inject(PricingService);
   private dialog = inject(MatDialog);
 
   public isAuthenticated = this.authService.isAuthenticated;
   public currentUser = this.authService.currentUser;
   
-  public pendingApprovalsCount = 0;
-
   constructor() {
-    // Check pending count periodically or once if super admin
-    setInterval(() => this.checkPendingApprovals(), 30000); // Check every 30s
-    setTimeout(() => this.checkPendingApprovals(), 1000);
-    
-    this.pricingService.pendingApprovalUpdated.subscribe(() => {
-      this.checkPendingApprovals();
-    });
-  }
-
-  private checkPendingApprovals() {
-    if (this.isAuthenticated() && (this.authService.hasRole('Super Admin'))) {
-      this.pricingService.getPendingApprovalsCount().subscribe({
-        next: (count) => this.pendingApprovalsCount = count,
-        error: () => {} // ignore
-      });
-    }
   }
 
   public hasPermission(permission: string): boolean {

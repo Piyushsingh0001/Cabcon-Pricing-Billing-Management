@@ -22,6 +22,8 @@ public record MaterialDto
     public bool IsPlaceholder { get; init; }
     public decimal LandedCost { get; init; }
     public string? UpdatedBy { get; init; }
+    public string? VendorName { get; init; }
+    public int MissingDaysCount { get; init; }
 }
 
 public record GetMaterialsQuery : IRequest<PaginatedList<MaterialDto>>
@@ -37,11 +39,13 @@ public record GetMaterialsQuery : IRequest<PaginatedList<MaterialDto>>
 public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, PaginatedList<MaterialDto>>
 {
     private readonly IRepository<Material> _repository;
+    private readonly IRepository<MaterialPriceHistory> _historyRepo;
     private readonly PricingCalculationService _pricingService = new();
 
-    public GetMaterialsQueryHandler(IRepository<Material> repository)
+    public GetMaterialsQueryHandler(IRepository<Material> repository, IRepository<MaterialPriceHistory> historyRepo)
     {
         _repository = repository;
+        _historyRepo = historyRepo;
     }
 
     public async Task<PaginatedList<MaterialDto>> Handle(GetMaterialsQuery request, CancellationToken cancellationToken)
@@ -81,20 +85,47 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             .Take(request.PageSize)
             .ToListAsync(cancellationToken);
 
-        var dtos = items.Select(m => new MaterialDto
-        {
-            Id = m.Id,
-            Name = m.Name,
-            Type = m.Type,
-            LmeUsdPerMt = m.LmeUsdPerMt,
-            PremiumUsdPerMt = m.PremiumUsdPerMt,
-            FxRate = m.FxRate,
-            FreightInrPerMt = m.FreightInrPerMt,
-            DirectRateInrPerKg = m.DirectRateInrPerKg,
-            AsOnDate = m.AsOnDate,
-            IsPlaceholder = m.IsPlaceholder,
-            LandedCost = _pricingService.LandedCost(m),
-            UpdatedBy = m.UpdatedBy ?? m.CreatedBy
+        var materialIds = items.Select(x => x.Id).ToList();
+        var thirtyDaysAgo = DateTime.UtcNow.Date.AddDays(-30);
+        
+        var histories = await _historyRepo.Query()
+            .Where(h => materialIds.Contains(h.MaterialId) && h.EffectiveDate >= thirtyDaysAgo)
+            .Select(h => new { h.MaterialId, Date = h.EffectiveDate.Date })
+            .ToListAsync(cancellationToken);
+
+        var dtos = items.Select(m => {
+            var mHistories = histories.Where(h => h.MaterialId == m.Id).Select(h => h.Date).Distinct().ToList();
+            
+            // Calculate missing days in the last 30 days (or since creation)
+            var startDate = m.CreatedDate.Date > thirtyDaysAgo ? m.CreatedDate.Date : thirtyDaysAgo;
+            var today = DateTime.UtcNow.Date;
+            int missingCount = 0;
+            
+            for (var d = startDate; d <= today; d = d.AddDays(1))
+            {
+                if (!mHistories.Contains(d))
+                {
+                    missingCount++;
+                }
+            }
+
+            return new MaterialDto
+            {
+                Id = m.Id,
+                Name = m.Name,
+                Type = m.Type,
+                LmeUsdPerMt = m.LmeUsdPerMt,
+                PremiumUsdPerMt = m.PremiumUsdPerMt,
+                FxRate = m.FxRate,
+                FreightInrPerMt = m.FreightInrPerMt,
+                DirectRateInrPerKg = m.DirectRateInrPerKg,
+                AsOnDate = m.AsOnDate,
+                IsPlaceholder = m.IsPlaceholder,
+                LandedCost = _pricingService.LandedCost(m),
+                UpdatedBy = m.UpdatedBy ?? m.CreatedBy,
+                VendorName = m.VendorName,
+                MissingDaysCount = missingCount
+            };
         }).ToList();
 
         return new PaginatedList<MaterialDto>(dtos, count, request.PageNumber, request.PageSize);

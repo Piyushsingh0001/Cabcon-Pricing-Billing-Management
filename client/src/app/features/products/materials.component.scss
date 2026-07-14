@@ -17,7 +17,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   margin-top: 16px;
 }
@@ -238,5 +238,57 @@
   margin-bottom: 12px;
   .bare {
     width: 100%;
+  }
+}
+
+.averages-drawer {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: var(--shadow-premium);
+  margin-top: 16px;
+}
+
+.simple-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  
+  th, td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-glass);
+    text-align: left;
+  }
+  
+  th {
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: #f8fafc;
+  }
+
+  tr:hover td {
+    background: #f1f5f9;
+  }
+}
+
+.warning-badge {
+  background-color: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FCA5A5;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+  transition: opacity 0.2s;
+  
+  &:hover {
+    opacity: 0.8;
   }
 }

@@ -7,15 +7,6 @@
       <img src="Images\Logo.jpg.png" alt="Cabcon Logo" class="toolbar-logo">
       <span class="spacer"></span>
 
-      <!-- Notifications for Super Admin -->
-      <!-- <button mat-icon-button [matMenuTriggerFor]="notificationMenu" *ngIf="(hasPermission('Quotation.Generate') || hasPermission('Quotation.View')) && pendingApprovalsCount > 0" title="Pending Approvals">
-    <mat-icon [matBadge]="pendingApprovalsCount" matBadgeColor="warn">notifications</mat-icon>
-  </button>
-  <mat-menu #notificationMenu="matMenu">
-    <button mat-menu-item routerLink="/quotations">
-      <span>There are {{pendingApprovalsCount}} Quotations pending for approvable.</span>
-    </button>
-  </mat-menu> -->
       <!-- User profile info -->
       <div class="user-profile" *ngIf="currentUser() as user">
         <span class="user-name">{{ user.fullName }}</span>
@@ -74,6 +65,10 @@
           <a mat-list-item routerLink="/quotations" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
             <mat-icon matListItemIcon>receipt</mat-icon>
             <span matListItemTitle>Quotation History</span>
+          </a>
+          <a mat-list-item routerLink="/pending-approvals" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View') && authService.hasRole('Super Admin')">
+            <mat-icon matListItemIcon>pending_actions</mat-icon>
+            <span matListItemTitle>Pending Approval</span>
           </a>
           <a mat-list-item routerLink="/customers" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
             <mat-icon matListItemIcon>groups</mat-icon>

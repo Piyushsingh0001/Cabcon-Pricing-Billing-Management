@@ -122,6 +122,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
                     {
                         MaterialId = entry.Entity.Id,
                         Type = type,
+                        VendorName = entry.Entity.VendorName,
                         LmeUsdPerMt = entry.Entity.LmeUsdPerMt,
                         PremiumUsdPerMt = entry.Entity.PremiumUsdPerMt,
                         FxRate = entry.Entity.FxRate,
@@ -151,6 +152,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
                 {
                     Material = entry.Entity,
                     Type = type,
+                    VendorName = entry.Entity.VendorName,
                     LmeUsdPerMt = entry.Entity.LmeUsdPerMt,
                     PremiumUsdPerMt = entry.Entity.PremiumUsdPerMt,
                     FxRate = entry.Entity.FxRate,

@@ -16,6 +16,7 @@ public record MaterialPriceHistoryDto
     public decimal LandedCostInrPerKg { get; init; }
     public DateTime EffectiveDate { get; init; }
     public string? UpdatedBy { get; init; }
+    public Cabcon.Domain.Enums.MaterialType Type { get; init; }
 }
 
 public record GetMaterialPriceHistoryQuery(int MaterialId) : IRequest<IReadOnlyList<MaterialPriceHistoryDto>>;
@@ -44,7 +45,8 @@ public class GetMaterialPriceHistoryQueryHandler : IRequestHandler<GetMaterialPr
                 DirectRateInrPerKg = x.DirectRateInrPerKg,
                 LandedCostInrPerKg = x.LandedCostInrPerKg,
                 EffectiveDate = x.EffectiveDate,
-                UpdatedBy = x.UpdatedBy ?? x.CreatedBy
+                UpdatedBy = x.UpdatedBy ?? x.CreatedBy,
+                Type = x.Type
             })
             .ToListAsync(cancellationToken);
     }

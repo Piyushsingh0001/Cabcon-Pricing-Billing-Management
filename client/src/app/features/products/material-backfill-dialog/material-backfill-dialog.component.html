@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>Backfill Prices - {{ material.name }} {{ material.vendorName ? '(' + material.vendorName + ')' : '' }}</h2>
+<mat-dialog-content>
+  <p class="subtitle">Enter the missing prices for the dates below.</p>
+  
+  <form [formGroup]="form" class="backfill-form">
+    <div formArrayName="prices">
+      <div *ngFor="let priceGroup of pricesArray.controls; let i = index" [formGroupName]="i" class="price-row" style="align-items: center; gap: 12px; margin-bottom: 8px; display: flex;">
+        <div class="date-column">
+          <span class="date-label" style="font-weight: 500;">{{ missingDates[i] | date:'mediumDate' }}</span>
+        </div>
+
+        <div class="fields-column">
+          <mat-form-field appearance="outline" class="sm-field" style="width: 140px; margin-right: 12px;">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+              <mat-option [value]="0">LME-linked</mat-option>
+              <mat-option [value]="1">Direct ₹/kg</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <ng-container *ngIf="priceGroup.get('type')?.value === 0">
+            <mat-form-field appearance="outline" class="sm-field">
+              <mat-label>LME ($)</mat-label>
+              <input matInput formControlName="lmeUsdPerMt" type="number">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="sm-field">
+              <mat-label>Prem. ($)</mat-label>
+              <input matInput formControlName="premiumUsdPerMt" type="number">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="sm-field">
+              <mat-label>FX (₹)</mat-label>
+              <input matInput formControlName="fxRate" type="number" step="0.01">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="sm-field">
+              <mat-label>Fr. (₹)</mat-label>
+              <input matInput formControlName="freightInrPerMt" type="number">
+            </mat-form-field>
+          </ng-container>
+
+          <ng-container *ngIf="priceGroup.get('type')?.value === 1">
+            <mat-form-field appearance="outline" class="sm-field">
+              <mat-label>Direct Rate (₹/kg)</mat-label>
+              <input matInput formControlName="directRateInrPerKg" type="number" step="0.01">
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button class="btn-primary" [disabled]="form.invalid || loading()" (click)="onSubmit()">
+    Save Prices
+  </button>
+</mat-dialog-actions>

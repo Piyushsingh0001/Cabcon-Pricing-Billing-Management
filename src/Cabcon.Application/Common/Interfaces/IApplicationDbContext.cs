@@ -1,7 +1,7 @@
 using Cabcon.Domain.Entities.Audit;
 using Cabcon.Domain.Entities.Identity;
 using Cabcon.Domain.Entities.Billing;
-using Microsoft.EntityFrameworkCore;
+using Cabcon.Domain.Entities.Pricing;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cabcon.Application.Common.Interfaces;
@@ -28,6 +28,7 @@ public interface IApplicationDbContext
     DbSet<EmailVerificationToken> EmailVerificationTokens { get; }
     DbSet<LoginHistory> LoginHistory { get; }
     DbSet<Customer> Customers { get; }
+    DbSet<MaterialPriceHistory> MaterialPriceHistory { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

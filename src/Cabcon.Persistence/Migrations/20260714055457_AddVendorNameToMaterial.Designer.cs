@@ -4,6 +4,7 @@ using Cabcon.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cabcon.Persistence.Migrations
 {
     [DbContext(typeof(CabconDbContext))]
-    partial class CabconDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260714055457_AddVendorNameToMaterial")]
+    partial class AddVendorNameToMaterial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1376,13 +1379,12 @@ namespace Cabcon.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("VendorName")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name", "VendorName")
-                        .IsUnique()
-                        .HasFilter("[VendorName] IS NOT NULL");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Materials", (string)null);
 

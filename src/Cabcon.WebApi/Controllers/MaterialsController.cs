@@ -64,7 +64,7 @@ public class MaterialsController : ControllerBase
     [HasPermission(AppPermissions.Pricing.Update)]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateMaterialRequest request, CancellationToken ct)
     {
-        var result = await _mediator.Send(new UpdateMaterialCommand(id, request.Name, request.Type), ct);
+        var result = await _mediator.Send(new UpdateMaterialCommand(id, request.Name, request.VendorName, request.Type), ct);
         return result.Succeeded ? NoContent() : BadRequest(result.Errors);
     }
 
@@ -75,9 +75,42 @@ public class MaterialsController : ControllerBase
         var result = await _mediator.Send(new DeleteMaterialCommand(id), ct);
         return result.Succeeded ? NoContent() : BadRequest(result.Errors);
     }
+
+    [HttpPost("bulk-stamp")]
+    [HasPermission(AppPermissions.Pricing.Update)]
+    public async Task<IActionResult> BulkStamp(CancellationToken ct)
+    {
+        var result = await _mediator.Send(new BulkStampMaterialPricesCommand(), ct);
+        return result.Succeeded ? Ok(result.Data) : BadRequest(result.Errors);
+    }
+
+    [HttpGet("monthly-average")]
+    [HasPermission(AppPermissions.Pricing.View)]
+    public async Task<IActionResult> GetMonthlyAverage([FromQuery] int month, [FromQuery] int year, CancellationToken ct)
+    {
+        var query = new Cabcon.Application.Features.Pricing.Materials.Queries.GetMonthlyAveragePrices.GetMonthlyAveragePricesQuery(month, year);
+        var result = await _mediator.Send(query, ct);
+        return Ok(result);
+    }
+
+    [HttpPost("{id:int}/backfill")]
+    [HasPermission(AppPermissions.Pricing.Update)]
+    public async Task<IActionResult> Backfill(int id, [FromBody] List<BackfillPriceDto> prices, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new BackfillMaterialPricesCommand(id, prices), ct);
+        return result.Succeeded ? Ok() : BadRequest(result.Errors);
+    }
+
+    [HttpGet("{id:int}/missing-dates")]
+    [HasPermission(AppPermissions.Pricing.View)]
+    public async Task<IActionResult> GetMissingDates(int id, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetMaterialMissingDatesQuery(id), ct);
+        return Ok(result);
+    }
 }
 
-public record UpdateMaterialRequest(string Name, MaterialType Type);
+public record UpdateMaterialRequest(string Name, string? VendorName, MaterialType Type);
 
 public record GetMaterialsRequest(
     string? Search = null,

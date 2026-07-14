@@ -23,7 +23,7 @@ public class MaterialConfiguration : IEntityTypeConfiguration<Material>
             b.Property(prop).HasColumnType("decimal(18,4)");
         }
 
-        b.HasIndex(x => x.Name).IsUnique();
+        b.HasIndex(x => new { x.Name, x.VendorName }).IsUnique();
 
         b.HasMany(x => x.PriceHistory).WithOne(x => x.Material).HasForeignKey(x => x.MaterialId).OnDelete(DeleteBehavior.Cascade);
         // Restrict: a Material referenced by a live BOM line cannot be hard-deleted -

@@ -15,6 +15,7 @@ import { AuthService } from '../../core/auth.service';
 import { MaterialCreateEditDialogComponent } from './material-create-edit-dialog/material-create-edit-dialog.component';
 import { MaterialHistoryDialogComponent } from './material-history-dialog/material-history-dialog.component';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { MaterialBackfillDialogComponent } from './material-backfill-dialog/material-backfill-dialog.component';
 
 @Component({
   selector: 'app-materials',
@@ -43,12 +44,71 @@ export class MaterialsComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   public materials: Material[] = [];
-  public totalCount = 0;
-  public loading = signal(false);
+  public materialGroups: any[] = [];
+  public loading = signal(true);
+
+  // Monthly Averages
+  public showAverages = false;
+  public monthlyAverages: any[] = [];
+  public selectedMonth = new Date().getMonth() + 1;
+  public selectedYear = new Date().getFullYear();
+  public averageColumns = ['materialName', 'vendorName', 'averageCost'];
+
+  public months = [
+    { value: 1, label: 'January' }, { value: 2, label: 'February' }, { value: 3, label: 'March' },
+    { value: 4, label: 'April' }, { value: 5, label: 'May' }, { value: 6, label: 'June' },
+    { value: 7, label: 'July' }, { value: 8, label: 'August' }, { value: 9, label: 'September' },
+    { value: 10, label: 'October' }, { value: 11, label: 'November' }, { value: 12, label: 'December' }
+  ];
+  
+  public years = [2024, 2025, 2026, 2027];
 
   ngOnInit() {
     this.loadMaterials();
   }
+
+  public onVendorChange(group: any) {
+    this.updateGroupSelectedVariant(group);
+  }
+
+  private updateGroupSelectedVariant(group: any) {
+    const selected = group.variants.find((v: any) => v.id === group.selectedVariantId) || group.variants[0];
+    group.selectedVariant = selected;
+  }
+
+  public toggleAverages() {
+    this.showAverages = !this.showAverages;
+    if (this.showAverages) {
+      this.loadMonthlyAverages();
+    }
+  }
+
+  public loadMonthlyAverages() {
+    this.pricingService.getMonthlyAverage(this.selectedMonth, this.selectedYear).subscribe({
+      next: (res) => {
+        this.monthlyAverages = res;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.snackBar.open('Failed to load monthly averages.', 'Close', { duration: 3000 });
+      }
+    });
+  }
+
+  public getMissingDays(group: any): number {
+    return group.selectedVariant?.missingDaysCount || 0;
+  }
+
+  public openBackfill(material: Material) {
+    if (!this.canUpdate()) return;
+    const dialogRef = this.dialog.open(MaterialBackfillDialogComponent, {
+      width: '650px',
+      data: material
+    });
+    dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
+  }
+
+  // removed bulkStamp
 
   public canUpdate(): boolean {
     return this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
@@ -56,6 +116,15 @@ export class MaterialsComponent implements OnInit {
 
   public loadMaterials() {
     this.loading.set(true);
+
+    // Preserve current selections before reloading
+    const currentSelections = new Map<string, number>();
+    this.materialGroups.forEach(g => {
+      if (g.selectedVariantId) {
+        currentSelections.set(g.name, g.selectedVariantId);
+      }
+    });
+
     // Request up to 100 materials on page 1 sorted by name (asc) to ensure all display together
     this.pricingService.getMaterials(
       undefined,
@@ -66,8 +135,27 @@ export class MaterialsComponent implements OnInit {
       100
     ).subscribe({
       next: (res) => {
-        this.materials = res.items;
-        this.totalCount = res.totalCount;
+        // Group materials by Name
+        const groupsMap = new Map<string, any>();
+        
+        res.items.forEach(m => {
+          if (!groupsMap.has(m.name)) {
+            groupsMap.set(m.name, {
+              name: m.name,
+              variants: [],
+              selectedVariantId: currentSelections.get(m.name) || m.id // Preserve selection or default
+            });
+          }
+          groupsMap.get(m.name).variants.push(m);
+        });
+
+        this.materialGroups = Array.from(groupsMap.values());
+        
+        // Ensure each group exposes the selected variant's properties for the template
+        this.materialGroups.forEach(group => {
+          this.updateGroupSelectedVariant(group);
+        });
+
         this.loading.set(false);
         this.cdr.detectChanges();
       },
@@ -94,60 +182,32 @@ export class MaterialsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
   }
 
-  public deleteMaterial(material: Material) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '450px',
-      data: {
-        title: 'Delete Material',
-        message: `Are you sure you want to delete material "${material.name}"? This action cannot be undone.`,
-        type: 'confirm',
-        confirmText: 'Delete',
-        cancelText: 'Cancel'
-      }
-    });
+  // removed delete method
 
-    dialogRef.afterClosed().subscribe(confirmed => {
-      if (confirmed) {
-        this.pricingService.deleteMaterial(material.id).subscribe({
-          next: () => {
-            this.snackBar.open('Material deleted successfully.', 'Close', { duration: 3000 });
-            this.loadMaterials();
-          },
-          error: (err) => {
-            this.snackBar.open(err.error?.message || 'Failed to delete material.', 'Close', { duration: 3000 });
-          }
-        });
-      }
-    });
-  }
-
-  public viewHistory(material: Material) {
+  public viewHistory(group: any) {
+    const material = group.selectedVariant;
+    if (!material) return;
     this.dialog.open(MaterialHistoryDialogComponent, {
-      width: '650px',
+      width: '700px',
       data: material
     });
   }
 
-  public calculateLandedCost(material: Material): number {
+  public calculateLandedCost(group: any): number {
+    const material = group.selectedVariant;
+    if (!material) return 0;
     if (material.type === 0) {
-      const lme = Number(material.lmeUsdPerMt || 0);
-      const premium = Number(material.premiumUsdPerMt || 0);
-      const fx = Number(material.fxRate || 0);
-      const freight = Number(material.freightInrPerMt || 0);
-      return ((lme + premium) * fx + freight) / 1000;
-    } else {
-      return Number(material.directRateInrPerKg || 0);
+      return (((material.lmeUsdPerMt || 0) + (material.premiumUsdPerMt || 0)) * (material.fxRate || 0) + (material.freightInrPerMt || 0)) / 1000;
     }
+    return material.directRateInrPerKg || 0;
   }
 
-  public updatePrice(material: Material) {
-    if (!this.canUpdate()) {
-      this.snackBar.open('You do not have permission to update pricing.', 'Close', { duration: 3000 });
-      return;
-    }
-
+  public updatePrice(group: any) {
+    if (!this.canUpdate()) return;
+    const material = group.selectedVariant;
     const metaPayload = {
       name: material.name,
+      vendorName: material.vendorName,
       type: material.type
     };
 

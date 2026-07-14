@@ -4,64 +4,113 @@
       <h1 class="sh-t">Daily raw-material prices</h1>
       <p class="subtitle">Update inputs, then stamp the date. Exchange metals build up from LME; others are a direct ₹/kg.</p>
     </div>
-    <button class="btn-ghost" (click)="addMaterial()" *ngIf="canUpdate()">
-      + Add material
-    </button>
+    <div style="display: flex; gap: 8px;">
+      <button class="btn-ghost" (click)="toggleAverages()">
+        <mat-icon style="vertical-align: middle;">calendar_month</mat-icon> Monthly Averages
+      </button>
+      <button class="btn-ghost" (click)="addMaterial()" *ngIf="canUpdate()">
+        + Add material
+      </button>
+    </div>
+  </div>
+
+  <div class="averages-drawer" *ngIf="showAverages">
+    <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+      <mat-form-field appearance="outline">
+        <mat-label>Month</mat-label>
+        <mat-select [(ngModel)]="selectedMonth" (selectionChange)="loadMonthlyAverages()">
+          <mat-option *ngFor="let m of months" [value]="m.value">{{ m.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline">
+        <mat-label>Year</mat-label>
+        <mat-select [(ngModel)]="selectedYear" (selectionChange)="loadMonthlyAverages()">
+          <mat-option *ngFor="let y of years" [value]="y">{{ y }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <table class="simple-table" *ngIf="monthlyAverages.length > 0">
+      <thead>
+        <tr>
+          <th>Material</th>
+          <th>Vendor</th>
+          <th style="text-align: right;">Avg. Cost (₹/kg)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let avg of monthlyAverages">
+          <td>{{ avg.materialName }}</td>
+          <td>{{ avg.vendorName || '-' }}</td>
+          <td style="text-align: right;">₹{{ avg.averageCost | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="monthlyAverages.length === 0" style="color: var(--text-secondary);">
+      No data available for the selected month.
+    </div>
   </div>
 
   <div class="grid">
-    <div class="card glass-card" *ngFor="let element of materials">
+    <div class="card glass-card" *ngFor="let group of materialGroups">
       <div class="card-header" style="justify-content: flex-end;">
         <div class="header-actions">
-          <select class="sel" [(ngModel)]="element.type" [disabled]="!canUpdate()">
+          <select class="sel" [(ngModel)]="group.selectedVariant.type" [disabled]="!canUpdate()">
             <option [ngValue]="0">LME-linked</option>
             <option [ngValue]="1">Direct ₹/kg</option>
           </select>
           
-          <button mat-icon-button color="accent" (click)="viewHistory(element)" title="View Price History">
+          <button mat-icon-button color="accent" (click)="viewHistory(group)" title="View Price History">
             <mat-icon>history</mat-icon>
-          </button>
-          
-          <button mat-icon-button color="warn" (click)="deleteMaterial(element)" *ngIf="canUpdate()" title="Delete Material">
-            <mat-icon>delete</mat-icon>
           </button>
         </div>
       </div>
 
-      <div class="material-name-row">
-        <input class="bare" [(ngModel)]="element.name" [disabled]="!canUpdate()" placeholder="Material Name">
+      <div class="material-name-row" style="margin-bottom: 4px;">
+        <input class="bare" [value]="group.name" disabled placeholder="Material Name">
+      </div>
+      <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; display: flex; align-items: center; gap: 4px;">
+        Vendor: 
+        <select class="bare" style="width: auto; font-size: 12px; font-weight: normal; background: transparent; padding: 2px;" 
+                [(ngModel)]="group.selectedVariantId" 
+                (ngModelChange)="onVendorChange(group)">
+          <option *ngFor="let variant of group.variants" [ngValue]="variant.id">
+            {{ variant.vendorName || 'Default Vendor' }}
+          </option>
+        </select>
       </div>
 
-      <div class="badge-row" *ngIf="element.isPlaceholder">
+      <div class="badge-row" *ngIf="group.selectedVariant.isPlaceholder">
         <span class="tag">example — set price today</span>
       </div>
 
       <div class="fields-container">
         <!-- LME-linked fields -->
-        <ng-container *ngIf="element.type === 0">
+        <ng-container *ngIf="group.selectedVariant.type === 0">
           <div class="field-row">
             <span class="field-label">LME (USD/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="element.lmeUsdPerMt" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.selectedVariant.lmeUsdPerMt" [disabled]="!canUpdate()">
           </div>
           <div class="field-row">
             <span class="field-label">Premium (USD/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="element.premiumUsdPerMt" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.selectedVariant.premiumUsdPerMt" [disabled]="!canUpdate()">
           </div>
           <div class="field-row">
             <span class="field-label">FX (₹/USD)</span>
-            <input type="number" class="field-input" [(ngModel)]="element.fxRate" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.selectedVariant.fxRate" [disabled]="!canUpdate()">
           </div>
           <div class="field-row">
             <span class="field-label">Freight (₹/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="element.freightInrPerMt" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.selectedVariant.freightInrPerMt" [disabled]="!canUpdate()">
           </div>
         </ng-container>
 
         <!-- Direct fields -->
-        <ng-container *ngIf="element.type === 1">
+        <ng-container *ngIf="group.selectedVariant.type === 1">
           <div class="field-row">
             <span class="field-label">Price (₹/kg)</span>
-            <input type="number" class="field-input" [(ngModel)]="element.directRateInrPerKg" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.selectedVariant.directRateInrPerKg" [disabled]="!canUpdate()">
           </div>
         </ng-container>
       </div>
@@ -70,14 +119,22 @@
         <div class="footer-left">
           <div class="footer-label">Landed cost</div>
           <div class="footer-val">
-            ₹{{ calculateLandedCost(element) | number:'1.2-2' }}<span class="footer-unit">/kg</span>
+            ₹{{ calculateLandedCost(group) | number:'1.2-2' }}<span class="footer-unit">/kg</span>
           </div>
         </div>
         <div class="footer-right">
-          <div class="footer-as-on">as on {{ element.asOnDate ? (element.asOnDate | date:'yyyy-MM-dd') : '-' }}</div>
-          <button class="btn-update" (click)="updatePrice(element)" [disabled]="!canUpdate()">Update price</button>
+          <ng-container *ngIf="getMissingDays(group) > 0; else updatedOk">
+            <div class="warning-badge cursor-pointer" (click)="openBackfill(group.selectedVariant)" title="Click to fill missing prices">
+              ⚠️ Prices missing for {{ getMissingDays(group) }} day(s)
+            </div>
+          </ng-container>
+          <ng-template #updatedOk>
+            <div class="footer-as-on">Updated today</div>
+          </ng-template>
+          
+          <button class="btn-update" style="margin-top: 4px;" (click)="updatePrice(group)" [disabled]="!canUpdate()">Update today's price</button>
         </div>
       </div>
     </div>
   </div>
-</div>
+</div>

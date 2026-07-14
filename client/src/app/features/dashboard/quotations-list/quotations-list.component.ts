@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, OnInit, inject, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
@@ -41,13 +42,16 @@ export class QuotationsListComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   private cdr = inject(ChangeDetectorRef);
   private datePipe = inject(DatePipe);
+  private route = inject(ActivatedRoute);
 
   public displayedColumns = ['quoteNumber', 'partyName', 'date', 'totalExGst', 'totalGross', 'createdBy', 'actions'];
   public dataSource = new MatTableDataSource<QuotationSummary>([]);
   public canApprove = this.authService.hasRole('Super Admin');
   public canDelete = this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
+  public pendingOnly = false;
 
   ngOnInit() {
+    this.pendingOnly = this.route.snapshot.data['pendingOnly'] === true;
     // Custom filter predicate to match formatted date and selected columns
     this.dataSource.filterPredicate = (data: QuotationSummary, filter: string) => {
       const searchStr = filter.toLowerCase();
@@ -69,7 +73,11 @@ private loadQuotations() {
   this.pricingService.getQuotations().subscribe({
     next: (res) => {
 
-      this.dataSource.data = res ?? [];
+      let data = res ?? [];
+      if (this.pendingOnly) {
+        data = data.filter(q => q.approvalStatus === 0);
+      }
+      this.dataSource.data = data;
 
       this.cdr.detectChanges();
 
@@ -94,7 +102,11 @@ private loadQuotations() {
         dialogRef.afterClosed().subscribe((newStatus: number | undefined | string) => {
           if (typeof newStatus === 'number') {
             quote.approvalStatus = newStatus;
-            this.dataSource.data = [...this.dataSource.data];
+            if (this.pendingOnly && newStatus !== 0) {
+              this.dataSource.data = this.dataSource.data.filter(q => q.id !== quote.id);
+            } else {
+              this.dataSource.data = [...this.dataSource.data];
+            }
             this.cdr.detectChanges();
           }
         });
@@ -109,7 +121,11 @@ private loadQuotations() {
     this.pricingService.approveQuotation(quote.id, status).subscribe({
       next: () => {
         quote.approvalStatus = status;
-        this.dataSource.data = [...this.dataSource.data];
+        if (this.pendingOnly && status !== 0) {
+          this.dataSource.data = this.dataSource.data.filter(q => q.id !== quote.id);
+        } else {
+          this.dataSource.data = [...this.dataSource.data];
+        }
         this.pricingService.pendingApprovalUpdated.next();
         this.snackBar.open(status === 1 ? 'Quotation Approved' : 'Quotation Rejected', 'Close', { duration: 3000 });
         this.cdr.detectChanges();

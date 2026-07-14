@@ -17,10 +17,10 @@
           <ng-container matColumnDef="rateDetails">
             <th mat-header-cell *matHeaderCellDef>Rate Details</th>
             <td mat-cell *matCellDef="let log">
-              <span *ngIf="material.type === 0">
+              <span *ngIf="log.type === 0">
                 LME: \${{log.lmeUsdPerMt}}, Prem: \${{log.premiumUsdPerMt}}, Fx: ₹{{log.fxRate}}
               </span>
-              <span *ngIf="material.type === 1">
+              <span *ngIf="log.type === 1">
                 Direct Rate: ₹{{log.directRateInrPerKg}}/kg
               </span>
             </td>

@@ -1,0 +1,35 @@
+.subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.price-row:last-child {
+  border-bottom: none;
+}
+
+.date-column {
+  min-width: 100px;
+}
+
+.date-label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.fields-column {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+
+.sm-field {
+  width: 100px;
+}
