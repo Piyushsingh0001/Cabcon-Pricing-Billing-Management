@@ -294,6 +294,10 @@ export class PricingService {
     return this.http.post<number>(`${this.apiBase}/customers`, payload);
   }
 
+  public updateCustomer(id: number, payload: any): Observable<void> {
+    return this.http.put<void>(`${this.apiBase}/customers/${id}`, { ...payload, id });
+  }
+
   public deleteCustomer(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiBase}/customers/${id}`);
   }

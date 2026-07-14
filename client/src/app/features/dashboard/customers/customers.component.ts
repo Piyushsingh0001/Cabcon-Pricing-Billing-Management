@@ -41,7 +41,8 @@ export class CustomersComponent implements OnInit {
   public displayedColumns = ['name', 'contactNumber', 'gstNumber', 'address', 'updatedBy', 'actions'];
   public dataSource = new MatTableDataSource<CustomerSummary>([]);
   public canEdit = this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
-  public isAdding = signal(false);
+  public isFormOpen = signal(false);
+  public editingCustomerId = signal<number | null>(null);
   public addForm!: FormGroup;
 
   ngOnInit() {
@@ -72,27 +73,57 @@ export class CustomersComponent implements OnInit {
   }
 
   public showAddForm() {
-    this.isAdding.set(true);
+    this.isFormOpen.set(true);
+    this.editingCustomerId.set(null);
     this.addForm.reset();
   }
 
+  public showEditForm(customer: CustomerSummary) {
+    this.isFormOpen.set(true);
+    this.editingCustomerId.set(customer.id);
+    this.addForm.patchValue({
+      name: customer.name,
+      contactNumber: customer.contactNumber,
+      gstNumber: customer.gstNumber,
+      address: customer.address
+    });
+  }
+
   public cancelAdd() {
-    this.isAdding.set(false);
+    this.isFormOpen.set(false);
+    this.editingCustomerId.set(null);
   }
 
   public submitAdd() {
     if (this.addForm.invalid) return;
     
-    this.pricingService.createCustomer(this.addForm.value).subscribe({
-      next: () => {
-        this.snackBar.open('Customer added successfully', 'Close', { duration: 3000 });
-        this.isAdding.set(false);
-        this.loadCustomers();
-      },
-      error: () => {
-        this.snackBar.open('Failed to add customer', 'Close', { duration: 3000 });
-      }
-    });
+    const id = this.editingCustomerId();
+    
+    if (id) {
+      this.pricingService.updateCustomer(id, this.addForm.value).subscribe({
+        next: () => {
+          this.snackBar.open('Customer updated successfully', 'Close', { duration: 3000 });
+          this.isFormOpen.set(false);
+          this.editingCustomerId.set(null);
+          this.loadCustomers();
+        },
+        error: () => {
+          this.snackBar.open('Failed to update customer', 'Close', { duration: 3000 });
+        }
+      });
+    } else {
+      this.pricingService.createCustomer(this.addForm.value).subscribe({
+        next: () => {
+          this.snackBar.open('Customer added successfully', 'Close', { duration: 3000 });
+          this.isFormOpen.set(false);
+          this.editingCustomerId.set(null);
+          this.loadCustomers();
+        },
+        error: () => {
+          this.snackBar.open('Failed to add customer', 'Close', { duration: 3000 });
+        }
+      });
+    }
   }
 
   public deleteCustomer(customer: CustomerSummary) {
