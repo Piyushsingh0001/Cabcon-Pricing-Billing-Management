@@ -12,8 +12,6 @@ export interface QuotationPreviewData {
   validityDays: number;
   priceBasisNote: string;
   totalExGst: number;
-  totalGst: number;
-  totalGross: number;
   lines: any[];
 }
 
@@ -34,7 +32,7 @@ export interface QuotationPreviewData {
 export class QuotationPreviewDialogComponent {
   private authService = inject(AuthService);
   
-  public displayedColumns = ['sno', 'description', 'unit', 'offerExGst', 'gstPercent', 'gstAmount', 'grossRate'];
+  public displayedColumns = ['sno', 'description', 'unit', 'offerExGst'];
   public isSuperAdmin = this.authService.hasRole('Super Admin');
   public today = new Date();
 

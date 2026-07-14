@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cabcon.Application.Features.Pricing.Quotations;
 
-public record SaveQuotationLineInput
+public record UpdateQuotationLineInput
 {
     public int SkuId { get; init; }
     public decimal RmCostSnapshot { get; init; }
@@ -18,20 +18,22 @@ public record SaveQuotationLineInput
     public decimal Profit { get; init; }
 }
 
-public record SaveQuotationResponse(int Id, string QuotationNumber);
+public record UpdateQuotationResponse(int Id, string QuotationNumber);
 
-public record SaveQuotationCommand : IRequest<Result<SaveQuotationResponse>>
+public record UpdateQuotationCommand : IRequest<Result<UpdateQuotationResponse>>
 {
+    public int Id { get; init; }
     public string PartyName { get; init; } = string.Empty;
     public int ValidityDays { get; init; }
 
-    public List<SaveQuotationLineInput> Lines { get; init; } = new();
+    public List<UpdateQuotationLineInput> Lines { get; init; } = new();
 }
 
-public class SaveQuotationCommandValidator : AbstractValidator<SaveQuotationCommand>
+public class UpdateQuotationCommandValidator : AbstractValidator<UpdateQuotationCommand>
 {
-    public SaveQuotationCommandValidator()
+    public UpdateQuotationCommandValidator()
     {
+        RuleFor(x => x.Id).GreaterThan(0);
         RuleFor(x => x.PartyName).NotEmpty().MaximumLength(200);
         RuleFor(x => x.ValidityDays).GreaterThan(0);
         RuleFor(x => x.Lines).NotEmpty().WithMessage("Quotation must have at least one line.");
@@ -48,21 +50,27 @@ public class SaveQuotationCommandValidator : AbstractValidator<SaveQuotationComm
     }
 }
 
-public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand, Result<SaveQuotationResponse>>
+public class UpdateQuotationCommandHandler : IRequestHandler<UpdateQuotationCommand, Result<UpdateQuotationResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IDateTime _dateTime;
     private readonly ICurrentUserService _currentUser;
 
-    public SaveQuotationCommandHandler(IUnitOfWork unitOfWork, IDateTime dateTime, ICurrentUserService currentUser)
+    public UpdateQuotationCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUser)
     {
         _unitOfWork = unitOfWork;
-        _dateTime = dateTime;
         _currentUser = currentUser;
     }
 
-    public async Task<Result<SaveQuotationResponse>> Handle(SaveQuotationCommand request, CancellationToken cancellationToken)
+    public async Task<Result<UpdateQuotationResponse>> Handle(UpdateQuotationCommand request, CancellationToken cancellationToken)
     {
+        var quotationRepo = _unitOfWork.Repository<Quotation>();
+        var quotation = await quotationRepo.Query()
+            .Include(q => q.Lines)
+            .FirstOrDefaultAsync(q => q.Id == request.Id, cancellationToken);
+
+        if (quotation == null)
+            return Result<UpdateQuotationResponse>.Failure("Quotation not found.");
+
         var skuRepo = _unitOfWork.Repository<Sku>();
         var skuIds = request.Lines.Select(l => l.SkuId).Distinct().ToList();
         var skus = await skuRepo.Query()
@@ -72,35 +80,22 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
 
         if (skus.Count != skuIds.Count)
         {
-            return Result<SaveQuotationResponse>.Failure("One or more SKU IDs are invalid.");
+            return Result<UpdateQuotationResponse>.Failure("One or more SKU IDs are invalid.");
         }
-
-        var today = _dateTime.UtcNow.Date;
-        var tomorrow = today.AddDays(1);
-        
-        var quotationRepo = _unitOfWork.Repository<Quotation>();
-        var todayCount = await quotationRepo.Query()
-            .CountAsync(q => q.CreatedDate >= today && q.CreatedDate < tomorrow, cancellationToken);
-
-        var sequence = todayCount + 1;
-        var quotationNumber = $"CIL/Q/{_dateTime.UtcNow:yyyyMMdd}/{sequence:D3}";
 
         var totalExGst = request.Lines.Sum(l => l.OfferExGst);
         var totalGst = 0m;
         var totalGross = totalExGst;
 
-        var quotation = new Quotation
-        {
-            QuotationNumber = quotationNumber,
-            QuotationDate = _dateTime.UtcNow,
-            PartyName = request.PartyName,
-            ValidityDays = request.ValidityDays,
-            PriceBasisNote = string.Empty,
-            TotalExGst = totalExGst,
-            TotalGst = totalGst,
-            TotalGross = totalGross,
-            ApprovalStatus = _currentUser.Roles.Contains("Super Admin") ? ApprovalStatus.Approved : ApprovalStatus.Pending
-        };
+        quotation.PartyName = request.PartyName;
+        quotation.ValidityDays = request.ValidityDays;
+        quotation.PriceBasisNote = string.Empty;
+        quotation.TotalExGst = totalExGst;
+        quotation.TotalGst = totalGst;
+        quotation.TotalGross = totalGross;
+        // Keep status as-is (Pending).
+        
+        quotation.Lines.Clear();
 
         int order = 0;
         foreach (var lineInput in request.Lines)
@@ -122,9 +117,9 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
             });
         }
 
-        await quotationRepo.AddAsync(quotation, cancellationToken);
+        quotationRepo.Update(quotation);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Result<SaveQuotationResponse>.Success(new SaveQuotationResponse(quotation.Id, quotationNumber));
+        return Result<UpdateQuotationResponse>.Success(new UpdateQuotationResponse(quotation.Id, quotation.QuotationNumber));
     }
 }

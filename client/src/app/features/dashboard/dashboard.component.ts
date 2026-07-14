@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { PricingService, Sku, Material, CustomerSummary } from '../../core/pricing.service';
 import { QuotationPreviewDialogComponent } from './quotation-preview-dialog/quotation-preview-dialog.component';
@@ -27,9 +27,6 @@ interface CalculatorRow {
   rowOfferOverride?: number;
   offerExGst: number;
   profit: number;
-  gstPercent: number;
-  gstAmount: number;
-  grossRate: number;
 }
 
 @Component({
@@ -57,6 +54,10 @@ export class DashboardComponent implements OnInit {
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
   private cdr = inject(ChangeDetectorRef);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  public editId: number | null = null;
 
   public rows: CalculatorRow[] = [];
   public skus: Sku[] = [];
@@ -90,12 +91,52 @@ export class DashboardComponent implements OnInit {
   public hasDraft = false;
 
   ngOnInit() {
-    const savedDraft = localStorage.getItem('cabcon_draft_quotation');
-    if (savedDraft) {
-      this.hasDraft = true;
-    }
-    this.loadCustomers();
-    this.loadSkusAndRecalculate();
+    this.route.queryParams.subscribe(params => {
+      if (params['edit']) {
+        this.editId = +params['edit'];
+        this.loadQuotationForEdit(this.editId);
+      } else {
+        const savedDraft = localStorage.getItem('cabcon_draft_quotation');
+        if (savedDraft) {
+          this.hasDraft = true;
+        }
+        this.loadCustomers();
+        this.loadSkusAndRecalculate();
+      }
+    });
+  }
+
+  private loadQuotationForEdit(id: number) {
+    this.pricingService.getQuotation(id).subscribe({
+      next: (quote) => {
+        this.partyName = quote.partyName;
+        this.validityDays = quote.validityDays;
+        
+        this.pricingService.selectedSkuIds.clear();
+        this.overridesMap.clear();
+        
+        quote.lines.forEach(line => {
+          this.pricingService.selectedSkuIds.add(line.skuId);
+          this.overridesMap.set(line.skuId, {
+            rowOfferOverride: line.offerExGst
+          });
+        });
+
+        this.loadCustomers();
+        
+        // This will load SKUs and recalculate based on the overrides map we just set
+        this.pricingService.getSkus(undefined, undefined, undefined, false, 1, 100).subscribe({
+          next: (res) => {
+            this.skus = res.items;
+            this.recalculate();
+          }
+        });
+      },
+      error: () => {
+        this.snackBar.open('Failed to load quotation for edit.', 'Close', { duration: 3000 });
+        this.router.navigate(['/dashboard']);
+      }
+    });
   }
 
   private loadCustomers() {
@@ -326,9 +367,6 @@ export class DashboardComponent implements OnInit {
             offerExGst = item.offerExGst + profit;
           }
 
-          const gstAmount = offerExGst * item.gstPercent;
-          const grossRate = offerExGst + gstAmount;
-
           return {
             skuId: item.skuId,
             categoryName: item.categoryName,
@@ -342,10 +380,7 @@ export class DashboardComponent implements OnInit {
             rowAmtOverride: overrides?.rowAmtOverride,
             rowOfferOverride: overrides?.rowOfferOverride,
             offerExGst: offerExGst,
-            profit: profit,
-            gstPercent: item.gstPercent,
-            gstAmount: gstAmount,
-            grossRate: grossRate
+            profit: profit
           };
         });
         this.cdr.detectChanges();
@@ -375,22 +410,11 @@ export class DashboardComponent implements OnInit {
     return this.rows.reduce((sum, r) => sum + r.profit, 0);
   }
 
-  public get totalGstAmount(): number {
-    return this.rows.reduce((sum, r) => sum + r.gstAmount, 0);
-  }
-
-  public get totalGrossRate(): number {
-    return this.rows.reduce((sum, r) => sum + r.grossRate, 0);
-  }
-
   public generateQuotation() {
     if (!this.partyName.trim()) {
       this.snackBar.open('Please enter Customer / Party Name.', 'Close', { duration: 3000 });
       return;
     }
-
-    const priceBasis = this.rows.map(r => `${r.skuName} (${r.spec}) ex-GST: ₹${r.offerExGst}/unit`).slice(0, 3).join(', ') + (this.rows.length > 3 ? '...' : '');
-    const priceBasisNote = `Pricing Mode: ${this.loadingMode() === 0 ? 'Percentage' : this.loadingMode() === 1 ? 'Amount' : 'Itemised'} Basis: ${priceBasis}`;
 
     // Open preview dialog directly
     const previewRef = this.dialog.open(QuotationPreviewDialogComponent, {
@@ -399,17 +423,11 @@ export class DashboardComponent implements OnInit {
         partyName: this.partyName,
         customerDetails: this.selectedCustomer,
         validityDays: this.validityDays,
-        priceBasisNote: priceBasisNote,
         totalExGst: this.totalOfferExGst,
-        totalGst: this.totalGstAmount,
-        totalGross: this.totalGrossRate,
         lines: this.rows.map(r => ({
           description: `${r.categoryName} - ${r.skuName} ${r.spec}`,
           unit: r.unit,
-          offerExGst: r.offerExGst,
-          gstPercent: r.gstPercent,
-          gstAmount: r.gstAmount,
-          grossRate: r.grossRate
+          offerExGst: r.offerExGst
         }))
       }
     });
@@ -417,22 +435,23 @@ export class DashboardComponent implements OnInit {
     previewRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         const payload = {
+          id: this.editId || 0,
           partyName: this.partyName,
           validityDays: this.validityDays,
-          priceBasisNote: priceBasisNote,
           lines: this.rows.map(r => ({
             skuId: r.skuId,
             rmCostSnapshot: r.rmCost,
             mfgCostSnapshot: r.mfgCost,
             offerExGst: r.offerExGst,
-            profit: r.profit,
-            gstPercent: r.gstPercent,
-            gstAmount: r.gstAmount,
-            grossRate: r.grossRate
+            profit: r.profit
           }))
         };
 
-        this.pricingService.saveQuotation(payload).subscribe({
+        const saveObs = this.editId 
+          ? this.pricingService.updateQuotation(this.editId, payload)
+          : this.pricingService.saveQuotation(payload);
+
+        saveObs.subscribe({
           next: (res) => {
             this.snackBar.open(`Quotation generated: ${res.quotationNumber}`, 'Close', { duration: 5000 });
 
@@ -443,7 +462,8 @@ export class DashboardComponent implements OnInit {
             this.partyName = '';
             this.validityDays = 7;
             localStorage.removeItem('cabcon_draft_quotation');
-            this.hasDraft = false;
+            this.editId = null;
+            this.router.navigate(['/dashboard'], { replaceUrl: true });
             this.cdr.detectChanges();
           },
           error: () => {

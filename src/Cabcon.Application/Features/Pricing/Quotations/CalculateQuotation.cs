@@ -40,9 +40,6 @@ public record CalculatedQuotationItemDto
     public decimal RmCost { get; init; }
     public decimal MfgCost { get; init; }
     public decimal OfferExGst { get; init; }
-    public decimal GstPercent { get; init; }
-    public decimal GstAmount { get; init; }
-    public decimal GrossRate { get; init; }
 }
 
 public class CalculateQuotationCommandHandler : IRequestHandler<CalculateQuotationCommand, IReadOnlyList<CalculatedQuotationItemDto>>
@@ -92,8 +89,6 @@ public class CalculateQuotationCommandHandler : IRequestHandler<CalculateQuotati
                 itemInput.RowOfferOverride
             );
 
-            var (gstAmount, gross) = _pricingService.ApplyGst(offerExGst, sku.GstRate);
-
             results.Add(new CalculatedQuotationItemDto
             {
                 SkuId = sku.Id,
@@ -103,10 +98,7 @@ public class CalculateQuotationCommandHandler : IRequestHandler<CalculateQuotati
                 Unit = sku.Unit,
                 RmCost = rm,
                 MfgCost = mfg,
-                OfferExGst = offerExGst,
-                GstPercent = sku.GstRate,
-                GstAmount = gstAmount,
-                GrossRate = gross
+                OfferExGst = offerExGst
             });
         }
 

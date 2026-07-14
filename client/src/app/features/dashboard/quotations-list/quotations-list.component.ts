@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, OnInit, inject, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
@@ -43,11 +43,13 @@ export class QuotationsListComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private datePipe = inject(DatePipe);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
-  public displayedColumns = ['quoteNumber', 'partyName', 'date', 'totalExGst', 'totalGross', 'createdBy', 'actions'];
+  public displayedColumns = ['quoteNumber', 'partyName', 'date', 'totalExGst', 'createdBy', 'actions'];
   public dataSource = new MatTableDataSource<QuotationSummary>([]);
   public canApprove = this.authService.hasRole('Super Admin');
   public canDelete = this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
+  public canModify = this.authService.hasPermission('Quotation.Modify');
   public pendingOnly = false;
 
   ngOnInit() {
@@ -163,5 +165,9 @@ private loadQuotations() {
         });
       }
     });
+  }
+
+  public editQuotation(quote: QuotationSummary) {
+    this.router.navigate(['/dashboard'], { queryParams: { edit: quote.id } });
   }
 }

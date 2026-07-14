@@ -86,8 +86,6 @@
             <th>Loading</th>
             <th>Offer ₹/unit<br><span style="font-size: 9px; font-weight: 400;">ex-GST</span></th>
             <th>Profit<br><span style="font-size: 9px; font-weight: 400;">₹/unit</span></th>
-            <th style="text-align: right;">GST</th>
-            <th style="text-align: right;">Gross ₹/unit</th>
           </tr>
         </thead>
         <tbody>
@@ -134,16 +132,12 @@
                      (ngModelChange)="onRowProfitChange(element.skuId, $event)"
                      placeholder="0.00">
             </td>
-            <td style="text-align: right;">{{ element.gstAmount | number:'1.2-2' }}</td>
-            <td style="font-weight: 700; text-align: right;">{{ element.grossRate | number:'1.2-2' }}</td>
           </tr>
           <!-- Totals Row -->
           <tr style="background: #fafafa; font-weight: 700;">
             <td colspan="6" style="text-align: right;">Total</td>
             <td style="text-align: right;">{{ totalOfferExGst | number:'1.2-2' }}</td>
             <td style="text-align: right;">{{ totalProfit | number:'1.2-2' }}</td>
-            <td style="text-align: right;">{{ totalGstAmount | number:'1.2-2' }}</td>
-            <td style="text-align: right;">{{ totalGrossRate | number:'1.2-2' }}</td>
           </tr>
         </tbody>
       </table>

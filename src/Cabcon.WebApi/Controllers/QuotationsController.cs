@@ -33,6 +33,15 @@ public class QuotationsController : ControllerBase
         return result.Succeeded ? Ok(result.Data) : BadRequest(result.Errors);
     }
 
+    [HttpPut("{id}")]
+    [HasPermission(AppPermissions.Quotation.Modify)]
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateQuotationCommand command, CancellationToken ct)
+    {
+        if (id != command.Id) return BadRequest("ID mismatch");
+        var result = await _mediator.Send(command, ct);
+        return result.Succeeded ? Ok(result.Data) : BadRequest(result.Errors);
+    }
+
     [HttpGet]
     [HasPermission(AppPermissions.Quotation.View)]
     public async Task<IActionResult> GetAll(CancellationToken ct)

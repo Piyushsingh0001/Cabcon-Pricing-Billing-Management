@@ -45,12 +45,6 @@
     <div class="client-details">
       <h3>Customer Details</h3>
       <div class="party-name"><strong>Party Name:</strong> {{data.partyName}}</div>
-      <div *ngIf="data.customerDetails" style="margin-top: 4px;">
-        <div *ngIf="data.customerDetails.contactNumber"><strong>Contact:</strong> {{data.customerDetails.contactNumber}}</div>
-        <div *ngIf="data.customerDetails.gstNumber"><strong>GST No:</strong> {{data.customerDetails.gstNumber}}</div>
-        <div *ngIf="data.customerDetails.address"><strong>Address:</strong> {{data.customerDetails.address}}</div>
-      </div>
-      <div class="price-basis" style="margin-top: 8px;"><strong>Price Basis:</strong> {{data.priceBasisNote}}</div>
     </div>
 
     <div class="table-container">
@@ -81,24 +75,6 @@
           <td mat-cell *matCellDef="let element" class="number-cell"> {{element.offerExGst | currency:'INR':'symbol':'1.2-2'}} </td>
         </ng-container>
 
-        <!-- GST % Column -->
-        <ng-container matColumnDef="gstPercent">
-          <th mat-header-cell *matHeaderCellDef class="compact-cell number-cell"> GST % </th>
-          <td mat-cell *matCellDef="let element" class="compact-cell number-cell"> {{(element.gstPercent * 100) | number:'1.0-1'}}% </td>
-        </ng-container>
-
-        <!-- GST Amount Column -->
-        <ng-container matColumnDef="gstAmount">
-          <th mat-header-cell *matHeaderCellDef class="number-cell"> GST Amt </th>
-          <td mat-cell *matCellDef="let element" class="number-cell"> {{element.gstAmount | currency:'INR':'symbol':'1.2-2'}} </td>
-        </ng-container>
-
-        <!-- Gross Rate Column -->
-        <ng-container matColumnDef="grossRate">
-          <th mat-header-cell *matHeaderCellDef class="number-cell"> Gross Rate </th>
-          <td mat-cell *matCellDef="let element" class="number-cell"> <strong>{{element.grossRate | currency:'INR':'symbol':'1.2-2'}}</strong> </td>
-        </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
@@ -109,14 +85,6 @@
         <div class="total-row">
           <span class="total-label">Total Ex-GST:</span>
           <span class="total-value">{{data.totalExGst | currency:'INR':'symbol':'1.2-2'}}</span>
-        </div>
-        <div class="total-row">
-          <span class="total-label">Total GST:</span>
-          <span class="total-value">{{data.totalGst | currency:'INR':'symbol':'1.2-2'}}</span>
-        </div>
-        <div class="total-row grand-total">
-          <span class="total-label">Total Gross:</span>
-          <span class="total-value">{{data.totalGross | currency:'INR':'symbol':'1.2-2'}}</span>
         </div>
       </div>
     </div>

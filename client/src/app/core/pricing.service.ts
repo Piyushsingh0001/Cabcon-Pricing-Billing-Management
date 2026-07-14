@@ -86,9 +86,6 @@ export interface CalculatedQuotationItem {
   rmCost: number;
   mfgCost: number;
   offerExGst: number;
-  gstPercent: number;
-  gstAmount: number;
-  grossRate: number;
 }
 
 export interface QuotationSummary {
@@ -98,8 +95,6 @@ export interface QuotationSummary {
   partyName: string;
   validityDays: number;
   totalExGst: number;
-  totalGst: number;
-  totalGross: number;
   approvalStatus: number;
   createdBy?: string;
   isActive: boolean;
@@ -112,9 +107,6 @@ export interface QuotationLine {
   rmCostSnapshot: number;
   mfgCostSnapshot: number;
   offerExGst: number;
-  gstPercent: number;
-  gstAmount: number;
-  grossRate: number;
   lineOrder: number;
 }
 
@@ -124,10 +116,7 @@ export interface QuotationDetails {
   quotationDate: string;
   partyName: string;
   validityDays: number;
-  priceBasisNote: string;
   totalExGst: number;
-  totalGst: number;
-  totalGross: number;
   approvalStatus: number;
   lines: QuotationLine[];
 }
@@ -337,19 +326,30 @@ export class PricingService {
   public saveQuotation(payload: {
     partyName: string;
     validityDays: number;
-    priceBasisNote: string;
     lines: {
       skuId: number;
       rmCostSnapshot: number;
       mfgCostSnapshot: number;
       offerExGst: number;
       profit: number;
-      gstPercent: number;
-      gstAmount: number;
-      grossRate: number;
     }[];
   }): Observable<{ id: number; quotationNumber: string }> {
     return this.http.post<{ id: number; quotationNumber: string }>(`${this.apiBase}/quotations`, payload);
+  }
+
+  public updateQuotation(id: number, payload: {
+    id: number;
+    partyName: string;
+    validityDays: number;
+    lines: {
+      skuId: number;
+      rmCostSnapshot: number;
+      mfgCostSnapshot: number;
+      offerExGst: number;
+      profit: number;
+    }[];
+  }): Observable<{ id: number; quotationNumber: string }> {
+    return this.http.put<{ id: number; quotationNumber: string }>(`${this.apiBase}/quotations/${id}`, payload);
   }
 
   public getQuotations(): Observable<QuotationSummary[]> {

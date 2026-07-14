@@ -14,9 +14,6 @@ public record QuotationLineDto
     public decimal RmCostSnapshot { get; init; }
     public decimal MfgCostSnapshot { get; init; }
     public decimal OfferExGst { get; init; }
-    public decimal GstPercent { get; init; }
-    public decimal GstAmount { get; init; }
-    public decimal GrossRate { get; init; }
     public int LineOrder { get; init; }
 }
 
@@ -27,10 +24,7 @@ public record QuotationDetailsDto
     public DateTime QuotationDate { get; init; }
     public string PartyName { get; init; } = string.Empty;
     public int ValidityDays { get; init; }
-    public string PriceBasisNote { get; init; } = string.Empty;
     public decimal TotalExGst { get; init; }
-    public decimal TotalGst { get; init; }
-    public decimal TotalGross { get; init; }
     public Cabcon.Domain.Enums.ApprovalStatus ApprovalStatus { get; init; }
     public IReadOnlyList<QuotationLineDto> Lines { get; init; } = Array.Empty<QuotationLineDto>();
 }
@@ -67,9 +61,6 @@ public class GetQuotationDetailsQueryHandler : IRequestHandler<GetQuotationDetai
                 RmCostSnapshot = l.RmCostSnapshot,
                 MfgCostSnapshot = l.MfgCostSnapshot,
                 OfferExGst = l.OfferExGst,
-                GstPercent = l.GstPercent,
-                GstAmount = l.GstAmount,
-                GrossRate = l.GrossRate,
                 LineOrder = l.LineOrder
             })
             .ToList();
@@ -81,10 +72,7 @@ public class GetQuotationDetailsQueryHandler : IRequestHandler<GetQuotationDetai
             QuotationDate = quotation.QuotationDate,
             PartyName = quotation.PartyName,
             ValidityDays = quotation.ValidityDays,
-            PriceBasisNote = quotation.PriceBasisNote,
             TotalExGst = quotation.TotalExGst,
-            TotalGst = quotation.TotalGst,
-            TotalGross = quotation.TotalGross,
             ApprovalStatus = quotation.ApprovalStatus,
             Lines = lines
         };

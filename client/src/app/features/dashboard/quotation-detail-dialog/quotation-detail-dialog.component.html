@@ -48,8 +48,6 @@
                 <th class="num">RM Cost (₹)</th>
                 <th class="num">Mfg Cost (₹)</th>
                 <th class="num">Rate ex-GST (₹)</th>
-                <th class="num">GST (%)</th>
-                <th class="num">Net Rate (₹)</th>
               </tr>
             </thead>
             <tbody>
@@ -60,28 +58,17 @@
                 <td class="num">{{line.rmCostSnapshot | number:'1.2-2'}}</td>
                 <td class="num">{{line.mfgCostSnapshot | number:'1.2-2'}}</td>
                 <td class="num highlight">{{line.offerExGst | number:'1.2-2'}}</td>
-                <td class="num">{{line.gstPercent * 100 | number}}%</td>
-                <td class="num highlight gross">{{line.grossRate | number:'1.2-2'}}</td>
               </tr>
               <!-- Summary Rows -->
               <tr class="summary-row separator">
                 <td colspan="5" class="label">Total (Excluding GST):</td>
-                <td colspan="3" class="num val">₹{{quote.totalExGst | number:'1.2-2'}}</td>
-              </tr>
-              <tr class="summary-row">
-                <td colspan="5" class="label">Total GST Amount:</td>
-                <td colspan="3" class="num val">₹{{quote.totalGst | number:'1.2-2'}}</td>
-              </tr>
-              <tr class="summary-row grand-total">
-                <td colspan="5" class="label">Grand Total (Inclusive of GST):</td>
-                <td colspan="3" class="num val highlight-green">₹{{quote.totalGross | number:'1.2-2'}}</td>
+                <td colspan="1" class="num val highlight-green">₹{{quote.totalExGst | number:'1.2-2'}}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="price-basis-disclaimer font-small">
-          <p><strong>Price Basis Notes:</strong> {{quote.priceBasisNote}}</p>
           <p class="disclaimer-text">
             * This is a frozen quotation snapshot. Raw material prices (LME/Premium/Fx) and markups are captured at the time of quotation generation. Terms of delivery as agreed.
           </p>

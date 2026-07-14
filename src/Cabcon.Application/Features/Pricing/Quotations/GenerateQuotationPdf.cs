@@ -81,22 +81,14 @@ public class GenerateQuotationPdfQueryHandler : IRequestHandler<GenerateQuotatio
         {
             column.Spacing(5);
             
-            if (!string.IsNullOrWhiteSpace(quotation.PriceBasisNote))
-            {
-                column.Item().PaddingBottom(10).Text($"Price Basis: {quotation.PriceBasisNote}").Italic();
-            }
-
             column.Item().Table(table =>
             {
                 table.ColumnsDefinition(columns =>
                 {
                     columns.ConstantColumn(25); // #
                     columns.RelativeColumn();   // Description
-                    columns.ConstantColumn(40); // Unit
-                    columns.ConstantColumn(75); // Ex-GST Rate
-                    columns.ConstantColumn(45); // GST %
-                    columns.ConstantColumn(65); // GST Amt
-                    columns.ConstantColumn(75); // Gross Rate
+                    columns.ConstantColumn(60); // Unit
+                    columns.ConstantColumn(100); // Ex-GST Rate
                 });
 
                 table.Header(header =>
@@ -104,10 +96,7 @@ public class GenerateQuotationPdfQueryHandler : IRequestHandler<GenerateQuotatio
                     header.Cell().Element(CellStyle).Text("#");
                     header.Cell().Element(CellStyle).Text("Description");
                     header.Cell().Element(CellStyle).AlignRight().Text("Unit");
-                    header.Cell().Element(CellStyle).AlignRight().Text("Ex-GST Rate");
-                    header.Cell().Element(CellStyle).AlignRight().Text("GST %");
-                    header.Cell().Element(CellStyle).AlignRight().Text("GST Amt");
-                    header.Cell().Element(CellStyle).AlignRight().Text("Gross Rate");
+                    header.Cell().Element(CellStyle).AlignRight().Text("Rate (Ex-GST)");
 
                     static IContainer CellStyle(IContainer container)
                     {
@@ -122,9 +111,6 @@ public class GenerateQuotationPdfQueryHandler : IRequestHandler<GenerateQuotatio
                     table.Cell().Element(CellStyle).Text(item.DescriptionSnapshot);
                     table.Cell().Element(CellStyle).AlignRight().Text(item.Unit);
                     table.Cell().Element(CellStyle).AlignRight().Text($"Rs {item.OfferExGst:N2}");
-                    table.Cell().Element(CellStyle).AlignRight().Text($"{item.GstPercent * 100:N0}%");
-                    table.Cell().Element(CellStyle).AlignRight().Text($"Rs {item.GstAmount:N2}");
-                    table.Cell().Element(CellStyle).AlignRight().Text($"Rs {item.GrossRate:N2}");
                     index++;
 
                     static IContainer CellStyle(IContainer container)
@@ -143,13 +129,7 @@ public class GenerateQuotationPdfQueryHandler : IRequestHandler<GenerateQuotatio
                 });
 
                 table.Cell().Text("Total Ex-GST:").SemiBold().AlignRight();
-                table.Cell().Text($"Rs {quotation.TotalExGst:N2}").AlignRight();
-
-                table.Cell().Text("Total GST:").SemiBold().AlignRight();
-                table.Cell().Text($"Rs {quotation.TotalGst:N2}").AlignRight();
-
-                table.Cell().Text("Total Gross:").SemiBold().AlignRight();
-                table.Cell().Text($"Rs {quotation.TotalGross:N2}").SemiBold().AlignRight();
+                table.Cell().Text($"Rs {quotation.TotalExGst:N2}").SemiBold().AlignRight();
             });
         });
     }
