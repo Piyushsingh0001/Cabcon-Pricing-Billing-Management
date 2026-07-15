@@ -55,7 +55,7 @@
   <div class="grid">
     <div class="card glass-card" *ngFor="let group of materialGroups">
       <div class="card-header">
-        <select class="sel" [(ngModel)]="group.selectedVariant.type" (ngModelChange)="onTypeChange(group)" [disabled]="!canUpdate()">
+        <select class="sel" [(ngModel)]="group.selectedVariant.type" (ngModelChange)="onTypeChange(group)">
           <option [ngValue]="0">LME-linked</option>
           <option [ngValue]="1">Direct ₹/kg</option>
         </select>
