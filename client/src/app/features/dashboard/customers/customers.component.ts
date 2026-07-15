@@ -11,6 +11,7 @@ import { ReactiveFormsModule, FormsModule, FormBuilder, Validators, FormGroup } 
 import { PricingService, CustomerSummary } from '../../../core/pricing.service';
 import { AuthService } from '../../../core/auth.service';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { CustomerEditDialogComponent } from './customer-edit-dialog/customer-edit-dialog.component';
 
 @Component({
   selector: 'app-customers',
@@ -41,18 +42,8 @@ export class CustomersComponent implements OnInit {
   public displayedColumns = ['name', 'contactNumber', 'gstNumber', 'address', 'updatedBy', 'actions'];
   public dataSource = new MatTableDataSource<CustomerSummary>([]);
   public canEdit = this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
-  public isFormOpen = signal(false);
-  public editingCustomerId = signal<number | null>(null);
-  public addForm!: FormGroup;
 
   ngOnInit() {
-    this.addForm = this.fb.group({
-      name: ['', Validators.required],
-      contactNumber: [''],
-      gstNumber: [''],
-      address: ['']
-    });
-    
     this.loadCustomers();
   }
 
@@ -73,57 +64,29 @@ export class CustomersComponent implements OnInit {
   }
 
   public showAddForm() {
-    this.isFormOpen.set(true);
-    this.editingCustomerId.set(null);
-    this.addForm.reset();
-  }
+    const dialogRef = this.dialog.open(CustomerEditDialogComponent, {
+      width: '770px',
+      data: null
+    });
 
-  public showEditForm(customer: CustomerSummary) {
-    this.isFormOpen.set(true);
-    this.editingCustomerId.set(customer.id);
-    this.addForm.patchValue({
-      name: customer.name,
-      contactNumber: customer.contactNumber,
-      gstNumber: customer.gstNumber,
-      address: customer.address
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadCustomers();
+      }
     });
   }
 
-  public cancelAdd() {
-    this.isFormOpen.set(false);
-    this.editingCustomerId.set(null);
-  }
+  public showEditForm(customer: CustomerSummary) {
+    const dialogRef = this.dialog.open(CustomerEditDialogComponent, {
+      width: '770px',
+      data: customer
+    });
 
-  public submitAdd() {
-    if (this.addForm.invalid) return;
-    
-    const id = this.editingCustomerId();
-    
-    if (id) {
-      this.pricingService.updateCustomer(id, this.addForm.value).subscribe({
-        next: () => {
-          this.snackBar.open('Customer updated successfully', 'Close', { duration: 3000 });
-          this.isFormOpen.set(false);
-          this.editingCustomerId.set(null);
-          this.loadCustomers();
-        },
-        error: () => {
-          this.snackBar.open('Failed to update customer', 'Close', { duration: 3000 });
-        }
-      });
-    } else {
-      this.pricingService.createCustomer(this.addForm.value).subscribe({
-        next: () => {
-          this.snackBar.open('Customer added successfully', 'Close', { duration: 3000 });
-          this.isFormOpen.set(false);
-          this.editingCustomerId.set(null);
-          this.loadCustomers();
-        },
-        error: () => {
-          this.snackBar.open('Failed to add customer', 'Close', { duration: 3000 });
-        }
-      });
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadCustomers();
+      }
+    });
   }
 
   public deleteCustomer(customer: CustomerSummary) {

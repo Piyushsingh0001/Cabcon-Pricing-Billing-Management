@@ -1,0 +1,110 @@
+<div class="edit-dialog-container">
+
+  <div class="dialog-header">
+    <div class="header-icon">
+      <mat-icon>person</mat-icon>
+    </div>
+
+    <div>
+      <h2>{{ data?.id ? 'Edit Customer' : 'New Customer' }}</h2>
+      <p>Enter customer details below.</p>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="form-grid">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Customer Name</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
+
+        <input
+          matInput
+          formControlName="name">
+
+        <mat-error
+          *ngIf="form.get('name')?.hasError('required')">
+          Customer name is required
+        </mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Contact Number</mat-label>
+        <mat-icon matPrefix>phone</mat-icon>
+
+        <input
+          matInput
+          formControlName="contactNumber">
+      </mat-form-field>
+
+      <mat-form-field
+          appearance="outline"
+          class="full">
+
+        <mat-label>GST Number</mat-label>
+
+        <mat-icon matPrefix>receipt_long</mat-icon>
+
+        <input
+          matInput
+          formControlName="gstNumber">
+
+      </mat-form-field>
+
+      <mat-form-field
+          appearance="outline"
+          class="full">
+
+        <mat-label>Address</mat-label>
+
+        <mat-icon matPrefix>location_on</mat-icon>
+
+        <textarea
+          matInput
+          rows="4"
+          formControlName="address">
+        </textarea>
+
+      </mat-form-field>
+
+    </div>
+
+    <div class="dialog-actions">
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="onCancel()">
+
+        Cancel
+
+      </button>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid || loading">
+
+        <mat-spinner
+            *ngIf="loading"
+            diameter="18">
+        </mat-spinner>
+
+        <span *ngIf="!loading">
+          {{ data?.id ? 'Update Customer' : 'Save Customer' }}
+        </span>
+
+        <span *ngIf="loading">
+          {{ data?.id ? 'Updating...' : 'Saving...' }}
+        </span>
+
+      </button>
+
+    </div>
+
+  </form>
+
+</div>

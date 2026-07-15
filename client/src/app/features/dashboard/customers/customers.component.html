@@ -20,7 +20,7 @@
           placeholder="Search by Name, GST or Contact">
       </mat-form-field>
 
-      <button class="btn-ghost" *ngIf="canEdit && !isFormOpen()" (click)="showAddForm()">
+      <button class="btn-ghost" *ngIf="canEdit" (click)="showAddForm()">
         + Add Customer
       </button>
 
@@ -28,57 +28,7 @@
 
   </div>
 
-  <!-- Add Form -->
 
-  <div class="card glass-card" *ngIf="isFormOpen()" style="margin-bottom: 24px;">
-    <h3 style="margin-top: 0;">{{ editingCustomerId() ? 'Edit Customer' : 'Add New Customer' }}</h3>
-
-    <form
-      [formGroup]="addForm"
-      (ngSubmit)="submitAdd()"
-      class="customer-form">
-
-      <div class="form-grid">
-
-        <mat-form-field appearance="outline">
-          <mat-label>Customer Name</mat-label>
-          <input matInput formControlName="name">
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Contact Number</mat-label>
-          <input matInput formControlName="contactNumber">
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>GST Number</mat-label>
-          <input matInput formControlName="gstNumber">
-        </mat-form-field>
-
-      </div>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Address</mat-label>
-        <textarea
-          matInput
-          rows="3"
-          formControlName="address">
-        </textarea>
-      </mat-form-field>
-
-      <div class="form-actions">
-
-        <div style="display: flex; justify-content: flex-end; gap: 8px;">
-          <button mat-button type="button" (click)="cancelAdd()">Cancel</button>
-          <button mat-raised-button color="primary" type="submit" [disabled]="addForm.invalid">{{ editingCustomerId() ? 'Update' : 'Save' }} Customer</button>
-        </div>
-      </div>
-
-    </form>
-
-  </div>
-
-  <!-- Table -->
 
  <div class="table-container glass-card">
 
@@ -148,7 +98,7 @@
   </div>
 
   <ng-template #noCustomers>
-    <div class="no-customers-placeholder glass-card animated-view" style="text-align: center; padding: 40px;" *ngIf="!isFormOpen()">
+    <div class="no-customers-placeholder glass-card animated-view" style="text-align: center; padding: 40px;">
 
       <mat-icon>groups</mat-icon>
 
