@@ -121,7 +121,7 @@ export class MaterialsComponent implements OnInit {
   public openBackfill(material: Material) {
     if (!this.canUpdate()) return;
     const dialogRef = this.dialog.open(MaterialBackfillDialogComponent, {
-      width: '650px',
+      width: '750px',
       data: material
     });
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });

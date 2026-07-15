@@ -1,0 +1,196 @@
+2026-07-15 10:28:53.040 +05:30 [INF] GET / responded 404 in 52ms
+2026-07-15 10:31:27.100 +05:30 [INF] OPTIONS /api/skus responded 204 in 6ms
+2026-07-15 10:31:27.100 +05:30 [INF] OPTIONS /api/customers responded 204 in 6ms
+2026-07-15 10:31:27.599 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-15 10:31:27.602 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-15 10:31:28.261 +05:30 [INF] GET /api/skus responded 401 in 43ms
+2026-07-15 10:31:28.261 +05:30 [INF] GET /api/customers responded 401 in 43ms
+2026-07-15 10:31:28.306 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-15 10:31:28.360 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-15 10:31:28.573 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-15 10:31:28.773 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-15 10:31:28.784 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 471ms
+2026-07-15 10:31:28.813 +05:30 [INF] Handling GetCustomersQuery
+2026-07-15 10:31:28.823 +05:30 [INF] Handling GetSkusQuery
+2026-07-15 10:31:28.835 +05:30 [INF] Handled GetCustomersQuery
+2026-07-15 10:31:28.840 +05:30 [INF] GET /api/customers responded 200 in 48ms
+2026-07-15 10:31:28.949 +05:30 [INF] Handled GetSkusQuery
+2026-07-15 10:31:28.963 +05:30 [INF] GET /api/skus responded 200 in 171ms
+2026-07-15 10:31:36.377 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-15 10:31:36.391 +05:30 [INF] Handling LogoutCommand
+2026-07-15 10:31:36.438 +05:30 [INF] Handled LogoutCommand
+2026-07-15 10:31:36.441 +05:30 [INF] POST /api/auth/logout responded 204 in 56ms
+2026-07-15 10:31:36.451 +05:30 [INF] GET /api/customers responded 401 in 0ms
+2026-07-15 10:31:36.451 +05:30 [INF] GET /api/skus responded 401 in 0ms
+2026-07-15 10:31:49.372 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-15 10:31:49.386 +05:30 [INF] Handling LoginCommand
+2026-07-15 10:31:49.398 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-15 10:31:49.494 +05:30 [INF] Handled LoginCommand
+2026-07-15 10:31:49.495 +05:30 [INF] POST /api/auth/login responded 200 in 115ms
+2026-07-15 10:31:49.532 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-15 10:31:49.532 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-15 10:31:49.540 +05:30 [INF] Handling GetSkusQuery
+2026-07-15 10:31:49.541 +05:30 [INF] Handling GetCustomersQuery
+2026-07-15 10:31:49.544 +05:30 [INF] Handled GetCustomersQuery
+2026-07-15 10:31:49.545 +05:30 [INF] GET /api/customers responded 200 in 5ms
+2026-07-15 10:31:49.547 +05:30 [INF] Handled GetSkusQuery
+2026-07-15 10:31:49.548 +05:30 [INF] GET /api/skus responded 200 in 10ms
+2026-07-15 10:31:59.560 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-15 10:31:59.574 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-15 10:31:59.642 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-15 10:31:59.650 +05:30 [INF] GET /api/materials responded 200 in 83ms
+2026-07-15 10:32:14.495 +05:30 [INF] OPTIONS /api/materials/1/history responded 204 in 0ms
+2026-07-15 10:32:14.531 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 10:32:14.550 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 10:32:14.553 +05:30 [INF] GET /api/materials/1/history responded 200 in 34ms
+2026-07-15 10:33:00.172 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-15 10:33:00.184 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-15 10:33:00.210 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-15 10:33:00.211 +05:30 [INF] GET /api/materials responded 200 in 29ms
+2026-07-15 10:34:46.170 +05:30 [INF] OPTIONS /api/materials responded 204 in 34ms
+2026-07-15 10:34:46.193 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-15 10:34:46.220 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-15 10:34:46.222 +05:30 [INF] GET /api/materials responded 200 in 36ms
+2026-07-15 10:38:02.610 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-15 10:38:02.675 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-15 10:38:02.701 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-15 10:38:02.703 +05:30 [INF] GET /api/materials responded 200 in 36ms
+2026-07-15 10:39:23.975 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-15 10:39:24.003 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-15 10:39:24.024 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-15 10:39:24.026 +05:30 [INF] GET /api/materials responded 200 in 30ms
+2026-07-15 10:40:48.608 +05:30 [INF] OPTIONS /api/materials/14/history responded 204 in 23ms
+2026-07-15 10:40:48.663 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 10:40:48.675 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 10:40:48.676 +05:30 [INF] GET /api/materials/14/history responded 200 in 20ms
+2026-07-15 10:40:52.867 +05:30 [INF] OPTIONS /api/materials/14/history responded 204 in 0ms
+2026-07-15 10:40:52.890 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 10:40:52.909 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 10:40:52.911 +05:30 [INF] GET /api/materials/14/history responded 200 in 28ms
+2026-07-15 10:44:42.974 +05:30 [INF] OPTIONS /api/materials/4/history responded 204 in 0ms
+2026-07-15 10:44:43.019 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 10:44:43.031 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 10:44:43.032 +05:30 [INF] GET /api/materials/4/history responded 200 in 21ms
+2026-07-15 10:44:45.272 +05:30 [INF] OPTIONS /api/materials/4/history responded 204 in 0ms
+2026-07-15 10:44:45.280 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 10:44:45.286 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 10:44:45.287 +05:30 [INF] GET /api/materials/4/history responded 200 in 9ms
+2026-07-15 10:44:47.393 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-15 10:44:47.401 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 10:44:47.404 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 10:44:47.406 +05:30 [INF] GET /api/materials/6/history responded 200 in 6ms
+2026-07-15 10:48:19.068 +05:30 [INF] OPTIONS /api/materials/1 responded 204 in 0ms
+2026-07-15 10:48:19.097 +05:30 [INF] PUT /api/materials/1 responded 401 in 0ms
+2026-07-15 10:48:19.104 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-15 10:48:19.111 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-15 10:48:19.172 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-15 10:48:19.174 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 64ms
+2026-07-15 10:48:19.197 +05:30 [INF] Handling UpdateMaterialCommand
+2026-07-15 10:48:19.245 +05:30 [INF] Handled UpdateMaterialCommand
+2026-07-15 10:48:19.247 +05:30 [INF] PUT /api/materials/1 responded 204 in 64ms
+2026-07-15 10:48:19.252 +05:30 [INF] OPTIONS /api/materials/price responded 204 in 0ms
+2026-07-15 10:48:19.269 +05:30 [INF] Handling UpdateMaterialPriceCommand
+2026-07-15 10:48:19.277 +05:30 [INF] Handled UpdateMaterialPriceCommand
+2026-07-15 10:48:19.277 +05:30 [INF] PUT /api/materials/price responded 204 in 21ms
+2026-07-15 10:48:19.286 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-15 10:48:19.293 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-15 10:48:19.316 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-15 10:48:19.317 +05:30 [INF] GET /api/materials responded 200 in 25ms
+2026-07-15 10:48:29.380 +05:30 [INF] OPTIONS /api/materials/14/history responded 204 in 0ms
+2026-07-15 10:48:29.392 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 10:48:29.401 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 10:48:29.402 +05:30 [INF] GET /api/materials/14/history responded 200 in 12ms
+2026-07-15 11:01:20.867 +05:30 [INF] OPTIONS /api/materials/6/missing-dates responded 204 in 0ms
+2026-07-15 11:01:20.946 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:01:20.975 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:01:20.978 +05:30 [INF] GET /api/materials/6/missing-dates responded 200 in 46ms
+2026-07-15 11:01:26.969 +05:30 [INF] OPTIONS /api/materials/6/missing-dates responded 204 in 0ms
+2026-07-15 11:01:26.982 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:01:26.985 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:01:26.993 +05:30 [INF] GET /api/materials/6/missing-dates responded 200 in 13ms
+2026-07-15 11:01:28.938 +05:30 [INF] OPTIONS /api/materials/1/missing-dates responded 204 in 0ms
+2026-07-15 11:01:28.954 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:01:28.958 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:01:28.960 +05:30 [INF] GET /api/materials/1/missing-dates responded 200 in 10ms
+2026-07-15 11:01:31.344 +05:30 [INF] OPTIONS /api/materials/4/missing-dates responded 204 in 0ms
+2026-07-15 11:01:31.356 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:01:31.359 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:01:31.361 +05:30 [INF] GET /api/materials/4/missing-dates responded 200 in 6ms
+2026-07-15 11:01:33.306 +05:30 [INF] OPTIONS /api/materials/6/missing-dates responded 204 in 0ms
+2026-07-15 11:01:33.317 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:01:33.320 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:01:33.321 +05:30 [INF] GET /api/materials/6/missing-dates responded 200 in 5ms
+2026-07-15 11:01:39.551 +05:30 [INF] OPTIONS /api/materials/3/missing-dates responded 204 in 0ms
+2026-07-15 11:01:39.563 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:01:39.566 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:01:39.568 +05:30 [INF] GET /api/materials/3/missing-dates responded 200 in 6ms
+2026-07-15 11:01:41.549 +05:30 [INF] OPTIONS /api/materials/5/missing-dates responded 204 in 0ms
+2026-07-15 11:01:41.560 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:01:41.563 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:01:41.565 +05:30 [INF] GET /api/materials/5/missing-dates responded 200 in 6ms
+2026-07-15 11:01:47.447 +05:30 [INF] OPTIONS /api/materials/6/missing-dates responded 204 in 0ms
+2026-07-15 11:01:47.479 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:01:47.493 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:01:47.495 +05:30 [INF] GET /api/materials/6/missing-dates responded 200 in 23ms
+2026-07-15 11:01:49.945 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-15 11:01:49.971 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 11:01:49.980 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 11:01:49.982 +05:30 [INF] GET /api/materials/6/history responded 200 in 18ms
+2026-07-15 11:02:27.238 +05:30 [INF] OPTIONS /api/materials/6 responded 204 in 0ms
+2026-07-15 11:02:27.253 +05:30 [INF] Handling UpdateMaterialCommand
+2026-07-15 11:02:27.275 +05:30 [INF] Handled UpdateMaterialCommand
+2026-07-15 11:02:27.276 +05:30 [INF] PUT /api/materials/6 responded 204 in 25ms
+2026-07-15 11:02:27.281 +05:30 [INF] OPTIONS /api/materials/price responded 204 in 0ms
+2026-07-15 11:02:27.288 +05:30 [INF] Handling UpdateMaterialPriceCommand
+2026-07-15 11:02:27.332 +05:30 [INF] Handled UpdateMaterialPriceCommand
+2026-07-15 11:02:27.333 +05:30 [INF] PUT /api/materials/price responded 204 in 47ms
+2026-07-15 11:02:27.341 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-15 11:02:27.347 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-15 11:02:27.366 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-15 11:02:27.367 +05:30 [INF] GET /api/materials responded 200 in 22ms
+2026-07-15 11:02:38.817 +05:30 [INF] GET /api/materials/1 responded 405 in 0ms
+2026-07-15 11:02:47.053 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-15 11:02:47.064 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 11:02:47.067 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 11:02:47.068 +05:30 [INF] GET /api/materials/6/history responded 200 in 5ms
+2026-07-15 11:02:49.540 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-15 11:02:49.549 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 11:02:49.557 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 11:02:49.559 +05:30 [INF] GET /api/materials/6/history responded 200 in 10ms
+2026-07-15 11:02:57.041 +05:30 [INF] OPTIONS /api/materials/6/history responded 204 in 0ms
+2026-07-15 11:02:57.069 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 11:02:57.078 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 11:02:57.079 +05:30 [INF] GET /api/materials/6/history responded 200 in 16ms
+2026-07-15 11:03:00.444 +05:30 [INF] OPTIONS /api/materials/6/missing-dates responded 204 in 0ms
+2026-07-15 11:03:00.454 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:03:00.468 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:03:00.470 +05:30 [INF] GET /api/materials/6/missing-dates responded 200 in 16ms
+2026-07-15 11:03:06.409 +05:30 [INF] OPTIONS /api/materials/5/missing-dates responded 204 in 0ms
+2026-07-15 11:03:06.419 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:03:06.423 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:03:06.425 +05:30 [INF] GET /api/materials/5/missing-dates responded 200 in 6ms
+2026-07-15 11:03:14.488 +05:30 [INF] OPTIONS /api/materials/4/history responded 204 in 0ms
+2026-07-15 11:03:14.497 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-07-15 11:03:14.503 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-07-15 11:03:14.504 +05:30 [INF] GET /api/materials/4/history responded 200 in 8ms
+2026-07-15 11:03:16.762 +05:30 [INF] OPTIONS /api/materials/4/missing-dates responded 204 in 0ms
+2026-07-15 11:03:16.771 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:03:16.774 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:03:16.776 +05:30 [INF] GET /api/materials/4/missing-dates responded 200 in 5ms
+2026-07-15 11:04:17.387 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-15 11:04:17.407 +05:30 [INF] GET /api/materials responded 401 in 0ms
+2026-07-15 11:04:17.414 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-15 11:04:17.419 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-15 11:04:17.468 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-15 11:04:17.469 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 52ms
+2026-07-15 11:04:17.477 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-15 11:04:17.496 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-15 11:04:17.497 +05:30 [INF] GET /api/materials responded 200 in 23ms
+2026-07-15 11:04:19.161 +05:30 [INF] OPTIONS /api/materials/2/missing-dates responded 204 in 0ms
+2026-07-15 11:04:19.170 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:04:19.181 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:04:19.182 +05:30 [INF] GET /api/materials/2/missing-dates responded 200 in 13ms
+2026-07-15 11:04:23.621 +05:30 [INF] OPTIONS /api/materials/1/missing-dates responded 204 in 0ms
+2026-07-15 11:04:23.629 +05:30 [INF] Handling GetMaterialMissingDatesQuery
+2026-07-15 11:04:23.636 +05:30 [INF] Handled GetMaterialMissingDatesQuery
+2026-07-15 11:04:23.636 +05:30 [INF] GET /api/materials/1/missing-dates responded 200 in 8ms
