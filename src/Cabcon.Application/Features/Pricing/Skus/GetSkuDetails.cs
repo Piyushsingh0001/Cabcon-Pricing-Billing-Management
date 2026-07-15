@@ -16,6 +16,10 @@ public record SkuBomLineDto
     public decimal WeightKg { get; init; }
     public decimal MaterialLandedCost { get; init; }
     public int LineOrder { get; init; }
+    public MaterialType PriceType { get; init; }
+    public BomPricingMethod PricingMethod { get; init; }
+    public BomPricingMonth? PricingMonth { get; init; }
+    public decimal? ManualPrice { get; init; }
 }
 
 public record SkuDetailsDto
@@ -70,7 +74,11 @@ public class GetSkuDetailsQueryHandler : IRequestHandler<GetSkuDetailsQuery, Sku
                 MaterialType = b.Material.Type,
                 WeightKg = b.WeightKg,
                 MaterialLandedCost = _pricingService.LandedCost(b.Material),
-                LineOrder = b.LineOrder
+                LineOrder = b.LineOrder,
+                PriceType = b.PriceType,
+                PricingMethod = b.PricingMethod,
+                PricingMonth = b.PricingMonth,
+                ManualPrice = b.ManualPrice
             })
             .ToList();
 

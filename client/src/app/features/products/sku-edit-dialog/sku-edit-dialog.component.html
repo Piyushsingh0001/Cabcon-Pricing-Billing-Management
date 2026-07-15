@@ -1,6 +1,6 @@
 <div class="edit-dialog-container">
   <div class="dialog-header">
-    <h2 class="dialog-title">{{ sku && sku.id ? 'Edit Product' : 'Add Product' }}</h2>
+    <h2 class="dialog-title">{{ sku && sku.id && !sku.isAddSpec ? 'Edit Product' : (sku?.isAddSpec ? 'Add Spec' : 'Add Product') }}</h2>
   </div>
 
   <div class="dialog-content">
@@ -34,7 +34,6 @@
             <option value="MT">MT</option>
           </select>
         </div>
-        
         <div class="input-group">
           <div class="lbl">MFG method</div>
           <select class="sel" formControlName="conversionType">
@@ -43,10 +42,7 @@
           </select>
         </div>
         
-        <div class="input-group">
-          <div class="lbl">GST %</div>
-          <input class="in" style="width: 70px;" type="number" formControlName="gstPercent">
-        </div>
+
       </div>
 
       <div class="warning-banner" *ngIf="nameExistsError">
@@ -56,26 +52,61 @@
       <div class="bom-section-title">Bill of materials (kg per {{ form.get('unit')?.value }})</div>
       
       <div formArrayName="bomLines" class="bom-lines-list">
-        <div class="bom-line-row" *ngFor="let line of bomLines.controls; let idx = index; let isLast = last" [formGroupName]="idx">
-          <select class="sel" formControlName="materialName" (change)="onMaterialNameChange(idx)">
-            <option value="" disabled>Select Material</option>
-            <option *ngFor="let name of uniqueMaterialNames" [value]="name">{{ name }}</option>
-          </select>
-          <select class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)">
-            <option value="" disabled>Select Vendor</option>
-            <option *ngFor="let vendor of getAvailableVendors(idx)" [value]="vendor">{{ vendor }}</option>
-          </select>
+        <div class="bom-line-card" *ngFor="let line of bomLines.controls; let idx = index" [formGroupName]="idx">
           
-          <input class="in" style="width: 90px; text-align: right;" type="number" formControlName="weightKg">
-          
-          <span class="bom-mult-text">
-            kg x ₹{{ getLandedCost(line.get('materialId')?.value) | number:'1.2-2' }} = ₹{{ ((line.get('weightKg')?.value || 0) * getLandedCost(line.get('materialId')?.value)) | number:'1.2-2' }}
-          </span>
-          
-          <button class="linkbtn-remove" type="button" (click)="removeBomLine(idx)">remove</button>
-          
-          <button class="btn-ghost-mini" style="margin-left: 8px;" type="button" (click)="addBomLine()" *ngIf="isLast">+ material line</button>
+          <div class="bom-line-row">
+            <select class="sel" formControlName="materialName" (change)="onMaterialNameChange(idx)">
+              <option value="" disabled>Select Material</option>
+              <option *ngFor="let name of uniqueMaterialNames" [value]="name">{{ name }}</option>
+            </select>
+            <select class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)">
+              <option value="" disabled>Select Vendor</option>
+              <option *ngFor="let vendor of getAvailableVendors(idx)" [value]="vendor">{{ vendor }}</option>
+            </select>
+            <select class="sel" formControlName="priceType" (change)="onPricingMethodChange(idx)" style="width: 100px;">
+              <option [value]="0">LME-linked</option>
+              <option [value]="1">Direct ₹/kg</option>
+            </select>
+          </div>
+
+          <div class="bom-line-row" style="margin-top: 8px;">
+            <!-- Radio buttons for pricing method -->
+            <div style="display: flex; gap: 8px; align-items: center; font-size: 11px; background: #fff; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border-glass);">
+              <label><input type="radio" formControlName="pricingMethod" [value]="0" (change)="onPricingMethodChange(idx)"> Average</label>
+              <label><input type="radio" formControlName="pricingMethod" [value]="1" (change)="onPricingMethodChange(idx)"> Actual</label>
+              <label><input type="radio" formControlName="pricingMethod" [value]="2" (change)="onPricingMethodChange(idx)"> Manual</label>
+            </div>
+
+            <!-- Dynamic input based on Pricing Method -->
+            <div *ngIf="line.get('pricingMethod')?.value === 0" style="display: flex; gap: 4px; align-items: center;">
+              <select class="sel" formControlName="pricingMonth" (change)="onPricingMethodChange(idx)" style="width: 110px;">
+                <option [value]="0">This month avg</option>
+                <option [value]="1">Prev month avg</option>
+              </select>
+              <span class="bom-mult-text">₹{{ line.get('manualPrice')?.value | number:'1.2-2' }}</span>
+            </div>
+
+            <div *ngIf="line.get('pricingMethod')?.value === 1">
+              <span class="bom-mult-text">₹{{ getLandedCost(line.get('materialId')?.value, line.get('priceType')?.value) | number:'1.2-2' }}</span>
+            </div>
+
+            <div *ngIf="line.get('pricingMethod')?.value === 2">
+              <input class="in" style="width: 70px; text-align: right;" type="number" formControlName="manualPrice" placeholder="Price">
+            </div>
+
+            <span class="bom-mult-text" style="font-weight: 500;">
+              Total: <span style="color: var(--primary-color);">₹{{ getCalculatedBomLineCost(idx) | number:'1.2-2' }}</span>
+            </span>
+          </div>
+
+          <div class="bom-line-actions">
+            <button class="linkbtn-remove" type="button" (click)="removeBomLine(idx)" [disabled]="bomLines.controls.length <= 1" [class.disabled]="bomLines.controls.length <= 1">
+                <mat-icon>cancel</mat-icon>
+              </button>
+          </div>
         </div>
+
+        <button class="btn-ghost-mini" style="align-self: flex-start; margin-top: 8px;" type="button" (click)="addBomLine()">+ add material line</button>
       </div>
     </form>
   </div>
@@ -83,7 +114,7 @@
   <div class="panel-actions-row">
     <div class="actions-left">
       <button class="btn-save-product" type="button" (click)="onSubmit()" [disabled]="form.invalid || nameExistsError || loading()">
-        {{ sku && sku.id ? 'Save Product' : 'Create Product' }}
+        {{ sku && sku.id && !sku.isAddSpec ? 'Save Product' : (sku?.isAddSpec ? 'Add Spec' : 'Create Product') }}
       </button>
       <button class="btn-cancel" type="button" (click)="onCancel()">Cancel</button>
     </div>

@@ -67,16 +67,20 @@ export interface Sku {
   manufacturingCost: number;
   totalWeight: number;
   updatedBy?: string;
-  bomLines?: { materialId: number; materialName: string; weightKg: number }[];
+  bomLines?: { materialId: number; materialName?: string; weightKg: number }[];
 }
 
 export interface SkuBomLine {
   materialId: number;
-  materialName: string;
-  materialType: number;
+  materialName?: string;
+  materialType?: number;
   weightKg: number;
-  materialLandedCost: number;
-  lineOrder: number;
+  materialLandedCost?: number;
+  lineOrder?: number;
+  priceType?: number;
+  pricingMethod?: number;
+  pricingMonth?: number | null;
+  manualPrice?: number | null;
 }
 
 export interface SkuDetails extends Sku {

@@ -58,8 +58,8 @@ export class SkuEditDialogComponent implements OnInit {
       : 8;
 
     this.form = this.fb.group({
-      categoryName: [sku?.categoryName || 'New category', Validators.required],
-      name: [sku?.name || '', Validators.required],
+      categoryName: [{value: sku?.categoryName || 'New category', disabled: !sku?.isGlobalAdd}, Validators.required],
+      name: [{value: sku?.name || '', disabled: sku?.isAddSpec}, Validators.required],
       spec: [sku?.spec || '', Validators.required],
       unit: [sku?.unit || 'coil', Validators.required],
       conversionType: [sku?.conversionType || 0, Validators.required],
@@ -80,7 +80,6 @@ export class SkuEditDialogComponent implements OnInit {
   public existingSkus: Sku[] = [];
   public errorMessage = signal<string | null>(null);
   public nameExistsError = false;
-  public categoryDuplicateError = false;
 
   private loadDropdowns() {
     this.pricingService.getCategories().subscribe(res => this.categories = res);
@@ -101,7 +100,11 @@ export class SkuEditDialogComponent implements OnInit {
             materialName: [mat ? mat.name : '', Validators.required],
             vendorName: [{value: mat ? (mat.vendorName || 'Default') : '', disabled: !mat}, Validators.required],
             materialId: [line.materialId, Validators.required],
-            weightKg: [line.weightKg, [Validators.required, Validators.min(0.0001)]]
+            weightKg: [line.weightKg ?? 1, [Validators.required, Validators.min(0.0001)]],
+            priceType: [line.priceType ?? (mat ? mat.type : 0), Validators.required],
+            pricingMethod: [line.pricingMethod ?? 1, Validators.required],
+            pricingMonth: [line.pricingMonth ?? 0],
+            manualPrice: [line.manualPrice ?? 0]
           }));
         });
       } else {
@@ -120,7 +123,11 @@ export class SkuEditDialogComponent implements OnInit {
       materialName: ['', Validators.required],
       vendorName: [{value: '', disabled: true}, Validators.required],
       materialId: [null, Validators.required],
-      weightKg: [0.1, [Validators.required, Validators.min(0.0001)]]
+      weightKg: [1, [Validators.required, Validators.min(0.0001)]],
+      priceType: [0, Validators.required],
+      pricingMethod: [1, Validators.required],
+      pricingMonth: [0],
+      manualPrice: [0]
     }));
     this.cdr.detectChanges();
   }
@@ -131,11 +138,14 @@ export class SkuEditDialogComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  public getLandedCost(materialId: any): number {
+  public getLandedCost(materialId: any, priceType?: any): number {
     if (!materialId) return 0;
     const mat = this.materials.find(m => m.id === Number(materialId));
     if (!mat) return 0;
-    if (mat.type === 0) {
+    
+    const typeToUse = priceType !== undefined && priceType !== null && priceType !== '' ? Number(priceType) : mat.type;
+
+    if (typeToUse === 0) {
       const lme = Number(mat.lmeUsdPerMt || 0);
       const premium = Number(mat.premiumUsdPerMt || 0);
       const fx = Number(mat.fxRate || 0);
@@ -144,6 +154,60 @@ export class SkuEditDialogComponent implements OnInit {
     } else {
       return Number(mat.directRateInrPerKg || 0);
     }
+  }
+
+  public getCalculatedBomLineCost(idx: number): number {
+    const line = this.bomLines.at(idx);
+    if (!line) return 0;
+    const matId = line.get('materialId')?.value;
+    if (!matId) return 0;
+
+    const method = Number(line.get('pricingMethod')?.value);
+    const pType = Number(line.get('priceType')?.value);
+    if (method === 1) { // Actual
+      return this.getLandedCost(matId, pType);
+    }
+    
+    // For Manual or Average, use the manualPrice field
+    return Number(line.get('manualPrice')?.value || 0);
+  }
+
+  public onPricingMethodChange(idx: number) {
+    const line = this.bomLines.at(idx);
+    const method = Number(line.get('pricingMethod')?.value);
+    
+    if (method === 0) { // Average
+      this.calculateAveragePrice(idx);
+    }
+    this.cdr.detectChanges();
+  }
+
+  public calculateAveragePrice(idx: number) {
+    const line = this.bomLines.at(idx);
+    const matId = line.get('materialId')?.value;
+    const pType = Number(line.get('priceType')?.value || 0);
+    const pMonth = Number(line.get('pricingMonth')?.value || 0);
+    
+    if (!matId) return;
+
+    // Call service to get history/missing dates
+    // For now, we will fetch average from the pricing service or calculate it
+    // Wait, we need to get average from backend.
+    this.pricingService.getMissingDates(matId, pType).subscribe(res => {
+      this.pricingService.getMaterials(undefined, pType, undefined, false, 1, 1000).subscribe(mats => {
+        const mat = mats.items.find(m => m.id === matId);
+        if (mat) {
+          let avg = 0;
+          if (pType === 0) {
+            avg = pMonth === 0 ? (mat.thisMonthAvgLme || 0) : (mat.prevMonthAvgLme || 0);
+          } else {
+            avg = pMonth === 0 ? (mat.thisMonthAvgDirect || 0) : (mat.prevMonthAvgDirect || 0);
+          }
+          line.patchValue({ manualPrice: avg });
+          this.cdr.detectChanges();
+        }
+      });
+    });
   }
 
   public getAvailableVendors(idx: number): string[] {
@@ -180,6 +244,7 @@ export class SkuEditDialogComponent implements OnInit {
       const mat = this.materials.find(m => m.name === matName && (m.vendorName || 'Default') === vendName);
       if (mat) {
         line.patchValue({ materialId: mat.id });
+        this.onPricingMethodChange(idx);
       } else {
         line.patchValue({ materialId: null });
       }
@@ -195,21 +260,7 @@ export class SkuEditDialogComponent implements OnInit {
     const spec = (formVal.spec || '').trim().toLowerCase();
     const unit = (formVal.unit || '').trim().toLowerCase();
 
-    // 1. Check if Category Name textbox input matches an existing name in the Categories database table
-    if (catName) {
-      const catMatch = this.categories.find(
-        c => c.name.trim().toLowerCase() === catName
-      );
-      
-      const isEditMode = this.sku && this.sku.id;
-      if (isEditMode && this.sku.categoryName?.trim().toLowerCase() === catName) {
-        this.categoryDuplicateError = false;
-      } else {
-        this.categoryDuplicateError = !!catMatch;
-      }
-    } else {
-      this.categoryDuplicateError = false;
-    }
+    // 1. (Removed categoryDuplicateError because using an existing category is perfectly valid)
 
     // 2. Check if Product Name + Spec + Unit combination already exists in that category
     if (!catName || !prodName || !spec) {
@@ -267,11 +318,11 @@ export class SkuEditDialogComponent implements OnInit {
   }
 
   public onSubmit() {
-    if (this.form.invalid || this.nameExistsError || this.categoryDuplicateError) return;
+    if (this.form.invalid || this.nameExistsError) return;
 
     this.loading.set(true);
     this.errorMessage.set(null);
-    const formVal = this.form.value;
+    const formVal = this.form.getRawValue();
     const categoryNameInput = formVal.categoryName?.trim() || '';
 
     if (!categoryNameInput) {
@@ -297,11 +348,15 @@ export class SkuEditDialogComponent implements OnInit {
         bomLines: formVal.bomLines.map((line: any, index: number) => ({
           materialId: Number(line.materialId),
           weightKg: Number(line.weightKg || 0),
+          priceType: Number(line.priceType || 0),
+          pricingMethod: Number(line.pricingMethod || 1),
+          pricingMonth: line.pricingMethod === 0 ? Number(line.pricingMonth || 0) : null,
+          manualPrice: line.pricingMethod === 2 || line.pricingMethod === 0 ? Number(line.manualPrice || 0) : null,
           lineOrder: index + 1
         }))
       };
 
-      const action$ = this.sku && this.sku.id
+      const action$ = this.sku && this.sku.id && !this.sku.isAddSpec
         ? this.pricingService.updateSku(this.sku.id, body)
         : this.pricingService.createSku(body);
 

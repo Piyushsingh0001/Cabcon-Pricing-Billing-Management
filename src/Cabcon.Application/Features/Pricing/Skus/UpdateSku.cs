@@ -9,7 +9,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cabcon.Application.Features.Pricing.Skus;
 
-public record UpdateSkuBomLineInput(int MaterialId, decimal WeightKg);
+public record UpdateSkuBomLineInput(
+    int MaterialId, 
+    decimal WeightKg,
+    MaterialType PriceType = MaterialType.Exchange,
+    BomPricingMethod PricingMethod = BomPricingMethod.Actual,
+    BomPricingMonth? PricingMonth = null,
+    decimal? ManualPrice = null
+);
 
 public record UpdateSkuCommand : IRequest<Result>
 {
@@ -104,6 +111,10 @@ public class UpdateSkuCommandHandler : IRequestHandler<UpdateSkuCommand, Result>
                 SkuId = sku.Id,
                 MaterialId = bomInput.MaterialId,
                 WeightKg = bomInput.WeightKg,
+                PriceType = bomInput.PriceType,
+                PricingMethod = bomInput.PricingMethod,
+                PricingMonth = bomInput.PricingMonth,
+                ManualPrice = bomInput.ManualPrice,
                 LineOrder = ++order
             });
         }

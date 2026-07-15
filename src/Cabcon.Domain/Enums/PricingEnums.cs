@@ -37,3 +37,16 @@ public enum ApprovalStatus
     Approved = 1,
     Rejected = 2
 }
+
+public enum BomPricingMethod
+{
+    Average = 0,
+    Actual = 1,
+    Manual = 2
+}
+
+public enum BomPricingMonth
+{
+    ThisMonth = 0,
+    PreviousMonth = 1
+}

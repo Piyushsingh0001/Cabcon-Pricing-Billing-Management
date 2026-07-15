@@ -8,7 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cabcon.Application.Features.Pricing.Skus;
 
-public record CreateSkuBomLineInput(int MaterialId, decimal WeightKg);
+public record CreateSkuBomLineInput(
+    int MaterialId, 
+    decimal WeightKg,
+    MaterialType PriceType = MaterialType.Exchange,
+    BomPricingMethod PricingMethod = BomPricingMethod.Actual,
+    BomPricingMonth? PricingMonth = null,
+    decimal? ManualPrice = null
+);
 
 public record CreateSkuCommand : IRequest<Result<int>>
 {
@@ -89,6 +96,10 @@ public class CreateSkuCommandHandler : IRequestHandler<CreateSkuCommand, Result<
             {
                 MaterialId = bomInput.MaterialId,
                 WeightKg = bomInput.WeightKg,
+                PriceType = bomInput.PriceType,
+                PricingMethod = bomInput.PricingMethod,
+                PricingMonth = bomInput.PricingMonth,
+                ManualPrice = bomInput.ManualPrice,
                 LineOrder = ++order
             });
         }

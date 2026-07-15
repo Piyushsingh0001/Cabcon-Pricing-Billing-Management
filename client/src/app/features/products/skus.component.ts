@@ -52,7 +52,7 @@ export class SkusComponent implements OnInit {
   public editingSkuId: number | null = null;
   public editingSku: any = null; // SkuDetails formatted for inline inputs
   public localSelections: { [key: number]: boolean } = {};
-  public groupedSkusList: { categoryName: string, items: Sku[] }[] = [];
+  public groupedSkusList: { categoryName: string, products: { productName: string, items: Sku[] }[] }[] = [];
   public collapsedCategories = new Set<string>();
 
   public get totalSelections(): number {
@@ -171,33 +171,45 @@ export class SkusComponent implements OnInit {
   }
 
   private groupSkus() {
-    const groups: { [key: string]: Sku[] } = {};
+    const groups: { [key: string]: { [name: string]: Sku[] } } = {};
     this.skus.forEach(sku => {
       const cat = sku.categoryName || 'Uncategorized';
+      const name = sku.name || 'Unnamed Product';
+      
       if (!groups[cat]) {
-        groups[cat] = [];
+        groups[cat] = {};
       }
-      groups[cat].push(sku);
+      if (!groups[cat][name]) {
+        groups[cat][name] = [];
+      }
+      groups[cat][name].push(sku);
     });
-    this.groupedSkusList = Object.keys(groups).map(categoryName => ({
-      categoryName,
-      items: groups[categoryName]
-    }));
+    
+    this.groupedSkusList = Object.keys(groups).map(categoryName => {
+      const productNames = Object.keys(groups[categoryName]);
+      const products = productNames.map(productName => ({
+        productName,
+        items: groups[categoryName][productName]
+      }));
+      return { categoryName, products };
+    });
   }
 
-  public addSku(categoryName?: string) {
+  public addSku(categoryName?: string, productName?: string) {
     const defaultData = {
       categoryName: categoryName || 'New category',
-      name: 'Item',
+      name: productName || 'Item',
       spec: 'spec',
       unit: 'km',
       conversionType: 0, // % of RM
       conversionValue: 0.08, // 8%
-      gstRate: 0.18 // 18%
+      gstRate: 0.18, // 18%
+      isAddSpec: !!productName,
+      isGlobalAdd: !categoryName
     };
 
     const dialogRef = this.dialog.open(SkuEditDialogComponent, {
-      width: '650px',
+      width: '950px',
       data: defaultData
     });
 
@@ -225,7 +237,7 @@ export class SkusComponent implements OnInit {
       next: (fullSku) => {
         this.loading.set(false);
         const dialogRef = this.dialog.open(SkuEditDialogComponent, {
-          width: '650px',
+          width: '950px',
           data: fullSku
         });
 

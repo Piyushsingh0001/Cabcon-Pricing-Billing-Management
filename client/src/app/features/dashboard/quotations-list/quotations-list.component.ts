@@ -28,8 +28,7 @@ import { DatePipe } from '@angular/common';
     MatDialogModule,
     MatMenuModule,
     MatFormFieldModule,
-    MatInputModule,
-    ConfirmDialogComponent
+    MatInputModule
   ],
   providers: [DatePipe],
     templateUrl: './quotations-list.component.html',

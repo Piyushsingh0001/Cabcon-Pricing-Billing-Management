@@ -19,4 +19,9 @@ public class SkuBomLine : BaseEntity
     public decimal WeightKg { get; set; }
 
     public int LineOrder { get; set; }
+
+    public Cabcon.Domain.Enums.MaterialType PriceType { get; set; } = Cabcon.Domain.Enums.MaterialType.Exchange;
+    public Cabcon.Domain.Enums.BomPricingMethod PricingMethod { get; set; } = Cabcon.Domain.Enums.BomPricingMethod.Actual;
+    public Cabcon.Domain.Enums.BomPricingMonth? PricingMonth { get; set; }
+    public decimal? ManualPrice { get; set; }
 }

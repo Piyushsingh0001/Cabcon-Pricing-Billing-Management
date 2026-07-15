@@ -6,7 +6,7 @@
     </div>
     <div class="action-buttons-header">
       <div class="search-container" style="position: relative; margin-right: 12px;">
-        <mat-icon style="position: absolute; left: 10px; top: 10px; color: var(--text-secondary);">search</mat-icon>
+        <mat-icon style="position: absolute; left: 10px; top: 5px; color: var(--text-secondary);">search</mat-icon>
         <input type="text" class="in" style="padding-left: 36px; width: 220px;" placeholder="Search products..." [(ngModel)]="searchQuery" (keyup)="onSearchChange()">
       </div>
       <button class="btn-ghost" (click)="addSku()" *ngIf="canCreate()">
@@ -58,12 +58,19 @@
                 <th style="width: 120px;"></th>
               </tr>
             </thead>
-            <tbody>
-              <tr *ngFor="let sku of group.items" [style.background]="localSelections[sku.id] ? '#FFF4F4' : 'transparent'">
+            <ng-container *ngFor="let product of group.products">
+              <tr>
+                <td colspan="8" style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-weight: 600; font-size: 13px;">{{ product.productName }}</span>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngFor="let sku of product.items" [style.background]="localSelections[sku.id] ? '#FFF4F4' : 'transparent'">
                 <td>
                   <input type="checkbox" [(ngModel)]="localSelections[sku.id]" (change)="onSelectionChange(sku.id)">
                 </td>
-                <td style="text-align: left; font-weight: 600;">
+                <td style="text-align: left; font-weight: 600; padding-left: 24px;">
                   {{ sku.spec }}
                   <span class="tag" *ngIf="sku.isPlaceholder">example</span>
                 </td>
@@ -81,15 +88,15 @@
                   {{ sku.updatedBy || 'System' }}
                 </td>
                 <td style="white-space: nowrap;">
-                  <button mat-icon-button class="row-icon-btn edit-btn" (click)="editSkuInline(sku)" title="Edit Product" *ngIf="canUpdate()">
+                  <button mat-icon-button class="row-icon-btn edit-btn" (click)="editSkuInline(sku)" title="Edit Spec" *ngIf="canUpdate()">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button mat-icon-button class="row-icon-btn delete-btn" (click)="deleteSku(sku.id, sku.name)" title="Delete Product" *ngIf="canDelete()">
+                  <button mat-icon-button class="row-icon-btn delete-btn" (click)="deleteSku(sku.id, sku.name)" title="Delete Spec" *ngIf="canDelete()">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </td>
               </tr>
-            </tbody>
+            </ng-container>
           </table>
         </div>
       </div>

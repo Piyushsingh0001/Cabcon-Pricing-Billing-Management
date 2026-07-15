@@ -29,7 +29,14 @@ public class PricingCalculationService
 
     /// <summary>HTML: skuRM(sku) - sum of BOM weight * landed cost.</summary>
     public decimal RawMaterialCost(Sku sku) =>
-        sku.BomLines.Sum(b => b.WeightKg * LandedCost(b.Material));
+        sku.BomLines.Sum(b => 
+        {
+            if (b.PricingMethod == BomPricingMethod.Manual || b.PricingMethod == BomPricingMethod.Average)
+            {
+                return b.WeightKg * (b.ManualPrice ?? 0);
+            }
+            return b.WeightKg * LandedCost(b.Material);
+        });
 
     /// <summary>HTML: skuWt(sku) - total BOM weight in kg.</summary>
     public decimal TotalBomWeight(Sku sku) =>

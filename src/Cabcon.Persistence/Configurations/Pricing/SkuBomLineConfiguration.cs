@@ -11,6 +11,7 @@ public class SkuBomLineConfiguration : IEntityTypeConfiguration<SkuBomLine>
         b.ToTable("SkuBomLines");
         b.HasKey(x => x.Id);
         b.Property(x => x.WeightKg).HasColumnType("decimal(18,6)");
+        b.Property(x => x.ManualPrice).HasColumnType("decimal(18,2)");
 
         b.HasIndex(x => new { x.SkuId, x.MaterialId });
     }

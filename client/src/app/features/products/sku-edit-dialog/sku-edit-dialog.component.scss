@@ -97,6 +97,23 @@
   flex-wrap: wrap;
 }
 
+.bom-line-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bom-line-actions {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
 .bom-mult-text {
   font-size: 12px;
   color: var(--text-secondary);
@@ -222,3 +239,4 @@
   margin-bottom: 12px;
   font-weight: 500;
 }
+
