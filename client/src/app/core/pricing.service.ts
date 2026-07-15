@@ -117,6 +117,7 @@ export interface QuotationLine {
   rmCostSnapshot: number;
   mfgCostSnapshot: number;
   offerExGst: number;
+  quantity?: number;
   lineOrder: number;
 }
 
@@ -349,7 +350,7 @@ export class PricingService {
       rmCostSnapshot: number;
       mfgCostSnapshot: number;
       offerExGst: number;
-      profit: number;
+      quantity: number;
     }[];
   }): Observable<{ id: number; quotationNumber: string }> {
     return this.http.post<{ id: number; quotationNumber: string }>(`${this.apiBase}/quotations`, payload);
@@ -364,7 +365,7 @@ export class PricingService {
       rmCostSnapshot: number;
       mfgCostSnapshot: number;
       offerExGst: number;
-      profit: number;
+      quantity: number;
     }[];
   }): Observable<{ id: number; quotationNumber: string }> {
     return this.http.put<{ id: number; quotationNumber: string }>(`${this.apiBase}/quotations/${id}`, payload);

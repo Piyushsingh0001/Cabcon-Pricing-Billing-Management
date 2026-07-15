@@ -26,7 +26,7 @@ interface CalculatorRow {
   rowAmtOverride?: number;
   rowOfferOverride?: number;
   offerExGst: number;
-  profit: number;
+  quantity: number;
 }
 
 @Component({
@@ -61,6 +61,13 @@ export class DashboardComponent implements OnInit {
 
   public rows: CalculatorRow[] = [];
   public skus: Sku[] = [];
+  public materials: Material[] = [];
+  
+  // Product Selection State
+  public searchQuery = '';
+  public groupedSkusList: { categoryName: string, products: { productName: string, items: Sku[] }[] }[] = [];
+  public collapsedCategories = new Set<string>();
+  public localSelections: { [key: number]: boolean } = {};
 
   // Global settings
   public loadingMode = signal<number>(0);
@@ -85,7 +92,7 @@ export class DashboardComponent implements OnInit {
     rowPctOverride?: number;
     rowAmtOverride?: number;
     rowOfferOverride?: number;
-    rowProfit?: number;
+    rowQuantity?: number;
   }>();
 
   public hasDraft = false;
@@ -101,6 +108,7 @@ export class DashboardComponent implements OnInit {
           this.hasDraft = true;
         }
         this.loadCustomers();
+        this.loadMaterials();
         this.loadSkusAndRecalculate();
       }
     });
@@ -139,6 +147,12 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  private loadMaterials() {
+    this.pricingService.getMaterials(undefined, undefined, 'name', false, 1, 100).subscribe({
+      next: (res) => this.materials = res.items
+    });
+  }
+
   private loadCustomers() {
     this.pricingService.getCustomers().subscribe({
       next: (res) => {
@@ -162,13 +176,25 @@ export class DashboardComponent implements OnInit {
     this.partyName = customer.name;
   }
 
+  public onSearchChange() {
+    this.loadSkusAndRecalculate();
+  }
+
   private loadSkusAndRecalculate() {
-    this.pricingService.getSkus(undefined, undefined, undefined, false, 1, 100).subscribe({
+    this.pricingService.getSkus(this.searchQuery || undefined, undefined, 'categoryName', false, 1, 100).subscribe({
       next: (res) => {
         this.skus = res.items;
 
+        this.groupSkus();
+
         // Initialize overridesMap with selected SKUs from PricingService
         const selectedIds = Array.from(this.pricingService.selectedSkuIds);
+        
+        // Sync local selections
+        this.skus.forEach(s => {
+          this.localSelections[s.id] = this.pricingService.selectedSkuIds.has(s.id);
+        });
+
         if (selectedIds.length > 0) {
           const newMap = new Map<number, any>();
           selectedIds.forEach(id => {
@@ -182,9 +208,97 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  private groupSkus() {
+    const groups: { [key: string]: { [name: string]: Sku[] } } = {};
+    this.skus.forEach(sku => {
+      const cat = sku.categoryName || 'Uncategorized';
+      const name = sku.name || 'Unnamed Product';
+      
+      if (!groups[cat]) {
+        groups[cat] = {};
+      }
+      if (!groups[cat][name]) {
+        groups[cat][name] = [];
+      }
+      groups[cat][name].push(sku);
+    });
+    
+    this.groupedSkusList = Object.keys(groups).map(categoryName => {
+      const productNames = Object.keys(groups[categoryName]);
+      const products = productNames.map(productName => ({
+        productName,
+        items: groups[categoryName][productName]
+      }));
+      return { categoryName, products };
+    });
+  }
+
+  public toggleCategoryCollapse(categoryName: string) {
+    if (this.collapsedCategories.has(categoryName)) {
+      this.collapsedCategories.delete(categoryName);
+    } else {
+      this.collapsedCategories.add(categoryName);
+    }
+  }
+
+  public isCategoryCollapsed(categoryName: string): boolean {
+    return this.collapsedCategories.has(categoryName);
+  }
+
+  public toggleSelectAll(categoryName: string) {
+    const categorySkus = this.skus.filter(s => s.categoryName === categoryName);
+    const allSelected = categorySkus.every(s => this.localSelections[s.id]);
+    categorySkus.forEach(s => {
+      this.localSelections[s.id] = !allSelected;
+      if (!allSelected) {
+        this.pricingService.selectedSkuIds.add(s.id);
+        if (!this.overridesMap.has(s.id)) {
+          this.overridesMap.set(s.id, {});
+        }
+      } else {
+        this.pricingService.selectedSkuIds.delete(s.id);
+        this.overridesMap.delete(s.id);
+      }
+    });
+    this.recalculate();
+  }
+
+  public onSelectionChange(skuId: number) {
+    if (this.localSelections[skuId]) {
+      this.pricingService.selectedSkuIds.add(skuId);
+      if (!this.overridesMap.has(skuId)) {
+        this.overridesMap.set(skuId, {});
+      }
+    } else {
+      this.pricingService.selectedSkuIds.delete(skuId);
+      this.overridesMap.delete(skuId);
+    }
+    this.recalculate();
+  }
+
   public getSkuConversionType(skuId: number): number {
     const sku = this.skus.find(s => s.id === skuId);
     return sku ? sku.conversionType : 0;
+  }
+
+  public getBomSummary(sku: Sku): string {
+    if (!sku.bomLines || sku.bomLines.length === 0) return 'No BOM';
+    return sku.bomLines.map(line => {
+      const namePart = line.materialName ? line.materialName.split(' ')[0] : 'Material';
+      return `${namePart} ${line.weightKg}`;
+    }).join(' · ');
+  }
+
+  public get usedMaterials(): Material[] {
+    if (!this.skus || this.skus.length === 0 || !this.materials || this.materials.length === 0) return [];
+    const selectedIds = Array.from(this.pricingService.selectedSkuIds);
+    const usedMatIds = new Set<number>();
+    for (const sku of this.skus.filter(s => selectedIds.includes(s.id))) {
+      if (sku.bomLines) {
+        sku.bomLines.forEach(bom => usedMatIds.add(bom.materialId));
+      }
+    }
+    return this.materials.filter(m => usedMatIds.has(m.id));
   }
 
   public getSkuConversionValue(skuId: number): number {
@@ -320,6 +434,7 @@ export class DashboardComponent implements OnInit {
   public recalculate() {
     if (this.overridesMap.size === 0) {
       this.rows = [];
+      this.cdr.detectChanges();
       return;
     }
 
@@ -358,13 +473,11 @@ export class DashboardComponent implements OnInit {
       next: (res) => {
         this.rows = res.map(item => {
           const overrides = this.overridesMap.get(item.skuId);
-          const profit = overrides?.rowProfit || 0;
+          const quantity = overrides?.rowQuantity ?? 1;
           
           let offerExGst = item.offerExGst;
           if (overrides?.rowOfferOverride !== undefined) {
             offerExGst = overrides.rowOfferOverride;
-          } else {
-            offerExGst = item.offerExGst + profit;
           }
 
           return {
@@ -380,7 +493,7 @@ export class DashboardComponent implements OnInit {
             rowAmtOverride: overrides?.rowAmtOverride,
             rowOfferOverride: overrides?.rowOfferOverride,
             offerExGst: offerExGst,
-            profit: profit
+            quantity: quantity
           };
         });
         this.cdr.detectChanges();
@@ -391,23 +504,19 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  public onRowProfitChange(skuId: number, val: any) {
+  public onRowQuantityChange(skuId: number, val: any) {
     const override = this.overridesMap.get(skuId) || {};
     if (val === null || val === undefined || val === '') {
-      override.rowProfit = undefined;
+      override.rowQuantity = undefined;
     } else {
-      override.rowProfit = Number(val);
+      override.rowQuantity = Number(val);
     }
     this.overridesMap.set(skuId, override);
     this.recalculate();
   }
 
   public get totalOfferExGst(): number {
-    return this.rows.reduce((sum, r) => sum + r.offerExGst, 0);
-  }
-
-  public get totalProfit(): number {
-    return this.rows.reduce((sum, r) => sum + r.profit, 0);
+    return this.rows.reduce((sum, r) => sum + (r.offerExGst * r.quantity), 0);
   }
 
   public generateQuotation() {
@@ -427,6 +536,7 @@ export class DashboardComponent implements OnInit {
         lines: this.rows.map(r => ({
           description: `${r.categoryName} - ${r.skuName} ${r.spec}`,
           unit: r.unit,
+          quantity: r.quantity,
           offerExGst: r.offerExGst
         }))
       }
@@ -443,7 +553,7 @@ export class DashboardComponent implements OnInit {
             rmCostSnapshot: r.rmCost,
             mfgCostSnapshot: r.mfgCost,
             offerExGst: r.offerExGst,
-            profit: r.profit
+            quantity: r.quantity
           }))
         };
 

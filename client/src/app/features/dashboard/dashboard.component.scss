@@ -229,3 +229,59 @@
 .btn-save-product:hover {
   background: #1c3256;
 }
+
+/* Product Selection Card Styles */
+.category-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sku-category-card {
+  padding: 0 !important;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-title-bar {
+  background: var(--primary-color);
+  color: #ffffff;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-title {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.category-title-bar.clickable {
+  transition: background-color 0.2s ease;
+}
+
+.category-title-bar.clickable:hover {
+  background: #1c3256; /* slightly darker navy */
+}
+
+.header-icon-btn {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}

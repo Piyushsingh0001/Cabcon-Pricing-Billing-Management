@@ -32,7 +32,7 @@ export interface QuotationPreviewData {
 export class QuotationPreviewDialogComponent {
   private authService = inject(AuthService);
   
-  public displayedColumns = ['sno', 'description', 'unit', 'offerExGst'];
+  public displayedColumns = ['sno', 'description', 'unit', 'quantity', 'offerExGst', 'totalAmount'];
   public isSuperAdmin = this.authService.hasRole('Super Admin');
   public today = new Date();
 

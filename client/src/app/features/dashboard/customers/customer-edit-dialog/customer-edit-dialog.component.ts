@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { PricingService, CustomerSummary } from '../../../../core/pricing.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-customer-edit-dialog',
@@ -19,7 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './customer-edit-dialog.component.html',
   styleUrls: ['./customer-edit-dialog.component.scss']
