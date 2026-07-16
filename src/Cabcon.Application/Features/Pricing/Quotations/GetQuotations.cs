@@ -23,10 +23,12 @@ public record GetQuotationsQuery : IRequest<IReadOnlyList<QuotationSummaryDto>>;
 public class GetQuotationsQueryHandler : IRequestHandler<GetQuotationsQuery, IReadOnlyList<QuotationSummaryDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICurrentUserService _currentUser;
 
-    public GetQuotationsQueryHandler(IUnitOfWork unitOfWork)
+    public GetQuotationsQueryHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUser)
     {
         _unitOfWork = unitOfWork;
+        _currentUser = currentUser;
     }
 
     public async Task<IReadOnlyList<QuotationSummaryDto>> Handle(GetQuotationsQuery request, CancellationToken cancellationToken)
@@ -34,9 +36,15 @@ public class GetQuotationsQueryHandler : IRequestHandler<GetQuotationsQuery, IRe
         var quotationRepo = _unitOfWork.Repository<Quotation>();
         var now = DateTime.UtcNow;
 
-        var activeQuotations = await quotationRepo.Query()
-            .Where(q => q.IsActive)
-            .ToListAsync(cancellationToken);
+        var query = quotationRepo.Query().Where(q => q.IsActive);
+        
+        bool isAdmin = _currentUser.Roles.Contains("Super Admin") || _currentUser.Roles.Contains("Admin");
+        if (!isAdmin && !string.IsNullOrEmpty(_currentUser.UserName))
+        {
+            query = query.Where(q => q.CreatedBy == _currentUser.UserName);
+        }
+
+        var activeQuotations = await query.ToListAsync(cancellationToken);
 
         var expired = activeQuotations
             .Where(q => q.QuotationDate.AddDays(q.ValidityDays) < now)
@@ -52,7 +60,7 @@ public class GetQuotationsQueryHandler : IRequestHandler<GetQuotationsQuery, IRe
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
-        return await quotationRepo.Query()
+        return await query
             .OrderByDescending(q => q.QuotationDate)
             .Select(q => new QuotationSummaryDto
             {

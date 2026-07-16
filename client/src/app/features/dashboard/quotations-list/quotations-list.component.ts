@@ -77,6 +77,8 @@ private loadQuotations() {
       let data = res ?? [];
       if (this.pendingOnly) {
         data = data.filter(q => q.approvalStatus === 0);
+      } else {
+        data = data.filter(q => q.approvalStatus !== 0);
       }
       this.dataSource.data = data;
 
@@ -137,34 +139,6 @@ private loadQuotations() {
     });
   }
 
-  public deleteQuotation(quote: QuotationSummary) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      data: {
-        title: 'Delete Quotation',
-        message: `Are you sure you want to delete quotation ${quote.quotationNumber}?`,
-        confirmText: 'Delete',
-        cancelText: 'Cancel',
-        theme: 'red'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(confirmed => {
-      if (confirmed) {
-        this.pricingService.deleteQuotation(quote.id).subscribe({
-          next: () => {
-            quote.isActive = false;
-            this.dataSource.data = [...this.dataSource.data];
-            this.snackBar.open('Quotation removed successfully.', 'Close', { duration: 3000 });
-            this.cdr.detectChanges();
-          },
-          error: () => {
-            this.snackBar.open('Failed to remove quotation.', 'Close', { duration: 3000 });
-          }
-        });
-      }
-    });
-  }
 
   public editQuotation(quote: QuotationSummary) {
     this.router.navigate(['/dashboard'], { queryParams: { edit: quote.id } });

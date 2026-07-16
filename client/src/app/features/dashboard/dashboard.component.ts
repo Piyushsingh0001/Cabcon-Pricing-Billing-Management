@@ -584,5 +584,24 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+  public cancel() {
+    this.overridesMap.clear();
+    this.pricingService.selectedSkuIds.clear();
+    this.rows = [];
+    this.partyName = '';
+    this.validityDays = 7;
+    localStorage.removeItem('cabcon_draft_quotation');
+    this.hasDraft = false;
+    
+    if (this.editId) {
+      this.editId = null;
+      this.router.navigate(['/history'], { replaceUrl: true });
+    } else {
+      this.router.navigate(['/dashboard'], { replaceUrl: true });
+    }
+    
+    this.recalculate();
+  }
 }
 

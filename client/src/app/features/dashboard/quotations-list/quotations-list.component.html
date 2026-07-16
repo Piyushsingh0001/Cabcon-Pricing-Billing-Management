@@ -72,12 +72,8 @@
                 <mat-icon>visibility</mat-icon>
               </button>
               
-              <button mat-icon-button class="row-icon-btn edit-btn" (click)="editQuotation(element)" *ngIf="pendingOnly && canModify && element.isActive && element.approvalStatus === 0" title="Edit Quotation" style="margin-left: 8px;">
+              <button mat-icon-button class="row-icon-btn edit-btn" (click)="editQuotation(element)" *ngIf="canModify && element.isActive" title="Edit Quotation" style="margin-left: 8px;">
                 <mat-icon style="color: #2196f3;">edit</mat-icon>
-              </button>
-              
-              <button mat-icon-button color="warn" (click)="deleteQuotation(element)" *ngIf="element.isActive && canDelete" title="Remove Quotation" style="margin-left: 8px;">
-                <mat-icon>delete</mat-icon>
               </button>
               
               <span class="deleted-tag" *ngIf="!element.isActive">Deleted</span>

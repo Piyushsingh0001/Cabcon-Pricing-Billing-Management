@@ -87,14 +87,43 @@ public class UpdateQuotationCommandHandler : IRequestHandler<UpdateQuotationComm
         var totalGst = 0m;
         var totalGross = totalExGst;
 
+        var currentNumber = quotation.QuotationNumber ?? "";
+        int lastUnderscore = currentNumber.LastIndexOf('_');
+        if (lastUnderscore > 0 && lastUnderscore > currentNumber.LastIndexOf('/'))
+        {
+            var prefix = currentNumber.Substring(0, lastUnderscore);
+            var suffixString = currentNumber.Substring(lastUnderscore + 1);
+            if (int.TryParse(suffixString, out int suffixValue))
+            {
+                quotation.QuotationNumber = $"{prefix}_{suffixValue + 1}";
+            }
+            else
+            {
+                quotation.QuotationNumber = $"{currentNumber}_1";
+            }
+        }
+        else if (!string.IsNullOrEmpty(currentNumber))
+        {
+            quotation.QuotationNumber = $"{currentNumber}_1";
+        }
+
         quotation.PartyName = request.PartyName;
         quotation.ValidityDays = request.ValidityDays;
         quotation.PriceBasisNote = string.Empty;
         quotation.TotalExGst = totalExGst;
         quotation.TotalGst = totalGst;
         quotation.TotalGross = totalGross;
-        // Keep status as-is (Pending).
         
+        bool isSuperAdmin = _currentUser.Roles.Contains("Super Admin");
+        if (!isSuperAdmin)
+        {
+            quotation.ApprovalStatus = ApprovalStatus.Pending;
+        }
+        else
+        {
+            quotation.ApprovalStatus = ApprovalStatus.Approved;
+        }
+
         quotation.Lines.Clear();
 
         int order = 0;

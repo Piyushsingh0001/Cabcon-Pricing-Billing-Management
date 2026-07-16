@@ -250,9 +250,14 @@
           <input class="in" style="width: 80px;" type="number" [(ngModel)]="validityDays">
         </div>
       </div>
-      <button class="btn-generate-quotation" (click)="generateQuotation()">
-        Generate quotation &rarr;
-      </button>
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <button mat-button class="btn-ghost" (click)="cancel()" style="color: var(--text-secondary); border: 1px solid var(--border-glass);">
+          Cancel
+        </button>
+        <button class="btn-generate-quotation" (click)="generateQuotation()">
+          Generate quotation &rarr;
+        </button>
+      </div>
     </div>
   </div>
 
@@ -261,6 +266,7 @@
       <mat-icon style="font-size: 48px; width: 48px; height: 48px; color: var(--text-secondary);">shopping_basket</mat-icon>
       <h3>Your Pricing Sheet is Empty</h3>
       <!-- <p>Go to the <a routerLink="/skus" style="color: var(--primary-color); font-weight: 600; text-decoration: underline;">SKUs & BOMs</a> page to select products for quotation estimation.</p> -->
+   <p>Select items to generate Quotation</p>
     </div>
   </ng-template>
 
