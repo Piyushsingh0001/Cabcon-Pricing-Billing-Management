@@ -191,6 +191,7 @@ export class SkusComponent implements OnInit {
         productName,
         items: groups[categoryName][productName]
       }));
+      this.collapsedCategories.add(categoryName);
       return { categoryName, products };
     });
   }

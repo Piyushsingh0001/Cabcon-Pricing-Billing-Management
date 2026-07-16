@@ -79,7 +79,7 @@
 
             <!-- Dynamic input based on Pricing Method -->
             <div *ngIf="line.get('pricingMethod')?.value === 0" style="display: flex; gap: 4px; align-items: center;">
-              <select class="sel" formControlName="pricingMonth" (change)="onPricingMethodChange(idx)" style="width: 110px;">
+              <select class="sel" formControlName="pricingMonth" (change)="onPricingMethodChange(idx)" style="width: 132px;">
                 <option [value]="0">This month avg</option>
                 <option [value]="1">Prev month avg</option>
               </select>
