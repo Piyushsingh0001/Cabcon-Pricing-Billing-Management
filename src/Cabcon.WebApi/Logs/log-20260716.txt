@@ -908,3 +908,523 @@
 2026-07-16 15:00:03.968 +05:30 [INF] Handling GetQuotationsQuery
 2026-07-16 15:00:03.981 +05:30 [INF] Handled GetQuotationsQuery
 2026-07-16 15:00:03.983 +05:30 [INF] GET /api/quotations responded 200 in 20ms
+2026-07-16 15:03:05.783 +05:30 [INF] GET / responded 404 in 47ms
+2026-07-16 15:03:24.002 +05:30 [INF] OPTIONS /api/materials responded 204 in 2ms
+2026-07-16 15:03:24.808 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-16 15:03:24.813 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-16 15:03:26.169 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 15:03:26.417 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 15:03:26.464 +05:30 [INF] GET /api/materials responded 200 in 765ms
+2026-07-16 15:03:34.164 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-16 15:03:34.164 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-16 15:03:34.164 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 15:03:34.164 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 15:03:34.276 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 15:03:34.282 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-16 15:03:34.283 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 15:03:34.286 +05:30 [INF] GET /api/materials responded 200 in 52ms
+2026-07-16 15:03:34.286 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 15:03:34.301 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-16 15:03:34.302 +05:30 [INF] GET /api/categories responded 200 in 73ms
+2026-07-16 15:03:34.306 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-16 15:03:34.308 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-16 15:03:34.309 +05:30 [INF] GET /api/categories responded 200 in 5ms
+2026-07-16 15:03:34.542 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 15:03:34.554 +05:30 [INF] GET /api/skus responded 200 in 278ms
+2026-07-16 15:03:37.431 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 15:03:37.446 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 15:03:37.510 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 15:03:37.514 +05:30 [INF] GET /api/quotations responded 200 in 74ms
+2026-07-16 15:03:42.920 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 15:03:42.920 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 15:03:42.921 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 15:03:42.933 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 15:03:42.934 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 15:03:42.939 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 15:03:42.940 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 15:03:42.941 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 15:03:42.942 +05:30 [INF] GET /api/skus responded 200 in 12ms
+2026-07-16 15:03:42.942 +05:30 [INF] GET /api/materials responded 200 in 10ms
+2026-07-16 15:03:42.959 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 15:03:42.969 +05:30 [INF] GET /api/customers responded 200 in 39ms
+2026-07-16 15:47:46.083 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-16 15:47:46.158 +05:30 [INF] Handling LoginCommand
+2026-07-16 15:47:46.208 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-16 15:47:46.536 +05:30 [INF] Handled LoginCommand
+2026-07-16 15:47:46.540 +05:30 [INF] POST /api/auth/login responded 200 in 418ms
+2026-07-16 15:47:46.592 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 15:47:46.601 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 15:47:46.626 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 15:47:46.629 +05:30 [INF] GET /api/materials responded 200 in 31ms
+2026-07-16 15:47:49.499 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 15:47:49.514 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 15:47:49.532 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 15:47:49.534 +05:30 [INF] GET /api/quotations responded 200 in 23ms
+2026-07-16 15:47:53.756 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 15:47:53.767 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 15:47:53.782 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 15:47:53.785 +05:30 [INF] GET /api/materials responded 200 in 19ms
+2026-07-16 15:47:54.349 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-16 15:47:54.349 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-16 15:47:54.349 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 15:47:54.389 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 15:47:54.442 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-16 15:47:54.449 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 15:47:54.451 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-16 15:47:54.451 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 15:47:54.453 +05:30 [INF] GET /api/categories responded 200 in 15ms
+2026-07-16 15:47:54.455 +05:30 [INF] GET /api/materials responded 200 in 105ms
+2026-07-16 15:47:54.460 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-16 15:47:54.464 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-16 15:47:54.465 +05:30 [INF] GET /api/categories responded 200 in 11ms
+2026-07-16 15:47:54.478 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 15:47:54.480 +05:30 [INF] GET /api/skus responded 200 in 39ms
+2026-07-16 15:47:55.164 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 15:47:55.177 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 15:47:55.182 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 15:47:55.184 +05:30 [INF] GET /api/customers responded 200 in 10ms
+2026-07-16 15:47:56.061 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 15:47:56.071 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 15:47:56.078 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 15:47:56.079 +05:30 [INF] GET /api/quotations responded 200 in 10ms
+2026-07-16 15:48:01.183 +05:30 [INF] OPTIONS /api/quotations/25 responded 204 in 0ms
+2026-07-16 15:48:01.203 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-16 15:48:01.275 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-16 15:48:01.280 +05:30 [INF] GET /api/quotations/25 responded 200 in 85ms
+2026-07-16 15:48:01.306 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 15:48:01.306 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 15:48:01.314 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 15:48:01.314 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 15:48:01.318 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 15:48:01.319 +05:30 [INF] GET /api/customers responded 200 in 6ms
+2026-07-16 15:48:01.376 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 15:48:01.378 +05:30 [INF] GET /api/skus responded 200 in 65ms
+2026-07-16 15:48:01.385 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-16 15:48:01.412 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:01.475 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:01.479 +05:30 [INF] POST /api/quotations/calculate responded 200 in 88ms
+2026-07-16 15:48:09.476 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 15:48:09.487 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 15:48:09.491 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 15:48:09.493 +05:30 [INF] GET /api/quotations responded 200 in 8ms
+2026-07-16 15:48:12.605 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-16 15:48:12.627 +05:30 [INF] POST /api/auth/logout responded 401 in 12ms
+2026-07-16 15:48:12.635 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-16 15:48:12.653 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-16 15:48:12.666 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-16 15:48:12.741 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-16 15:48:12.743 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 101ms
+2026-07-16 15:48:12.757 +05:30 [INF] Handling LogoutCommand
+2026-07-16 15:48:12.773 +05:30 [INF] Handled LogoutCommand
+2026-07-16 15:48:12.774 +05:30 [INF] POST /api/auth/logout responded 204 in 25ms
+2026-07-16 15:48:12.782 +05:30 [INF] GET /api/materials responded 401 in 0ms
+2026-07-16 15:48:12.782 +05:30 [INF] GET /api/customers responded 401 in 0ms
+2026-07-16 15:48:12.782 +05:30 [INF] GET /api/skus responded 401 in 0ms
+2026-07-16 15:48:16.173 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-16 15:48:16.189 +05:30 [INF] Handling LoginCommand
+2026-07-16 15:48:16.319 +05:30 [INF] Handled LoginCommand
+2026-07-16 15:48:16.321 +05:30 [INF] POST /api/auth/login responded 200 in 133ms
+2026-07-16 15:48:16.366 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 15:48:16.366 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 15:48:16.366 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 15:48:16.382 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 15:48:16.383 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 15:48:16.383 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 15:48:16.387 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 15:48:16.389 +05:30 [INF] GET /api/customers responded 200 in 13ms
+2026-07-16 15:48:16.404 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 15:48:16.407 +05:30 [INF] GET /api/materials responded 200 in 32ms
+2026-07-16 15:48:16.417 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 15:48:16.419 +05:30 [INF] GET /api/skus responded 200 in 43ms
+2026-07-16 15:48:17.612 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 15:48:17.627 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 15:48:17.636 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 15:48:17.638 +05:30 [INF] GET /api/quotations responded 200 in 15ms
+2026-07-16 15:48:22.047 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 15:48:22.063 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 15:48:22.066 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 15:48:22.067 +05:30 [INF] GET /api/customers responded 200 in 10ms
+2026-07-16 15:48:22.760 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 15:48:22.769 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 15:48:22.792 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 15:48:22.794 +05:30 [INF] GET /api/quotations responded 200 in 27ms
+2026-07-16 15:48:25.088 +05:30 [INF] OPTIONS /api/quotations/25 responded 204 in 0ms
+2026-07-16 15:48:25.099 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-16 15:48:25.110 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-16 15:48:25.111 +05:30 [INF] GET /api/quotations/25 responded 200 in 13ms
+2026-07-16 15:48:25.117 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 15:48:25.119 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 15:48:25.122 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 15:48:25.123 +05:30 [INF] GET /api/customers responded 200 in 5ms
+2026-07-16 15:48:25.124 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 15:48:25.162 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 15:48:25.164 +05:30 [INF] GET /api/skus responded 200 in 41ms
+2026-07-16 15:48:25.172 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-16 15:48:25.180 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:25.206 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:25.207 +05:30 [INF] POST /api/quotations/calculate responded 200 in 29ms
+2026-07-16 15:48:27.642 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:27.646 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:27.648 +05:30 [INF] POST /api/quotations/calculate responded 200 in 10ms
+2026-07-16 15:48:27.830 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:27.832 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:27.833 +05:30 [INF] POST /api/quotations/calculate responded 200 in 5ms
+2026-07-16 15:48:28.075 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:28.081 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:28.082 +05:30 [INF] POST /api/quotations/calculate responded 200 in 9ms
+2026-07-16 15:48:28.259 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:28.263 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:28.263 +05:30 [INF] POST /api/quotations/calculate responded 200 in 6ms
+2026-07-16 15:48:28.428 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:28.430 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:28.431 +05:30 [INF] POST /api/quotations/calculate responded 200 in 5ms
+2026-07-16 15:48:28.598 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:28.600 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:28.600 +05:30 [INF] POST /api/quotations/calculate responded 200 in 4ms
+2026-07-16 15:48:28.793 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:28.795 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:28.796 +05:30 [INF] POST /api/quotations/calculate responded 200 in 5ms
+2026-07-16 15:48:28.979 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:28.981 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:28.982 +05:30 [INF] POST /api/quotations/calculate responded 200 in 5ms
+2026-07-16 15:48:29.142 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:29.146 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:29.147 +05:30 [INF] POST /api/quotations/calculate responded 200 in 8ms
+2026-07-16 15:48:29.309 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:29.312 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:29.313 +05:30 [INF] POST /api/quotations/calculate responded 200 in 6ms
+2026-07-16 15:48:29.487 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:29.492 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:29.492 +05:30 [INF] POST /api/quotations/calculate responded 200 in 7ms
+2026-07-16 15:48:29.680 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:29.685 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:29.687 +05:30 [INF] POST /api/quotations/calculate responded 200 in 9ms
+2026-07-16 15:48:30.174 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:30.176 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:30.177 +05:30 [INF] POST /api/quotations/calculate responded 200 in 5ms
+2026-07-16 15:48:30.341 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-16 15:48:30.351 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:30.354 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:30.355 +05:30 [INF] POST /api/quotations/calculate responded 200 in 5ms
+2026-07-16 15:48:30.527 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:30.531 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:30.532 +05:30 [INF] POST /api/quotations/calculate responded 200 in 7ms
+2026-07-16 15:48:30.723 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:48:30.726 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:48:30.727 +05:30 [INF] POST /api/quotations/calculate responded 200 in 7ms
+2026-07-16 15:48:33.990 +05:30 [INF] OPTIONS /api/quotations/25 responded 204 in 0ms
+2026-07-16 15:48:34.022 +05:30 [INF] Handling UpdateQuotationCommand
+2026-07-16 15:48:34.194 +05:30 [INF] Handled UpdateQuotationCommand
+2026-07-16 15:48:34.198 +05:30 [INF] PUT /api/quotations/25 responded 200 in 200ms
+2026-07-16 15:48:34.211 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 15:48:34.211 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 15:48:34.211 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 15:48:34.221 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 15:48:34.222 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 15:48:34.224 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 15:48:34.223 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 15:48:34.225 +05:30 [INF] GET /api/customers responded 200 in 4ms
+2026-07-16 15:48:34.239 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 15:48:34.241 +05:30 [INF] GET /api/materials responded 200 in 17ms
+2026-07-16 15:48:34.249 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 15:48:34.251 +05:30 [INF] GET /api/skus responded 200 in 30ms
+2026-07-16 15:48:36.604 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 15:48:36.613 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 15:48:36.617 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 15:48:36.618 +05:30 [INF] GET /api/quotations responded 200 in 6ms
+2026-07-16 15:48:39.666 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 15:48:39.675 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 15:48:39.685 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 15:48:39.686 +05:30 [INF] GET /api/quotations responded 200 in 12ms
+2026-07-16 15:48:45.791 +05:30 [INF] OPTIONS /api/quotations/25 responded 204 in 0ms
+2026-07-16 15:48:45.801 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-07-16 15:48:45.806 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-07-16 15:48:45.807 +05:30 [INF] GET /api/quotations/25 responded 200 in 8ms
+2026-07-16 15:52:36.830 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 15:52:36.830 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 15:52:36.831 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 15:52:36.850 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 15:52:36.850 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 15:52:36.850 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 15:52:36.855 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 15:52:36.855 +05:30 [INF] GET /api/customers responded 200 in 10ms
+2026-07-16 15:52:36.867 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 15:52:36.869 +05:30 [INF] GET /api/materials responded 200 in 23ms
+2026-07-16 15:52:36.874 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 15:52:36.876 +05:30 [INF] GET /api/skus responded 200 in 30ms
+2026-07-16 15:52:39.058 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-16 15:52:39.075 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:52:39.105 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:52:39.106 +05:30 [INF] POST /api/quotations/calculate responded 200 in 37ms
+2026-07-16 15:54:27.581 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 15:54:27.581 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 15:54:27.581 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 15:54:27.603 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 15:54:27.603 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 15:54:27.603 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 15:54:27.607 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 15:54:27.609 +05:30 [INF] GET /api/customers responded 200 in 9ms
+2026-07-16 15:54:27.624 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 15:54:27.626 +05:30 [INF] GET /api/materials responded 200 in 26ms
+2026-07-16 15:54:27.633 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 15:54:27.634 +05:30 [INF] GET /api/skus responded 200 in 34ms
+2026-07-16 15:54:28.275 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 15:54:28.283 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 15:54:28.292 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 15:54:28.293 +05:30 [INF] GET /api/quotations responded 200 in 10ms
+2026-07-16 15:54:35.243 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-16 15:54:35.253 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 15:54:35.280 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 15:54:35.281 +05:30 [INF] POST /api/quotations/calculate responded 200 in 30ms
+2026-07-16 15:59:14.839 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-16 15:59:14.897 +05:30 [INF] Handling LogoutCommand
+2026-07-16 15:59:14.909 +05:30 [INF] Handled LogoutCommand
+2026-07-16 15:59:14.910 +05:30 [INF] POST /api/auth/logout responded 204 in 18ms
+2026-07-16 15:59:14.925 +05:30 [INF] GET /api/quotations responded 401 in 0ms
+2026-07-16 16:00:38.847 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-16 16:00:38.863 +05:30 [INF] Handling LoginCommand
+2026-07-16 16:03:36.654 +05:30 [INF] Handled LoginCommand
+2026-07-16 16:03:36.655 +05:30 [INF] POST /api/auth/login responded 200 in 177795ms
+2026-07-16 16:03:36.716 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 16:03:36.717 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 16:03:36.716 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 16:03:36.789 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 16:03:36.790 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 16:03:36.795 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 16:03:36.801 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 16:03:36.803 +05:30 [INF] GET /api/customers responded 200 in 75ms
+2026-07-16 16:03:36.817 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 16:03:36.819 +05:30 [INF] GET /api/materials responded 200 in 90ms
+2026-07-16 16:03:36.831 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 16:03:36.832 +05:30 [INF] GET /api/skus responded 200 in 44ms
+2026-07-16 16:03:42.196 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-16 16:03:42.214 +05:30 [INF] Handling LogoutCommand
+2026-07-16 16:03:42.227 +05:30 [INF] Handled LogoutCommand
+2026-07-16 16:03:42.229 +05:30 [INF] POST /api/auth/logout responded 204 in 20ms
+2026-07-16 16:03:42.243 +05:30 [INF] GET /api/customers responded 401 in 0ms
+2026-07-16 16:03:42.243 +05:30 [INF] GET /api/materials responded 401 in 0ms
+2026-07-16 16:03:42.243 +05:30 [INF] GET /api/skus responded 401 in 0ms
+2026-07-16 16:03:47.243 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-16 16:04:15.752 +05:30 [INF] Handling LoginCommand
+2026-07-16 16:06:04.880 +05:30 [INF] Handled LoginCommand
+2026-07-16 16:06:24.503 +05:30 [INF] POST /api/auth/login responded 200 in 156121ms
+2026-07-16 16:06:39.212 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 16:06:39.212 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 16:06:39.212 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 16:06:39.260 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 16:06:44.734 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 16:06:44.739 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 16:06:44.739 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 16:06:44.749 +05:30 [INF] GET /api/customers responded 200 in 5527ms
+2026-07-16 16:06:44.760 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 16:06:44.763 +05:30 [INF] GET /api/materials responded 200 in 5541ms
+2026-07-16 16:06:44.776 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 16:06:44.778 +05:30 [INF] GET /api/skus responded 200 in 42ms
+2026-07-16 16:06:49.753 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-16 16:06:49.764 +05:30 [INF] Handling LogoutCommand
+2026-07-16 16:06:49.776 +05:30 [INF] Handled LogoutCommand
+2026-07-16 16:06:49.780 +05:30 [INF] POST /api/auth/logout responded 204 in 17ms
+2026-07-16 16:06:49.792 +05:30 [INF] GET /api/skus responded 401 in 0ms
+2026-07-16 16:06:49.792 +05:30 [INF] GET /api/materials responded 401 in 0ms
+2026-07-16 16:06:49.792 +05:30 [INF] GET /api/customers responded 401 in 0ms
+2026-07-16 16:07:00.418 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-16 16:07:17.234 +05:30 [INF] Handling LoginCommand
+2026-07-16 16:11:30.462 +05:30 [ERR] Unhandled exception for LoginCommand
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Invalid username or password.
+   at Cabcon.Application.Features.Authentication.Commands.Login.LoginCommandHandler.Handle(LoginCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\Login\LoginCommandHandler.cs:line 64
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+2026-07-16 16:11:32.887 +05:30 [WRN] AuthenticationFailedException processing POST /api/auth/login: Invalid username or password.
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Invalid username or password.
+   at Cabcon.Application.Features.Authentication.Commands.Login.LoginCommandHandler.Handle(LoginCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\Login\LoginCommandHandler.cs:line 64
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+   at Cabcon.WebApi.Controllers.AuthController.Login(LoginRequest request, CancellationToken ct) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Controllers\AuthController.cs:line 42
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Cabcon.WebApi.Middleware.AuditTrackingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\AuditTrackingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Cabcon.WebApi.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\RequestResponseLoggingMiddleware.cs:line 26
+   at Cabcon.WebApi.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Project\SKU\Cabcon\src\Cabcon.WebApi\Middleware\GlobalExceptionMiddleware.cs:line 30
+2026-07-16 16:11:39.020 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-16 16:11:39.033 +05:30 [INF] POST /api/auth/logout responded 401 in 1ms
+2026-07-16 16:11:39.040 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-16 16:11:39.045 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-16 16:11:39.104 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-16 16:11:39.105 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 61ms
+2026-07-16 16:11:39.115 +05:30 [INF] Handling LogoutCommand
+2026-07-16 16:11:39.121 +05:30 [INF] Handled LogoutCommand
+2026-07-16 16:11:39.123 +05:30 [INF] POST /api/auth/logout responded 204 in 12ms
+2026-07-16 16:11:39.133 +05:30 [INF] GET /api/customers responded 401 in 0ms
+2026-07-16 16:11:39.133 +05:30 [INF] GET /api/materials responded 401 in 0ms
+2026-07-16 16:11:39.134 +05:30 [INF] GET /api/skus responded 401 in 0ms
+2026-07-16 16:11:46.887 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-16 16:11:48.728 +05:30 [INF] Handling LoginCommand
+2026-07-16 16:12:28.754 +05:30 [INF] Handled LoginCommand
+2026-07-16 16:12:28.755 +05:30 [INF] POST /api/auth/login responded 200 in 41860ms
+2026-07-16 16:12:28.879 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 16:12:28.879 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 16:12:28.880 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 16:12:28.916 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 16:12:28.916 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 16:12:28.921 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 16:12:28.922 +05:30 [INF] GET /api/customers responded 200 in 10ms
+2026-07-16 16:12:28.932 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 16:12:28.950 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 16:12:28.951 +05:30 [INF] GET /api/materials responded 200 in 38ms
+2026-07-16 16:12:28.964 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 16:12:28.965 +05:30 [INF] GET /api/skus responded 200 in 33ms
+2026-07-16 16:12:31.439 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-16 16:12:33.308 +05:30 [INF] Handling LoginCommand
+2026-07-16 16:13:33.683 +05:30 [ERR] Unhandled exception for LoginCommand
+Cabcon.Shared.Exceptions.AuthenticationFailedException: Invalid username or password.
+   at Cabcon.Application.Features.Authentication.Commands.Login.LoginCommandHandler.Handle(LoginCommand request, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Features\Authentication\Commands\Login\LoginCommandHandler.cs:line 64
+   at Cabcon.Application.Common.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\ValidationBehaviour.cs:line 38
+   at Cabcon.Application.Common.Behaviours.LoggingBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\Project\SKU\Cabcon\src\Cabcon.Application\Common\Behaviours\LoggingBehaviour.cs:line 23
+2026-07-16 16:31:06.170 +05:30 [INF] GET / responded 404 in 47ms
+2026-07-16 16:31:08.527 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 2ms
+2026-07-16 16:31:09.413 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-16 16:31:09.416 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-16 16:31:14.799 +05:30 [INF] Handling LoginCommand
+2026-07-16 16:31:18.366 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-16 16:31:18.829 +05:30 [INF] Handled LoginCommand
+2026-07-16 16:31:18.846 +05:30 [INF] POST /api/auth/login responded 200 in 8360ms
+2026-07-16 16:31:18.900 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 16:31:18.900 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 16:31:18.900 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 16:31:19.067 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 16:31:19.081 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 16:31:19.082 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 16:31:19.094 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 16:31:19.100 +05:30 [INF] GET /api/customers responded 200 in 141ms
+2026-07-16 16:31:19.231 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 16:31:19.249 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 16:31:19.255 +05:30 [INF] GET /api/materials responded 200 in 296ms
+2026-07-16 16:31:19.257 +05:30 [INF] GET /api/skus responded 200 in 298ms
+2026-07-16 16:31:24.516 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 16:31:24.544 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 16:31:24.618 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 16:31:24.627 +05:30 [INF] GET /api/quotations responded 200 in 97ms
+2026-07-16 16:31:28.198 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 16:31:28.198 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 16:31:28.198 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 16:31:28.212 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 16:31:28.213 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 16:31:28.213 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 16:31:28.215 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 16:31:28.216 +05:30 [INF] GET /api/customers responded 200 in 7ms
+2026-07-16 16:31:28.220 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 16:31:28.221 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 16:31:28.221 +05:30 [INF] GET /api/materials responded 200 in 11ms
+2026-07-16 16:31:28.222 +05:30 [INF] GET /api/skus responded 200 in 12ms
+2026-07-16 16:31:31.997 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-16 16:31:32.035 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 16:31:32.105 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 16:31:32.108 +05:30 [INF] POST /api/quotations/calculate responded 200 in 99ms
+2026-07-16 17:02:11.134 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 17:02:11.135 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 17:02:11.136 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 17:02:11.310 +05:30 [INF] GET /api/materials responded 401 in 20ms
+2026-07-16 17:02:11.310 +05:30 [INF] GET /api/skus responded 401 in 21ms
+2026-07-16 17:02:11.310 +05:30 [INF] GET /api/customers responded 401 in 21ms
+2026-07-16 17:02:11.322 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-16 17:02:11.349 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-16 17:02:11.381 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-16 17:02:11.523 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-16 17:02:11.525 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 193ms
+2026-07-16 17:02:11.549 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 17:02:11.549 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 17:02:11.550 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 17:02:11.564 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 17:02:11.567 +05:30 [INF] GET /api/customers responded 200 in 26ms
+2026-07-16 17:02:11.588 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 17:02:11.591 +05:30 [INF] GET /api/materials responded 200 in 51ms
+2026-07-16 17:02:11.603 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 17:02:11.608 +05:30 [INF] GET /api/skus responded 200 in 68ms
+2026-07-16 17:02:12.747 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-16 17:02:12.790 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 17:02:12.833 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 17:02:12.837 +05:30 [INF] POST /api/quotations/calculate responded 200 in 52ms
+2026-07-16 17:02:41.236 +05:30 [INF] OPTIONS /api/customers responded 204 in 35ms
+2026-07-16 17:02:41.325 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 17:02:41.330 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 17:02:41.335 +05:30 [INF] GET /api/customers responded 200 in 52ms
+2026-07-16 17:02:41.636 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 17:02:41.636 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 17:02:41.641 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 17:02:41.694 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 17:02:41.696 +05:30 [INF] GET /api/customers responded 200 in 61ms
+2026-07-16 17:02:41.725 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 17:02:41.725 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 17:02:41.736 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 17:02:41.741 +05:30 [INF] GET /api/materials responded 200 in 20ms
+2026-07-16 17:02:41.744 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 17:02:41.755 +05:30 [INF] GET /api/skus responded 200 in 35ms
+2026-07-16 17:02:41.768 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-16 17:02:41.785 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 17:02:41.790 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 17:02:41.793 +05:30 [INF] POST /api/quotations/calculate responded 200 in 12ms
+2026-07-16 17:02:49.046 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-16 17:02:49.087 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 17:02:49.092 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 17:02:49.094 +05:30 [INF] POST /api/quotations/calculate responded 200 in 11ms
+2026-07-16 17:02:52.981 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 17:02:53.039 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 17:02:53.060 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 17:02:53.063 +05:30 [INF] GET /api/quotations responded 200 in 33ms
+2026-07-16 17:02:53.458 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 17:02:53.458 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 17:02:53.458 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 17:02:53.515 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 17:02:53.515 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 17:02:53.515 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 17:02:53.524 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 17:02:53.530 +05:30 [INF] GET /api/customers responded 200 in 24ms
+2026-07-16 17:02:53.556 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 17:02:53.559 +05:30 [INF] GET /api/materials responded 200 in 53ms
+2026-07-16 17:02:53.570 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 17:02:53.573 +05:30 [INF] GET /api/skus responded 200 in 67ms
+2026-07-16 17:02:53.596 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 17:02:53.638 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 17:02:53.642 +05:30 [INF] POST /api/quotations/calculate responded 200 in 54ms
+2026-07-16 17:02:57.733 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-16 17:02:57.791 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 17:02:57.836 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 17:02:57.839 +05:30 [INF] POST /api/quotations/calculate responded 200 in 56ms
+2026-07-16 17:03:16.589 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-16 17:03:16.614 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-16 17:03:16.620 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-16 17:03:16.621 +05:30 [INF] POST /api/quotations/calculate responded 200 in 11ms
+2026-07-16 17:04:18.620 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-16 17:04:18.620 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 17:04:18.621 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-16 17:04:18.670 +05:30 [INF] Handling GetCustomersQuery
+2026-07-16 17:04:18.672 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 17:04:18.673 +05:30 [INF] Handling GetSkusQuery
+2026-07-16 17:04:18.683 +05:30 [INF] Handled GetCustomersQuery
+2026-07-16 17:04:18.686 +05:30 [INF] GET /api/customers responded 200 in 23ms
+2026-07-16 17:04:18.707 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 17:04:18.710 +05:30 [INF] GET /api/materials responded 200 in 48ms
+2026-07-16 17:04:18.725 +05:30 [INF] Handled GetSkusQuery
+2026-07-16 17:04:18.731 +05:30 [INF] GET /api/skus responded 200 in 68ms
+2026-07-16 17:52:52.143 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-16 17:52:52.196 +05:30 [INF] GET /api/quotations responded 401 in 2ms
+2026-07-16 17:52:52.208 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-16 17:52:52.225 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-16 17:52:52.326 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-16 17:52:52.328 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 107ms
+2026-07-16 17:52:52.350 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-16 17:52:52.373 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-16 17:52:52.376 +05:30 [INF] GET /api/quotations responded 200 in 32ms
+2026-07-16 17:53:04.544 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-16 17:53:04.569 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-16 17:53:04.605 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-16 17:53:04.608 +05:30 [INF] GET /api/materials responded 200 in 44ms

@@ -277,6 +277,13 @@ export class DashboardComponent implements OnInit {
     this.recalculate();
   }
 
+  public removeRow(skuId: number) {
+    this.localSelections[skuId] = false;
+    this.pricingService.selectedSkuIds.delete(skuId);
+    this.overridesMap.delete(skuId);
+    this.recalculate();
+  }
+
   public getSkuConversionType(skuId: number): number {
     const sku = this.skus.find(s => s.id === skuId);
     return sku ? sku.conversionType : 0;

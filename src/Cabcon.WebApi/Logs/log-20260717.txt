@@ -1,0 +1,822 @@
+2026-07-17 10:48:06.594 +05:30 [INF] GET / responded 404 in 115ms
+2026-07-17 10:49:21.545 +05:30 [INF] OPTIONS /api/materials responded 204 in 34ms
+2026-07-17 10:49:22.479 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-17 10:49:22.481 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-17 10:49:23.734 +05:30 [INF] GET /api/materials responded 401 in 82ms
+2026-07-17 10:49:23.813 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-17 10:49:23.942 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-17 10:49:24.262 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-17 10:49:24.771 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-17 10:49:24.798 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 934ms
+2026-07-17 10:49:24.899 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 10:49:25.096 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 10:49:25.153 +05:30 [INF] GET /api/materials responded 200 in 318ms
+2026-07-17 10:50:41.015 +05:30 [INF] OPTIONS /api/auth/logout responded 204 in 0ms
+2026-07-17 10:50:41.103 +05:30 [INF] Handling LogoutCommand
+2026-07-17 10:50:41.194 +05:30 [INF] Handled LogoutCommand
+2026-07-17 10:50:41.197 +05:30 [INF] POST /api/auth/logout responded 204 in 121ms
+2026-07-17 10:50:41.217 +05:30 [INF] GET /api/materials responded 401 in 1ms
+2026-07-17 10:50:46.047 +05:30 [INF] OPTIONS /api/auth/login responded 204 in 0ms
+2026-07-17 10:50:46.111 +05:30 [INF] Handling LoginCommand
+2026-07-17 10:50:46.139 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-07-17 10:50:46.366 +05:30 [INF] Handled LoginCommand
+2026-07-17 10:50:46.375 +05:30 [INF] POST /api/auth/login responded 200 in 281ms
+2026-07-17 10:50:46.459 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 10:50:46.459 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 10:50:46.517 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 10:50:46.593 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 10:50:46.641 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 10:50:46.641 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 10:50:46.652 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 10:50:46.655 +05:30 [INF] GET /api/materials responded 200 in 66ms
+2026-07-17 10:50:46.677 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 10:50:46.709 +05:30 [INF] GET /api/customers responded 200 in 168ms
+2026-07-17 10:50:46.903 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 10:50:46.944 +05:30 [INF] GET /api/skus responded 200 in 350ms
+2026-07-17 10:50:50.811 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 10:50:50.832 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 10:50:50.844 +05:30 [INF] GET /api/materials responded 200 in 38ms
+2026-07-17 10:50:52.122 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-17 10:50:52.150 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-17 10:50:52.238 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-17 10:50:52.248 +05:30 [INF] GET /api/quotations responded 200 in 107ms
+2026-07-17 10:50:53.501 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 10:50:53.525 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 10:50:53.538 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 10:50:53.547 +05:30 [INF] GET /api/materials responded 200 in 26ms
+2026-07-17 10:50:56.920 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-17 10:50:56.920 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-17 10:50:56.959 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 10:50:56.920 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 10:50:57.065 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 10:50:57.071 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-17 10:50:57.074 +05:30 [INF] GET /api/materials responded 200 in 153ms
+2026-07-17 10:50:57.112 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 10:50:57.123 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-17 10:50:57.125 +05:30 [INF] GET /api/categories responded 200 in 70ms
+2026-07-17 10:50:57.125 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 10:50:57.129 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-17 10:50:57.132 +05:30 [INF] GET /api/skus responded 200 in 22ms
+2026-07-17 10:50:57.139 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-17 10:50:57.148 +05:30 [INF] GET /api/categories responded 200 in 20ms
+2026-07-17 10:50:57.880 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 10:50:57.902 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 10:50:57.910 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 10:50:57.915 +05:30 [INF] GET /api/customers responded 200 in 16ms
+2026-07-17 10:50:59.478 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-17 10:50:59.505 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-17 10:50:59.518 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-17 10:50:59.527 +05:30 [INF] GET /api/quotations responded 200 in 25ms
+2026-07-17 10:51:01.733 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 10:51:01.737 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 10:51:01.737 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 10:51:01.750 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 10:51:01.753 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 10:51:01.755 +05:30 [INF] GET /api/customers responded 200 in 21ms
+2026-07-17 10:51:01.757 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 10:51:01.767 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 10:51:01.779 +05:30 [INF] GET /api/skus responded 200 in 45ms
+2026-07-17 10:51:01.783 +05:30 [INF] GET /api/materials responded 200 in 33ms
+2026-07-17 10:53:42.290 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 10:53:42.348 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 10:53:42.440 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 10:53:42.447 +05:30 [INF] POST /api/quotations/calculate responded 200 in 130ms
+2026-07-17 11:03:22.712 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 11:03:22.712 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 11:03:22.712 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 11:03:22.756 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:03:22.756 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:03:22.762 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:03:22.769 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:03:22.774 +05:30 [INF] GET /api/customers responded 200 in 25ms
+2026-07-17 11:03:22.796 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:03:22.804 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:03:22.805 +05:30 [INF] GET /api/materials responded 200 in 44ms
+2026-07-17 11:03:22.809 +05:30 [INF] GET /api/skus responded 200 in 61ms
+2026-07-17 11:06:55.662 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 11:06:55.662 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 11:06:55.662 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 11:06:55.677 +05:30 [INF] GET /api/skus responded 401 in 0ms
+2026-07-17 11:06:55.677 +05:30 [INF] GET /api/customers responded 401 in 1ms
+2026-07-17 11:06:55.679 +05:30 [INF] GET /api/materials responded 401 in 0ms
+2026-07-17 11:06:55.689 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-17 11:06:55.697 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-17 11:06:55.745 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-17 11:06:55.747 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 51ms
+2026-07-17 11:06:55.761 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:06:55.762 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:06:55.762 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:06:55.766 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:06:55.767 +05:30 [INF] GET /api/customers responded 200 in 10ms
+2026-07-17 11:06:55.786 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:06:55.792 +05:30 [INF] GET /api/materials responded 200 in 35ms
+2026-07-17 11:06:55.795 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:06:55.797 +05:30 [INF] GET /api/skus responded 200 in 39ms
+2026-07-17 11:09:40.939 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 11:09:40.940 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 11:09:40.948 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 11:09:40.981 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:40.981 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:41.003 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:41.015 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:41.019 +05:30 [INF] GET /api/customers responded 200 in 46ms
+2026-07-17 11:09:41.021 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:41.037 +05:30 [INF] GET /api/materials responded 200 in 58ms
+2026-07-17 11:09:41.060 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:41.067 +05:30 [INF] GET /api/skus responded 200 in 66ms
+2026-07-17 11:09:41.724 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:41.724 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:41.724 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:41.736 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:41.741 +05:30 [INF] GET /api/customers responded 200 in 19ms
+2026-07-17 11:09:41.742 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:41.743 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:41.748 +05:30 [INF] GET /api/materials responded 200 in 26ms
+2026-07-17 11:09:41.751 +05:30 [INF] GET /api/skus responded 200 in 28ms
+2026-07-17 11:09:42.396 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:42.396 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:42.396 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:42.402 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:42.416 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:42.418 +05:30 [INF] GET /api/customers responded 200 in 25ms
+2026-07-17 11:09:42.422 +05:30 [INF] GET /api/materials responded 200 in 27ms
+2026-07-17 11:09:42.424 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:42.437 +05:30 [INF] GET /api/skus responded 200 in 42ms
+2026-07-17 11:09:42.589 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:42.589 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:42.590 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:42.595 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:42.595 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:42.596 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:42.597 +05:30 [INF] GET /api/materials responded 200 in 10ms
+2026-07-17 11:09:42.599 +05:30 [INF] GET /api/customers responded 200 in 12ms
+2026-07-17 11:09:42.605 +05:30 [INF] GET /api/skus responded 200 in 18ms
+2026-07-17 11:09:42.993 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:42.993 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:43.006 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:42.994 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:43.010 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:43.012 +05:30 [INF] GET /api/materials responded 200 in 22ms
+2026-07-17 11:09:43.018 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:43.020 +05:30 [INF] GET /api/skus responded 200 in 29ms
+2026-07-17 11:09:43.025 +05:30 [INF] GET /api/customers responded 200 in 35ms
+2026-07-17 11:09:43.142 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:43.143 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:43.143 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:43.145 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:43.150 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:43.150 +05:30 [INF] GET /api/customers responded 200 in 9ms
+2026-07-17 11:09:43.152 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:43.152 +05:30 [INF] GET /api/skus responded 200 in 11ms
+2026-07-17 11:09:43.157 +05:30 [INF] GET /api/materials responded 200 in 16ms
+2026-07-17 11:09:43.350 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:43.351 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:43.351 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:43.355 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:43.360 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:43.364 +05:30 [INF] GET /api/customers responded 200 in 15ms
+2026-07-17 11:09:43.368 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:43.369 +05:30 [INF] GET /api/skus responded 200 in 19ms
+2026-07-17 11:09:43.377 +05:30 [INF] GET /api/materials responded 200 in 28ms
+2026-07-17 11:09:43.553 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:43.553 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:43.554 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:43.556 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:43.563 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:43.564 +05:30 [INF] GET /api/customers responded 200 in 26ms
+2026-07-17 11:09:43.568 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:43.570 +05:30 [INF] GET /api/materials responded 200 in 17ms
+2026-07-17 11:09:43.576 +05:30 [INF] GET /api/skus responded 200 in 23ms
+2026-07-17 11:09:43.702 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:43.703 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:43.703 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:43.722 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:43.724 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:43.726 +05:30 [INF] GET /api/skus responded 200 in 25ms
+2026-07-17 11:09:43.727 +05:30 [INF] GET /api/customers responded 200 in 27ms
+2026-07-17 11:09:43.731 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:43.741 +05:30 [INF] GET /api/materials responded 200 in 41ms
+2026-07-17 11:09:43.871 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:43.872 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:43.872 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:43.876 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:43.880 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:43.885 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:43.886 +05:30 [INF] GET /api/customers responded 200 in 16ms
+2026-07-17 11:09:43.892 +05:30 [INF] GET /api/materials responded 200 in 22ms
+2026-07-17 11:09:43.896 +05:30 [INF] GET /api/skus responded 200 in 25ms
+2026-07-17 11:09:44.053 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:44.053 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:44.054 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:44.056 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:44.064 +05:30 [INF] GET /api/customers responded 200 in 15ms
+2026-07-17 11:09:44.066 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:44.067 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:44.070 +05:30 [INF] GET /api/materials responded 200 in 19ms
+2026-07-17 11:09:44.072 +05:30 [INF] GET /api/skus responded 200 in 21ms
+2026-07-17 11:09:44.223 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:44.223 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:44.223 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:44.228 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:44.235 +05:30 [INF] GET /api/customers responded 200 in 13ms
+2026-07-17 11:09:44.235 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:44.237 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:44.241 +05:30 [INF] GET /api/materials responded 200 in 19ms
+2026-07-17 11:09:44.242 +05:30 [INF] GET /api/skus responded 200 in 21ms
+2026-07-17 11:09:44.403 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:44.404 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:44.404 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:44.408 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:44.415 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:44.416 +05:30 [INF] GET /api/customers responded 200 in 14ms
+2026-07-17 11:09:44.417 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:44.418 +05:30 [INF] GET /api/materials responded 200 in 16ms
+2026-07-17 11:09:44.426 +05:30 [INF] GET /api/skus responded 200 in 24ms
+2026-07-17 11:09:44.605 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:44.605 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:44.606 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:44.622 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:44.626 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:44.628 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:44.631 +05:30 [INF] GET /api/customers responded 200 in 28ms
+2026-07-17 11:09:44.635 +05:30 [INF] GET /api/materials responded 200 in 31ms
+2026-07-17 11:09:44.636 +05:30 [INF] GET /api/skus responded 200 in 32ms
+2026-07-17 11:09:44.769 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:44.770 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:44.770 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:44.778 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:44.780 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:44.786 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:44.788 +05:30 [INF] GET /api/skus responded 200 in 19ms
+2026-07-17 11:09:44.790 +05:30 [INF] GET /api/customers responded 200 in 22ms
+2026-07-17 11:09:44.792 +05:30 [INF] GET /api/materials responded 200 in 24ms
+2026-07-17 11:09:44.937 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:44.937 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:44.937 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:44.946 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:44.952 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:44.954 +05:30 [INF] GET /api/customers responded 200 in 17ms
+2026-07-17 11:09:44.954 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:44.957 +05:30 [INF] GET /api/skus responded 200 in 21ms
+2026-07-17 11:09:44.967 +05:30 [INF] GET /api/materials responded 200 in 31ms
+2026-07-17 11:09:45.160 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:45.161 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:45.162 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:45.171 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:45.176 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:45.183 +05:30 [INF] GET /api/customers responded 200 in 25ms
+2026-07-17 11:09:45.186 +05:30 [INF] GET /api/skus responded 200 in 28ms
+2026-07-17 11:09:45.188 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:45.197 +05:30 [INF] GET /api/materials responded 200 in 40ms
+2026-07-17 11:09:45.334 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:45.334 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:45.334 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:45.337 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:45.342 +05:30 [INF] GET /api/customers responded 200 in 10ms
+2026-07-17 11:09:45.343 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:45.344 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:45.350 +05:30 [INF] GET /api/materials responded 200 in 18ms
+2026-07-17 11:09:45.352 +05:30 [INF] GET /api/skus responded 200 in 19ms
+2026-07-17 11:09:45.512 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:45.513 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:45.513 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:45.518 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:45.523 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:45.525 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:45.525 +05:30 [INF] GET /api/customers responded 200 in 14ms
+2026-07-17 11:09:45.529 +05:30 [INF] GET /api/materials responded 200 in 18ms
+2026-07-17 11:09:45.531 +05:30 [INF] GET /api/skus responded 200 in 20ms
+2026-07-17 11:09:45.721 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:45.721 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:45.721 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:45.752 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:45.754 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:45.755 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:45.757 +05:30 [INF] GET /api/skus responded 200 in 38ms
+2026-07-17 11:09:45.758 +05:30 [INF] GET /api/materials responded 200 in 40ms
+2026-07-17 11:09:45.760 +05:30 [INF] GET /api/customers responded 200 in 41ms
+2026-07-17 11:09:45.879 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:45.879 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:45.879 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:45.883 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:45.890 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:45.891 +05:30 [INF] GET /api/customers responded 200 in 14ms
+2026-07-17 11:09:45.893 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:45.899 +05:30 [INF] GET /api/skus responded 200 in 21ms
+2026-07-17 11:09:45.913 +05:30 [INF] GET /api/materials responded 200 in 35ms
+2026-07-17 11:09:46.311 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 11:09:46.311 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 11:09:46.312 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 11:09:46.324 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:09:46.327 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:09:46.336 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:09:46.337 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:09:46.349 +05:30 [INF] GET /api/customers responded 200 in 26ms
+2026-07-17 11:09:46.352 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:09:46.364 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:09:46.371 +05:30 [INF] GET /api/materials responded 200 in 45ms
+2026-07-17 11:09:46.374 +05:30 [INF] GET /api/skus responded 200 in 38ms
+2026-07-17 11:09:50.876 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:09:50.898 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:09:50.945 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:09:50.956 +05:30 [INF] POST /api/quotations/calculate responded 200 in 61ms
+2026-07-17 11:10:07.446 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 11:10:07.486 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:10:07.589 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:10:07.597 +05:30 [INF] GET /api/skus responded 200 in 113ms
+2026-07-17 11:10:07.636 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:10:07.658 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:10:07.673 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:10:07.680 +05:30 [INF] POST /api/quotations/calculate responded 200 in 25ms
+2026-07-17 11:10:23.307 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 11:10:23.394 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:10:23.439 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:10:23.444 +05:30 [INF] GET /api/skus responded 200 in 57ms
+2026-07-17 11:10:23.463 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:10:23.476 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:10:23.504 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:10:23.506 +05:30 [INF] POST /api/quotations/calculate responded 200 in 31ms
+2026-07-17 11:10:23.534 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:10:23.541 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:10:23.554 +05:30 [INF] GET /api/skus responded 200 in 22ms
+2026-07-17 11:10:23.581 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:10:23.591 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:10:23.594 +05:30 [INF] POST /api/quotations/calculate responded 200 in 16ms
+2026-07-17 11:10:32.256 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:10:32.302 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:10:32.315 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:10:32.322 +05:30 [INF] POST /api/quotations/calculate responded 200 in 22ms
+2026-07-17 11:10:40.676 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:10:40.722 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:10:40.732 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:10:40.739 +05:30 [INF] POST /api/quotations/calculate responded 200 in 20ms
+2026-07-17 11:10:41.941 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:10:41.951 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:10:41.957 +05:30 [INF] POST /api/quotations/calculate responded 200 in 19ms
+2026-07-17 11:10:42.600 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:10:42.610 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:10:42.617 +05:30 [INF] POST /api/quotations/calculate responded 200 in 19ms
+2026-07-17 11:15:47.713 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 11:15:47.714 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 11:15:47.713 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 11:15:47.931 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:15:47.939 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:15:47.943 +05:30 [INF] GET /api/customers responded 200 in 33ms
+2026-07-17 11:15:47.974 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:15:47.995 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:15:48.011 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:15:48.014 +05:30 [INF] GET /api/materials responded 200 in 46ms
+2026-07-17 11:15:48.161 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:15:48.162 +05:30 [INF] GET /api/skus responded 200 in 171ms
+2026-07-17 11:20:00.715 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:20:00.809 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:20:00.864 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:20:00.872 +05:30 [INF] POST /api/quotations/calculate responded 200 in 124ms
+2026-07-17 11:22:32.706 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 11:22:32.735 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 11:22:32.736 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 11:22:32.840 +05:30 [INF] GET /api/customers responded 401 in 1ms
+2026-07-17 11:22:32.853 +05:30 [INF] GET /api/skus responded 401 in 1ms
+2026-07-17 11:22:32.911 +05:30 [INF] GET /api/materials responded 401 in 54ms
+2026-07-17 11:22:32.921 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-17 11:22:32.941 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-17 11:22:33.020 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-17 11:22:33.027 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 89ms
+2026-07-17 11:22:33.053 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:22:33.053 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:22:33.065 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:22:33.078 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:22:33.083 +05:30 [INF] GET /api/customers responded 200 in 40ms
+2026-07-17 11:22:33.092 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:22:33.099 +05:30 [INF] GET /api/materials responded 200 in 57ms
+2026-07-17 11:22:33.103 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:22:33.117 +05:30 [INF] GET /api/skus responded 200 in 74ms
+2026-07-17 11:25:10.484 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:25:10.518 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:25:10.574 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:25:10.579 +05:30 [INF] POST /api/quotations/calculate responded 200 in 69ms
+2026-07-17 11:25:19.350 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 11:25:19.351 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 11:25:19.350 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 11:25:19.446 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 11:25:19.447 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 11:25:19.476 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 11:25:19.503 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 11:25:19.507 +05:30 [INF] GET /api/customers responded 200 in 109ms
+2026-07-17 11:25:19.524 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 11:25:19.531 +05:30 [INF] GET /api/materials responded 200 in 133ms
+2026-07-17 11:25:19.547 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 11:25:19.551 +05:30 [INF] GET /api/skus responded 200 in 152ms
+2026-07-17 11:25:21.881 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:25:21.926 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:25:21.935 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:25:21.942 +05:30 [INF] POST /api/quotations/calculate responded 200 in 19ms
+2026-07-17 11:25:30.245 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:25:30.290 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:25:30.301 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:25:30.310 +05:30 [INF] POST /api/quotations/calculate responded 200 in 22ms
+2026-07-17 11:25:38.321 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:25:38.374 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:25:38.415 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:25:38.425 +05:30 [INF] POST /api/quotations/calculate responded 200 in 59ms
+2026-07-17 11:25:45.909 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:25:45.969 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:25:46.030 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:25:46.039 +05:30 [INF] POST /api/quotations/calculate responded 200 in 77ms
+2026-07-17 11:29:30.304 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 24ms
+2026-07-17 11:29:30.373 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:29:30.434 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:29:30.445 +05:30 [INF] POST /api/quotations/calculate responded 200 in 81ms
+2026-07-17 11:30:33.936 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 11:30:33.984 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 11:30:34.045 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 11:30:34.053 +05:30 [INF] POST /api/quotations/calculate responded 200 in 76ms
+2026-07-17 12:11:20.816 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 12:11:20.816 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 12:11:20.816 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:11:20.841 +05:30 [INF] GET /api/customers responded 401 in 0ms
+2026-07-17 12:11:20.841 +05:30 [INF] GET /api/materials responded 401 in 0ms
+2026-07-17 12:11:20.847 +05:30 [INF] GET /api/skus responded 401 in 0ms
+2026-07-17 12:11:20.854 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-17 12:11:20.860 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-17 12:11:20.913 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-17 12:11:20.915 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 55ms
+2026-07-17 12:11:20.928 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:11:20.929 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:11:20.929 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:11:20.936 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:11:20.937 +05:30 [INF] GET /api/customers responded 200 in 9ms
+2026-07-17 12:11:20.946 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:11:20.948 +05:30 [INF] GET /api/materials responded 200 in 23ms
+2026-07-17 12:11:20.962 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:11:20.963 +05:30 [INF] GET /api/skus responded 200 in 37ms
+2026-07-17 12:12:25.853 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:12:25.854 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 12:12:25.853 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 12:12:25.870 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:12:25.871 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:12:25.871 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:12:25.877 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:12:25.878 +05:30 [INF] GET /api/customers responded 200 in 11ms
+2026-07-17 12:12:25.892 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:12:25.893 +05:30 [INF] GET /api/materials responded 200 in 25ms
+2026-07-17 12:12:25.894 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:12:25.896 +05:30 [INF] GET /api/skus responded 200 in 29ms
+2026-07-17 12:20:58.380 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 12:20:58.381 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:20:58.382 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 12:20:58.420 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:20:58.421 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:20:58.422 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:20:58.427 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:20:58.429 +05:30 [INF] GET /api/customers responded 200 in 13ms
+2026-07-17 12:20:58.440 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:20:58.443 +05:30 [INF] GET /api/materials responded 200 in 27ms
+2026-07-17 12:20:58.457 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:20:58.459 +05:30 [INF] GET /api/skus responded 200 in 43ms
+2026-07-17 12:21:22.883 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 12:21:22.894 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:21:22.927 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:21:22.929 +05:30 [INF] POST /api/quotations/calculate responded 200 in 36ms
+2026-07-17 12:21:26.921 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 12:21:26.921 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 12:21:26.922 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:21:26.935 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:21:26.965 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:21:26.965 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:21:26.967 +05:30 [INF] GET /api/customers responded 200 in 33ms
+2026-07-17 12:21:26.968 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:21:26.969 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:21:26.970 +05:30 [INF] GET /api/materials responded 200 in 6ms
+2026-07-17 12:21:26.972 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:21:26.973 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-17 12:21:28.046 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:21:28.046 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:21:28.046 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:21:28.049 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:21:28.052 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:21:28.052 +05:30 [INF] GET /api/customers responded 200 in 7ms
+2026-07-17 12:21:28.053 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:21:28.053 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-07-17 12:21:28.056 +05:30 [INF] GET /api/materials responded 200 in 11ms
+2026-07-17 12:21:29.702 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 12:21:29.711 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:21:29.714 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:21:29.716 +05:30 [INF] POST /api/quotations/calculate responded 200 in 7ms
+2026-07-17 12:21:32.903 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:21:32.906 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:21:32.909 +05:30 [INF] POST /api/quotations/calculate responded 200 in 9ms
+2026-07-17 12:21:36.014 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 12:21:36.026 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:21:36.028 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:21:36.029 +05:30 [INF] POST /api/quotations/calculate responded 200 in 4ms
+2026-07-17 12:23:46.700 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 12:23:46.752 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:23:46.793 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:23:46.796 +05:30 [INF] POST /api/quotations/calculate responded 200 in 48ms
+2026-07-17 12:23:47.837 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:23:47.841 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:23:47.843 +05:30 [INF] POST /api/quotations/calculate responded 200 in 7ms
+2026-07-17 12:24:04.701 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 12:24:04.702 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:24:04.701 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 12:24:04.782 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:04.782 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:04.783 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:04.787 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:04.789 +05:30 [INF] GET /api/customers responded 200 in 74ms
+2026-07-17 12:24:04.810 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:04.810 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:04.812 +05:30 [INF] GET /api/materials responded 200 in 29ms
+2026-07-17 12:24:04.813 +05:30 [INF] GET /api/skus responded 200 in 98ms
+2026-07-17 12:24:17.537 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 12:24:17.537 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 12:24:17.537 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:24:17.553 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:17.553 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:17.553 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:17.557 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:17.559 +05:30 [INF] GET /api/customers responded 200 in 10ms
+2026-07-17 12:24:17.575 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:17.576 +05:30 [INF] GET /api/materials responded 200 in 27ms
+2026-07-17 12:24:17.586 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:17.588 +05:30 [INF] GET /api/skus responded 200 in 37ms
+2026-07-17 12:24:18.112 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:18.112 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:18.112 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:18.114 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:18.117 +05:30 [INF] GET /api/customers responded 200 in 7ms
+2026-07-17 12:24:18.118 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:18.118 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:18.120 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-17 12:24:18.126 +05:30 [INF] GET /api/materials responded 200 in 15ms
+2026-07-17 12:24:18.308 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:18.308 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:18.308 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:18.310 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:18.312 +05:30 [INF] GET /api/customers responded 200 in 5ms
+2026-07-17 12:24:18.313 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:18.313 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:18.315 +05:30 [INF] GET /api/materials responded 200 in 8ms
+2026-07-17 12:24:18.317 +05:30 [INF] GET /api/skus responded 200 in 10ms
+2026-07-17 12:24:18.514 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:18.514 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:18.514 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:18.517 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:18.518 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:18.519 +05:30 [INF] GET /api/customers responded 200 in 6ms
+2026-07-17 12:24:18.520 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-17 12:24:18.521 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:18.525 +05:30 [INF] GET /api/materials responded 200 in 12ms
+2026-07-17 12:24:18.689 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:18.689 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:18.689 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:18.690 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:18.693 +05:30 [INF] GET /api/customers responded 200 in 6ms
+2026-07-17 12:24:18.694 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:18.694 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:18.696 +05:30 [INF] GET /api/materials responded 200 in 8ms
+2026-07-17 12:24:18.697 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-17 12:24:18.867 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:18.867 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:18.867 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:18.872 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:18.872 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:18.873 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:18.873 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-17 12:24:18.874 +05:30 [INF] GET /api/customers responded 200 in 8ms
+2026-07-17 12:24:18.875 +05:30 [INF] GET /api/materials responded 200 in 9ms
+2026-07-17 12:24:19.043 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:19.043 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:19.043 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:19.045 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:19.048 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:19.048 +05:30 [INF] GET /api/customers responded 200 in 6ms
+2026-07-17 12:24:19.049 +05:30 [INF] GET /api/skus responded 200 in 7ms
+2026-07-17 12:24:19.049 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:19.054 +05:30 [INF] GET /api/materials responded 200 in 12ms
+2026-07-17 12:24:19.212 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:19.212 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:19.212 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:19.216 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:19.218 +05:30 [INF] GET /api/customers responded 200 in 7ms
+2026-07-17 12:24:19.219 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:19.219 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:19.221 +05:30 [INF] GET /api/materials responded 200 in 10ms
+2026-07-17 12:24:19.222 +05:30 [INF] GET /api/skus responded 200 in 11ms
+2026-07-17 12:24:19.399 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:19.399 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:19.400 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:19.401 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:19.404 +05:30 [INF] GET /api/customers responded 200 in 6ms
+2026-07-17 12:24:19.405 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:19.406 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:19.407 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-07-17 12:24:19.408 +05:30 [INF] GET /api/materials responded 200 in 9ms
+2026-07-17 12:24:19.590 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:19.590 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:19.590 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:19.595 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:19.595 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:19.596 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:19.596 +05:30 [INF] GET /api/materials responded 200 in 7ms
+2026-07-17 12:24:19.597 +05:30 [INF] GET /api/customers responded 200 in 8ms
+2026-07-17 12:24:19.598 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-17 12:24:19.764 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:19.764 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:19.764 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:19.767 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:19.770 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:19.770 +05:30 [INF] GET /api/customers responded 200 in 7ms
+2026-07-17 12:24:19.771 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-07-17 12:24:19.771 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:19.776 +05:30 [INF] GET /api/materials responded 200 in 13ms
+2026-07-17 12:24:19.959 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:19.959 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:19.959 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:19.961 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:19.964 +05:30 [INF] GET /api/customers responded 200 in 6ms
+2026-07-17 12:24:19.964 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:19.965 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:19.967 +05:30 [INF] GET /api/materials responded 200 in 10ms
+2026-07-17 12:24:19.969 +05:30 [INF] GET /api/skus responded 200 in 11ms
+2026-07-17 12:24:20.126 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:20.126 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:20.126 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:20.128 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:20.131 +05:30 [INF] GET /api/customers responded 200 in 6ms
+2026-07-17 12:24:20.131 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:20.132 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:20.135 +05:30 [INF] GET /api/materials responded 200 in 9ms
+2026-07-17 12:24:20.136 +05:30 [INF] GET /api/skus responded 200 in 10ms
+2026-07-17 12:24:20.312 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:20.312 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:20.312 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:20.315 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:20.319 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:20.319 +05:30 [INF] GET /api/customers responded 200 in 8ms
+2026-07-17 12:24:20.320 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:20.320 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-17 12:24:20.323 +05:30 [INF] GET /api/materials responded 200 in 12ms
+2026-07-17 12:24:20.484 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:20.484 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:20.484 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:20.486 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:20.489 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:20.490 +05:30 [INF] GET /api/customers responded 200 in 7ms
+2026-07-17 12:24:20.491 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:20.492 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-07-17 12:24:20.495 +05:30 [INF] GET /api/materials responded 200 in 12ms
+2026-07-17 12:24:20.685 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:20.685 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:20.685 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:20.691 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:20.691 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:20.692 +05:30 [INF] GET /api/customers responded 200 in 7ms
+2026-07-17 12:24:20.692 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:20.694 +05:30 [INF] GET /api/materials responded 200 in 9ms
+2026-07-17 12:24:20.698 +05:30 [INF] GET /api/skus responded 200 in 13ms
+2026-07-17 12:24:20.853 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:20.853 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:20.853 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:20.855 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:20.858 +05:30 [INF] GET /api/customers responded 200 in 6ms
+2026-07-17 12:24:20.858 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:20.859 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:20.861 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-07-17 12:24:20.862 +05:30 [INF] GET /api/materials responded 200 in 10ms
+2026-07-17 12:24:21.055 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:24:21.055 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:24:21.055 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:24:21.057 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:24:21.060 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:24:21.060 +05:30 [INF] GET /api/customers responded 200 in 5ms
+2026-07-17 12:24:21.061 +05:30 [INF] GET /api/skus responded 200 in 6ms
+2026-07-17 12:24:21.062 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:24:21.066 +05:30 [INF] GET /api/materials responded 200 in 11ms
+2026-07-17 12:24:24.994 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 12:24:25.006 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:24:25.042 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:24:25.044 +05:30 [INF] POST /api/quotations/calculate responded 200 in 39ms
+2026-07-17 12:24:25.992 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:24:25.998 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:24:26.000 +05:30 [INF] POST /api/quotations/calculate responded 200 in 9ms
+2026-07-17 12:26:01.550 +05:30 [INF] OPTIONS /api/skus responded 204 in 27ms
+2026-07-17 12:26:01.567 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:26:01.608 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:26:01.610 +05:30 [INF] GET /api/skus responded 200 in 47ms
+2026-07-17 12:26:01.620 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 12:26:01.626 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:26:01.662 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:26:01.665 +05:30 [INF] POST /api/quotations/calculate responded 200 in 40ms
+2026-07-17 12:26:01.723 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:26:01.729 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:26:01.733 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:26:01.733 +05:30 [INF] GET /api/skus responded 200 in 5ms
+2026-07-17 12:26:01.738 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:26:01.740 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:26:01.741 +05:30 [INF] POST /api/quotations/calculate responded 200 in 3ms
+2026-07-17 12:26:02.584 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:26:02.589 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:26:02.592 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:26:02.592 +05:30 [INF] GET /api/skus responded 200 in 4ms
+2026-07-17 12:26:02.597 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:26:02.601 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:26:02.602 +05:30 [INF] POST /api/quotations/calculate responded 200 in 5ms
+2026-07-17 12:26:05.144 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:26:05.147 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:26:05.149 +05:30 [INF] POST /api/quotations/calculate responded 200 in 6ms
+2026-07-17 12:26:08.775 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 12:26:08.788 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:26:08.792 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:26:08.794 +05:30 [INF] POST /api/quotations/calculate responded 200 in 7ms
+2026-07-17 12:26:11.072 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:26:11.075 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:26:11.077 +05:30 [INF] POST /api/quotations/calculate responded 200 in 6ms
+2026-07-17 12:26:13.456 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-17 12:26:13.465 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-17 12:26:13.480 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-17 12:26:13.481 +05:30 [INF] GET /api/quotations responded 200 in 17ms
+2026-07-17 12:26:18.622 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-17 12:26:18.623 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:26:18.622 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-17 12:26:18.622 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 12:26:18.641 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-17 12:26:18.641 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:26:18.644 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:26:18.647 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-17 12:26:18.648 +05:30 [INF] GET /api/categories responded 200 in 13ms
+2026-07-17 12:26:18.650 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-17 12:26:18.652 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-17 12:26:18.653 +05:30 [INF] GET /api/categories responded 200 in 3ms
+2026-07-17 12:26:18.660 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:26:18.662 +05:30 [INF] GET /api/materials responded 200 in 19ms
+2026-07-17 12:26:18.670 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:26:18.671 +05:30 [INF] GET /api/skus responded 200 in 30ms
+2026-07-17 12:26:24.638 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 12:26:24.638 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:26:24.638 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 12:26:24.651 +05:30 [INF] GET /api/materials responded 401 in 0ms
+2026-07-17 12:26:24.651 +05:30 [INF] GET /api/skus responded 401 in 0ms
+2026-07-17 12:26:24.651 +05:30 [INF] GET /api/customers responded 401 in 0ms
+2026-07-17 12:26:24.656 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-17 12:26:24.661 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-17 12:26:24.716 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-17 12:26:24.717 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 56ms
+2026-07-17 12:26:24.725 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:26:24.725 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:26:24.725 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:26:24.728 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:26:24.729 +05:30 [INF] GET /api/customers responded 200 in 7ms
+2026-07-17 12:26:24.740 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:26:24.741 +05:30 [INF] GET /api/materials responded 200 in 19ms
+2026-07-17 12:26:24.753 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:26:24.754 +05:30 [INF] GET /api/skus responded 200 in 32ms
+2026-07-17 12:26:24.759 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 12:26:24.764 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:26:24.798 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:26:24.801 +05:30 [INF] POST /api/quotations/calculate responded 200 in 38ms
+2026-07-17 12:26:28.922 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:26:28.928 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:26:28.930 +05:30 [INF] GET /api/materials responded 200 in 10ms
+2026-07-17 12:26:30.784 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-07-17 12:26:30.784 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:26:30.793 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-17 12:26:30.795 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:26:30.797 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-17 12:26:30.800 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 12:26:30.802 +05:30 [INF] GET /api/categories responded 200 in 9ms
+2026-07-17 12:26:30.802 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:26:30.804 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-17 12:26:30.832 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:26:30.833 +05:30 [INF] GET /api/skus responded 200 in 39ms
+2026-07-17 12:26:30.836 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:26:30.836 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-17 12:26:30.839 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:26:30.841 +05:30 [INF] GET /api/categories responded 200 in 38ms
+2026-07-17 12:26:30.842 +05:30 [INF] GET /api/materials responded 200 in 11ms
+2026-07-17 12:26:30.865 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-07-17 12:26:30.842 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:26:30.872 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-07-17 12:26:30.873 +05:30 [INF] GET /api/skus responded 200 in 38ms
+2026-07-17 12:26:30.874 +05:30 [INF] GET /api/categories responded 200 in 31ms
+2026-07-17 12:26:37.600 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-07-17 12:26:37.600 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-07-17 12:26:37.600 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-07-17 12:26:37.609 +05:30 [INF] Handling GetCustomersQuery
+2026-07-17 12:26:37.611 +05:30 [INF] Handling GetMaterialsQuery
+2026-07-17 12:26:37.614 +05:30 [INF] Handled GetCustomersQuery
+2026-07-17 12:26:37.615 +05:30 [INF] Handling GetSkusQuery
+2026-07-17 12:26:37.618 +05:30 [INF] GET /api/customers responded 200 in 9ms
+2026-07-17 12:26:37.618 +05:30 [INF] Handled GetMaterialsQuery
+2026-07-17 12:26:37.621 +05:30 [INF] Handled GetSkusQuery
+2026-07-17 12:26:37.622 +05:30 [INF] GET /api/materials responded 200 in 11ms
+2026-07-17 12:26:37.623 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-07-17 12:26:37.629 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 12:26:37.635 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:26:37.637 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:26:37.638 +05:30 [INF] POST /api/quotations/calculate responded 200 in 4ms
+2026-07-17 12:26:46.454 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-07-17 12:26:46.465 +05:30 [INF] Handling CalculateQuotationCommand
+2026-07-17 12:26:46.469 +05:30 [INF] Handled CalculateQuotationCommand
+2026-07-17 12:26:46.470 +05:30 [INF] POST /api/quotations/calculate responded 200 in 7ms
