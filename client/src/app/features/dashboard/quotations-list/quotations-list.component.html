@@ -2,8 +2,8 @@
     <div class="quotations-container animated-view">
       <div class="header-section" style="display: flex; justify-content: space-between; align-items: center;">
         <div>
-          <h1>Saved Quotations History</h1>
-          <p class="subtitle">View and audit previously generated quotation snapshots</p>
+          <h1>{{ draftOnly ? 'Draft Quotations' : (pendingOnly ? 'Pending Approvals' : 'Saved Quotations History') }}</h1>
+          <p class="subtitle">{{ draftOnly ? 'View and edit your draft quotations' : 'View and audit previously generated quotation snapshots' }}</p>
         </div>
         <mat-form-field appearance="outline" class="search-field" style="width: 350px;">
           <mat-label>Search Quotations</mat-label>
@@ -36,6 +36,7 @@
               <mat-icon *ngIf="(!canApprove && element.approvalStatus === 0)" style="color: orange; font-size: 16px; margin-left: 5px; vertical-align: middle;" title="Pending Approval">pending_actions</mat-icon>
               <mat-icon *ngIf="element.approvalStatus === 1" style="color: green; font-size: 16px; margin-left: 5px; vertical-align: middle;" title="Approved">check_circle</mat-icon>
               <mat-icon *ngIf="element.approvalStatus === 2" style="color: red; font-size: 16px; margin-left: 5px; vertical-align: middle;" title="Rejected">cancel</mat-icon>
+              <mat-icon *ngIf="element.approvalStatus === 3" style="color: gray; font-size: 16px; margin-left: 5px; vertical-align: middle;" title="Draft">edit_document</mat-icon>
             </td>
           </ng-container>
 

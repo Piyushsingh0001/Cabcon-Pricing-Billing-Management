@@ -45,9 +45,9 @@
     <div class="client-details">
       <h3>Customer Details</h3>
       <div class="party-name"><strong>Party Name:</strong> {{data.partyName}}</div>
-      <div class="contactNumber"><strong>Contact:</strong> {{data.customerDetails.contactNumber}}</div>
-      <div class="gstNumber"><strong>GST:</strong> {{data.customerDetails.gstNumber}}</div>
-      <div class="address"><strong>Address:</strong> {{data.customerDetails.address}}</div>
+      <div class="contactNumber"><strong>Contact:</strong> {{data.customerDetails?.contactNumber || 'N/A'}}</div>
+      <div class="gstNumber"><strong>GST:</strong> {{data.customerDetails?.gstNumber || 'N/A'}}</div>
+      <div class="address"><strong>Address:</strong> {{data.customerDetails?.address || 'N/A'}}</div>
     </div>
 
     <div class="table-container">
@@ -122,7 +122,10 @@
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-flat-button color="primary" (click)="onSend()">
+  <button mat-stroked-button color="primary" (click)="onSaveDraft()" style="margin-left: 8px;">
+    Save as Draft
+  </button>
+  <button mat-flat-button color="primary" (click)="onSend()" style="margin-left: 8px;">
     {{ isSuperAdmin ? 'Save Quotation' : 'Send for Approvals' }}
   </button>
 </mat-dialog-actions>

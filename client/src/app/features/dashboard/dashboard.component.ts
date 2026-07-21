@@ -126,19 +126,13 @@ export class DashboardComponent implements OnInit {
         quote.lines.forEach(line => {
           this.pricingService.selectedSkuIds.add(line.skuId);
           this.overridesMap.set(line.skuId, {
-            rowOfferOverride: line.offerExGst
+            rowOfferOverride: line.offerExGst,
+            rowQuantity: line.quantity
           });
         });
 
         this.loadCustomers();
-        
-        // This will load SKUs and recalculate based on the overrides map we just set
-        this.pricingService.getSkus(undefined, undefined, undefined, false, 1, 100).subscribe({
-          next: (res) => {
-            this.skus = res.items;
-            this.recalculate();
-          }
-        });
+        this.loadSkusAndRecalculate();
       },
       error: () => {
         this.snackBar.open('Failed to load quotation for edit.', 'Close', { duration: 3000 });
@@ -158,6 +152,12 @@ export class DashboardComponent implements OnInit {
       next: (res) => {
         this.customers = res || [];
         this.filteredCustomers = this.customers;
+        if (this.partyName) {
+          const match = this.customers.find(c => c.name.toLowerCase() === this.partyName.toLowerCase());
+          if (match) {
+            this.selectedCustomer = match;
+          }
+        }
       }
     });
   }
@@ -550,12 +550,14 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    previewRef.afterClosed().subscribe(confirmed => {
-      if (confirmed) {
+    previewRef.afterClosed().subscribe(result => {
+      if (result) {
+        const isDraft = result.action === 'draft';
         const payload = {
           id: this.editId || 0,
           partyName: this.partyName,
           validityDays: this.validityDays,
+          isDraft: isDraft,
           lines: this.rows.map(r => ({
             skuId: r.skuId,
             rmCostSnapshot: r.rmCost,
@@ -571,7 +573,7 @@ export class DashboardComponent implements OnInit {
 
         saveObs.subscribe({
           next: (res) => {
-            this.snackBar.open(`Quotation generated: ${res.quotationNumber}`, 'Close', { duration: 5000 });
+            this.snackBar.open(`Quotation ${isDraft ? 'draft saved' : 'generated'}: ${res.quotationNumber}`, 'Close', { duration: 5000 });
 
             // Clear state and draft
             this.overridesMap.clear();

@@ -50,9 +50,11 @@ export class QuotationsListComponent implements OnInit {
   public canDelete = this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
   public canModify = this.authService.hasPermission('Quotation.Modify');
   public pendingOnly = false;
+  public draftOnly = false;
 
   ngOnInit() {
     this.pendingOnly = this.route.snapshot.data['pendingOnly'] === true;
+    this.draftOnly = this.route.snapshot.data['draftOnly'] === true;
     // Custom filter predicate to match formatted date and selected columns
     this.dataSource.filterPredicate = (data: QuotationSummary, filter: string) => {
       const searchStr = filter.toLowerCase();
@@ -77,8 +79,10 @@ private loadQuotations() {
       let data = res ?? [];
       if (this.pendingOnly) {
         data = data.filter(q => q.approvalStatus === 0);
+      } else if (this.draftOnly) {
+        data = data.filter(q => q.approvalStatus === 3);
       } else {
-        data = data.filter(q => q.approvalStatus !== 0);
+        data = data.filter(q => q.approvalStatus !== 0 && q.approvalStatus !== 3);
       }
       this.dataSource.data = data;
 

@@ -42,6 +42,10 @@ export class QuotationPreviewDialogComponent {
   ) {}
 
   public onSend() {
-    this.dialogRef.close(true);
+    this.dialogRef.close({ action: 'send' });
+  }
+
+  public onSaveDraft() {
+    this.dialogRef.close({ action: 'draft' });
   }
 }

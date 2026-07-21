@@ -74,6 +74,10 @@
             <mat-icon matListItemIcon>groups</mat-icon>
             <span matListItemTitle>Customer Master</span>
           </a>
+          <a mat-list-item routerLink="/draft-quotations" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
+            <mat-icon matListItemIcon>edit_document</mat-icon>
+            <span matListItemTitle>Draft Quotations</span>
+          </a>
           <a mat-list-item routerLink="/quotations" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
             <mat-icon matListItemIcon>receipt</mat-icon>
             <span matListItemTitle>Quotation History</span>

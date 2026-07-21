@@ -342,32 +342,34 @@ export class PricingService {
     return this.http.post<CalculatedQuotationItem[]>(`${this.apiBase}/quotations/calculate`, payload);
   }
 
-  public saveQuotation(payload: {
-    partyName: string;
-    validityDays: number;
-    lines: {
-      skuId: number;
-      rmCostSnapshot: number;
-      mfgCostSnapshot: number;
-      offerExGst: number;
-      quantity: number;
-    }[];
-  }): Observable<{ id: number; quotationNumber: string }> {
+    public saveQuotation(payload: {
+      partyName: string;
+      validityDays: number;
+      isDraft?: boolean;
+      lines: {
+        skuId: number;
+        rmCostSnapshot: number;
+        mfgCostSnapshot: number;
+        offerExGst: number;
+        quantity: number;
+      }[];
+    }): Observable<{ id: number; quotationNumber: string }> {
     return this.http.post<{ id: number; quotationNumber: string }>(`${this.apiBase}/quotations`, payload);
   }
 
-  public updateQuotation(id: number, payload: {
-    id: number;
-    partyName: string;
-    validityDays: number;
-    lines: {
-      skuId: number;
-      rmCostSnapshot: number;
-      mfgCostSnapshot: number;
-      offerExGst: number;
-      quantity: number;
-    }[];
-  }): Observable<{ id: number; quotationNumber: string }> {
+    public updateQuotation(id: number, payload: {
+      id: number;
+      partyName: string;
+      validityDays: number;
+      isDraft?: boolean;
+      lines: {
+        skuId: number;
+        rmCostSnapshot: number;
+        mfgCostSnapshot: number;
+        offerExGst: number;
+        quantity: number;
+      }[];
+    }): Observable<{ id: number; quotationNumber: string }> {
     return this.http.put<{ id: number; quotationNumber: string }>(`${this.apiBase}/quotations/${id}`, payload);
   }
 

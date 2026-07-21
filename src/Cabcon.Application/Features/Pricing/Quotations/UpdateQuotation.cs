@@ -25,6 +25,7 @@ public record UpdateQuotationCommand : IRequest<Result<UpdateQuotationResponse>>
     public int Id { get; init; }
     public string PartyName { get; init; } = string.Empty;
     public int ValidityDays { get; init; }
+    public bool IsDraft { get; init; }
 
     public List<UpdateQuotationLineInput> Lines { get; init; } = new();
 }
@@ -115,7 +116,11 @@ public class UpdateQuotationCommandHandler : IRequestHandler<UpdateQuotationComm
         quotation.TotalGross = totalGross;
         
         bool isSuperAdmin = _currentUser.Roles.Contains("Super Admin");
-        if (!isSuperAdmin)
+        if (request.IsDraft)
+        {
+            quotation.ApprovalStatus = ApprovalStatus.Draft;
+        }
+        else if (!isSuperAdmin)
         {
             quotation.ApprovalStatus = ApprovalStatus.Pending;
         }

@@ -1,6 +1,6 @@
 <div class="print-header-actions" mat-dialog-title>
       <h2>Quotation Details: {{quote.quotationNumber}}</h2>
-      <button style="width: 182px; white-space: nowrap;" mat-stroked-button color="primary" (click)="printQuote()" [disabled]="quote.approvalStatus === 0 || quote.approvalStatus === 2" [title]="quote.approvalStatus === 0 ? 'Cannot print pending quotation' : (quote.approvalStatus === 2 ? 'Cannot print rejected quotation' : '')">
+      <button style="width: 182px; white-space: nowrap;" mat-stroked-button color="primary" (click)="printQuote()" [disabled]="quote.approvalStatus === 0 || quote.approvalStatus === 2 || quote.approvalStatus === 3" [title]="quote.approvalStatus === 3 ? 'Cannot print draft quotation' : (quote.approvalStatus === 0 ? 'Cannot print pending quotation' : (quote.approvalStatus === 2 ? 'Cannot print rejected quotation' : ''))">
         <mat-icon>print</mat-icon> Print Sheet
       </button>
       <ng-container *ngIf="canApprove && quote.approvalStatus === 0">

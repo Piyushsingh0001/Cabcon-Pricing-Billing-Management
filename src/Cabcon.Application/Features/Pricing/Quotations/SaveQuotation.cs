@@ -24,6 +24,7 @@ public record SaveQuotationCommand : IRequest<Result<SaveQuotationResponse>>
 {
     public string PartyName { get; init; } = string.Empty;
     public int ValidityDays { get; init; }
+    public bool IsDraft { get; init; }
 
     public List<SaveQuotationLineInput> Lines { get; init; } = new();
 }
@@ -99,7 +100,7 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
             TotalExGst = totalExGst,
             TotalGst = totalGst,
             TotalGross = totalGross,
-            ApprovalStatus = _currentUser.Roles.Contains("Super Admin") ? ApprovalStatus.Approved : ApprovalStatus.Pending
+            ApprovalStatus = request.IsDraft ? ApprovalStatus.Draft : (_currentUser.Roles.Contains("Super Admin") ? ApprovalStatus.Approved : ApprovalStatus.Pending)
         };
 
         int order = 0;
