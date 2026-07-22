@@ -124,6 +124,19 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
         }
 
         await quotationRepo.AddAsync(quotation, cancellationToken);
+        
+        if (!request.IsDraft)
+        {
+            var trackingRepo = _unitOfWork.Repository<QuotationTracking>();
+            await trackingRepo.AddAsync(new QuotationTracking
+            {
+                Quotation = quotation,
+                QuotationNumber = quotationNumber,
+                Action = "Submitted for Approval",
+                Details = $"Quotation generated and sent for approval by {_currentUser.UserName}."
+            }, cancellationToken);
+        }
+        
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result<SaveQuotationResponse>.Success(new SaveQuotationResponse(quotation.Id, quotationNumber));

@@ -397,6 +397,14 @@ export class PricingService {
     return this.http.post<number>(`${this.apiBase}/quotations/${id}/approve`, status);
   }
 
+  public getTrackingSummaries(): Observable<TrackingSummaryDto[]> {
+    return this.http.get<TrackingSummaryDto[]>(`${this.apiBase}/quotations/tracking/summaries`);
+  }
+
+  public getTrackingDetails(id: number): Observable<TrackingLogDto[]> {
+    return this.http.get<TrackingLogDto[]>(`${this.apiBase}/quotations/${id}/tracking`);
+  }
+
   // --- Admin User / Role management ---
   public getUsers(): Observable<UserDto[]> {
     return this.http.get<UserDto[]>(`${this.apiBase}/users`);
@@ -459,4 +467,22 @@ export interface PermissionDto {
   code: string;
   name: string;
   module: string;
+}
+
+export interface TrackingSummaryDto {
+  quotationId: number;
+  quotationNumber: string;
+  partyName: string;
+  createdBy: string;
+  sentForApprovalBy: string;
+  approvedBy: string;
+  status: string;
+  createdDate: string;
+}
+
+export interface TrackingLogDto {
+  action: string;
+  details: string;
+  performedBy: string;
+  timestamp: string;
 }

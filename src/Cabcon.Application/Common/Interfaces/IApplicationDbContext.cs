@@ -28,7 +28,10 @@ public interface IApplicationDbContext
     DbSet<EmailVerificationToken> EmailVerificationTokens { get; }
     DbSet<LoginHistory> LoginHistory { get; }
     DbSet<Customer> Customers { get; }
+    DbSet<Quotation> Quotations { get; }
+    DbSet<QuotationLine> QuotationLines { get; }
     DbSet<MaterialPriceHistory> MaterialPriceHistory { get; }
+    DbSet<QuotationTracking> QuotationTrackings { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

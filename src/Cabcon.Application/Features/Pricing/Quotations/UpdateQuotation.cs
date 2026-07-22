@@ -152,6 +152,19 @@ public class UpdateQuotationCommandHandler : IRequestHandler<UpdateQuotationComm
         }
 
         quotationRepo.Update(quotation);
+        
+        if (!request.IsDraft)
+        {
+            var trackingRepo = _unitOfWork.Repository<QuotationTracking>();
+            await trackingRepo.AddAsync(new QuotationTracking
+            {
+                Quotation = quotation,
+                QuotationNumber = quotation.QuotationNumber,
+                Action = "Revised & Submitted for Approval",
+                Details = $"Quotation revised and sent for approval by {_currentUser.UserName}."
+            }, cancellationToken);
+        }
+        
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result<UpdateQuotationResponse>.Success(new UpdateQuotationResponse(quotation.Id, quotation.QuotationNumber));

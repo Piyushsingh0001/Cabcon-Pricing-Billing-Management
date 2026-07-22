@@ -24,5 +24,6 @@ public class Quotation : BaseEntity
 
     public bool IsActive { get; set; } = true;
 
-    public ICollection<QuotationLine> Lines { get; set; } = new List<QuotationLine>();
+    public ICollection<QuotationLine> Lines { get; } = new List<QuotationLine>();
+    public ICollection<QuotationTracking> QuotationTrackings { get; } = new List<QuotationTracking>();
 }

@@ -58,6 +58,22 @@ public class QuotationsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("tracking/summaries")]
+    [HasPermission(AppPermissions.Quotation.View)]
+    public async Task<IActionResult> GetTrackingSummaries(CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetTrackingSummariesQuery(), ct);
+        return Ok(result.Data);
+    }
+
+    [HttpGet("{id}/tracking")]
+    [HasPermission(AppPermissions.Quotation.View)]
+    public async Task<IActionResult> GetTrackingDetails(int id, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetTrackingDetailsQuery(id), ct);
+        return Ok(result.Data);
+    }
+
     [HttpGet("{id}/pdf")]
     [HasPermission(AppPermissions.Quotation.View)]
     public async Task<IActionResult> DownloadPdf(int id, CancellationToken ct)

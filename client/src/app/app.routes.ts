@@ -33,6 +33,11 @@ export const routes: Routes = [
     data: { draftOnly: true }
   },
   {
+    path: 'tracking',
+    loadComponent: () => import('./features/dashboard/tracking-list/tracking-list.component').then(m => m.TrackingListComponent),
+    canActivate: [authGuard, permissionGuard('Quotation.View')]
+  },
+  {
     path: 'customers',
     loadComponent: () => import('./features/dashboard/customers/customers.component').then(m => m.CustomersComponent),
     canActivate: [authGuard, permissionGuard('Quotation.View')]

@@ -55,6 +55,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
     // Billing
     public DbSet<Quotation> Quotations => Set<Quotation>();
     public DbSet<QuotationLine> QuotationLines => Set<QuotationLine>();
+    public DbSet<QuotationTracking> QuotationTrackings => Set<QuotationTracking>();
     public DbSet<Customer> Customers => Set<Customer>();
 
     // Settings
