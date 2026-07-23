@@ -46,6 +46,7 @@ public static class AppPermissions
         public const string View = "Quotation.View";
         public const string Generate = "Quotation.Generate";
         public const string Modify = "Quotation.Modify";
+        public const string State = "Quotation.State";
     }
 
     public static class Settings

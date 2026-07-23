@@ -70,6 +70,40 @@
           </td>
         </ng-container>
 
+        <!-- Quotation State Column -->
+        <ng-container matColumnDef="quotationState">
+          <th mat-header-cell *matHeaderCellDef> Quotation State </th>
+          <td mat-cell *matCellDef="let row">
+            <ng-container *ngIf="row.status === 'Approved'; else notApproved">
+              <ng-container *ngIf="hasStatePermission() && !isStateLocked(row.quotationState); else staticState">
+                <mat-select 
+                  [value]="row.quotationState" 
+                  (selectionChange)="onStateChange(row, $event.value)"
+                  class="glass-input" 
+                  [ngClass]="getStateClass(row.quotationState)"
+                  style="width: 140px; font-size: 0.85rem;"
+                  placeholder="Set State">
+                  <mat-option *ngFor="let state of quotationStates" [value]="state.value">
+                    {{ state.label }}
+                  </mat-option>
+                </mat-select>
+              </ng-container>
+              <ng-template #staticState>
+                <span class="state-text" [ngClass]="getStateClass(row.quotationState)" *ngIf="row.quotationState">
+                  {{ row.quotationState === QuotationState.SentToCustomer ? 'Sent to Customer' : 
+                     row.quotationState === QuotationState.Accepted ? 'Accepted' : 
+                     row.quotationState === QuotationState.Rejected ? 'Rejected' : 
+                     row.quotationState === QuotationState.RequestForModification ? 'Request for modification' : '-' }}
+                </span>
+                <span class="text-secondary" *ngIf="!row.quotationState">-</span>
+              </ng-template>
+            </ng-container>
+            <ng-template #notApproved>
+              <span class="text-secondary">-</span>
+            </ng-template>
+          </td>
+        </ng-container>
+
         <!-- Creation Date Column -->
         <ng-container matColumnDef="createdDate">
           <th mat-header-cell *matHeaderCellDef> Creation Date </th>
@@ -86,6 +120,14 @@
               matTooltip="View Activity Timeline"
               color="primary">
               <mat-icon>history</mat-icon>
+            </button>
+            <button 
+              *ngIf="row.quotationState === QuotationState.RequestForModification"
+              mat-icon-button 
+              (click)="editQuotation(row)" 
+              matTooltip="Edit Quotation"
+              color="accent">
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         </ng-container>

@@ -78,7 +78,7 @@
             <mat-icon matListItemIcon>edit_document</mat-icon>
             <span matListItemTitle>Draft Quotations</span>
           </a>
-          <a mat-list-item routerLink="/tracking" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
+          <a mat-list-item routerLink="/tracking" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View') && hasPermission('Quotation.State')" >
             <mat-icon matListItemIcon>track_changes</mat-icon>
             <span matListItemTitle>Quotations Tracking</span>
           </a>

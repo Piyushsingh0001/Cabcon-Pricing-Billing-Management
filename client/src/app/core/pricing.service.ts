@@ -12,6 +12,13 @@ export interface PaginatedResult<T> {
   hasNextPage: boolean;
 }
 
+export enum QuotationState {
+  SentToCustomer = 1,
+  Accepted = 2,
+  Rejected = 3,
+  RequestForModification = 4
+}
+
 export interface Category {
   id: number;
   name: string;
@@ -405,6 +412,10 @@ export class PricingService {
     return this.http.get<TrackingLogDto[]>(`${this.apiBase}/quotations/${id}/tracking`);
   }
 
+  public changeQuotationState(id: number, state: number): Observable<any> {
+    return this.http.post<any>(`${this.apiBase}/quotations/${id}/state`, state);
+  }
+
   // --- Admin User / Role management ---
   public getUsers(): Observable<UserDto[]> {
     return this.http.get<UserDto[]>(`${this.apiBase}/users`);
@@ -477,6 +488,7 @@ export interface TrackingSummaryDto {
   sentForApprovalBy: string;
   approvedBy: string;
   status: string;
+  quotationState: number | null;
   createdDate: string;
 }
 

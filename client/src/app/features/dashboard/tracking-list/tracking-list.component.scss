@@ -155,6 +155,48 @@
   }
 }
 
+.state-text {
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  
+  &::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  &.state-sent {
+    color: #3b82f6;
+    &::before { background: #3b82f6; }
+  }
+
+  &.state-accepted {
+    color: #059669;
+    &::before { background: #059669; }
+  }
+
+  &.state-rejected {
+    color: #dc2626;
+    &::before { background: #dc2626; }
+  }
+
+  &.state-request {
+    color: #d97706;
+    &::before { background: #d97706; }
+  }
+}
+
+::ng-deep {
+  .mat-mdc-select.state-sent .mat-mdc-select-value-text { color: #3b82f6 !important; font-weight: 600; }
+  .mat-mdc-select.state-accepted .mat-mdc-select-value-text { color: #059669 !important; font-weight: 600; }
+  .mat-mdc-select.state-rejected .mat-mdc-select-value-text { color: #dc2626 !important; font-weight: 600; }
+  .mat-mdc-select.state-request .mat-mdc-select-value-text { color: #d97706 !important; font-weight: 600; }
+}
+
 .loading-state,
 .empty-state {
   display: flex;

@@ -23,6 +23,8 @@ public class Quotation : BaseEntity
     public ApprovalStatus ApprovalStatus { get; set; } = ApprovalStatus.Pending;
 
     public bool IsActive { get; set; } = true;
+    
+    public QuotationState? QuotationState { get; set; }
 
     public ICollection<QuotationLine> Lines { get; } = new List<QuotationLine>();
     public ICollection<QuotationTracking> QuotationTrackings { get; } = new List<QuotationTracking>();

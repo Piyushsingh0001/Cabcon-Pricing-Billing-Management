@@ -98,6 +98,14 @@ public class QuotationsController : ControllerBase
         return result.Succeeded ? Ok(result.Data) : BadRequest(result.Errors);
     }
 
+    [HttpPost("{id}/state")]
+    [HasPermission(AppPermissions.Quotation.State)]
+    public async Task<IActionResult> ChangeState(int id, [FromBody] Cabcon.Domain.Enums.QuotationState state, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new ChangeQuotationStateCommand(id, state), ct);
+        return result.Success ? Ok(new { result.Message }) : BadRequest(result.Message);
+    }
+
     [HttpDelete("{id}")]
     [HasPermission(AppPermissions.Quotation.Generate)]
     public async Task<IActionResult> DeleteQuotation(int id, CancellationToken ct)

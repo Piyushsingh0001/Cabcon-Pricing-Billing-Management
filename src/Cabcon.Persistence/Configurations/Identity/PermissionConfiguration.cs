@@ -41,7 +41,8 @@ public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
             new Permission { Id = 18, Code = "Quotation.Generate", Module = "Quotation", CreatedDate = seedDate },
             new Permission { Id = 19, Code = "Settings.View", Module = "Settings", CreatedDate = seedDate },
             new Permission { Id = 20, Code = "Settings.Update", Module = "Settings", CreatedDate = seedDate },
-            new Permission { Id = 21, Code = "Quotation.Modify", Module = "Quotation", CreatedDate = seedDate }
+            new Permission { Id = 21, Code = "Quotation.Modify", Module = "Quotation", CreatedDate = seedDate },
+            new Permission { Id = 22, Code = "Quotation.State", Module = "Quotation", CreatedDate = seedDate }
         );
     }
 }

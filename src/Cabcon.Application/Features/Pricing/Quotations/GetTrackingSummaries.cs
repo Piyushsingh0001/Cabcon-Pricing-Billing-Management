@@ -19,6 +19,7 @@ public record TrackingSummaryDto
     public string SentForApprovalBy { get; init; } = string.Empty;
     public string ApprovedBy { get; init; } = string.Empty;
     public string Status { get; init; } = string.Empty;
+    public int? QuotationState { get; init; }
     public System.DateTime CreatedDate { get; init; }
 }
 
@@ -72,6 +73,7 @@ public class GetTrackingSummariesQueryHandler : IRequestHandler<GetTrackingSumma
                 SentForApprovalBy = sentTrack?.CreatedBy ?? "-",
                 ApprovedBy = approveTrack?.CreatedBy ?? "-",
                 Status = q.ApprovalStatus.ToString(),
+                QuotationState = (int?)q.QuotationState,
                 CreatedDate = q.CreatedDate
             };
         }).ToList();
