@@ -25,4 +25,4 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Publish Web API
-        run: dotnet publish .\src\Cabcon.WebApi\Cabcon.WebApi.csproj -c Release -o C:\Deployments\API
+        run: dotnet publish .\src\Cabcon.WebApi\Cabcon.SKUQuoteApi.csproj -c Release -o C:\Deployments\API
