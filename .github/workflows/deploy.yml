@@ -6,23 +6,105 @@ on:
       - main
 
 jobs:
-  build-backend:
+  build-and-publish:
+    name: Build Backend & Frontend
     runs-on: self-hosted
 
     steps:
+      # =====================================
+      # Checkout Repository
+      # =====================================
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # =====================================
+      # Setup .NET
+      # =====================================
       - name: Setup .NET 9
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.x
 
+      # =====================================
+      # Restore NuGet Packages
+      # =====================================
       - name: Restore NuGet Packages
         run: dotnet restore
 
+      # =====================================
+      # Build Solution
+      # =====================================
       - name: Build Solution
         run: dotnet build --configuration Release --no-restore
 
+      # =====================================
+      # Publish Web API
+      # =====================================
       - name: Publish Web API
-        run: dotnet publish .\src\Cabcon.WebApi\Cabcon.SKUQuoteApi.csproj -c Release -o C:\Deployments\API
+        run: |
+          dotnet publish .\src\Cabcon.WebApi\Cabcon.SKUQuoteApi.csproj `
+            -c Release `
+            -o C:\Deployments\API
+
+      # =====================================
+      # Setup Node.js
+      # =====================================
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      # =====================================
+      # Install Angular Packages
+      # =====================================
+      - name: Install Angular Dependencies
+        working-directory: ./client
+        run: npm ci
+
+      # =====================================
+      # Build Angular
+      # =====================================
+      - name: Build Angular
+        working-directory: ./client
+        run: npm run build
+
+      # =====================================
+      # Copy Angular Build
+      # =====================================
+      - name: Copy Angular Build
+        shell: powershell
+        run: |
+          $destination = "C:\Deployments\Client"
+
+          if (Test-Path $destination) {
+              Remove-Item $destination -Recurse -Force
+          }
+
+          New-Item -ItemType Directory -Path $destination -Force | Out-Null
+
+          Copy-Item ".\client\dist\cabcon-client\*" `
+              $destination `
+              -Recurse `
+              -Force
+
+      # =====================================
+      # Verify Output
+      # =====================================
+      - name: Verify Published Files
+        shell: powershell
+        run: |
+          Write-Host ""
+          Write-Host "========== API =========="
+          Get-ChildItem C:\Deployments\API
+
+          Write-Host ""
+          Write-Host "========== Angular =========="
+          Get-ChildItem C:\Deployments\Client
+
+      # =====================================
+      # Success
+      # =====================================
+      - name: Build Complete
+        run: echo "Backend and Frontend built successfully."
