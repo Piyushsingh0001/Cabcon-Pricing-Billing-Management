@@ -1,105 +1,74 @@
-# Cabcon Pricing & Billing Management — Solution Skeleton
+# Cabcon Pricing & Billing Management
 
-Clean Architecture solution skeleton for the enterprise conversion of the
-`CabconPricingDashboard.html` reference application.
+Cabcon Pricing & Billing Management is an enterprise-grade web application tailored for dynamic pricing, SKU configuration, and quotation generation. The project uses a **Clean Architecture .NET 9 Web API** backend and a modern **Angular 18** frontend featuring glassmorphism and animated interfaces.
 
-## Projects
+## Project Structure & Architecture
 
-| Project | Layer | Depends on |
+The backend is strictly divided into functional layers to ensure separation of concerns:
+
+| Project | Layer | Responsibility |
 |---|---|---|
-| `Cabcon.Domain` | Entities, enums, pure domain services (pricing engine) | — |
-| `Cabcon.Shared` | Cross-cutting constants/exceptions/Result wrapper | — |
-| `Cabcon.Application` | CQRS commands/queries, DTOs, validators, AutoMapper | Domain, Shared |
-| `Cabcon.Persistence` | EF Core DbContext, configurations, repositories, migrations | Application, Domain |
-| `Cabcon.Infrastructure` | JWT, password hashing, Serilog sinks, PDF/print reporting | Application, Domain |
-| `Cabcon.WebApi` | Controllers, middleware, Swagger, composition root | all of the above |
-| `Cabcon.Domain.Tests` / `Cabcon.Application.Tests` | xUnit test projects | respective layer |
+| `Cabcon.Domain` | Core | Entities, Enums, Pure domain logic, Pricing calculations (`PricingCalculationService`). Has no external dependencies. |
+| `Cabcon.Shared` | Common | Cross-cutting constants, permissions, and Result wrappers. |
+| `Cabcon.Application` | Application | CQRS commands/queries using MediatR, DTOs, AutoMapper, FluentValidation. |
+| `Cabcon.Persistence` | Infrastructure | EF Core `CabconDbContext`, Entity Configurations, Repositories, Data Seeding, and EF Migrations. |
+| `Cabcon.Infrastructure` | Infrastructure | JWT Token Generation, Authentication services, CurrentUser extraction, and PDF rendering tools. |
+| `Cabcon.WebApi` | Presentation | REST API Controllers, Middleware (Exception handling, Logging, Auth), Swagger, and Dependency Injection composition root. |
+| `Cabcon.Client` | Frontend | Angular 18 Single Page Application. Features dynamic pricing dashboards, tracking timelines, robust state management, and modern CSS glassmorphism UI. |
 
-## What's wired up already
+## Key Features
 
-- Solution file referencing all 8 projects with correct project-to-project references
-  (dependency direction enforced exactly per the Clean Architecture rule: Domain has
-  zero dependencies; Application depends only on Domain+Shared; Persistence/Infrastructure
-  depend on Application+Domain; WebApi is the composition root).
-- `BaseEntity` / `IAuditable` with the mandated audit columns
-  (`CreatedDate/By`, `UpdatedDate/By`, `DeletedDate/By`, `IsDeleted`).
-- Domain enums (`MaterialType`, `ConversionType`, `LoadingMode`) mirroring the HTML's
-  `material.type` and `sku.convType` values exactly.
-- Per-layer `AddXxxServices(...)` DI extension methods (Options Pattern for JWT/connection
-  string — nothing hardcoded), composed in `Program.cs`.
-- Middleware pipeline stubs in the correct order: GlobalException → RequestResponseLogging →
-  Auth(N)/Auth(Z) → AuditTracking, matching the Request Flow documented in Phase 1.
-- `appsettings.json` with **your exact connection-string placeholder**
-  (`Server=LAPTOP-AQ0HSGQ7\SQLEXPRESS;Database=CabconBillingManagement;...`) — replace the
-  server/database name only; nothing else in the app needs to change.
-- Swagger configured with JWT Bearer auth support.
-- `HealthController` as a smoke-test endpoint.
+- **Dynamic Material Pricing**: Real-time material pricing updates, historical trends, LME/Premium/FX rate components, and backfilling missing rates.
+- **SKU & BOM Management**: Define SKUs with layered Bill of Materials (BOM), configurable manufacturing costs, and real-time margin calculations.
+- **Quotation Engine**: Generate highly customized quotations using real-time pricing data. Offers multiple calculation modes (Percentage, Fixed Amount, Itemised, Raw Cost).
+- **Quotation Tracking & State Management**: Track approvals, status changes, and state transitions (e.g., *Sent to Customer*, *Accepted*, *Rejected*, *Request for Modification*).
+- **PDF Generation**: Instantly render professional PDF outputs of approved quotations.
+- **Role-Based Access Control (RBAC)**: Secure access configured for `Admin`, `Manager`, and `User` roles using JWT authentication and custom Permission checks.
 
-## What is intentionally NOT yet implemented
+## Technology Stack
 
-Entities, EF configurations/migrations, repositories, MediatR handlers, JWT token
-generation, and feature controllers are **not** in this skeleton — they arrive
-module-by-module starting with Part 2 (SQL schema) → Part 3 (EF Core) → Part 4 (Auth),
-per the project's module-by-module development rule.
+- **Backend**: .NET 9, C#, ASP.NET Core Web API, Entity Framework Core, SQL Server, MediatR, AutoMapper, FluentValidation, Serilog.
+- **Frontend**: Angular 18, TypeScript, RxJS, Angular Material, SCSS (Custom Glassmorphism UI), Chart.js.
 
-## Restoring & running (on your machine — this sandbox has no .NET SDK / NuGet access)
+## Running the Application Locally
 
-```bash
-dotnet restore Cabcon.sln
-dotnet build Cabcon.sln
-dotnet run --project src/Cabcon.WebApi
+### 1. Database Setup
+Ensure you have SQL Server (e.g., SQLEXPRESS) installed and running.
+Edit the connection string in `src/Cabcon.WebApi/appsettings.json` to match your local SQL Server instance:
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=CabconBillingManagement;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"
+}
 ```
 
-Then browse to `https://localhost:<port>/swagger` — you should see the Health endpoint.
-
-Before running, edit `src/Cabcon.WebApi/appsettings.json`:
-- Set your real SQL Server instance name / database name in `ConnectionStrings:DefaultConnection`.
-- Replace `JwtSettings:Secret` with a strong random value (or move it to user-secrets /
-  environment variables for non-dev environments — never commit a real secret).
-
-## Next step
-
-Part 2 — full SQL Server schema (tables, PK/FK, indexes, cascade rules, soft-delete,
-audit columns) for every entity identified in Phase 1's ERD.
-
-## Part 3 — EF Core Code-First model (added)
-
-Entities (`Cabcon.Domain/Entities/**`): Identity (User/Role/Permission/RolePermission/
-UserRole/RefreshToken), Audit (AuditLog/LoginHistory/ApiRequestLog/ExceptionLog),
-Pricing (Category/Material/MaterialPriceHistory/Sku/SkuBomLine — the core domain,
-1:1 with the HTML's materials/skus/BOM), Billing (Quotation/QuotationLine — frozen
-snapshots), Settings (ApplicationSetting).
-
-`PricingCalculationService` (`Cabcon.Domain/Services`) is a pure, side-effect-free
-translation of the HTML's `landed / skuRM / skuMfg / effOfferEx` JS functions — the
-single source of truth for cost math, usable identically from live read APIs and
-quotation generation/recompute.
-
-Fluent API configurations live in `Cabcon.Persistence/Configurations/**` (one file per
-entity), applied via `modelBuilder.ApplyConfigurationsFromAssembly(...)`. `CabconDbContext`
-adds a global soft-delete query filter to every `BaseEntity` descendant and overrides
-`SaveChangesAsync` to auto-stamp `Created/Updated/Deleted (Date/By)` and convert hard
-deletes into soft deletes — no command handler needs to remember this itself.
-
-Seed data (`Cabcon.Persistence/Seed/PricingSeedData.cs` + `HasData()` in the Role/
-Permission/RolePermission configs) reproduces the HTML's `seedMaterials()`/`seedSkus()`
-starting data exactly, plus the three roles (Admin/Manager/User) and a baseline
-permission set, so a freshly migrated DB looks identical to the HTML's first load.
-
-### Generating the first migration (run locally — this sandbox has no .NET SDK)
-
+### 2. Run Backend
+Run the Web API from the CLI:
 ```bash
-dotnet tool install --global dotnet-ef   # if not already installed
 cd src/Cabcon.WebApi
-dotnet ef migrations add InitialCreate --project ../Cabcon.Persistence --startup-project .
-dotnet ef database update --project ../Cabcon.Persistence --startup-project .
+dotnet restore
+dotnet build
+dotnet run
 ```
+*The API will typically start on `https://localhost:55027` and you can browse the Swagger UI at `https://localhost:55027/swagger`.*
+*(Note: Entity Framework Migrations and seed data are automatically applied on startup if configured, otherwise run `dotnet ef database update --project ../Cabcon.Persistence`)*
 
-This will create your `CabconBillingManagement` database (per the connection string in
-`appsettings.json`) with every table, FK, index, and the seed rows already populated.
+### 3. Run Frontend
+In a new terminal window, navigate to the client folder, install dependencies, and start the Angular dev server:
+```bash
+cd client
+npm install
+npm start
+```
+*The Angular app will run on `http://localhost:4200`.*
 
-### Not yet implemented (next parts)
+### Default Credentials
+Upon the first run, the database is seeded with a default Admin user:
+- **Username**: `****`
+- **Password**: `******`
 
-- `IRepository<T>` / `IUnitOfWork` + concrete repository implementations (Part 6).
-- MediatR commands/queries for Materials/Skus/Quotations (Part 6).
-- `ICurrentUserService` concrete implementation reading JWT claims (Part 4).
+## Development Guidelines
+
+- **CQRS Pattern**: All incoming HTTP requests to the Web API must map to a MediatR `IRequest` (Command or Query) to keep controllers thin.
+- **Database Access**: No direct DB context access in the API controllers. Use the injected `ISender` (MediatR) to execute application layer handlers which interact with the `IUnitOfWork`.
+- **UI System**: The frontend uses predefined CSS variables in `theme.scss` (e.g., `var(--primary-color)`) and heavily leverages `.glass-card` and `.animated-view` container wrapper fade-ins.
+- **Audit Logs**: The database automatically soft-deletes and tracks `CreatedBy`, `CreatedDate`, `LastModifiedBy`, `LastModifiedDate` using EF Core interceptors via `BaseEntity`.
