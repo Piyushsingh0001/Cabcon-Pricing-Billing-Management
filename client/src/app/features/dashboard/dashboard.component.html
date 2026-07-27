@@ -244,8 +244,8 @@
     <div class="footer-row">
       <div class="footer-inputs">
         <div class="control-group">
-          <div class="lbl">Customer / Party</div>
-          <mat-form-field appearance="outline" subscriptSizing="dynamic" style="width: 280px;">
+          <div class="lbls">Customer / Party</div>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="dense-field" style="width: 280px;">
             <input matInput type="text" placeholder="Search Customer..." [(ngModel)]="partyName" (keyup)="filterCustomers($event)" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCustomerSelected($event.option.value)">
               <mat-option *ngFor="let c of filteredCustomers" [value]="c">
@@ -255,8 +255,10 @@
           </mat-form-field>
         </div>
         <div class="control-group">
-          <div class="lbl">Validity (days)</div>
-          <input class="in" style="width: 80px;" type="number" [(ngModel)]="validityDays">
+          <div class="lbls">Validity (days)</div>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="dense-field" style="width: 100px;">
+            <input matInput type="number" [(ngModel)]="validityDays">
+          </mat-form-field>
         </div>
       </div>
       <div style="display: flex; gap: 12px; align-items: center;">
