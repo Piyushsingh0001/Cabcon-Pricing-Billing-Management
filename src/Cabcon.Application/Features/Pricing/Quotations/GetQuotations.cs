@@ -39,9 +39,16 @@ public class GetQuotationsQueryHandler : IRequestHandler<GetQuotationsQuery, IRe
         var query = quotationRepo.Query().Where(q => q.IsActive);
         
         bool isAdmin = _currentUser.Roles.Contains("Super Admin") || _currentUser.Roles.Contains("Admin");
-        if (!isAdmin && !string.IsNullOrEmpty(_currentUser.UserName))
+        if (!string.IsNullOrEmpty(_currentUser.UserName))
         {
-            query = query.Where(q => q.CreatedBy == _currentUser.UserName);
+            if (!isAdmin)
+            {
+                query = query.Where(q => q.CreatedBy == _currentUser.UserName);
+            }
+            else
+            {
+                query = query.Where(q => q.ApprovalStatus != Cabcon.Domain.Enums.ApprovalStatus.Draft || q.CreatedBy == _currentUser.UserName);
+            }
         }
 
         var activeQuotations = await query.ToListAsync(cancellationToken);

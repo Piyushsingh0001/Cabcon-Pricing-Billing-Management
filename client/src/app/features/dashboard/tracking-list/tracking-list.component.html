@@ -32,7 +32,8 @@
         <ng-container matColumnDef="quotationNumber">
           <th mat-header-cell *matHeaderCellDef> Quotation No. </th>
           <td mat-cell *matCellDef="let row">
-            <strong class="text-primary">{{ row.quotationNumber }}</strong>
+            <strong class="text-primary" *ngIf="row.quotationNumber">{{ row.quotationNumber }}</strong>
+            <span *ngIf="!row.quotationNumber" style="color: gray; font-style: italic;">[Draft]</span>
           </td>
         </ng-container>
 

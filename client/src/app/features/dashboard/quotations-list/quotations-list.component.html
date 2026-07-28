@@ -17,7 +17,8 @@
           <ng-container matColumnDef="quoteNumber">
             <th mat-header-cell *matHeaderCellDef>Quotation Number</th>
             <td mat-cell *matCellDef="let element" class="number-cell">
-              {{element.quotationNumber}}
+              <span *ngIf="element.quotationNumber">{{element.quotationNumber}}</span>
+              <span *ngIf="!element.quotationNumber" style="color: gray; font-style: italic;">[Draft]</span>
               <!-- Approval Status Icon with Menu -->
               <button mat-icon-button *ngIf="canApprove && element.approvalStatus === 0" [matMenuTriggerFor]="approveMenu" style="width: 24px; height: 24px; line-height: 24px;">
                 <mat-icon style="color: orange; font-size: 16px; vertical-align: middle;" title="Pending Approval">pending_actions</mat-icon>

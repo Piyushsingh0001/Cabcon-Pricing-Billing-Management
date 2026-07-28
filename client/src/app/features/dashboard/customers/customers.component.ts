@@ -39,9 +39,11 @@ export class CustomersComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   private fb = inject(FormBuilder);
 
-  public displayedColumns = ['name', 'contactNumber', 'gstNumber', 'address', 'updatedBy', 'actions'];
-  public dataSource = new MatTableDataSource<CustomerSummary>([]);
   public canEdit = this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
+  public displayedColumns = this.canEdit 
+    ? ['name', 'contactNumber', 'gstNumber', 'address', 'updatedBy', 'actions']
+    : ['name', 'contactNumber', 'gstNumber', 'address', 'updatedBy'];
+  public dataSource = new MatTableDataSource<CustomerSummary>([]);
 
   ngOnInit() {
     this.loadCustomers();

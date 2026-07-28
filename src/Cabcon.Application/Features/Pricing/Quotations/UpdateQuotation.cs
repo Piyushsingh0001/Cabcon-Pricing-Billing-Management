@@ -89,23 +89,36 @@ public class UpdateQuotationCommandHandler : IRequestHandler<UpdateQuotationComm
         var totalGross = totalExGst;
 
         var currentNumber = quotation.QuotationNumber ?? "";
-        int lastUnderscore = currentNumber.LastIndexOf('_');
-        if (lastUnderscore > 0 && lastUnderscore > currentNumber.LastIndexOf('/'))
+        
+        if (!request.IsDraft && string.IsNullOrEmpty(currentNumber))
         {
-            var prefix = currentNumber.Substring(0, lastUnderscore);
-            var suffixString = currentNumber.Substring(lastUnderscore + 1);
-            if (int.TryParse(suffixString, out int suffixValue))
+            var today = System.DateTime.UtcNow.Date;
+            var tomorrow = today.AddDays(1);
+            var todayCount = await quotationRepo.Query()
+                .CountAsync(q => q.CreatedDate >= today && q.CreatedDate < tomorrow && q.QuotationNumber != "", cancellationToken);
+            var sequence = todayCount + 1;
+            quotation.QuotationNumber = $"CIL/Q/{System.DateTime.UtcNow:yyyyMMdd}/{sequence:D3}";
+        }
+        else if (!request.IsDraft)
+        {
+            int lastUnderscore = currentNumber.LastIndexOf('_');
+            if (lastUnderscore > 0 && lastUnderscore > currentNumber.LastIndexOf('/'))
             {
-                quotation.QuotationNumber = $"{prefix}_{suffixValue + 1}";
+                var prefix = currentNumber.Substring(0, lastUnderscore);
+                var suffixString = currentNumber.Substring(lastUnderscore + 1);
+                if (int.TryParse(suffixString, out int suffixValue))
+                {
+                    quotation.QuotationNumber = $"{prefix}_{suffixValue + 1}";
+                }
+                else
+                {
+                    quotation.QuotationNumber = $"{currentNumber}_1";
+                }
             }
-            else
+            else if (!string.IsNullOrEmpty(currentNumber))
             {
                 quotation.QuotationNumber = $"{currentNumber}_1";
             }
-        }
-        else if (!string.IsNullOrEmpty(currentNumber))
-        {
-            quotation.QuotationNumber = $"{currentNumber}_1";
         }
 
         quotation.PartyName = request.PartyName;

@@ -80,11 +80,15 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
         var tomorrow = today.AddDays(1);
         
         var quotationRepo = _unitOfWork.Repository<Quotation>();
-        var todayCount = await quotationRepo.Query()
-            .CountAsync(q => q.CreatedDate >= today && q.CreatedDate < tomorrow, cancellationToken);
+        var quotationNumber = string.Empty;
+        if (!request.IsDraft)
+        {
+            var todayCount = await quotationRepo.Query()
+                .CountAsync(q => q.CreatedDate >= today && q.CreatedDate < tomorrow && q.QuotationNumber != "", cancellationToken);
 
-        var sequence = todayCount + 1;
-        var quotationNumber = $"CIL/Q/{_dateTime.UtcNow:yyyyMMdd}/{sequence:D3}";
+            var sequence = todayCount + 1;
+            quotationNumber = $"CIL/Q/{_dateTime.UtcNow:yyyyMMdd}/{sequence:D3}";
+        }
 
         var totalExGst = request.Lines.Sum(l => l.OfferExGst);
         var totalGst = 0m;

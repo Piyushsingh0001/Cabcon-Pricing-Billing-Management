@@ -20,7 +20,7 @@ public class QuotationConfiguration : IEntityTypeConfiguration<Quotation>
 
         b.Property(x => x.IsActive).HasDefaultValue(true);
 
-        b.HasIndex(x => x.QuotationNumber).IsUnique();
+        b.HasIndex(x => x.QuotationNumber).IsUnique().HasFilter("[QuotationNumber] <> ''");
         b.HasIndex(x => x.QuotationDate);
 
         b.HasMany(x => x.Lines).WithOne(x => x.Quotation).HasForeignKey(x => x.QuotationId).OnDelete(DeleteBehavior.Cascade);

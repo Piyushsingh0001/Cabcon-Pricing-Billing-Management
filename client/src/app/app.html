@@ -70,6 +70,10 @@
             <mat-icon matListItemIcon>inventory_2</mat-icon>
             <span matListItemTitle>SKUs & BOMs</span>
           </a>
+          <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.Generate')">
+            <mat-icon matListItemIcon>dashboard</mat-icon>
+            <span matListItemTitle>Offer & Send</span>
+          </a>
           <a mat-list-item routerLink="/customers" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
             <mat-icon matListItemIcon>groups</mat-icon>
             <span matListItemTitle>Customer Master</span>
@@ -85,10 +89,6 @@
           <a mat-list-item routerLink="/quotations" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
             <mat-icon matListItemIcon>receipt</mat-icon>
             <span matListItemTitle>Quotation History</span>
-          </a>
-          <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.Generate')">
-            <mat-icon matListItemIcon>dashboard</mat-icon>
-            <span matListItemTitle>Offer & Send</span>
           </a>
           <a mat-list-item routerLink="/admin" routerLinkActive="active-link" *ngIf="hasPermission('Users.View')">
              <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
