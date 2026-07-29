@@ -816,3 +816,26 @@ Error Number:2601,State:1,Class:14
 2026-07-28 11:34:48.803 +05:30 [INF] GET /api/roles responded 200 in 107ms
 2026-07-28 11:34:48.828 +05:30 [INF] Handled GetUsersQuery
 2026-07-28 11:34:48.835 +05:30 [INF] GET /api/users responded 200 in 140ms
+2026-07-28 14:24:02.470 +05:30 [INF] OPTIONS /api/users responded 204 in 0ms
+2026-07-28 14:24:02.570 +05:30 [INF] OPTIONS /api/roles responded 204 in 0ms
+2026-07-28 14:24:02.730 +05:30 [INF] GET /api/users responded 401 in 2ms
+2026-07-28 14:24:02.891 +05:30 [INF] GET /api/roles responded 401 in 4ms
+2026-07-28 14:24:03.085 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-28 14:24:03.200 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-28 14:24:03.631 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-28 14:24:03.689 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 493ms
+2026-07-28 14:24:03.740 +05:30 [INF] Handling GetUsersQuery
+2026-07-28 14:24:03.740 +05:30 [INF] Handling GetAllRolesQuery
+2026-07-28 14:24:03.760 +05:30 [INF] Handled GetAllRolesQuery
+2026-07-28 14:24:03.762 +05:30 [INF] Handled GetUsersQuery
+2026-07-28 14:24:03.763 +05:30 [INF] GET /api/roles responded 200 in 32ms
+2026-07-28 14:24:03.765 +05:30 [INF] GET /api/users responded 200 in 33ms
+2026-07-28 14:24:04.830 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-07-28 14:24:04.852 +05:30 [INF] GET /api/quotations responded 401 in 1ms
+2026-07-28 14:24:04.946 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-07-28 14:24:04.969 +05:30 [INF] Handling RefreshTokenCommand
+2026-07-28 14:24:05.060 +05:30 [INF] Handled RefreshTokenCommand
+2026-07-28 14:24:05.063 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 96ms
+2026-07-28 14:24:05.098 +05:30 [INF] Handling GetQuotationsQuery
+2026-07-28 14:24:05.182 +05:30 [INF] Handled GetQuotationsQuery
+2026-07-28 14:24:05.186 +05:30 [INF] GET /api/quotations responded 200 in 96ms
