@@ -31,7 +31,8 @@
       </mat-form-field>
     </div>
 
-    <table class="simple-table" *ngIf="monthlyAverages.length > 0">
+    <div class="table-scroll-wrapper">
+      <table class="simple-table" *ngIf="monthlyAverages.length > 0">
       <thead>
         <tr>
           <th>Material</th>
@@ -46,7 +47,8 @@
           <td style="text-align: right;">₹{{ avg.averageCost | number:'1.2-2' }}</td>
         </tr>
       </tbody>
-    </table>
+      </table>
+    </div>
     <div *ngIf="monthlyAverages.length === 0" style="color: var(--text-secondary);">
       No data available for the selected month.
     </div>

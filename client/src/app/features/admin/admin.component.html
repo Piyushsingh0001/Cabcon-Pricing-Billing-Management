@@ -18,7 +18,8 @@
               </button>
             </div>
 
-            <table mat-table [dataSource]="users">
+            <div class="table-scroll-wrapper">
+              <table mat-table [dataSource]="users">
               <!-- Username -->
               <ng-container matColumnDef="username">
                 <th mat-header-cell *matHeaderCellDef>Username</th>
@@ -65,7 +66,8 @@
 
               <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: userColumns;"></tr>
-            </table>
+              </table>
+            </div>
           </div>
         </mat-tab>
 
@@ -79,7 +81,8 @@
               </button>
             </div>
 
-            <table mat-table [dataSource]="roles">
+            <div class="table-scroll-wrapper">
+              <table mat-table [dataSource]="roles">
               <!-- Name -->
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Role Name</th>
@@ -104,7 +107,8 @@
 
               <tr mat-header-row *matHeaderRowDef="roleColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: roleColumns;"></tr>
-            </table>
+              </table>
+            </div>
           </div>
         </mat-tab>
       </mat-tab-group>

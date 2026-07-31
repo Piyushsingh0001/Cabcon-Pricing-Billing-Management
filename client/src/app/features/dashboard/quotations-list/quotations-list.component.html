@@ -11,7 +11,8 @@
           <input matInput (keyup)="applyFilter($event)" placeholder="By Quote #, Customer, Created By, Date...">
         </mat-form-field>
       </div>
-     <div class="table-container glass-card"  *ngIf="dataSource.data.length > 0; else noQuotations">
+      <div class="table-container glass-card"  *ngIf="dataSource.data.length > 0; else noQuotations">
+        <div class="table-scroll-wrapper">
         <table mat-table [dataSource]="dataSource" *ngIf="dataSource.data.length > 0">
           <!-- Quote Number Column -->
           <ng-container matColumnDef="quoteNumber">
@@ -84,7 +85,8 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'inactive-row': !row.isActive}"></tr>
-        </table>
+          </table>
+        </div>
       </div>
 
       <ng-template #noQuotations>

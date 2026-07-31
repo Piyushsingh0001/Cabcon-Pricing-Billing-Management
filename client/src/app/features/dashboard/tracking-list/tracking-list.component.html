@@ -26,7 +26,8 @@
 
     <!-- Table Container -->
     <div class="table-container" *ngIf="!isLoading">
-      <table mat-table [dataSource]="filteredSummaries">
+      <div class="table-scroll-wrapper">
+        <table mat-table [dataSource]="filteredSummaries">
 
         <!-- Quotation No Column -->
         <ng-container matColumnDef="quotationNumber">
@@ -135,7 +136,8 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="grid-row"></tr>
-      </table>
+        </table>
+      </div>
 
       <!-- Empty State -->
       <div *ngIf="filteredSummaries.data.length === 0" class="empty-state">

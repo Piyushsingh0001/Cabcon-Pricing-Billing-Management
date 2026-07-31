@@ -282,7 +282,7 @@ export class SkuEditDialogComponent implements OnInit {
   public deleteProduct() {
     if (!this.sku) return;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '450px',
+      width: '95vw', maxWidth: '450px',
       data: {
         title: 'Delete Product',
         message: `Are you sure you want to delete product "${this.sku.name}"? This action cannot be undone.`,

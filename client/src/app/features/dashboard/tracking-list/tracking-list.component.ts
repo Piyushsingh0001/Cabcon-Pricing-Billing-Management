@@ -127,7 +127,7 @@ export class TrackingListComponent implements OnInit, OnDestroy {
 
   openTrackingTimeline(summary: TrackingSummaryDto): void {
     this.dialog.open(TrackingDetailDialogComponent, {
-      width: '600px',
+      width: '95vw', maxWidth: '600px',
       data: summary
     });
   }

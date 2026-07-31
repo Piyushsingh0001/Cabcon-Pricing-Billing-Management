@@ -535,7 +535,7 @@ export class DashboardComponent implements OnInit {
 
     // Open preview dialog directly
     const previewRef = this.dialog.open(QuotationPreviewDialogComponent, {
-      width: '750px',
+      width: '95vw', maxWidth: '750px',
       data: {
         partyName: this.partyName,
         customerDetails: this.selectedCustomer,

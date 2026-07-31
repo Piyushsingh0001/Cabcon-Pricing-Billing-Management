@@ -321,3 +321,29 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .footer-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .footer-inputs {
+    flex-direction: column;
+    width: 100%;
+  }
+  .footer-inputs mat-form-field {
+    width: 100% !important;
+  }
+  .btn-generate-quotation {
+    width: 100%;
+  }
+}

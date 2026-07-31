@@ -102,7 +102,7 @@ private loadQuotations() {
     this.pricingService.getQuotation(quote.id).subscribe({
       next: (details) => {
         const dialogRef = this.dialog.open(QuotationDetailDialogComponent, {
-          width: '750px',
+          width: '95vw', maxWidth: '750px',
           data: details
         });
 

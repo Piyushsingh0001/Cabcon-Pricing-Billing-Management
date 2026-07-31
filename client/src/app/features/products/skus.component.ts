@@ -84,7 +84,7 @@ export class SkusComponent implements OnInit {
     const cat = this.categories().find(c => c.name.toLowerCase() === categoryName.toLowerCase());
     if (cat) {
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '450px',
+        width: '95vw', maxWidth: '450px',
         data: {
           title: 'Delete Category',
           message: `Are you sure you want to delete category "${cat.name}" and all its products? This action cannot be undone.`,
@@ -210,7 +210,7 @@ export class SkusComponent implements OnInit {
     };
 
     const dialogRef = this.dialog.open(SkuEditDialogComponent, {
-      width: '950px',
+      width: '95vw', maxWidth: '950px',
       data: defaultData
     });
 
@@ -223,7 +223,7 @@ export class SkusComponent implements OnInit {
 
   public manageCategories() {
     const dialogRef = this.dialog.open(CategoryManageDialogComponent, {
-      width: '500px',
+      width: '95vw', maxWidth: '500px',
       data: null
     });
 
@@ -238,7 +238,7 @@ export class SkusComponent implements OnInit {
       next: (fullSku) => {
         this.loading.set(false);
         const dialogRef = this.dialog.open(SkuEditDialogComponent, {
-          width: '950px',
+          width: '95vw', maxWidth: '950px',
           data: fullSku
         });
 
@@ -257,7 +257,7 @@ export class SkusComponent implements OnInit {
 
   public deleteSku(skuId: number, name: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '450px',
+      width: '95vw', maxWidth: '450px',
       data: {
         title: 'Delete Product Spec',
         message: `Are you sure you want to delete product "${name}"? This action cannot be undone.`,

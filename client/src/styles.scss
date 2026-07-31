@@ -157,3 +157,25 @@ transform:scale(1.05);
 .animated-view {
   animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* --- Mobile Responsiveness --- */
+.table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 12px !important;
+  }
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    padding: 16px !important;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  .btn-primary, .btn-secondary {
+    padding: 0 16px !important;
+  }
+}
