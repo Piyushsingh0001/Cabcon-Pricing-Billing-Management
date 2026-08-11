@@ -53,19 +53,6 @@ public class GetQuotationsQueryHandler : IRequestHandler<GetQuotationsQuery, IRe
 
         var activeQuotations = await query.ToListAsync(cancellationToken);
 
-        var expired = activeQuotations
-            .Where(q => q.QuotationDate.AddDays(q.ValidityDays) < now)
-            .ToList();
-
-        if (expired.Any())
-        {
-            foreach (var q in expired)
-            {
-                q.IsActive = false;
-                quotationRepo.Update(q);
-            }
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-        }
 
         return await query
             .OrderByDescending(q => q.QuotationDate)
