@@ -24,7 +24,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         var seedDate = new DateTime(2026, 1, 1);
 
         // Default Admin user so the app is usable immediately after first migration.
-        // Password is "Admin@123" - hashed with the same PBKDF2-HMACSHA256 scheme as
+        // Password is "" - hashed with the same PBKDF2-HMACSHA256 scheme as
         // Cabcon.Infrastructure.Security.PasswordHasher (100,000 iterations, 16-byte
         // salt, 32-byte derived key, stored as "{iterations}.{saltB64}.{hashB64}").
         // CHANGE THIS PASSWORD IMMEDIATELY in any non-dev environment.
