@@ -63,10 +63,12 @@
               <option value="" disabled>Select Vendor</option>
               <option *ngFor="let vendor of getAvailableVendors(idx)" [value]="vendor">{{ vendor }}</option>
             </select>
-            <select class="sel" formControlName="priceType" (change)="onPricingMethodChange(idx)" style="width: 100px;">
+         
+            <select class="sel" formControlName="priceType" (change)="onPricingMethodChange(idx)" style="width: 110px;">
               <option [value]="0">LME-linked</option>
               <option [value]="1">Direct ₹/kg</option>
             </select>
+               <input class="in" type="number" formControlName="weightKg" placeholder="Qty (kg)" style="width: 80px;" min="0" step="0.01" title="Quantity (kg)">
           </div>
 
           <div class="bom-line-row" style="margin-top: 8px;">

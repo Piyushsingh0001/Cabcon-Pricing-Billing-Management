@@ -161,15 +161,21 @@ export class SkuEditDialogComponent implements OnInit {
     if (!line) return 0;
     const matId = line.get('materialId')?.value;
     if (!matId) return 0;
+    
+    const weightKg = Number(line.get('weightKg')?.value || 0);
 
     const method = Number(line.get('pricingMethod')?.value);
     const pType = Number(line.get('priceType')?.value);
+    let unitPrice = 0;
+
     if (method === 1) { // Actual
-      return this.getLandedCost(matId, pType);
+      unitPrice = this.getLandedCost(matId, pType);
+    } else {
+      // For Manual or Average, use the manualPrice field
+      unitPrice = Number(line.get('manualPrice')?.value || 0);
     }
-    
-    // For Manual or Average, use the manualPrice field
-    return Number(line.get('manualPrice')?.value || 0);
+
+    return unitPrice * weightKg;
   }
 
   public onPricingMethodChange(idx: number) {
