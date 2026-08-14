@@ -8,6 +8,7 @@ namespace Cabcon.Application.Features.Pricing.Materials;
 public record MaterialPriceHistoryDto
 {
     public int Id { get; init; }
+    public string? VendorName { get; init; }
     public decimal? LmeUsdPerMt { get; init; }
     public decimal? PremiumUsdPerMt { get; init; }
     public decimal? FxRate { get; init; }
@@ -45,6 +46,7 @@ public class GetMaterialPriceHistoryQueryHandler : IRequestHandler<GetMaterialPr
             .Select(x => new MaterialPriceHistoryDto
             {
                 Id = x.Id,
+                VendorName = x.VendorName ?? x.Material.VendorName,
                 LmeUsdPerMt = x.LmeUsdPerMt,
                 PremiumUsdPerMt = x.PremiumUsdPerMt,
                 FxRate = x.FxRate,

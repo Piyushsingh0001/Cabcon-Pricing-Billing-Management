@@ -209,8 +209,13 @@ export class MaterialsComponent implements OnInit {
     const material = group.selectedVariant;
     if (!material) return;
     this.dialog.open(MaterialHistoryDialogComponent, {
-      width: '95vw', maxWidth: '700px',
-      data: material
+      width: '95vw', maxWidth: '850px',
+      data: {
+        material: material,
+        group: group,
+        variants: group.variants,
+        selectedVariantId: group.selectedVariantId
+      }
     });
   }
 

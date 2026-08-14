@@ -1,15 +1,146 @@
+.history-dialog-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  padding: 4px;
+}
 
-    .history-table-container {
-      max-height: 400px;
-      overflow-y: auto;
+.dialog-header {
+  h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+}
+
+.filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--bg-tertiary, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.1));
+
+  .filter-field {
+    flex: 1 1 120px;
+    min-width: 100px;
+    max-width: 160px;
+
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+      display: none;
     }
-    .landed-cost-cell {
-      font-weight: 700;
-      color: var(--text-primary);
+  }
+
+  .date-field {
+    flex: 1 1 130px;
+    max-width: 170px;
+  }
+
+  .download-btn {
+    height: 48px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    .btn-text {
+      font-weight: 500;
     }
-    .no-records {
-      text-align: center;
-      padding: 24px;
-      color: var(--text-secondary);
+  }
+
+  .reset-btn {
+    align-self: center;
+  }
+}
+
+.history-table-container {
+  max-height: 420px;
+  overflow-x: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+  border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.1));
+}
+
+.history-table {
+  width: 100%;
+  min-width: 720px;
+
+  th.mat-mdc-header-cell {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--bg-card, var(--bg-secondary, #ffffff));
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-primary, #1f2937);
+    white-space: nowrap;
+    padding: 10px 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+
+  td.mat-mdc-cell {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    padding: 10px 12px;
+  }
+
+  .landed-cost-cell {
+    font-weight: 600;
+    color: var(--primary-color, #4f46e5);
+  }
+
+  .muted-text {
+    color: var(--text-secondary, #9ca3af);
+  }
+}
+
+.no-records {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-secondary, #9ca3af);
+  font-size: 0.9rem;
+}
+
+/* Mobile App Responsiveness */
+@media (max-width: 640px) {
+  .history-dialog-container {
+    padding: 0;
+  }
+
+  .dialog-header h2 {
+    font-size: 1.05rem;
+  }
+
+  .filters-row {
+    padding: 8px;
+    gap: 8px;
+
+    .filter-field, .date-field {
+      flex: 1 1 calc(50% - 6px);
+      min-width: 0;
+      max-width: 100%;
     }
-  
+
+    .download-btn {
+      flex: 1 1 calc(70% - 6px);
+      justify-content: center;
+    }
+
+    .reset-btn {
+      flex: 0 0 auto;
+    }
+  }
+
+  .history-table {
+    min-width: 640px;
+    
+    th.mat-mdc-header-cell, td.mat-mdc-cell {
+      padding: 8px 8px;
+      font-size: 0.8rem;
+    }
+  }
+}

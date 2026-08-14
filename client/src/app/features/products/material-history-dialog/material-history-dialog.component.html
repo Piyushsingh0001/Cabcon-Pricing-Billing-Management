@@ -1,48 +1,133 @@
+<div class="history-dialog-container">
+  <div class="dialog-header">
+    <h2 mat-dialog-title>Price Stamp Log: {{ groupName || material?.name }}</h2>
+  </div>
 
-    <h2 mat-dialog-title>Price Stamp Log: {{material.name}}</h2>
-    <mat-dialog-content>
-      <div class="history-table-container">
-        <table mat-table [dataSource]="historyData">
-          
-          <ng-container matColumnDef="effectiveDate">
-            <th mat-header-cell *matHeaderCellDef>Effective Date</th>
-            <td mat-cell *matCellDef="let log">{{log.effectiveDate | date:'medium'}}</td>
-          </ng-container>
+  <mat-dialog-content>
+    <!-- Filters Row -->
+    <div class="filters-row">
+      <!-- Vendor Filter -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Vendor</mat-label>
+        <mat-select [(ngModel)]="selectedVendorId" (selectionChange)="onVendorChange()">
+          <mat-option value="ALL">All Vendors</mat-option>
+          <mat-option *ngFor="let v of vendors" [value]="v.id">
+            {{ v.vendorName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-          <ng-container matColumnDef="updatedBy">
-            <th mat-header-cell *matHeaderCellDef>Updated By</th>
-            <td mat-cell *matCellDef="let log">{{log.updatedBy || 'System'}}</td>
-          </ng-container>
+      <!-- Year Filter -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Year</mat-label>
+        <mat-select [(ngModel)]="selectedYear" (selectionChange)="onFilterChange()">
+          <mat-option value="ALL">All Years</mat-option>
+          <mat-option *ngFor="let y of years" [value]="y">{{ y }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-          <ng-container matColumnDef="rateDetails">
-            <th mat-header-cell *matHeaderCellDef>Rate Details</th>
-            <td mat-cell *matCellDef="let log">
-              <span *ngIf="log.type === 0">
-                LME: \${{log.lmeUsdPerMt}}, Prem: \${{log.premiumUsdPerMt}}, Fx: ₹{{log.fxRate}}
-              </span>
-              <span *ngIf="log.type === 1">
-                Direct Rate: ₹{{log.directRateInrPerKg}}/kg
-              </span>
-            </td>
-          </ng-container>
+      <!-- Month Filter -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Month</mat-label>
+        <mat-select [(ngModel)]="selectedMonth" (selectionChange)="onFilterChange()">
+          <mat-option value="ALL">All Months</mat-option>
+          <mat-option *ngFor="let m of months" [value]="m.value">{{ m.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-          <ng-container matColumnDef="landedCost">
-            <th mat-header-cell *matHeaderCellDef>Landed Cost</th>
-            <td mat-cell *matCellDef="let log" class="landed-cost-cell">
-              ₹{{log.landedCostInrPerKg | number:'1.2-2'}}/kg
-            </td>
-          </ng-container>
+      <!-- Custom Date Filters -->
+      <mat-form-field appearance="outline" class="filter-field date-field">
+        <mat-label>From Date</mat-label>
+        <input matInput type="date" [(ngModel)]="startDate" (change)="onFilterChange()">
+      </mat-form-field>
 
-          <tr mat-header-row *matHeaderRowDef="columns"></tr>
-          <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-        </table>
+      <mat-form-field appearance="outline" class="filter-field date-field">
+        <mat-label>To Date</mat-label>
+        <input matInput type="date" [(ngModel)]="endDate" (change)="onFilterChange()">
+      </mat-form-field>
 
-        <div class="no-records" *ngIf="historyData.data.length === 0">
-          No pricing updates found for this material.
-        </div>
+      <!-- Download Dropdown Menu -->
+      <button mat-flat-button color="primary" [matMenuTriggerFor]="downloadMenu" class="download-btn" title="Download Options">
+        <mat-icon>download</mat-icon> <span class="btn-text">Download</span> <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+
+      <mat-menu #downloadMenu="matMenu">
+        <button mat-menu-item (click)="downloadExcel()">
+          <mat-icon>description</mat-icon>
+          <span>Excel (.xlsx / .csv)</span>
+        </button>
+        <button mat-menu-item (click)="downloadPdf()">
+          <mat-icon>picture_as_pdf</mat-icon>
+          <span>PDF (.pdf)</span>
+        </button>
+      </mat-menu>
+
+      <button mat-icon-button color="accent" class="reset-btn" (click)="resetFilters()" title="Reset Filters">
+        <mat-icon>restart_alt</mat-icon>
+      </button>
+    </div>
+
+    <!-- Table Grid -->
+    <div class="history-table-container">
+      <table mat-table [dataSource]="historyData" class="history-table">
+        
+        <!-- Date Column (Without time) -->
+        <ng-container matColumnDef="effectiveDate">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let log">{{ log.effectiveDate | date:'dd/MM/yyyy' }}</td>
+        </ng-container>
+
+        <!-- LME Rate Column -->
+        <ng-container matColumnDef="lmeRate">
+          <th mat-header-cell *matHeaderCellDef>LME Rate</th>
+          <td mat-cell *matCellDef="let log">
+            <span *ngIf="log.type === 0 && log.lmeUsdPerMt != null">
+              ${{ log.lmeUsdPerMt | number:'1.2-2' }}/MT
+            </span>
+            <span *ngIf="log.type !== 0 || log.lmeUsdPerMt == null" class="muted-text">-</span>
+          </td>
+        </ng-container>
+
+        <!-- LME Landed Cost Column -->
+        <ng-container matColumnDef="lmeLandedCost">
+          <th mat-header-cell *matHeaderCellDef>LME Landed Cost</th>
+          <td mat-cell *matCellDef="let log">
+            <span *ngIf="log.type === 0" class="landed-cost-cell">
+              ₹{{ log.landedCostInrPerKg | number:'1.2-2' }}/kg
+            </span>
+            <span *ngIf="log.type !== 0" class="muted-text">-</span>
+          </td>
+        </ng-container>
+
+
+        <!-- Direct Landed Cost Column -->
+        <ng-container matColumnDef="directLandedCost">
+          <th mat-header-cell *matHeaderCellDef>Direct Landed Cost</th>
+          <td mat-cell *matCellDef="let log">
+            <span *ngIf="log.type === 1" class="landed-cost-cell">
+              ₹{{ log.landedCostInrPerKg | number:'1.2-2' }}/kg
+            </span>
+            <span *ngIf="log.type !== 1" class="muted-text">-</span>
+          </td>
+        </ng-container>
+
+        <!-- Updated By Column -->
+        <ng-container matColumnDef="updatedBy">
+          <th mat-header-cell *matHeaderCellDef>Updated By</th>
+          <td mat-cell *matCellDef="let log">{{ log.updatedBy || 'System' }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+      </table>
+
+      <div class="no-records" *ngIf="historyData.data.length === 0">
+        No pricing updates found for the selected criteria.
       </div>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button mat-dialog-close>Close</button>
-    </mat-dialog-actions>
-  
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</div>

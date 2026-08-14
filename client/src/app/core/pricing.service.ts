@@ -48,6 +48,7 @@ export interface Material {
 
 export interface MaterialPriceHistory {
   id: number;
+  type?: number;
   lmeUsdPerMt?: number;
   premiumUsdPerMt?: number;
   fxRate?: number;
