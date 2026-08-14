@@ -1,0 +1,93 @@
+.edit-dialog-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 90vh;
+  background: var(--bg-primary);
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.dialog-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.header-icon-btn {
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.header-icon-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+/* Tags styling */
+.tag {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Table styling for dialog */
+.table-scroll-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border-glass);
+}
+
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: #ffffff;
+}
+
+.tbl th {
+  background: #fafafb;
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 10px 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-glass);
+  white-space: nowrap;
+}
+
+.tbl td {
+  padding: 10px 12px;
+  text-align: center;
+  border-bottom: 1px solid #f1f5f9;
+  color: var(--text-primary);
+}
+
+.tbl tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.tbl tbody tr:hover {
+  background-color: #f8fafc;
+}

@@ -12,6 +12,7 @@ import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { PricingService, Sku, Material, CustomerSummary } from '../../core/pricing.service';
 import { QuotationPreviewDialogComponent } from './quotation-preview-dialog/quotation-preview-dialog.component';
+import { BomBreakupDialogComponent } from './bom-breakup-dialog/bom-breakup-dialog.component';
 
 interface CalculatorRow {
   skuId: number;
@@ -525,6 +526,15 @@ export class DashboardComponent implements OnInit {
 
   public get totalOfferExGst(): number {
     return this.rows.reduce((sum, r) => sum + (r.offerExGst * r.quantity), 0);
+  }
+
+  public viewBomBreakup(skuId: number) {
+    const sku = this.skus.find(s => s.id === skuId);
+    if (!sku) return;
+    this.dialog.open(BomBreakupDialogComponent, {
+      width: '95vw', maxWidth: '650px',
+      data: { sku, materials: this.materials }
+    });
   }
 
   public generateQuotation() {

@@ -176,7 +176,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let element of rows">
-            <td style="text-align: left; font-weight: 600;">
+            <td style="text-align: left; font-weight: 600; cursor: pointer; color: var(--primary-color);" (click)="viewBomBreakup(element.skuId)" title="View BOM Breakup">
               {{ element.categoryName }} &middot; {{ element.skuName }} {{ element.spec }}
             </td>
             <td>{{ element.unit }}</td>
