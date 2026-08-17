@@ -28,6 +28,7 @@ public record UpdateSkuCommand : IRequest<Result>
     public ConversionType ConversionType { get; init; }
     public decimal ConversionValue { get; init; }
     public decimal GstRate { get; init; }
+    public decimal Quantity { get; init; } = 1m;
     public List<UpdateSkuBomLineInput> BomLines { get; init; } = new();
 }
 
@@ -98,6 +99,7 @@ public class UpdateSkuCommandHandler : IRequestHandler<UpdateSkuCommand, Result>
         sku.ConversionType = request.ConversionType;
         sku.ConversionValue = request.ConversionValue;
         sku.GstRate = request.GstRate;
+        sku.Quantity = request.Quantity > 0 ? request.Quantity : 1m;
         sku.IsPlaceholder = false;
 
         // Clear existing and rebuild BOM lines (simple replacement approach)

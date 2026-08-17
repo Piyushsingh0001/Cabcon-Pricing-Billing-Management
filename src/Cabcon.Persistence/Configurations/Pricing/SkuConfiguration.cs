@@ -17,6 +17,7 @@ public class SkuConfiguration : IEntityTypeConfiguration<Sku>
         b.Property(x => x.ConversionType).HasConversion<string>().HasMaxLength(20);
         b.Property(x => x.ConversionValue).HasColumnType("decimal(18,6)");
         b.Property(x => x.GstRate).HasColumnType("decimal(9,4)");
+        b.Property(x => x.Quantity).HasColumnType("decimal(18,4)").HasDefaultValue(1m);
 
         // a category cannot have two identical (spec+unit) active products
         b.HasIndex(x => new { x.CategoryId, x.Name, x.Spec, x.Unit }).IsUnique();

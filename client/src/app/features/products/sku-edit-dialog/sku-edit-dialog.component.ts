@@ -62,9 +62,10 @@ export class SkuEditDialogComponent implements OnInit {
       name: [{value: sku?.name || '', disabled: sku?.isAddSpec}, Validators.required],
       spec: [sku?.spec || '', Validators.required],
       unit: [sku?.unit || 'coil', Validators.required],
-      conversionType: [sku?.conversionType || 0, Validators.required],
-      conversionValue: [isMfgDisplay, [Validators.required, Validators.min(0)]],
-      gstPercent: [isGstPct, [Validators.required, Validators.min(0)]],
+      quantity: [sku?.quantity || 1, [Validators.required, Validators.min(1)]],
+      conversionType: [sku?.conversionType ?? 0],
+      conversionValue: [isMfgDisplay],
+      gstPercent: [isGstPct],
       bomLines: this.fb.array([], Validators.required)
     });
   }
@@ -176,6 +177,19 @@ export class SkuEditDialogComponent implements OnInit {
     }
 
     return unitPrice * weightKg;
+  }
+
+  public getTotalBomCost(): number {
+    let total = 0;
+    for (let i = 0; i < this.bomLines.length; i++) {
+      total += this.getCalculatedBomLineCost(i);
+    }
+    return total;
+  }
+
+  public getTotalPrice(): number {
+    const qty = Number(this.form.get('quantity')?.value || 1);
+    return this.getTotalBomCost() * (qty > 0 ? qty : 1);
   }
 
   public onPricingMethodChange(idx: number) {
@@ -346,11 +360,12 @@ export class SkuEditDialogComponent implements OnInit {
         name: formVal.name,
         spec: formVal.spec,
         unit: formVal.unit,
-        conversionType: Number(formVal.conversionType),
+        conversionType: Number(formVal.conversionType ?? 0),
         conversionValue: Number(formVal.conversionType) === 0
-          ? Number(formVal.conversionValue) / 100
-          : Number(formVal.conversionValue),
-        gstRate: Number(formVal.gstPercent) / 100,
+          ? Number(formVal.conversionValue || 0) / 100
+          : Number(formVal.conversionValue || 0),
+        gstRate: Number(formVal.gstPercent || 18) / 100,
+        quantity: Number(formVal.quantity || 1),
         bomLines: formVal.bomLines.map((line: any, index: number) => ({
           materialId: Number(line.materialId),
           weightKg: Number(line.weightKg || 0),

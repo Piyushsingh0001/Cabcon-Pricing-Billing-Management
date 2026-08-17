@@ -26,6 +26,7 @@ public record SkuDto
     public ConversionType ConversionType { get; init; }
     public decimal ConversionValue { get; init; }
     public decimal GstRate { get; init; }
+    public decimal Quantity { get; init; } = 1m;
     public bool IsPlaceholder { get; init; }
     
     // Computed pricing properties
@@ -110,6 +111,7 @@ public class GetSkusQueryHandler : IRequestHandler<GetSkusQuery, PaginatedList<S
             ConversionType = s.ConversionType,
             ConversionValue = s.ConversionValue,
             GstRate = s.GstRate,
+            Quantity = s.Quantity > 0 ? s.Quantity : 1m,
             IsPlaceholder = s.IsPlaceholder,
             RawMaterialCost = _pricingService.RawMaterialCost(s),
             ManufacturingCost = _pricingService.ManufacturingCost(s),

@@ -33,6 +33,7 @@ public record SkuDetailsDto
     public ConversionType ConversionType { get; init; }
     public decimal ConversionValue { get; init; }
     public decimal GstRate { get; init; }
+    public decimal Quantity { get; init; } = 1m;
     public bool IsPlaceholder { get; init; }
     public decimal RawMaterialCost { get; init; }
     public decimal ManufacturingCost { get; init; }
@@ -93,6 +94,7 @@ public class GetSkuDetailsQueryHandler : IRequestHandler<GetSkuDetailsQuery, Sku
             ConversionType = sku.ConversionType,
             ConversionValue = sku.ConversionValue,
             GstRate = sku.GstRate,
+            Quantity = sku.Quantity > 0 ? sku.Quantity : 1m,
             IsPlaceholder = sku.IsPlaceholder,
             RawMaterialCost = _pricingService.RawMaterialCost(sku),
             ManufacturingCost = _pricingService.ManufacturingCost(sku),

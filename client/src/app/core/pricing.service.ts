@@ -74,6 +74,7 @@ export interface Sku {
   rawMaterialCost: number;
   manufacturingCost: number;
   totalWeight: number;
+  quantity?: number;
   updatedBy?: string;
   bomLines?: { materialId: number; materialName?: string; weightKg: number }[];
 }
@@ -286,6 +287,7 @@ export class PricingService {
     conversionType: number;
     conversionValue: number;
     gstRate: number;
+    quantity?: number;
     bomLines: { materialId: number; weightKg: number }[];
   }): Observable<number> {
     return this.http.post<number>(`${this.apiBase}/skus`, payload);
@@ -300,6 +302,7 @@ export class PricingService {
     conversionType: number;
     conversionValue: number;
     gstRate: number;
+    quantity?: number;
     bomLines: { materialId: number; weightKg: number }[];
   }): Observable<void> {
     return this.http.put<void>(`${this.apiBase}/skus/${id}`, payload);

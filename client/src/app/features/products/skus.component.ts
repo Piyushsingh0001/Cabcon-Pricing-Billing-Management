@@ -150,15 +150,16 @@ export class SkusComponent implements OnInit {
     ).subscribe({
       next: (res) => {
         this.skus = res.items;
-        this.totalCount = res.totalCount;
-        this.groupSkus();
-        
-        // Sync selections from service
         this.skus.forEach(s => {
+          if (s.quantity === undefined || s.quantity === null || s.quantity < 1) {
+            s.quantity = 1;
+          }
           if (this.pricingService.selectedSkuIds.has(s.id)) {
             this.localSelections[s.id] = true;
           }
         });
+        this.totalCount = res.totalCount;
+        this.groupSkus();
 
         this.loading.set(false);
         this.cdr.detectChanges();
@@ -166,6 +167,53 @@ export class SkusComponent implements OnInit {
       error: () => {
         this.snackBar.open('Failed to load SKUs.', 'Close', { duration: 3000 });
         this.loading.set(false);
+      }
+    });
+  }
+
+  private quantityTimeoutMap = new Map<number, any>();
+
+  public onQuantityChange(sku: Sku) {
+    if (!sku.quantity || sku.quantity < 1) {
+      sku.quantity = 1;
+    }
+    if (this.quantityTimeoutMap.has(sku.id)) {
+      clearTimeout(this.quantityTimeoutMap.get(sku.id));
+    }
+    const timeout = setTimeout(() => {
+      this.saveSkuQuantity(sku);
+    }, 500);
+    this.quantityTimeoutMap.set(sku.id, timeout);
+  }
+
+  private saveSkuQuantity(sku: Sku) {
+    this.pricingService.getSku(sku.id).subscribe({
+      next: (fullSku) => {
+        const payload = {
+          id: fullSku.id,
+          categoryId: fullSku.categoryId,
+          name: fullSku.name,
+          spec: fullSku.spec,
+          unit: fullSku.unit,
+          conversionType: fullSku.conversionType ?? 0,
+          conversionValue: fullSku.conversionValue ?? 0,
+          gstRate: fullSku.gstRate ?? 0.18,
+          quantity: sku.quantity || 1,
+          bomLines: fullSku.bomLines.map(b => ({
+            materialId: b.materialId,
+            weightKg: b.weightKg,
+            priceType: b.priceType,
+            pricingMethod: b.pricingMethod,
+            pricingMonth: b.pricingMonth,
+            manualPrice: b.manualPrice
+          }))
+        };
+        this.pricingService.updateSku(sku.id, payload as any).subscribe({
+          next: () => {},
+          error: () => {
+            this.snackBar.open('Failed to save quantity to database.', 'Close', { duration: 3000 });
+          }
+        });
       }
     });
   }

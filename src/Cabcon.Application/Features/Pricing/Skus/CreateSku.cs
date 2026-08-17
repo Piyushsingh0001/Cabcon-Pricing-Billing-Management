@@ -26,6 +26,7 @@ public record CreateSkuCommand : IRequest<Result<int>>
     public ConversionType ConversionType { get; init; }
     public decimal ConversionValue { get; init; }
     public decimal GstRate { get; init; }
+    public decimal Quantity { get; init; } = 1m;
     public List<CreateSkuBomLineInput> BomLines { get; init; } = new();
 }
 
@@ -86,6 +87,7 @@ public class CreateSkuCommandHandler : IRequestHandler<CreateSkuCommand, Result<
             ConversionType = request.ConversionType,
             ConversionValue = request.ConversionValue,
             GstRate = request.GstRate,
+            Quantity = request.Quantity > 0 ? request.Quantity : 1m,
             IsPlaceholder = false
         };
 

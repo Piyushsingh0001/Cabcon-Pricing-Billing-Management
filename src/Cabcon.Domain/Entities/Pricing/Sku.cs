@@ -21,6 +21,8 @@ public class Sku : BaseEntity
     /// <summary>Fraction (0.18 = 18%) GST rate.</summary>
     public decimal GstRate { get; set; }
 
+    public decimal Quantity { get; set; } = 1m;
+
     public bool IsPlaceholder { get; set; }
 
     public ICollection<SkuBomLine> BomLines { get; set; } = new List<SkuBomLine>();

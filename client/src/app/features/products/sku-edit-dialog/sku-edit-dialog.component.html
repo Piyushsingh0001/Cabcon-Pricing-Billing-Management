@@ -34,15 +34,16 @@
             <option value="MT">MT</option>
           </select>
         </div>
+
         <div class="input-group">
-          <div class="lbl">MFG method</div>
-          <select class="sel" formControlName="conversionType">
-            <option [value]="0">% of RM</option>
-            <option [value]="1">₹/kg</option>
-          </select>
+          <div class="lbl">Quantity</div>
+          <input class="in" type="number" formControlName="quantity" min="1" step="1" style="width: 80px; text-align: center;">
         </div>
         
-
+        <div class="input-group">
+          <div class="lbl">Total Price (₹)</div>
+          <input class="in" type="text" [value]="getTotalPrice() | number:'1.2-2'" readonly disabled style="width: 110px; font-weight: 700; color: var(--primary-color); background: #f8fafc; text-align: right;">
+        </div>
       </div>
 
       <div class="warning-banner" *ngIf="nameExistsError">
