@@ -622,6 +622,9 @@ export class DashboardComponent implements OnInit {
     if (!sku) return;
     const row = this.rows.find(r => r.skuId === skuId);
     const overrides = this.overridesMap.get(skuId);
+    const skuQty = row?.quantity ?? overrides?.rowQuantity ?? (sku.quantity && sku.quantity > 0 ? sku.quantity : 1);
+    const rmCost = row?.rmCost ?? (sku.rawMaterialCost ? (sku.rawMaterialCost * skuQty) : undefined);
+
     this.dialog.open(BomBreakupDialogComponent, {
       width: '95vw', maxWidth: '850px',
       data: {
@@ -639,7 +642,7 @@ export class DashboardComponent implements OnInit {
         globalMarginPct: this.globalMarginPct(),
         globalPacking: this.globalPacking(),
         globalFreight: this.globalFreight(),
-        quantity: row?.quantity ?? overrides?.rowQuantity ?? sku.quantity ?? 1,
+        quantity: row?.quantity ?? 1,
         rmCost: row?.rmCost,
         mfgCost: row?.mfgCost,
         offerExGst: row?.offerExGst

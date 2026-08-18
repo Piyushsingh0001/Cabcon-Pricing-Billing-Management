@@ -32,6 +32,7 @@ export interface BomLineDisplayItem {
   vendorName: string;
   pricingMethod: number;
   priceType: number;
+  pricingTypeName: string;
   methodLabel: string;
   formulaText: string;
   pricingBasis: string;
@@ -84,7 +85,7 @@ export class BomBreakupDialogComponent implements OnInit {
   ) {
     this.sku = data.sku;
     this.materials = data.materials || [];
-    this.userQuantity = data.quantity || this.sku?.quantity || 1;
+    this.userQuantity = data.quantity || (this.sku?.quantity && this.sku.quantity > 0 ? this.sku.quantity : 1);
   }
 
   ngOnInit() {
@@ -107,6 +108,7 @@ export class BomBreakupDialogComponent implements OnInit {
         let methodLabel = '';
         let formulaText = '';
         let pricingBasis = '';
+        let pricingTypeName = method === 1 ? 'Actual' : (method === 0 ? 'Average' : 'Manual');
 
         if (method === 1) { // Actual
           if (pType === 0) { // LME-linked
@@ -163,6 +165,7 @@ export class BomBreakupDialogComponent implements OnInit {
           vendorName: mat?.vendorName || '--',
           pricingMethod: method,
           priceType: pType,
+          pricingTypeName: pricingTypeName,
           methodLabel: methodLabel,
           formulaText: formulaText,
           pricingBasis: pricingBasis,
@@ -180,15 +183,40 @@ export class BomBreakupDialogComponent implements OnInit {
       });
     }
 
+    // Determine target total RM cost from Dashboard or SKU master
+    let targetTotal = this.data.rmCost !== undefined && this.data.rmCost > 0 
+      ? this.data.rmCost 
+      : (this.sku?.rawMaterialCost ? (this.sku.rawMaterialCost * this.userQuantity) : sumBatchCost);
+
+    if (targetTotal > 0 && sumBatchCost > 0 && Math.abs(sumBatchCost - targetTotal) > 0.01) {
+      const scaleRatio = targetTotal / sumBatchCost;
+      sumUnitCost = 0;
+      sumBatchCost = 0;
+
+      this.bomLinesDisplay.forEach(item => {
+        item.unitPrice = item.unitPrice * scaleRatio;
+        item.unitLineCost = item.unitLineCost * scaleRatio;
+        item.batchLineCost = item.batchLineCost * scaleRatio;
+        item.rateDisplay = `₹${item.unitPrice.toFixed(2)} / kg`;
+        item.lineCostDisplay = `₹${item.batchLineCost.toFixed(2)} (${this.userQuantity > 1 ? `₹${item.unitLineCost.toFixed(2)} × ${this.userQuantity}` : `₹${item.unitLineCost.toFixed(2)}`})`;
+
+        sumUnitCost += item.unitLineCost;
+        sumBatchCost += item.batchLineCost;
+      });
+    } else if (targetTotal > 0 && sumBatchCost === 0) {
+      sumBatchCost = targetTotal;
+      sumUnitCost = targetTotal / (this.userQuantity > 0 ? this.userQuantity : 1);
+    }
+
     this.totalUnitCost = sumUnitCost;
-    this.totalBatchCost = sumBatchCost;
+    this.totalBatchCost = targetTotal > 0 ? targetTotal : sumBatchCost;
     this.totalUnitWeight = sumUnitWeight;
     this.totalBatchWeight = sumBatchWeight;
 
     // Calculate RM Total
-    this.totalRmCost = this.data.rmCost !== undefined ? this.data.rmCost : (sumUnitCost * this.userQuantity);
+    this.totalRmCost = this.totalBatchCost;
     this.rmTotalFormula = this.userQuantity > 1
-      ? `₹${sumUnitCost.toFixed(2)} / ${this.sku.unit || 'unit'} × ${this.userQuantity} = ₹${this.totalRmCost.toFixed(2)}`
+      ? `₹${this.totalUnitCost.toFixed(2)} / ${this.sku?.unit || 'unit'} × ${this.userQuantity} = ₹${this.totalRmCost.toFixed(2)}`
       : `₹${this.totalRmCost.toFixed(2)}`;
 
     // Manufacturing Cost (MFG)
@@ -226,7 +254,7 @@ export class BomBreakupDialogComponent implements OnInit {
       const amt = (this.data.rowAmtOverride !== undefined ? this.data.rowAmtOverride : globalAmt);
       this.loadingModeLabel = '₹ per unit';
       this.loadingValueDisplay = `₹${amt.toFixed(2)} / unit`;
-      this.loadingCost = amt * this.userQuantity;
+      this.loadingCost = amt;
     } else if (loadingMode === 2) {
       const overhead = this.data.globalOverheadPct ?? 0.05;
       const margin = this.data.globalMarginPct ?? 0.05;
@@ -234,7 +262,7 @@ export class BomBreakupDialogComponent implements OnInit {
       const freight = this.data.globalFreight ?? 3;
       this.loadingModeLabel = 'Itemised';
       this.loadingValueDisplay = `Overhead ${Math.round(overhead*100)}% + Margin ${Math.round(margin*100)}% + Packing ₹${packing} + Freight ₹${freight}`;
-      this.loadingCost = (this.totalRmCost * (overhead + margin)) + ((packing + freight) * this.userQuantity);
+      this.loadingCost = (this.totalRmCost * (overhead + margin)) + packing + freight;
     } else {
       this.loadingModeLabel = 'None';
       this.loadingValueDisplay = '0';
@@ -247,7 +275,7 @@ export class BomBreakupDialogComponent implements OnInit {
     } else if (this.data.offerExGst !== undefined && this.data.offerExGst > 0) {
       this.offerExGst = this.data.offerExGst;
     } else {
-      this.offerExGst = (this.mfgCost + this.loadingCost) / (this.userQuantity > 0 ? this.userQuantity : 1);
+      this.offerExGst = this.totalRmCost + this.mfgAddition + this.loadingCost;
     }
 
     this.totalAmount = this.offerExGst * this.userQuantity;
