@@ -90,6 +90,7 @@ export class DashboardComponent implements OnInit {
   // Selected SKUs to hold overrides state
   public overridesMap = new Map<number, {
     rowMfgOverride?: number;
+    rowConversionTypeOverride?: number;
     rowPctOverride?: number;
     rowAmtOverride?: number;
     rowOfferOverride?: number;
@@ -224,13 +225,19 @@ export class DashboardComponent implements OnInit {
       groups[cat][name].push(sku);
     });
     
+    const isSearching = !!(this.searchQuery && this.searchQuery.trim().length > 0);
+
     this.groupedSkusList = Object.keys(groups).map(categoryName => {
       const productNames = Object.keys(groups[categoryName]);
       const products = productNames.map(productName => ({
         productName,
         items: groups[categoryName][productName]
       }));
-      this.collapsedCategories.add(categoryName);
+      if (isSearching) {
+        this.collapsedCategories.delete(categoryName);
+      } else {
+        this.collapsedCategories.add(categoryName);
+      }
       return { categoryName, products };
     });
   }
@@ -286,6 +293,10 @@ export class DashboardComponent implements OnInit {
   }
 
   public getSkuConversionType(skuId: number): number {
+    const overrides = this.overridesMap.get(skuId);
+    if (overrides && overrides.rowConversionTypeOverride !== undefined) {
+      return overrides.rowConversionTypeOverride;
+    }
     const sku = this.skus.find(s => s.id === skuId);
     return sku ? sku.conversionType : 0;
   }
@@ -308,11 +319,6 @@ export class DashboardComponent implements OnInit {
       }
     }
     return this.materials.filter(m => usedMatIds.has(m.id));
-  }
-
-  public getSkuConversionValue(skuId: number): number {
-    const sku = this.skus.find(s => s.id === skuId);
-    return sku ? sku.conversionValue : 0;
   }
 
   public loadDraft() {
@@ -372,10 +378,15 @@ export class DashboardComponent implements OnInit {
 
   public getMfgDisplayValue(skuId: number): number {
     const overrides = this.overridesMap.get(skuId);
-    const val = (overrides && overrides.rowMfgOverride !== undefined) 
-      ? overrides.rowMfgOverride 
-      : this.getSkuConversionValue(skuId);
-    return this.getSkuConversionType(skuId) === 0 ? val * 100 : val;
+    const convType = this.getSkuConversionType(skuId);
+    if (overrides && overrides.rowMfgOverride !== undefined) {
+      const val = overrides.rowMfgOverride;
+      if (convType === 0) {
+        return Math.min(100, Math.round(val * 100 * 100) / 100);
+      }
+      return val;
+    }
+    return 0;
   }
 
   public onMfgOverrideChange(skuId: number, val: any) {
@@ -383,8 +394,30 @@ export class DashboardComponent implements OnInit {
     if (val === null || val === undefined || val === '') {
       override.rowMfgOverride = undefined;
     } else {
-      const numVal = Number(val);
-      override.rowMfgOverride = this.getSkuConversionType(skuId) === 0 ? numVal / 100 : numVal;
+      let numVal = Number(val);
+      if (isNaN(numVal)) numVal = 0;
+      if (this.getSkuConversionType(skuId) === 0) {
+        if (numVal > 100) numVal = 100;
+        if (numVal < 0) numVal = 0;
+        override.rowMfgOverride = numVal / 100;
+      } else {
+        override.rowMfgOverride = numVal;
+      }
+    }
+    this.overridesMap.set(skuId, override);
+    this.recalculate();
+  }
+
+  public onMfgTypeChange(skuId: number, val: any) {
+    const override = this.overridesMap.get(skuId) || {};
+    const newType = Number(val);
+    override.rowConversionTypeOverride = newType;
+    const currentDisplay = this.getMfgDisplayValue(skuId);
+    if (newType === 0) {
+      let pct = currentDisplay > 100 ? 100 : currentDisplay;
+      override.rowMfgOverride = pct / 100;
+    } else {
+      override.rowMfgOverride = currentDisplay;
     }
     this.overridesMap.set(skuId, override);
     this.recalculate();
@@ -452,7 +485,8 @@ export class DashboardComponent implements OnInit {
       rowMfgOverride: value.rowMfgOverride,
       rowPctOverride: value.rowPctOverride,
       rowAmtOverride: value.rowAmtOverride,
-      rowOfferOverride: value.rowOfferOverride
+      rowOfferOverride: value.rowOfferOverride,
+      rowConversionTypeOverride: value.rowConversionTypeOverride
     }));
 
     const payload = {
@@ -482,11 +516,45 @@ export class DashboardComponent implements OnInit {
       next: (res) => {
         this.rows = res.map(item => {
           const overrides = this.overridesMap.get(item.skuId);
-          const quantity = overrides?.rowQuantity ?? 1;
+          const sku = this.skus.find(s => s.id === item.skuId);
+          const skuQty = sku?.quantity && sku.quantity > 0 ? sku.quantity : 1;
+          const userQty = overrides?.rowQuantity ?? 1;
+          const convType = this.getSkuConversionType(item.skuId);
           
-          let offerExGst = item.offerExGst;
+          let convVal = overrides?.rowMfgOverride ?? 0;
+          if (convType === 0 && convVal > 1) {
+            convVal = 1; // Cap at 100% max
+          }
+
+          const totalRmCost = item.rmCost * skuQty;
+          const totalBomWeight = sku && sku.bomLines ? sku.bomLines.reduce((acc, b) => acc + (b.weightKg || 0), 0) : 0;
+
+          let rowMfgCost = 0;
+          if (convType === 0) {
+            rowMfgCost = totalRmCost * (1 + convVal);
+          } else {
+            rowMfgCost = totalRmCost + (totalBomWeight * convVal);
+          }
+
+          let offerExGst = 0;
+          const mode = this.loadingMode();
           if (overrides?.rowOfferOverride !== undefined) {
             offerExGst = overrides.rowOfferOverride;
+          } else if (mode === 0) {
+            const pct = overrides?.rowPctOverride ?? this.globalPct();
+            // Loading cost calculated on RM Total
+            offerExGst = rowMfgCost + (totalRmCost * pct);
+          } else if (mode === 1) {
+            const amt = overrides?.rowAmtOverride ?? this.globalAmt();
+            offerExGst = rowMfgCost + (amt * skuQty);
+          } else if (mode === 2) {
+            const overhead = this.globalOverheadPct();
+            const margin = this.globalMarginPct();
+            const packing = this.globalPacking();
+            const freight = this.globalFreight();
+            offerExGst = rowMfgCost + (totalRmCost * (overhead + margin)) + (packing + freight) * skuQty;
+          } else {
+            offerExGst = rowMfgCost;
           }
 
           return {
@@ -494,15 +562,15 @@ export class DashboardComponent implements OnInit {
             categoryName: item.categoryName,
             skuName: item.skuName,
             spec: item.spec,
-            unit: item.unit,
-            rmCost: item.rmCost,
-            mfgCost: item.mfgCost,
+            unit: `${skuQty} ${sku?.unit || item.unit}`,
+            rmCost: totalRmCost,
+            mfgCost: rowMfgCost,
             rowMfgOverride: overrides?.rowMfgOverride,
             rowPctOverride: overrides?.rowPctOverride,
             rowAmtOverride: overrides?.rowAmtOverride,
             rowOfferOverride: overrides?.rowOfferOverride,
             offerExGst: offerExGst,
-            quantity: quantity
+            quantity: userQty
           };
         });
         this.cdr.detectChanges();

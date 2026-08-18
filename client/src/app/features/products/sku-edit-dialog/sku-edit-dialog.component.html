@@ -37,7 +37,7 @@
 
         <div class="input-group">
           <div class="lbl">Quantity</div>
-          <input class="in" type="number" formControlName="quantity" min="1" step="1" style="width: 80px; text-align: center;">
+          <input class="in" type="number" formControlName="quantity" min="1" step="1" style="width: 80px; text-align: right;">
         </div>
         
         <div class="input-group">
@@ -56,56 +56,72 @@
         <div class="bom-line-card" *ngFor="let line of bomLines.controls; let idx = index" [formGroupName]="idx">
           
           <div class="bom-line-row">
-            <select class="sel" formControlName="materialName" (change)="onMaterialNameChange(idx)">
+            <select class="sel" formControlName="materialName" (change)="onMaterialNameChange(idx)" style="width: 170px;">
               <option value="" disabled>Select Material</option>
               <option *ngFor="let name of uniqueMaterialNames" [value]="name">{{ name }}</option>
             </select>
-            <select class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)">
+            <select class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)" style="width: 140px;">
               <option value="" disabled>Select Vendor</option>
               <option *ngFor="let vendor of getAvailableVendors(idx)" [value]="vendor">{{ vendor }}</option>
             </select>
-         
-            <select class="sel" formControlName="priceType" (change)="onPricingMethodChange(idx)" style="width: 110px;">
-              <option [value]="0">LME-linked</option>
-              <option [value]="1">Direct ₹/kg</option>
-            </select>
-               <input class="in" type="number" formControlName="weightKg" placeholder="Qty (kg)" style="width: 80px;" min="0" step="0.01" title="Quantity (kg)">
+
+            <!-- Radio buttons for pricing method -->
+            <div style="display: flex; gap: 8px; align-items: center; font-size: 11px; background: #fff; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border-glass);">
+              <label style="cursor: pointer;"><input type="radio" formControlName="pricingMethod" [value]="0" (change)="onPricingMethodChange(idx)"> Average</label>
+              <label style="cursor: pointer;"><input type="radio" formControlName="pricingMethod" [value]="1" (change)="onPricingMethodChange(idx)"> Actual</label>
+              <label style="cursor: pointer;"><input type="radio" formControlName="pricingMethod" [value]="2" (change)="onPricingMethodChange(idx)"> Manual</label>
+            </div>
           </div>
 
           <div class="bom-line-row" style="margin-top: 8px;">
-            <!-- Radio buttons for pricing method -->
-            <div style="display: flex; gap: 8px; align-items: center; font-size: 11px; background: #fff; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border-glass);">
-              <label><input type="radio" formControlName="pricingMethod" [value]="0" (change)="onPricingMethodChange(idx)"> Average</label>
-              <label><input type="radio" formControlName="pricingMethod" [value]="1" (change)="onPricingMethodChange(idx)"> Actual</label>
-              <label><input type="radio" formControlName="pricingMethod" [value]="2" (change)="onPricingMethodChange(idx)"> Manual</label>
-            </div>
+            <!-- LME-linked / Direct dropdown (equal width: 170px) -->
+            <select *ngIf="line.get('pricingMethod')?.value === 0 || line.get('pricingMethod')?.value === 1"
+                    class="sel" formControlName="priceType" (change)="onPricingMethodChange(idx)" style="width: 170px;">
+              <option [value]="0">LME-linked</option>
+              <option [value]="1">Direct ₹/kg</option>
+            </select>
 
-            <!-- Dynamic input based on Pricing Method -->
-            <div *ngIf="line.get('pricingMethod')?.value === 0" style="display: flex; gap: 4px; align-items: center;">
-              <select class="sel" formControlName="pricingMonth" (change)="onPricingMethodChange(idx)" style="width: 132px;">
+            <!-- Dynamic Value / Rate based on Pricing Method -->
+            <div *ngIf="line.get('pricingMethod')?.value === 0" style="display: flex; gap: 8px; align-items: center; width: 360px;">
+              <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Rate ₹/kg:</span>
+              <select class="sel" formControlName="pricingMonth" (change)="onPricingMethodChange(idx)" style="flex: 1; min-width: 140px;">
                 <option [value]="0">This month avg</option>
                 <option [value]="1">Prev month avg</option>
               </select>
-              <span class="bom-mult-text">₹{{ line.get('manualPrice')?.value | number:'1.2-2' }}</span>
+              <span class="bom-mult-text" style="font-weight: 600; white-space: nowrap;">₹{{ line.get('manualPrice')?.value | number:'1.2-2' }}</span>
             </div>
 
-            <div *ngIf="line.get('pricingMethod')?.value === 1">
-              <span class="bom-mult-text">₹{{ getLandedCost(line.get('materialId')?.value, line.get('priceType')?.value) | number:'1.2-2' }}</span>
+            <div *ngIf="line.get('pricingMethod')?.value === 1" style="display: flex; gap: 4px; align-items: center;">
+              <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">Rate ₹/kg:</span>
+              <span class="bom-mult-text" style="font-weight: 600;">₹{{ getLandedCost(line.get('materialId')?.value, line.get('priceType')?.value) | number:'1.2-2' }}</span>
             </div>
 
-            <div *ngIf="line.get('pricingMethod')?.value === 2">
-              <input class="in" style="width: 70px; text-align: right;" type="number" formControlName="manualPrice" placeholder="Price">
+            <div *ngIf="line.get('pricingMethod')?.value === 2" style="display: flex; gap: 6px; align-items: center; width: 170px;">
+              <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Rate ₹/kg:</span>
+              <input class="in" style="flex: 1; min-width: 0; text-align: right;" type="number" formControlName="manualPrice" placeholder="0.00" min="0" step="0.01">
             </div>
-
-            <span class="bom-mult-text" style="font-weight: 500;">
-              Total: <span style="color: var(--primary-color);">₹{{ getCalculatedBomLineCost(idx) | number:'1.2-2' }}</span>
-            </span>
           </div>
 
-          <div class="bom-line-actions">
-            <button class="linkbtn-remove" type="button" (click)="removeBomLine(idx)" [disabled]="bomLines.controls.length <= 1" [class.disabled]="bomLines.controls.length <= 1">
-                <mat-icon>cancel</mat-icon>
-              </button>
+          <!-- Line 3: Qty (kg), Total, and Remove button -->
+          <div class="bom-line-actions" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 8px; margin-top: 8px;">
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <!-- Qty (kg) container matching Select Material boundary (170px) -->
+              <div style="display: flex; gap: 6px; align-items: center; width: 170px;">
+                <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Qty (kg):</span>
+                <input class="in" type="number" formControlName="weightKg" placeholder="Qty (kg)" style="flex: 1; min-width: 0; text-align: right;" min="0" step="0.01" title="Quantity (kg)">
+              </div>
+
+              <!-- Total container matching Select Vendor right boundary (140px) -->
+              <div style="display: flex; gap: 4px; align-items: center; width: 140px;">
+                <span class="bom-mult-text" style="font-weight: 600; white-space: nowrap;">
+                  Total: <span style="color: var(--primary-color);">₹{{ getCalculatedBomLineCost(idx) | number:'1.2-2' }}</span>
+                </span>
+              </div>
+            </div>
+
+            <button class="linkbtn-remove" type="button" (click)="removeBomLine(idx)" [disabled]="bomLines.controls.length <= 1" [class.disabled]="bomLines.controls.length <= 1" title="Remove line">
+              <mat-icon style="font-size: 20px; width: 20px; height: 20px;">cancel</mat-icon>
+            </button>
           </div>
         </div>
 

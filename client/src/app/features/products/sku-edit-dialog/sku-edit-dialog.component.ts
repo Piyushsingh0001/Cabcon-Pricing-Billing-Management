@@ -53,9 +53,6 @@ export class SkuEditDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public sku: any // SkuDetails
   ) {
     const isGstPct = sku ? Math.round(sku.gstRate * 100) : 18;
-    const isMfgDisplay = sku
-      ? (sku.conversionType === 0 ? sku.conversionValue * 100 : sku.conversionValue)
-      : 8;
 
     this.form = this.fb.group({
       categoryName: [{value: sku?.categoryName || 'New category', disabled: !sku?.isGlobalAdd}, Validators.required],
@@ -64,7 +61,7 @@ export class SkuEditDialogComponent implements OnInit {
       unit: [sku?.unit || 'coil', Validators.required],
       quantity: [sku?.quantity || 1, [Validators.required, Validators.min(1)]],
       conversionType: [sku?.conversionType ?? 0],
-      conversionValue: [isMfgDisplay],
+      conversionValue: [0],
       gstPercent: [isGstPct],
       bomLines: this.fb.array([], Validators.required)
     });
@@ -361,9 +358,7 @@ export class SkuEditDialogComponent implements OnInit {
         spec: formVal.spec,
         unit: formVal.unit,
         conversionType: Number(formVal.conversionType ?? 0),
-        conversionValue: Number(formVal.conversionType) === 0
-          ? Number(formVal.conversionValue || 0) / 100
-          : Number(formVal.conversionValue || 0),
+        conversionValue: 0,
         gstRate: Number(formVal.gstPercent || 18) / 100,
         quantity: Number(formVal.quantity || 1),
         bomLines: formVal.bomLines.map((line: any, index: number) => ({
@@ -385,7 +380,7 @@ export class SkuEditDialogComponent implements OnInit {
         next: () => {
           this.loading.set(false);
           this.snackBar.open(this.sku && this.sku.id ? 'Product updated successfully.' : 'Product created successfully.', 'Close', { duration: 3000 });
-          this.dialogRef.close(true);
+          this.dialogRef.close(categoryNameInput);
         },
         error: (err: any) => {
           this.loading.set(false);

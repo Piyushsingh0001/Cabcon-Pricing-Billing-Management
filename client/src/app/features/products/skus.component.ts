@@ -48,9 +48,8 @@ export class SkusComponent implements OnInit {
   public loading = signal(false);
   public searchQuery = '';
 
-  // Inline editing state
   public editingSkuId: number | null = null;
-  public editingSku: any = null; // SkuDetails formatted for inline inputs
+  public editingSku: any = null;
   public localSelections: { [key: number]: boolean } = {};
   public groupedSkusList: { categoryName: string, products: { productName: string, items: Sku[] }[] }[] = [];
   public collapsedCategories = new Set<string>();
@@ -233,13 +232,19 @@ export class SkusComponent implements OnInit {
       groups[cat][name].push(sku);
     });
     
+    const isSearching = !!(this.searchQuery && this.searchQuery.trim().length > 0);
+
     this.groupedSkusList = Object.keys(groups).map(categoryName => {
       const productNames = Object.keys(groups[categoryName]);
       const products = productNames.map(productName => ({
         productName,
         items: groups[categoryName][productName]
       }));
-      this.collapsedCategories.add(categoryName);
+      if (isSearching) {
+        this.collapsedCategories.delete(categoryName);
+      } else {
+        this.collapsedCategories.add(categoryName);
+      }
       return { categoryName, products };
     });
   }
@@ -250,9 +255,9 @@ export class SkusComponent implements OnInit {
       name: productName || 'Item',
       spec: 'spec',
       unit: 'km',
-      conversionType: 0, // % of RM
-      conversionValue: 0.08, // 8%
-      gstRate: 0.18, // 18%
+      conversionType: 0,
+      conversionValue: 0.08,
+      gstRate: 0.18,
       isAddSpec: !!productName,
       isGlobalAdd: !categoryName
     };
@@ -264,7 +269,11 @@ export class SkusComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        const catToOpen = typeof result === 'string' ? result : categoryName;
         this.loadSkus();
+        if (catToOpen) {
+          setTimeout(() => this.collapsedCategories.delete(catToOpen), 50);
+        }
       }
     });
   }
@@ -292,7 +301,11 @@ export class SkusComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
+            const catToOpen = typeof result === 'string' ? result : sku?.categoryName;
             this.loadSkus();
+            if (catToOpen) {
+              setTimeout(() => this.collapsedCategories.delete(catToOpen), 50);
+            }
           }
         });
       },
@@ -315,17 +328,15 @@ export class SkusComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(confirmed => {
-      if (confirmed) {
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
         this.pricingService.deleteSku(skuId).subscribe({
           next: () => {
-            this.snackBar.open('Product deleted successfully.', 'Close', { duration: 3000 });
-            this.editingSkuId = null;
-            this.editingSku = null;
+            this.snackBar.open('Product spec deleted.', 'Close', { duration: 3000 });
             this.loadSkus();
           },
           error: () => {
-            this.snackBar.open('Failed to delete SKU.', 'Close', { duration: 3000 });
+            this.snackBar.open('Failed to delete product spec.', 'Close', { duration: 3000 });
           }
         });
       }
@@ -379,4 +390,3 @@ export class SkusComponent implements OnInit {
     this.loadSkus();
   }
 }
-

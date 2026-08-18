@@ -53,6 +53,10 @@
   background: #ffffff;
   outline: none;
   transition: border-color 0.2s ease;
+
+  &[type="number"] {
+    text-align: right;
+  }
 }
 
 .in:focus {

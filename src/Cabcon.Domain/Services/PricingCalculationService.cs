@@ -46,14 +46,21 @@ public class PricingCalculationService
     /// HTML: skuMfg(sku, mfgOverride). When mfgOverrideValue is supplied it stands in
     /// for sku.ConversionValue exactly as the HTML's per-row "mfg" override input does.
     /// </summary>
-    public decimal ManufacturingCost(Sku sku, decimal? mfgOverrideValue = null)
+    public decimal ManufacturingCost(Sku sku, decimal? mfgOverrideValue = null, ConversionType? convTypeOverride = null)
     {
         var rm = RawMaterialCost(sku);
-        var conv = mfgOverrideValue ?? sku.ConversionValue;
+        var convType = convTypeOverride ?? sku.ConversionType;
+        var conv = mfgOverrideValue ?? (sku.ConversionType == ConversionType.Percentage && convType == ConversionType.Percentage ? sku.ConversionValue : (convType == ConversionType.Percentage ? sku.ConversionValue / 100m : sku.ConversionValue));
 
-        return sku.ConversionType == ConversionType.Percentage
-            ? rm * (1 + conv)
-            : rm + TotalBomWeight(sku) * conv;
+        if (convType == ConversionType.Percentage)
+        {
+            if (conv > 1m) conv = 1m;
+            return rm * (1 + conv);
+        }
+        else
+        {
+            return rm + TotalBomWeight(sku) * conv;
+        }
     }
 
     /// <summary>
@@ -72,17 +79,19 @@ public class PricingCalculationService
         decimal? rowMfgOverride = null,
         decimal? rowPctOverride = null,
         decimal? rowAmtOverride = null,
-        decimal? rowOfferOverride = null)
+        decimal? rowOfferOverride = null,
+        ConversionType? convTypeOverride = null)
     {
         if (rowOfferOverride.HasValue) return rowOfferOverride.Value;
 
-        var mfg = ManufacturingCost(sku, rowMfgOverride);
+        var rm = RawMaterialCost(sku);
+        var mfg = ManufacturingCost(sku, rowMfgOverride, convTypeOverride);
 
         return mode switch
         {
-            LoadingMode.SimplePercentage => mfg * (1 + (rowPctOverride ?? globalPct)),
+            LoadingMode.SimplePercentage => mfg + (rm * (rowPctOverride ?? globalPct)),
             LoadingMode.SimpleAmount => mfg + (rowAmtOverride ?? globalAmt),
-            LoadingMode.Itemised => mfg * (1 + globalOverheadPct + globalMarginPct) + globalPacking + globalFreight,
+            LoadingMode.Itemised => mfg + (rm * (globalOverheadPct + globalMarginPct)) + globalPacking + globalFreight,
             _ => mfg
         };
     }

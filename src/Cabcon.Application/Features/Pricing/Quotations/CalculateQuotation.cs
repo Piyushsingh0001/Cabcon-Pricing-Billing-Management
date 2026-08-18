@@ -15,6 +15,7 @@ public record QuotationItemInput
     public decimal? RowPctOverride { get; init; }
     public decimal? RowAmtOverride { get; init; }
     public decimal? RowOfferOverride { get; init; }
+    public ConversionType? RowConversionTypeOverride { get; init; }
 }
 
 public record CalculateQuotationCommand : IRequest<IReadOnlyList<CalculatedQuotationItemDto>>
@@ -72,7 +73,7 @@ public class CalculateQuotationCommandHandler : IRequestHandler<CalculateQuotati
             }
 
             var rm = _pricingService.RawMaterialCost(sku);
-            var mfg = _pricingService.ManufacturingCost(sku, itemInput.RowMfgOverride);
+            var mfg = _pricingService.ManufacturingCost(sku, itemInput.RowMfgOverride, itemInput.RowConversionTypeOverride);
 
             var offerExGst = _pricingService.EffectiveOfferExGst(
                 sku,
@@ -86,7 +87,8 @@ public class CalculateQuotationCommandHandler : IRequestHandler<CalculateQuotati
                 itemInput.RowMfgOverride,
                 itemInput.RowPctOverride,
                 itemInput.RowAmtOverride,
-                itemInput.RowOfferOverride
+                itemInput.RowOfferOverride,
+                itemInput.RowConversionTypeOverride
             );
 
             results.Add(new CalculatedQuotationItemDto
