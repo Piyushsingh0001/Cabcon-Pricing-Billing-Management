@@ -439,6 +439,25 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  public getCalculatedLoadingCost(element: CalculatorRow): number {
+    const overrides = this.overridesMap.get(element.skuId);
+    const mode = this.loadingMode();
+    if (mode === 0) {
+      const pct = overrides?.rowPctOverride ?? this.globalPct();
+      return element.rmCost * pct;
+    } else if (mode === 1) {
+      const amt = overrides?.rowAmtOverride ?? this.globalAmt();
+      return amt;
+    } else if (mode === 2) {
+      const overhead = this.globalOverheadPct();
+      const margin = this.globalMarginPct();
+      const packing = this.globalPacking();
+      const freight = this.globalFreight();
+      return element.rmCost * (overhead + margin) + packing + freight;
+    }
+    return 0;
+  }
+
   public onRowLoadingChange(skuId: number, val: any) {
     const override = this.overridesMap.get(skuId) || {};
     if (val === null || val === undefined || val === '') {
@@ -544,18 +563,18 @@ export class DashboardComponent implements OnInit {
           } else if (mode === 0) {
             const pct = overrides?.rowPctOverride ?? this.globalPct();
             // Loading cost calculated on RM Total
-            offerExGst = rowMfgCost + (totalRmCost * pct);
+            offerExGst = totalRmCost + rowMfgCost + (totalRmCost * pct);
           } else if (mode === 1) {
             const amt = overrides?.rowAmtOverride ?? this.globalAmt();
-            offerExGst = rowMfgCost + (amt * skuQty);
+            offerExGst = totalRmCost + rowMfgCost + amt;
           } else if (mode === 2) {
             const overhead = this.globalOverheadPct();
             const margin = this.globalMarginPct();
             const packing = this.globalPacking();
             const freight = this.globalFreight();
-            offerExGst = rowMfgCost + (totalRmCost * (overhead + margin)) + (packing + freight) * skuQty;
+            offerExGst = totalRmCost + rowMfgCost + (totalRmCost * (overhead + margin)) + packing + freight;
           } else {
-            offerExGst = rowMfgCost;
+            offerExGst = totalRmCost + rowMfgCost;
           }
 
           return {
