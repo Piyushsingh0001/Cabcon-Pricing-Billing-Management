@@ -53,6 +53,7 @@ export class SkusComponent implements OnInit {
   public localSelections: { [key: number]: boolean } = {};
   public groupedSkusList: { categoryName: string, products: { productName: string, items: Sku[] }[] }[] = [];
   public collapsedCategories = new Set<string>();
+  private hasInitializedGroups = false;
 
   public get totalSelections(): number {
     return Object.values(this.localSelections).filter(Boolean).length;
@@ -242,11 +243,13 @@ export class SkusComponent implements OnInit {
       }));
       if (isSearching) {
         this.collapsedCategories.delete(categoryName);
-      } else {
+      } else if (!this.hasInitializedGroups) {
         this.collapsedCategories.add(categoryName);
       }
       return { categoryName, products };
     });
+
+    this.hasInitializedGroups = true;
   }
 
   public addSku(categoryName?: string, productName?: string) {
@@ -270,10 +273,10 @@ export class SkusComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const catToOpen = typeof result === 'string' ? result : categoryName;
-        this.loadSkus();
         if (catToOpen) {
-          setTimeout(() => this.collapsedCategories.delete(catToOpen), 50);
+          this.collapsedCategories.delete(catToOpen);
         }
+        this.loadSkus();
       }
     });
   }
@@ -302,10 +305,10 @@ export class SkusComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
             const catToOpen = typeof result === 'string' ? result : sku?.categoryName;
-            this.loadSkus();
             if (catToOpen) {
-              setTimeout(() => this.collapsedCategories.delete(catToOpen), 50);
+              this.collapsedCategories.delete(catToOpen);
             }
+            this.loadSkus();
           }
         });
       },

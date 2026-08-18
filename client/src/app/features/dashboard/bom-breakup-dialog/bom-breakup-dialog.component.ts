@@ -120,7 +120,7 @@ export class BomBreakupDialogComponent implements OnInit {
             methodLabel = 'Actual (LME-linked)';
             pricingBasis = 'LME-linked';
             if (lme > 0 || premium > 0 || fx > 0 || freight > 0) {
-              formulaText = `(($${lme.toLocaleString()} + $${premium}) × ${fx} + ₹${freight.toLocaleString()}) / 1000`;
+              formulaText = `((₹${lme.toLocaleString()} + ₹${premium}) × ${fx} + ₹${freight.toLocaleString()}) / 1000`;
             } else {
               formulaText = `((LME + Premium) × FX + Freight) / 1000`;
             }

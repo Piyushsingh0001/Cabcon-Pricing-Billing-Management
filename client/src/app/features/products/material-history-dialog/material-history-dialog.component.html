@@ -82,7 +82,7 @@
           <th mat-header-cell *matHeaderCellDef>LME Rate</th>
           <td mat-cell *matCellDef="let log">
             <span *ngIf="log.type === 0 && log.lmeUsdPerMt != null">
-              ${{ log.lmeUsdPerMt | number:'1.2-2' }}/MT
+              ₹{{ log.lmeUsdPerMt | number:'1.2-2' }}/MT
             </span>
             <span *ngIf="log.type !== 0 || log.lmeUsdPerMt == null" class="muted-text">-</span>
           </td>

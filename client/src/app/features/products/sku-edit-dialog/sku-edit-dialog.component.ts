@@ -364,10 +364,10 @@ export class SkuEditDialogComponent implements OnInit {
         bomLines: formVal.bomLines.map((line: any, index: number) => ({
           materialId: Number(line.materialId),
           weightKg: Number(line.weightKg || 0),
-          priceType: Number(line.priceType || 0),
-          pricingMethod: Number(line.pricingMethod || 1),
-          pricingMonth: line.pricingMethod === 0 ? Number(line.pricingMonth || 0) : null,
-          manualPrice: line.pricingMethod === 2 || line.pricingMethod === 0 ? Number(line.manualPrice || 0) : null,
+          priceType: Number(line.priceType ?? 0),
+          pricingMethod: Number(line.pricingMethod ?? 1),
+          pricingMonth: Number(line.pricingMethod ?? 1) === 0 ? Number(line.pricingMonth ?? 0) : null,
+          manualPrice: (Number(line.pricingMethod ?? 1) === 2 || Number(line.pricingMethod ?? 1) === 0) ? Number(line.manualPrice || 0) : null,
           lineOrder: index + 1
         }))
       };
