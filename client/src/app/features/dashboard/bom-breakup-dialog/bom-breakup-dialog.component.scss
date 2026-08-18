@@ -52,6 +52,30 @@
   align-items: center;
 }
 
+/* Badge Method Styling */
+.badge-method {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge-actual {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.badge-avg {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.badge-manual {
+  background: #fef3c7;
+  color: #b45309;
+}
+
 /* Table styling for dialog */
 .table-scroll-wrapper {
   overflow-x: auto;
@@ -72,16 +96,15 @@
   color: var(--text-secondary);
   font-weight: 600;
   padding: 10px 12px;
-  text-align: center;
   border-bottom: 1px solid var(--border-glass);
   white-space: nowrap;
 }
 
 .tbl td {
   padding: 10px 12px;
-  text-align: center;
   border-bottom: 1px solid #f1f5f9;
   color: var(--text-primary);
+  vertical-align: middle;
 }
 
 .tbl tbody tr {

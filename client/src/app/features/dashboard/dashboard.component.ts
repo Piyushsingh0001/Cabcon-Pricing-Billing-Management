@@ -22,6 +22,7 @@ interface CalculatorRow {
   unit: string;
   rmCost: number;
   mfgCost: number;
+  totalBomWeight: number;
   rowMfgOverride?: number;
   rowPctOverride?: number;
   rowAmtOverride?: number;
@@ -531,9 +532,9 @@ export class DashboardComponent implements OnInit {
 
           let rowMfgCost = 0;
           if (convType === 0) {
-            rowMfgCost = totalRmCost * (1 + convVal);
+            rowMfgCost = (totalRmCost * convVal);
           } else {
-            rowMfgCost = totalRmCost + (totalBomWeight * convVal);
+            rowMfgCost = totalBomWeight * convVal;
           }
 
           let offerExGst = 0;
@@ -565,6 +566,7 @@ export class DashboardComponent implements OnInit {
             unit: `${skuQty} ${sku?.unit || item.unit}`,
             rmCost: totalRmCost,
             mfgCost: rowMfgCost,
+            totalBomWeight: totalBomWeight,
             rowMfgOverride: overrides?.rowMfgOverride,
             rowPctOverride: overrides?.rowPctOverride,
             rowAmtOverride: overrides?.rowAmtOverride,
@@ -599,9 +601,30 @@ export class DashboardComponent implements OnInit {
   public viewBomBreakup(skuId: number) {
     const sku = this.skus.find(s => s.id === skuId);
     if (!sku) return;
+    const row = this.rows.find(r => r.skuId === skuId);
+    const overrides = this.overridesMap.get(skuId);
     this.dialog.open(BomBreakupDialogComponent, {
-      width: '95vw', maxWidth: '650px',
-      data: { sku, materials: this.materials }
+      width: '95vw', maxWidth: '850px',
+      data: {
+        sku,
+        materials: this.materials,
+        rowMfgOverride: overrides?.rowMfgOverride,
+        rowConversionTypeOverride: overrides?.rowConversionTypeOverride,
+        rowPctOverride: overrides?.rowPctOverride,
+        rowAmtOverride: overrides?.rowAmtOverride,
+        rowOfferOverride: overrides?.rowOfferOverride,
+        loadingMode: this.loadingMode(),
+        globalPct: this.globalPct(),
+        globalAmt: this.globalAmt(),
+        globalOverheadPct: this.globalOverheadPct(),
+        globalMarginPct: this.globalMarginPct(),
+        globalPacking: this.globalPacking(),
+        globalFreight: this.globalFreight(),
+        quantity: row?.quantity ?? overrides?.rowQuantity ?? sku.quantity ?? 1,
+        rmCost: row?.rmCost,
+        mfgCost: row?.mfgCost,
+        offerExGst: row?.offerExGst
+      }
     });
   }
 
