@@ -622,31 +622,39 @@ export class DashboardComponent implements OnInit {
     if (!sku) return;
     const row = this.rows.find(r => r.skuId === skuId);
     const overrides = this.overridesMap.get(skuId);
-    const skuQty = row?.quantity ?? overrides?.rowQuantity ?? (sku.quantity && sku.quantity > 0 ? sku.quantity : 1);
-    const rmCost = row?.rmCost ?? (sku.rawMaterialCost ? (sku.rawMaterialCost * skuQty) : undefined);
 
-    this.dialog.open(BomBreakupDialogComponent, {
-      width: '95vw', maxWidth: '850px',
-      data: {
-        sku,
-        materials: this.materials,
-        rowMfgOverride: overrides?.rowMfgOverride,
-        rowConversionTypeOverride: overrides?.rowConversionTypeOverride,
-        rowPctOverride: overrides?.rowPctOverride,
-        rowAmtOverride: overrides?.rowAmtOverride,
-        rowOfferOverride: overrides?.rowOfferOverride,
-        loadingMode: this.loadingMode(),
-        globalPct: this.globalPct(),
-        globalAmt: this.globalAmt(),
-        globalOverheadPct: this.globalOverheadPct(),
-        globalMarginPct: this.globalMarginPct(),
-        globalPacking: this.globalPacking(),
-        globalFreight: this.globalFreight(),
-        quantity: row?.quantity ?? 1,
-        rmCost: row?.rmCost,
-        mfgCost: row?.mfgCost,
-        offerExGst: row?.offerExGst
-      }
+    const openModal = (targetSku: Sku) => {
+      const quantityToUse = row?.quantity ?? overrides?.rowQuantity ?? (targetSku.quantity && targetSku.quantity > 0 ? targetSku.quantity : 1);
+      const rmCostToUse = row?.rmCost ?? (targetSku.rawMaterialCost ? (targetSku.rawMaterialCost * quantityToUse) : undefined);
+
+      this.dialog.open(BomBreakupDialogComponent, {
+        width: '95vw', maxWidth: '850px',
+        data: {
+          sku: targetSku,
+          materials: this.materials,
+          rowMfgOverride: overrides?.rowMfgOverride,
+          rowConversionTypeOverride: overrides?.rowConversionTypeOverride,
+          rowPctOverride: overrides?.rowPctOverride,
+          rowAmtOverride: overrides?.rowAmtOverride,
+          rowOfferOverride: overrides?.rowOfferOverride,
+          loadingMode: this.loadingMode(),
+          globalPct: this.globalPct(),
+          globalAmt: this.globalAmt(),
+          globalOverheadPct: this.globalOverheadPct(),
+          globalMarginPct: this.globalMarginPct(),
+          globalPacking: this.globalPacking(),
+          globalFreight: this.globalFreight(),
+          quantity: quantityToUse,
+          rmCost: rmCostToUse,
+          mfgCost: row?.mfgCost,
+          offerExGst: row?.offerExGst
+        }
+      });
+    };
+
+    this.pricingService.getSku(skuId).subscribe({
+      next: (fullSku) => openModal(fullSku),
+      error: () => openModal(sku)
     });
   }
 

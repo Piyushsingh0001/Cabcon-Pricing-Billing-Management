@@ -13,6 +13,10 @@ public record SkuBomSummaryDto
     public int MaterialId { get; init; }
     public string MaterialName { get; init; } = string.Empty;
     public decimal WeightKg { get; init; }
+    public MaterialType PriceType { get; init; }
+    public BomPricingMethod PricingMethod { get; init; }
+    public BomPricingMonth? PricingMonth { get; init; }
+    public decimal? ManualPrice { get; init; }
 }
 
 public record SkuDto
@@ -123,7 +127,11 @@ public class GetSkusQueryHandler : IRequestHandler<GetSkusQuery, PaginatedList<S
             {
                 MaterialId = b.MaterialId,
                 MaterialName = b.Material.Name,
-                WeightKg = b.WeightKg
+                WeightKg = b.WeightKg,
+                PriceType = b.PriceType,
+                PricingMethod = b.PricingMethod,
+                PricingMonth = b.PricingMonth,
+                ManualPrice = b.ManualPrice
             }).ToList()
         }).ToList();
 

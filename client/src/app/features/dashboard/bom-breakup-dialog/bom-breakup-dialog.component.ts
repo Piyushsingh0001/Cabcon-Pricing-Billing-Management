@@ -85,7 +85,7 @@ export class BomBreakupDialogComponent implements OnInit {
   ) {
     this.sku = data.sku;
     this.materials = data.materials || [];
-    this.userQuantity = data.quantity || (this.sku?.quantity && this.sku.quantity > 0 ? this.sku.quantity : 1);
+    this.userQuantity = this.sku?.quantity && this.sku.quantity > 0 ? this.sku.quantity : 1;
   }
 
   ngOnInit() {
@@ -183,33 +183,8 @@ export class BomBreakupDialogComponent implements OnInit {
       });
     }
 
-    // Determine target total RM cost from Dashboard or SKU master
-    let targetTotal = this.data.rmCost !== undefined && this.data.rmCost > 0 
-      ? this.data.rmCost 
-      : (this.sku?.rawMaterialCost ? (this.sku.rawMaterialCost * this.userQuantity) : sumBatchCost);
-
-    if (targetTotal > 0 && sumBatchCost > 0 && Math.abs(sumBatchCost - targetTotal) > 0.01) {
-      const scaleRatio = targetTotal / sumBatchCost;
-      sumUnitCost = 0;
-      sumBatchCost = 0;
-
-      this.bomLinesDisplay.forEach(item => {
-        item.unitPrice = item.unitPrice * scaleRatio;
-        item.unitLineCost = item.unitLineCost * scaleRatio;
-        item.batchLineCost = item.batchLineCost * scaleRatio;
-        item.rateDisplay = `₹${item.unitPrice.toFixed(2)} / kg`;
-        item.lineCostDisplay = `₹${item.batchLineCost.toFixed(2)} (${this.userQuantity > 1 ? `₹${item.unitLineCost.toFixed(2)} × ${this.userQuantity}` : `₹${item.unitLineCost.toFixed(2)}`})`;
-
-        sumUnitCost += item.unitLineCost;
-        sumBatchCost += item.batchLineCost;
-      });
-    } else if (targetTotal > 0 && sumBatchCost === 0) {
-      sumBatchCost = targetTotal;
-      sumUnitCost = targetTotal / (this.userQuantity > 0 ? this.userQuantity : 1);
-    }
-
     this.totalUnitCost = sumUnitCost;
-    this.totalBatchCost = targetTotal > 0 ? targetTotal : sumBatchCost;
+    this.totalBatchCost = sumUnitCost * (this.userQuantity > 0 ? this.userQuantity : 1);
     this.totalUnitWeight = sumUnitWeight;
     this.totalBatchWeight = sumBatchWeight;
 

@@ -76,7 +76,7 @@ export interface Sku {
   totalWeight: number;
   quantity?: number;
   updatedBy?: string;
-  bomLines?: { materialId: number; materialName?: string; weightKg: number }[];
+  bomLines?: SkuBomLine[];
 }
 
 export interface SkuBomLine {
