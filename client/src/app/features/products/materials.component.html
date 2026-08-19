@@ -155,7 +155,7 @@
             <div class="footer-as-on">Updated today</div>
           </ng-template>
           
-          <button class="btn-update" style="margin-top: 4px;" (click)="updatePrice(group)" [disabled]="!canUpdate()">Update today's price</button>
+          <button class="btn-update" style="margin-top: 4px;" (click)="updatePrice(group)" [disabled]="!canUpdate() || getMissingDays(group) === 0">Update today's price</button>
         </div>
       </div>
     </div>

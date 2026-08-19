@@ -127,7 +127,6 @@ public class UpdateMaterialCommandHandler : IRequestHandler<UpdateMaterialComman
         material.Name = request.Name;
         material.VendorName = request.VendorName;
         material.Type = request.Type;
-        material.AsOnDate = DateTime.UtcNow;
 
         repository.Update(material);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

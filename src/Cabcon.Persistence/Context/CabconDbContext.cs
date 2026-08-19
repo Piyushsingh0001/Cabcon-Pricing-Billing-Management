@@ -104,7 +104,8 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
                                      entry.Property(m => m.PremiumUsdPerMt).IsModified ||
                                      entry.Property(m => m.FxRate).IsModified ||
                                      entry.Property(m => m.FreightInrPerMt).IsModified ||
-                                     entry.Property(m => m.DirectRateInrPerKg).IsModified;
+                                     entry.Property(m => m.DirectRateInrPerKg).IsModified ||
+                                     entry.Property(m => m.AsOnDate).IsModified;
 
                 if (isPriceChanged)
                 {

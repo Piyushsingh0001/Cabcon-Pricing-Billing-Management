@@ -119,8 +119,11 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             
             for (var d = startDate; d <= today; d = d.AddDays(1))
             {
-                if (!mHistoryDatesLme.Contains(d)) missingCountLme++;
-                if (!mHistoryDatesDirect.Contains(d)) missingCountDirect++;
+                bool hasLme = mHistoryDatesLme.Contains(d) || (!m.IsPlaceholder && m.Type == MaterialType.Exchange && m.AsOnDate.Date == d);
+                bool hasDirect = mHistoryDatesDirect.Contains(d) || (!m.IsPlaceholder && m.Type == MaterialType.Direct && m.AsOnDate.Date == d);
+
+                if (!hasLme) missingCountLme++;
+                if (!hasDirect) missingCountDirect++;
             }
 
             var thisMonthAvgLme = mHistoriesLme.Where(h => h.Date >= startOfThisMonth && h.Date <= today).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;

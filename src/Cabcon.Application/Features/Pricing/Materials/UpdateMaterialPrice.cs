@@ -4,6 +4,7 @@ using Cabcon.Shared.Exceptions;
 using Cabcon.Shared.Wrappers;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cabcon.Application.Features.Pricing.Materials;
 
@@ -54,6 +55,15 @@ public class UpdateMaterialPriceCommandHandler : IRequestHandler<UpdateMaterialP
         if (material == null)
         {
             throw new NotFoundException(nameof(Material), request.MaterialId);
+        }
+
+        var today = _dateTime.UtcNow.Date;
+        var hasUpdatedTodayForType = await _unitOfWork.Repository<MaterialPriceHistory>().Query()
+            .AnyAsync(x => x.MaterialId == request.MaterialId && x.EffectiveDate.Date == today && x.Type == material.Type, cancellationToken);
+
+        if (hasUpdatedTodayForType && !material.IsPlaceholder)
+        {
+            return Result.Failure("Price has already been updated today. You can only update the price once per day.");
         }
 
         if (material.Type == Cabcon.Domain.Enums.MaterialType.Exchange)

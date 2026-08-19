@@ -29,8 +29,9 @@ public class GetMaterialMissingDatesQueryHandler : IRequestHandler<GetMaterialMi
             return Array.Empty<DateTime>();
 
         // Calculate missing dates in the last 30 days
-        var end = DateTime.UtcNow.Date;
-        var start = end.AddDays(-30);
+        var today = DateTime.UtcNow.Date;
+        var end = today.AddDays(1); // include today
+        var start = today.AddDays(-30);
         
         var query = _historyRepository.Query()
             .Where(h => h.MaterialId == request.MaterialId && h.EffectiveDate >= start && h.EffectiveDate < end);

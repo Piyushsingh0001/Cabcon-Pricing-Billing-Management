@@ -59,7 +59,7 @@ export class MaterialHistoryDialogComponent implements OnInit {
   public years: number[] = [];
 
   public allRawHistory: MaterialPriceHistory[] = [];
-  public historyData = new MatTableDataSource<MaterialPriceHistory>();
+  public historyData = new MatTableDataSource<any>();
   public columns = ['effectiveDate', 'lmeRate', 'lmeLandedCost', 'directLandedCost', 'updatedBy'];
 
   constructor(
@@ -181,7 +181,33 @@ export class MaterialHistoryDialogComponent implements OnInit {
     // Sort descending by date
     filtered.sort((a, b) => new Date(b.effectiveDate).getTime() - new Date(a.effectiveDate).getTime());
 
-    this.historyData = new MatTableDataSource<MaterialPriceHistory>(filtered);
+    const groupedMap = new Map<string, any>();
+    for (const item of filtered) {
+      const dateKey = new Date(item.effectiveDate).toISOString().split('T')[0];
+      const key = `${dateKey}_${item.vendorName || ''}`;
+      
+      if (!groupedMap.has(key)) {
+        groupedMap.set(key, {
+          effectiveDate: item.effectiveDate,
+          vendorName: item.vendorName,
+          lmeUsdPerMt: item.type === 0 ? item.lmeUsdPerMt : null,
+          lmeLandedCost: item.type === 0 ? item.landedCostInrPerKg : null,
+          directLandedCost: item.type === 1 ? item.landedCostInrPerKg : null,
+          updatedBy: item.updatedBy || 'System'
+        });
+      } else {
+        const existing = groupedMap.get(key);
+        if (item.type === 0 && existing.lmeLandedCost == null) {
+          existing.lmeUsdPerMt = item.lmeUsdPerMt;
+          existing.lmeLandedCost = item.landedCostInrPerKg;
+        } else if (item.type === 1 && existing.directLandedCost == null) {
+          existing.directLandedCost = item.landedCostInrPerKg;
+        }
+      }
+    }
+    
+    const groupedArr = Array.from(groupedMap.values());
+    this.historyData = new MatTableDataSource<any>(groupedArr);
     this.cdr.detectChanges();
   }
 
@@ -193,9 +219,9 @@ export class MaterialHistoryDialogComponent implements OnInit {
     const rows = data.map(item => [
       this.datePipe.transform(item.effectiveDate, 'dd/MM/yyyy') || '',
       `"${(item.vendorName || '').replace(/"/g, '""')}"`,
-      item.type === 0 && item.lmeUsdPerMt != null ? item.lmeUsdPerMt.toFixed(2) : '-',
-      item.type === 0 ? item.landedCostInrPerKg.toFixed(2) : '-',
-      item.type === 1 ? item.landedCostInrPerKg.toFixed(2) : '-',
+      item.lmeUsdPerMt != null ? item.lmeUsdPerMt.toFixed(2) : '-',
+      item.lmeLandedCost != null ? item.lmeLandedCost.toFixed(2) : '-',
+      item.directLandedCost != null ? item.directLandedCost.toFixed(2) : '-',
       `"${(item.updatedBy || 'System').replace(/"/g, '""')}"`
     ]);
 
@@ -225,9 +251,9 @@ export class MaterialHistoryDialogComponent implements OnInit {
     let tableRows = data.map(item => {
       const dateStr = this.datePipe.transform(item.effectiveDate, 'dd/MM/yyyy') || '';
       const vendorStr = item.vendorName || '-';
-      const lmeRateStr = item.type === 0 && item.lmeUsdPerMt != null ? `$${this.decimalPipe.transform(item.lmeUsdPerMt, '1.2-2')}/MT` : '-';
-      const lmeLandedStr = item.type === 0 ? `₹${this.decimalPipe.transform(item.landedCostInrPerKg, '1.2-2')}/kg` : '-';
-      const directLandedStr = item.type === 1 ? `₹${this.decimalPipe.transform(item.landedCostInrPerKg, '1.2-2')}/kg` : '-';
+      const lmeRateStr = item.lmeUsdPerMt != null ? `$${this.decimalPipe.transform(item.lmeUsdPerMt, '1.2-2')}/MT` : '-';
+      const lmeLandedStr = item.lmeLandedCost != null ? `₹${this.decimalPipe.transform(item.lmeLandedCost, '1.2-2')}/kg` : '-';
+      const directLandedStr = item.directLandedCost != null ? `₹${this.decimalPipe.transform(item.directLandedCost, '1.2-2')}/kg` : '-';
       const updatedByStr = item.updatedBy || 'System';
 
       return `
