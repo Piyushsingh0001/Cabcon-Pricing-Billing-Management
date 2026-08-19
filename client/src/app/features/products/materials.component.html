@@ -139,11 +139,18 @@
           </div>
         </div>
         <div class="footer-right">
-          <ng-container *ngIf="getMissingDays(group) > 0; else updatedOk">
+          <ng-container *ngIf="getMissingDays(group) > 1; else checkOneDay">
             <div class="warning-badge cursor-pointer" (click)="openBackfill(group.selectedVariant)" title="Click to fill missing prices">
               ⚠️ Prices missing for {{ getMissingDays(group) }} day(s)
             </div>
           </ng-container>
+          <ng-template #checkOneDay>
+            <ng-container *ngIf="getMissingDays(group) === 1; else updatedOk">
+              <div class="warning-badge" style="cursor: default;" title="Please use the 'Update today's price' button below">
+                ⚠️ Update today price
+              </div>
+            </ng-container>
+          </ng-template>
           <ng-template #updatedOk>
             <div class="footer-as-on">Updated today</div>
           </ng-template>

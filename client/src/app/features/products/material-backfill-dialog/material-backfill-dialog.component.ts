@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { switchMap } from 'rxjs';
 import { PricingService, Material } from '../../../core/pricing.service';
 
 @Component({
@@ -108,7 +109,15 @@ export class MaterialBackfillDialogComponent implements OnInit {
       return result;
     });
 
-    this.pricingService.backfillMaterialPrices(this.material.id, payload).subscribe({
+    const metaPayload = {
+      name: this.material.name,
+      vendorName: this.material.vendorName,
+      type: this.material.type
+    };
+
+    this.pricingService.updateMaterial(this.material.id, metaPayload).pipe(
+      switchMap(() => this.pricingService.backfillMaterialPrices(this.material.id, payload))
+    ).subscribe({
       next: () => {
         this.loading.set(false);
         this.snackBar.open('Material prices backfilled successfully.', 'Close', { duration: 3000 });
