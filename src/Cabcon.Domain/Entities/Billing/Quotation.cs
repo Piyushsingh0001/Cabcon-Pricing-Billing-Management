@@ -10,6 +10,7 @@ public class Quotation : BaseEntity
     public DateTime QuotationDate { get; set; }
 
     public string PartyName { get; set; } = string.Empty;
+    public string PartyAddress { get; set; } = string.Empty;
     public int ValidityDays { get; set; }
 
     /// <summary>Frozen disclaimer text captured at generation time (e.g. "Copper as on

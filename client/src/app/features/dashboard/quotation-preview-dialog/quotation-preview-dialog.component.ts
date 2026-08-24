@@ -8,6 +8,7 @@ import { AuthService } from '../../../core/auth.service';
 
 export interface QuotationPreviewData {
   partyName: string;
+  partyAddress: string;
   customerDetails?: any;
   validityDays: number;
   priceBasisNote: string;

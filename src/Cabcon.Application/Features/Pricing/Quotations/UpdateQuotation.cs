@@ -6,7 +6,8 @@ using Cabcon.Shared.Wrappers;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-
+// Copyright © 2026 Piyush Singh
+// Project: Cabcon Pricing & Billing Management
 namespace Cabcon.Application.Features.Pricing.Quotations;
 
 public record UpdateQuotationLineInput
@@ -24,6 +25,7 @@ public record UpdateQuotationCommand : IRequest<Result<UpdateQuotationResponse>>
 {
     public int Id { get; init; }
     public string PartyName { get; init; } = string.Empty;
+    public string PartyAddress { get; init; } = string.Empty;
     public int ValidityDays { get; init; }
     public bool IsDraft { get; init; }
 
@@ -122,6 +124,7 @@ public class UpdateQuotationCommandHandler : IRequestHandler<UpdateQuotationComm
         }
 
         quotation.PartyName = request.PartyName;
+        quotation.PartyAddress = request.PartyAddress;
         quotation.ValidityDays = request.ValidityDays;
         quotation.PriceBasisNote = string.Empty;
         quotation.TotalExGst = totalExGst;

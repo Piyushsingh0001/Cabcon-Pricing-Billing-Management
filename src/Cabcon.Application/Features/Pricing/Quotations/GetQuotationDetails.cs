@@ -1,3 +1,6 @@
+// Copyright © 2026 Piyush Singh
+// Project: Cabcon Pricing & Billing Management
+
 using Cabcon.Application.Common.Interfaces;
 using Cabcon.Domain.Entities.Billing;
 using Cabcon.Shared.Exceptions;
@@ -23,6 +26,7 @@ public record QuotationDetailsDto
     public string QuotationNumber { get; init; } = string.Empty;
     public DateTime QuotationDate { get; init; }
     public string PartyName { get; init; } = string.Empty;
+    public string PartyAddress { get; init; } = string.Empty;
     public int ValidityDays { get; init; }
     public decimal TotalExGst { get; init; }
     public Cabcon.Domain.Enums.ApprovalStatus ApprovalStatus { get; init; }
@@ -71,6 +75,7 @@ public class GetQuotationDetailsQueryHandler : IRequestHandler<GetQuotationDetai
             QuotationNumber = quotation.QuotationNumber,
             QuotationDate = quotation.QuotationDate,
             PartyName = quotation.PartyName,
+            PartyAddress = quotation.PartyAddress,
             ValidityDays = quotation.ValidityDays,
             TotalExGst = quotation.TotalExGst,
             ApprovalStatus = quotation.ApprovalStatus,

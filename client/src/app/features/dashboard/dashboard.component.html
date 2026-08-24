@@ -246,11 +246,23 @@
       <div class="footer-inputs">
         <div class="control-group">
           <div class="lbls">Customer / Party</div>
-          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="dense-field" style="width: 280px;">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="dense-field" style="width: 250px;">
             <input matInput type="text" placeholder="Search Customer..." [(ngModel)]="partyName" (keyup)="filterCustomers($event)" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCustomerSelected($event.option.value)">
               <mat-option *ngFor="let c of filteredCustomers" [value]="c">
                 {{c.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="control-group">
+          <div class="lbls">Customer Address</div>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="dense-field" style="width: 280px;">
+            <input matInput type="text" placeholder="Select or enter address..." [(ngModel)]="partyAddress" [matAutocomplete]="autoAddress">
+            <mat-autocomplete #autoAddress="matAutocomplete">
+              <mat-option *ngFor="let addr of customerAddresses; let i = index" [value]="addr">
+                {{i + 1}}. {{addr}}
+                <span *ngIf="i === customerDefaultAddressIndex" style="color: #1976d2; font-size: 11px; font-weight: 500; background: #e3f2fd; padding: 2px 6px; border-radius: 4px; margin-left: 8px; display: inline-block; line-height: 1;">Default</span>
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>

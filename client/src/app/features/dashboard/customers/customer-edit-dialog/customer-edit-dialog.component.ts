@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -40,12 +40,50 @@ export class CustomerEditDialogComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    let parsedAddresses: string[] = [];
+    let defaultIndex = 0;
+    if (this.data?.address) {
+      try {
+        const parsed = JSON.parse(this.data.address);
+        if (Array.isArray(parsed)) {
+          parsedAddresses = parsed;
+        } else if (parsed && Array.isArray(parsed.addresses)) {
+          parsedAddresses = parsed.addresses;
+          defaultIndex = parsed.defaultIndex || 0;
+        } else {
+          parsedAddresses = [this.data.address];
+        }
+      } catch {
+        parsedAddresses = [this.data.address];
+      }
+    }
+    
+    if (parsedAddresses.length === 0) {
+      parsedAddresses.push('');
+    }
+
     this.form = this.fb.group({
       name: [this.data?.name || '', Validators.required],
       contactNumber: [this.data?.contactNumber || ''],
       gstNumber: [this.data?.gstNumber || ''],
-      address: [this.data?.address || '']
+      addresses: this.fb.array(parsedAddresses.map(addr => this.fb.control(addr))),
+      defaultIndex: [defaultIndex]
     });
+  }
+
+  get addressesArray(): FormArray {
+    return this.form.get('addresses') as FormArray;
+  }
+
+  addAddress() {
+    this.addressesArray.push(this.fb.control(''));
+  }
+
+  removeAddress(index: number) {
+    this.addressesArray.removeAt(index);
+    if (this.addressesArray.length === 0) {
+      this.addAddress();
+    }
   }
 
   onCancel() {
@@ -56,8 +94,31 @@ export class CustomerEditDialogComponent implements OnInit {
     if (this.form.invalid) return;
     this.loading = true;
 
+    const formValue = { ...this.form.value };
+    const addresses = formValue.addresses;
+    
+    let validAddresses: string[] = [];
+    let newDefaultIndex = 0;
+    
+    for (let i = 0; i < addresses.length; i++) {
+        if ((addresses[i] || '').trim() !== '') {
+            validAddresses.push(addresses[i]);
+            if (i === formValue.defaultIndex) {
+                newDefaultIndex = validAddresses.length - 1;
+            }
+        }
+    }
+    
+    if (validAddresses.length > 0) {
+        formValue.address = JSON.stringify({ addresses: validAddresses, defaultIndex: newDefaultIndex });
+    } else {
+        formValue.address = null;
+    }
+    delete formValue.addresses;
+    delete formValue.defaultIndex;
+
     if (this.data && this.data.id) {
-      this.pricingService.updateCustomer(this.data.id, this.form.value).subscribe({
+      this.pricingService.updateCustomer(this.data.id, formValue).subscribe({
         next: () => {
           this.snackBar.open('Customer updated successfully', 'Close', { duration: 3000 });
           this.dialogRef.close(true);
@@ -68,7 +129,7 @@ export class CustomerEditDialogComponent implements OnInit {
         }
       });
     } else {
-      this.pricingService.createCustomer(this.form.value).subscribe({
+      this.pricingService.createCustomer(formValue).subscribe({
         next: () => {
           this.snackBar.open('Customer added successfully', 'Close', { duration: 3000 });
           this.dialogRef.close(true);

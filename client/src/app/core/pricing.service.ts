@@ -112,6 +112,7 @@ export interface QuotationSummary {
   quotationNumber: string;
   quotationDate: string;
   partyName: string;
+  partyAddress?: string;
   validityDays: number;
   totalExGst: number;
   approvalStatus: number;
@@ -135,6 +136,7 @@ export interface QuotationDetails {
   quotationNumber: string;
   quotationDate: string;
   partyName: string;
+  partyAddress?: string;
   validityDays: number;
   totalExGst: number;
   approvalStatus: number;
@@ -355,6 +357,7 @@ export class PricingService {
 
     public saveQuotation(payload: {
       partyName: string;
+      partyAddress?: string;
       validityDays: number;
       isDraft?: boolean;
       lines: {
@@ -371,6 +374,7 @@ export class PricingService {
     public updateQuotation(id: number, payload: {
       id: number;
       partyName: string;
+      partyAddress?: string;
       validityDays: number;
       isDraft?: boolean;
       lines: {

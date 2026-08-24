@@ -117,4 +117,20 @@ export class CustomersComponent implements OnInit {
       }
     });
   }
+
+  public formatAddress(address: string | null | undefined): string {
+    if (!address) return '-';
+    try {
+      const parsed = JSON.parse(address);
+      if (Array.isArray(parsed)) {
+        return parsed.length > 0 ? parsed[0] : '-';
+      } else if (parsed && Array.isArray(parsed.addresses)) {
+        const idx = parsed.defaultIndex || 0;
+        return parsed.addresses.length > idx ? parsed.addresses[idx] : '-';
+      }
+      return address;
+    } catch {
+      return address;
+    }
+  }
 }

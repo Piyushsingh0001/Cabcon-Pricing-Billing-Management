@@ -11,6 +11,7 @@ public record QuotationSummaryDto
     public string QuotationNumber { get; init; } = string.Empty;
     public DateTime QuotationDate { get; init; }
     public string PartyName { get; init; } = string.Empty;
+    public string PartyAddress { get; init; } = string.Empty;
     public int ValidityDays { get; init; }
     public decimal TotalExGst { get; init; }
     public Cabcon.Domain.Enums.ApprovalStatus ApprovalStatus { get; init; }
@@ -62,6 +63,7 @@ public class GetQuotationsQueryHandler : IRequestHandler<GetQuotationsQuery, IRe
                 QuotationNumber = q.QuotationNumber,
                 QuotationDate = q.QuotationDate,
                 PartyName = q.PartyName,
+                PartyAddress = q.PartyAddress,
                 ValidityDays = q.ValidityDays,
                 TotalExGst = q.TotalExGst,
                 ApprovalStatus = q.ApprovalStatus,

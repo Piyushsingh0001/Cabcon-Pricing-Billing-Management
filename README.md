@@ -72,3 +72,5 @@ Upon the first run, the database is seeded with a default Admin user:
 - **Database Access**: No direct DB context access in the API controllers. Use the injected `ISender` (MediatR) to execute application layer handlers which interact with the `IUnitOfWork`.
 - **UI System**: The frontend uses predefined CSS variables in `theme.scss` (e.g., `var(--primary-color)`) and heavily leverages `.glass-card` and `.animated-view` container wrapper fade-ins.
 - **Audit Logs**: The database automatically soft-deletes and tracks `CreatedBy`, `CreatedDate`, `LastModifiedBy`, `LastModifiedDate` using EF Core interceptors via `BaseEntity`.
+**Copyright © 2026 Piyush Singh**
+**Project: Cabcon Pricing & Billing Management**

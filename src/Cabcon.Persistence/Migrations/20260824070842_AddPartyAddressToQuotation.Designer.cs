@@ -4,6 +4,7 @@ using Cabcon.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cabcon.Persistence.Migrations
 {
     [DbContext(typeof(CabconDbContext))]
-    partial class CabconDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260824070842_AddPartyAddressToQuotation")]
+    partial class AddPartyAddressToQuotation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        /// // Copyright © 2026 Piyush Singh
+        // Project: Cabcon Pricing & Billing Management
+
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

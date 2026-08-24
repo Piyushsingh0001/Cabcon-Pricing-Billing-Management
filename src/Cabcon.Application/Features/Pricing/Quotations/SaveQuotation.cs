@@ -23,6 +23,7 @@ public record SaveQuotationResponse(int Id, string QuotationNumber);
 public record SaveQuotationCommand : IRequest<Result<SaveQuotationResponse>>
 {
     public string PartyName { get; init; } = string.Empty;
+    public string PartyAddress { get; init; } = string.Empty;
     public int ValidityDays { get; init; }
     public bool IsDraft { get; init; }
 
@@ -99,6 +100,7 @@ public class SaveQuotationCommandHandler : IRequestHandler<SaveQuotationCommand,
             QuotationNumber = quotationNumber,
             QuotationDate = _dateTime.UtcNow,
             PartyName = request.PartyName,
+            PartyAddress = request.PartyAddress,
             ValidityDays = request.ValidityDays,
             PriceBasisNote = string.Empty,
             TotalExGst = totalExGst,

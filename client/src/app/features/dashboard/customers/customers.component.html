@@ -59,12 +59,12 @@
   </ng-container>
 
   <!-- Address -->
-  <ng-container matColumnDef="address">
-    <th mat-header-cell *matHeaderCellDef>Address</th>
-    <td mat-cell *matCellDef="let element">
-      {{ element.address || '-' }}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>Address</th>
+      <td mat-cell *matCellDef="let element">
+        {{ formatAddress(element.address) }}
+      </td>
+    </ng-container>
 
   <!-- Updated By -->
   <ng-container matColumnDef="updatedBy">

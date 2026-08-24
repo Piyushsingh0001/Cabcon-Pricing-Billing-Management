@@ -82,9 +82,12 @@ export class DashboardComponent implements OnInit {
 
   // Footer inputs
   public partyName: string = '';
+  public partyAddress: string = '';
   public selectedCustomer: CustomerSummary | null = null;
   public validityDays: number = 7;
 
+  public customerAddresses: string[] = [];
+  public customerDefaultAddressIndex: number = 0;
   public customers: CustomerSummary[] = [];
   public filteredCustomers: CustomerSummary[] = [];
 
@@ -121,6 +124,7 @@ export class DashboardComponent implements OnInit {
     this.pricingService.getQuotation(id).subscribe({
       next: (quote) => {
         this.partyName = quote.partyName;
+        this.partyAddress = quote.partyAddress || '';
         this.validityDays = quote.validityDays;
         
         this.pricingService.selectedSkuIds.clear();
@@ -171,12 +175,47 @@ export class DashboardComponent implements OnInit {
     
     // If they typed a name that exactly matches, select it, otherwise clear selectedCustomer
     const match = this.customers.find(c => c.name.toLowerCase() === val);
-    this.selectedCustomer = match || null;
+    if (match) {
+      this.onCustomerSelected(match);
+    } else {
+      this.selectedCustomer = null;
+      this.customerAddresses = [];
+      this.customerDefaultAddressIndex = 0;
+      this.partyAddress = '';
+    }
   }
 
   public onCustomerSelected(customer: CustomerSummary) {
     this.selectedCustomer = customer;
     this.partyName = customer.name;
+    
+    this.customerAddresses = [];
+    let defaultIndex = 0;
+    if (customer.address) {
+      try {
+        const parsed = JSON.parse(customer.address);
+        if (Array.isArray(parsed)) {
+          this.customerAddresses = parsed;
+        } else if (parsed && Array.isArray(parsed.addresses)) {
+          this.customerAddresses = parsed.addresses;
+          defaultIndex = parsed.defaultIndex || 0;
+        } else {
+          this.customerAddresses = [customer.address];
+        }
+      } catch {
+        this.customerAddresses = [customer.address];
+      }
+    }
+    
+    if (this.customerAddresses.length > 0) {
+      if (defaultIndex >= this.customerAddresses.length) {
+        defaultIndex = 0;
+      }
+      this.customerDefaultAddressIndex = defaultIndex;
+      this.partyAddress = this.customerAddresses[defaultIndex];
+    } else {
+      this.customerDefaultAddressIndex = 0;
+    }
   }
 
   public onSearchChange() {
@@ -669,6 +708,7 @@ export class DashboardComponent implements OnInit {
       width: '95vw', maxWidth: '750px',
       data: {
         partyName: this.partyName,
+        partyAddress: this.partyAddress,
         customerDetails: this.selectedCustomer,
         validityDays: this.validityDays,
         totalExGst: this.totalOfferExGst,
@@ -687,6 +727,7 @@ export class DashboardComponent implements OnInit {
         const payload = {
           id: this.editId || 0,
           partyName: this.partyName,
+          partyAddress: this.partyAddress,
           validityDays: this.validityDays,
           isDraft: isDraft,
           lines: this.rows.map(r => ({
