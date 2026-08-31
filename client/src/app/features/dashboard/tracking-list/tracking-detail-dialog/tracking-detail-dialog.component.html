@@ -1,9 +1,14 @@
-<h2 mat-dialog-title>Activity Log: {{ data.quotationNumber }}</h2>
+<h2 mat-dialog-title>
+  <span>Activity Log: {{ data.quotationNumber }}</span>
+  <button mat-icon-button (click)="close()" title="Close" class="close-btn">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
 
 <mat-dialog-content>
   <!-- Loading State -->
   <div *ngIf="isLoading" class="loading-state">
-    <mat-spinner diameter="40"></mat-spinner>
+    <mat-spinner diameter="36"></mat-spinner>
   </div>
 
   <!-- Timeline List -->
@@ -24,7 +29,8 @@
 
     <!-- Empty State -->
     <div *ngIf="!logs || logs.length === 0" class="empty-state">
-      No activity logs found for this quotation.
+      <mat-icon class="empty-icon">history</mat-icon>
+      <span>No activity logs found for this quotation.</span>
     </div>
   </ng-container>
 </mat-dialog-content>

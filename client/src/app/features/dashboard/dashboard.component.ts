@@ -667,7 +667,7 @@ export class DashboardComponent implements OnInit {
       const rmCostToUse = row?.rmCost ?? (targetSku.rawMaterialCost ? (targetSku.rawMaterialCost * quantityToUse) : undefined);
 
       this.dialog.open(BomBreakupDialogComponent, {
-        width: '95vw', maxWidth: '850px',
+        panelClass: 'dialog-tier-lg',
         data: {
           sku: targetSku,
           materials: this.materials,
@@ -705,7 +705,7 @@ export class DashboardComponent implements OnInit {
 
     // Open preview dialog directly
     const previewRef = this.dialog.open(QuotationPreviewDialogComponent, {
-      width: '95vw', maxWidth: '750px',
+      panelClass: 'dialog-tier-lg',
       data: {
         partyName: this.partyName,
         partyAddress: this.partyAddress,

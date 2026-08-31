@@ -4,13 +4,13 @@
   
   <form [formGroup]="form" class="backfill-form">
     <div formArrayName="prices">
-      <div *ngFor="let priceGroup of pricesArray.controls; let i = index" [formGroupName]="i" class="price-row" style="align-items: center; gap: 12px; margin-bottom: 8px; display: flex;">
+      <div *ngFor="let priceGroup of pricesArray.controls; let i = index" [formGroupName]="i" class="price-row">
         <div class="date-column">
-          <span class="date-label" style="font-weight: 500;">{{ missingDates[i] | date:'mediumDate' }}</span>
+          <span class="date-label">{{ missingDates[i] | date:'mediumDate' }}</span>
         </div>
 
         <div class="fields-column">
-          <mat-form-field appearance="outline" class="sm-field" style="width: 140px; margin-right: 12px;">
+          <mat-form-field appearance="outline" class="sm-field-type">
             <mat-label>Type</mat-label>
             <mat-select formControlName="type">
               <mat-option [value]="0">LME-linked</mat-option>

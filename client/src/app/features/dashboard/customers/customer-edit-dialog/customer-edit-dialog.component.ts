@@ -79,10 +79,16 @@ export class CustomerEditDialogComponent implements OnInit {
     this.addressesArray.push(this.fb.control(''));
   }
 
+  setDefaultAddress(index: number) {
+    this.form.get('defaultIndex')?.setValue(index);
+  }
+
   removeAddress(index: number) {
     this.addressesArray.removeAt(index);
     if (this.addressesArray.length === 0) {
       this.addAddress();
+    } else if (this.form.get('defaultIndex')?.value >= this.addressesArray.length) {
+      this.form.get('defaultIndex')?.setValue(0);
     }
   }
 

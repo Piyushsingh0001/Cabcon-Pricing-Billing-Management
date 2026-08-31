@@ -1,5 +1,64 @@
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-    .edit-form { display: flex; flex-direction: column; gap: 12px; padding-top: 8px; }
-    .rate-fields-section { border-top: 1px dashed rgba(255,255,255,0.1); margin-top: 8px; padding-top: 12px; display: flex; flex-direction: column; gap: 12px; }
-    .section-title { font-size: 14px; font-weight: 600; margin: 0 0 4px 0; opacity: 0.8; color: var(--text-primary); }
-  
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.full-width-field {
+  width: 100%;
+}
+
+.rate-fields-section {
+  background: #f8fafc;
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+@media (max-width: 480px) {
+  :host {
+    max-width: 100%;
+  }
+
+  .form-row-2col,
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}

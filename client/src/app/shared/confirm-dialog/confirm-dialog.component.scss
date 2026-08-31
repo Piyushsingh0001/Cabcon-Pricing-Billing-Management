@@ -1,8 +1,9 @@
 .confirm-dialog-wrapper {
-  padding: 24px;
-  background: #ffffff;
-  border-radius: 8px;
-  max-width: 450px;
+  padding: 20px 24px;
+  background: var(--bg-card);
+  border-radius: 14px;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 16px;

@@ -1,6 +1,18 @@
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .chart-container {
   position: relative;
-  height: 300px;
+  height: 260px;
   width: 100%;
-  margin-top: 16px;
+  margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .chart-container {
+    height: 200px;
+  }
 }

@@ -266,7 +266,7 @@ export class SkusComponent implements OnInit {
     };
 
     const dialogRef = this.dialog.open(SkuEditDialogComponent, {
-      width: '95vw', maxWidth: '950px',
+      panelClass: 'dialog-tier-lg',
       data: defaultData
     });
 
@@ -283,7 +283,7 @@ export class SkusComponent implements OnInit {
 
   public manageCategories() {
     const dialogRef = this.dialog.open(CategoryManageDialogComponent, {
-      width: '95vw', maxWidth: '500px',
+      panelClass: 'dialog-tier-sm',
       data: null
     });
 
@@ -298,7 +298,7 @@ export class SkusComponent implements OnInit {
       next: (fullSku) => {
         this.loading.set(false);
         const dialogRef = this.dialog.open(SkuEditDialogComponent, {
-          width: '95vw', maxWidth: '950px',
+          panelClass: 'dialog-tier-lg',
           data: fullSku
         });
 

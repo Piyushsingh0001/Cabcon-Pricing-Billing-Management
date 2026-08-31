@@ -90,7 +90,7 @@ export class AdminComponent implements OnInit {
 
   public createUser() {
     const dialogRef = this.dialog.open(UserCreateDialogComponent, {
-      width: '95vw', maxWidth: '500px',
+      panelClass: 'dialog-tier-sm',
       data: { roles: this.roles }
     });
 
@@ -103,7 +103,7 @@ export class AdminComponent implements OnInit {
 
   public manageUserRoles(user: UserDto) {
     const dialogRef = this.dialog.open(UserRolesDialogComponent, {
-      width: '95vw', maxWidth: '450px',
+      panelClass: 'dialog-tier-sm',
       data: { user, roles: this.roles }
     });
 
@@ -116,7 +116,7 @@ export class AdminComponent implements OnInit {
 
   public createRole() {
     const dialogRef = this.dialog.open(RoleCreateDialogComponent, {
-      width: '95vw', maxWidth: '450px'
+      panelClass: 'dialog-tier-sm'
     });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -132,7 +132,7 @@ export class AdminComponent implements OnInit {
       next: (roleDetail: any) => {
         this.pricingService.getPermissions().subscribe(allPerms => {
           const dialogRef = this.dialog.open(RolePermissionsDialogComponent, {
-            width: '95vw', maxWidth: '550px',
+            panelClass: 'dialog-tier-md',
             data: {
               role,
               allPermissions: allPerms,

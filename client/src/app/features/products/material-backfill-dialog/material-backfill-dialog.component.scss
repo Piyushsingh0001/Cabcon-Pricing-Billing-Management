@@ -1,13 +1,20 @@
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .subtitle {
   color: var(--text-secondary);
-  margin-bottom: 16px;
+  font-size: 13px;
+  margin: 0 0 12px 0;
 }
 
 .price-row {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px 0;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border-glass);
 }
 
@@ -16,20 +23,43 @@
 }
 
 .date-column {
-  min-width: 100px;
-}
-
-.date-label {
   font-weight: 600;
-  color: var(--text-primary);
+  font-size: 13px;
+  color: var(--primary-color);
 }
 
 .fields-column {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  flex: 1;
+  align-items: center;
+}
+
+.sm-field-type {
+  width: 120px;
 }
 
 .sm-field {
-  width: 100px;
+  flex: 1 1 85px;
+  min-width: 75px;
+}
+
+mat-form-field {
+  margin-bottom: 0;
+}
+
+@media (min-width: 520px) {
+  .price-row {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .date-column {
+    width: 100px;
+    flex-shrink: 0;
+  }
+
+  .fields-column {
+    flex: 1;
+  }
 }

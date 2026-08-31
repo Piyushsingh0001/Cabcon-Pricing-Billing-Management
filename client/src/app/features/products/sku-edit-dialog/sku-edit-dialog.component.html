@@ -1,141 +1,135 @@
-<div class="edit-dialog-container">
-  <div class="dialog-header">
-    <h2 class="dialog-title">{{ sku && sku.id && !sku.isAddSpec ? 'Edit Product' : (sku?.isAddSpec ? 'Add Spec' : 'Add Product') }}</h2>
+<h2 mat-dialog-title>{{ sku && sku.id && !sku.isAddSpec ? 'Edit Product' : (sku?.isAddSpec ? 'Add Spec' : 'Add Product') }}</h2>
+
+<mat-dialog-content>
+  <div class="error-banner" *ngIf="errorMessage()">
+    {{ errorMessage() }}
   </div>
 
-  <div class="dialog-content">
-    <div class="error-banner" *ngIf="errorMessage()">
-      {{ errorMessage() }}
-    </div>
-
-    <form [formGroup]="form">
-      <div class="form-row">
-        <div class="input-group">
-          <div class="lbl">Category</div>
-          <input class="in" formControlName="categoryName" (blur)="checkUniqueness()" (change)="checkUniqueness()">
-        </div>
-        
-        <div class="input-group">
-          <div class="lbl">Variant</div>
-          <input class="in" formControlName="name" (blur)="checkUniqueness()" (change)="checkUniqueness()">
-        </div>
-        
-        <div class="input-group">
-          <div class="lbl">Spec</div>
-          <input class="in" formControlName="spec" (blur)="checkUniqueness()" (change)="checkUniqueness()">
-        </div>
-        
-        <div class="input-group">
-          <div class="lbl">Unit</div>
-          <select class="sel" formControlName="unit" (blur)="checkUniqueness()" (change)="checkUniqueness()">
-            <option value="coil">coil</option>
-            <option value="100m">100m</option>
-            <option value="km">km</option>
-            <option value="MT">MT</option>
-          </select>
-        </div>
-
-        <div class="input-group">
-          <div class="lbl">Quantity</div>
-          <input class="in" type="number" formControlName="quantity" min="1" step="1" style="width: 80px; text-align: right;">
-        </div>
-        
-        <div class="input-group">
-          <div class="lbl">Total Price (₹)</div>
-          <input class="in" type="text" [value]="getTotalPrice() | number:'1.2-2'" readonly disabled style="width: 110px; font-weight: 700; color: var(--primary-color); background: #f8fafc; text-align: right;">
-        </div>
+  <form [formGroup]="form">
+    <div class="form-row">
+      <div class="input-group">
+        <div class="lbl">Category</div>
+        <input class="in" formControlName="categoryName" (blur)="checkUniqueness()" (change)="checkUniqueness()">
       </div>
-
-      <div class="warning-banner" *ngIf="nameExistsError">
-        Product Name already Exists! Give Different name.
-      </div>
-
-      <div class="bom-section-title">Bill of materials (kg per {{ form.get('unit')?.value }})</div>
       
-      <div formArrayName="bomLines" class="bom-lines-list">
-        <div class="bom-line-card" *ngFor="let line of bomLines.controls; let idx = index" [formGroupName]="idx">
-          
-          <div class="bom-line-row">
-            <select class="sel" formControlName="materialName" (change)="onMaterialNameChange(idx)" style="width: 170px;">
-              <option value="" disabled>Select Material</option>
-              <option *ngFor="let name of uniqueMaterialNames" [value]="name">{{ name }}</option>
-            </select>
-            <select class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)" style="width: 140px;">
-              <option value="" disabled>Select Vendor</option>
-              <option *ngFor="let vendor of getAvailableVendors(idx)" [value]="vendor">{{ vendor }}</option>
-            </select>
+      <div class="input-group">
+        <div class="lbl">Variant</div>
+        <input class="in" formControlName="name" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+      </div>
+      
+      <div class="input-group">
+        <div class="lbl">Spec</div>
+        <input class="in" formControlName="spec" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+      </div>
+      
+      <div class="input-group">
+        <div class="lbl">Unit</div>
+        <select class="sel" formControlName="unit" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+          <option value="coil">coil</option>
+          <option value="100m">100m</option>
+          <option value="km">km</option>
+          <option value="MT">MT</option>
+        </select>
+      </div>
 
-            <!-- Radio buttons for pricing method -->
-            <div style="display: flex; gap: 8px; align-items: center; font-size: 11px; background: #fff; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border-glass);">
-              <label style="cursor: pointer;"><input type="radio" formControlName="pricingMethod" [value]="0" (change)="onPricingMethodChange(idx)"> Average</label>
-              <label style="cursor: pointer;"><input type="radio" formControlName="pricingMethod" [value]="1" (change)="onPricingMethodChange(idx)"> Actual</label>
-              <label style="cursor: pointer;"><input type="radio" formControlName="pricingMethod" [value]="2" (change)="onPricingMethodChange(idx)"> Manual</label>
-            </div>
-          </div>
+      <div class="input-group">
+        <div class="lbl">Quantity</div>
+        <input class="in" type="number" formControlName="quantity" min="1" step="1" style="width: 80px; text-align: right;">
+      </div>
+      
+      <div class="input-group">
+        <div class="lbl">Total Price (₹)</div>
+        <input class="in" type="text" [value]="getTotalPrice() | number:'1.2-2'" readonly disabled style="width: 110px; font-weight: 700; color: var(--primary-color); background: #f8fafc; text-align: right;">
+      </div>
+    </div>
 
-          <div class="bom-line-row" style="margin-top: 8px;">
-            <!-- LME-linked / Direct dropdown (equal width: 170px) -->
-            <select *ngIf="line.get('pricingMethod')?.value === 0 || line.get('pricingMethod')?.value === 1"
-                    class="sel" formControlName="priceType" (change)="onPricingMethodChange(idx)" style="width: 170px;">
-              <option [value]="0">LME-linked</option>
-              <option [value]="1">Direct ₹/kg</option>
-            </select>
+    <div class="warning-banner" *ngIf="nameExistsError">
+      Product Name already Exists! Give Different name.
+    </div>
 
-            <!-- Dynamic Value / Rate based on Pricing Method -->
-            <div *ngIf="line.get('pricingMethod')?.value === 0" style="display: flex; gap: 8px; align-items: center; width: 360px;">
-              <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Rate ₹/kg:</span>
-              <select class="sel" formControlName="pricingMonth" (change)="onPricingMethodChange(idx)" style="flex: 1; min-width: 140px;">
-                <option [value]="0">This month avg</option>
-                <option [value]="1">Prev month avg</option>
-              </select>
-              <span class="bom-mult-text" style="font-weight: 600; white-space: nowrap;">₹{{ line.get('manualPrice')?.value | number:'1.2-2' }}</span>
-            </div>
+    <div class="bom-section-title">Bill of materials (kg per {{ form.get('unit')?.value }})</div>
+    
+    <div formArrayName="bomLines" class="bom-lines-list">
+      <div class="bom-line-card" *ngFor="let line of bomLines.controls; let idx = index" [formGroupName]="idx">
+        
+        <div class="bom-line-row">
+          <select class="sel" formControlName="materialName" (change)="onMaterialNameChange(idx)" style="width: 170px;">
+            <option value="" disabled>Select Material</option>
+            <option *ngFor="let name of uniqueMaterialNames" [value]="name">{{ name }}</option>
+          </select>
+          <select class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)" style="width: 140px;">
+            <option value="" disabled>Select Vendor</option>
+            <option *ngFor="let vendor of getAvailableVendors(idx)" [value]="vendor">{{ vendor }}</option>
+          </select>
 
-            <div *ngIf="line.get('pricingMethod')?.value === 1" style="display: flex; gap: 4px; align-items: center;">
-              <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">Rate ₹/kg:</span>
-              <span class="bom-mult-text" style="font-weight: 600;">₹{{ getLandedCost(line.get('materialId')?.value, line.get('priceType')?.value) | number:'1.2-2' }}</span>
-            </div>
-
-            <div *ngIf="line.get('pricingMethod')?.value === 2" style="display: flex; gap: 6px; align-items: center; width: 170px;">
-              <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Rate ₹/kg:</span>
-              <input class="in" style="flex: 1; min-width: 0; text-align: right;" type="number" formControlName="manualPrice" placeholder="0.00" min="0" step="0.01">
-            </div>
-          </div>
-
-          <!-- Line 3: Qty (kg), Total, and Remove button -->
-          <div class="bom-line-actions" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 8px; margin-top: 8px;">
-            <div style="display: flex; gap: 10px; align-items: center;">
-              <!-- Qty (kg) container matching Select Material boundary (170px) -->
-              <div style="display: flex; gap: 6px; align-items: center; width: 170px;">
-                <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Qty (kg):</span>
-                <input class="in" type="number" formControlName="weightKg" placeholder="Qty (kg)" style="flex: 1; min-width: 0; text-align: right;" min="0" step="0.01" title="Quantity (kg)">
-              </div>
-
-              <!-- Total container matching Select Vendor right boundary (140px) -->
-              <div style="display: flex; gap: 4px; align-items: center; width: 140px;">
-                <span class="bom-mult-text" style="font-weight: 600; white-space: nowrap;">
-                  Total: <span style="color: var(--primary-color);">₹{{ getCalculatedBomLineCost(idx) | number:'1.2-2' }}</span>
-                </span>
-              </div>
-            </div>
-
-            <button class="linkbtn-remove" type="button" (click)="removeBomLine(idx)" [disabled]="bomLines.controls.length <= 1" [class.disabled]="bomLines.controls.length <= 1" title="Remove line">
-              <mat-icon style="font-size: 20px; width: 20px; height: 20px;">cancel</mat-icon>
-            </button>
+          <!-- Radio buttons for pricing method -->
+          <div style="display: flex; gap: 8px; align-items: center; font-size: 11px; background: #fff; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border-glass);">
+            <label style="cursor: pointer;"><input type="radio" formControlName="pricingMethod" [value]="0" (change)="onPricingMethodChange(idx)"> Average</label>
+            <label style="cursor: pointer;"><input type="radio" formControlName="pricingMethod" [value]="1" (change)="onPricingMethodChange(idx)"> Actual</label>
+            <label style="cursor: pointer;"><input type="radio" formControlName="pricingMethod" [value]="2" (change)="onPricingMethodChange(idx)"> Manual</label>
           </div>
         </div>
 
-        <button class="btn-ghost-mini" style="align-self: flex-start; margin-top: 8px;" type="button" (click)="addBomLine()">+ add material line</button>
-      </div>
-    </form>
-  </div>
+        <div class="bom-line-row" style="margin-top: 8px;">
+          <!-- LME-linked / Direct dropdown (equal width: 170px) -->
+          <select *ngIf="line.get('pricingMethod')?.value === 0 || line.get('pricingMethod')?.value === 1"
+                  class="sel" formControlName="priceType" (change)="onPricingMethodChange(idx)" style="width: 170px;">
+            <option [value]="0">LME-linked</option>
+            <option [value]="1">Direct ₹/kg</option>
+          </select>
 
-  <div class="panel-actions-row">
-    <div class="actions-left">
-      <button class="btn-save-product" type="button" (click)="onSubmit()" [disabled]="form.invalid || nameExistsError || loading()">
-        {{ sku && sku.id && !sku.isAddSpec ? 'Save Product' : (sku?.isAddSpec ? 'Add Spec' : 'Create Product') }}
-      </button>
-      <button class="btn-cancel" type="button" (click)="onCancel()">Cancel</button>
+          <!-- Dynamic Value / Rate based on Pricing Method -->
+          <div *ngIf="line.get('pricingMethod')?.value === 0" style="display: flex; gap: 8px; align-items: center; width: 360px;">
+            <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Rate ₹/kg:</span>
+            <select class="sel" formControlName="pricingMonth" (change)="onPricingMethodChange(idx)" style="flex: 1; min-width: 140px;">
+              <option [value]="0">This month avg</option>
+              <option [value]="1">Prev month avg</option>
+            </select>
+            <span class="bom-mult-text" style="font-weight: 600; white-space: nowrap;">₹{{ line.get('manualPrice')?.value | number:'1.2-2' }}</span>
+          </div>
+
+          <div *ngIf="line.get('pricingMethod')?.value === 1" style="display: flex; gap: 4px; align-items: center;">
+            <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">Rate ₹/kg:</span>
+            <span class="bom-mult-text" style="font-weight: 600;">₹{{ getLandedCost(line.get('materialId')?.value, line.get('priceType')?.value) | number:'1.2-2' }}</span>
+          </div>
+
+          <div *ngIf="line.get('pricingMethod')?.value === 2" style="display: flex; gap: 6px; align-items: center; width: 170px;">
+            <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Rate ₹/kg:</span>
+            <input class="in" style="flex: 1; min-width: 0; text-align: right;" type="number" formControlName="manualPrice" placeholder="0.00" min="0" step="0.01">
+          </div>
+        </div>
+
+        <!-- Line 3: Qty (kg), Total, and Remove button -->
+        <div class="bom-line-actions" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 8px; margin-top: 8px;">
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <!-- Qty (kg) container matching Select Material boundary (170px) -->
+            <div style="display: flex; gap: 6px; align-items: center; width: 170px;">
+              <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Qty (kg):</span>
+              <input class="in" type="number" formControlName="weightKg" placeholder="Qty (kg)" style="flex: 1; min-width: 0; text-align: right;" min="0" step="0.01" title="Quantity (kg)">
+            </div>
+
+            <!-- Total container matching Select Vendor right boundary (140px) -->
+            <div style="display: flex; gap: 4px; align-items: center; width: 140px;">
+              <span class="bom-mult-text" style="font-weight: 600; white-space: nowrap;">
+                Total: <span style="color: var(--primary-color);">₹{{ getCalculatedBomLineCost(idx) | number:'1.2-2' }}</span>
+              </span>
+            </div>
+          </div>
+
+          <button class="linkbtn-remove" type="button" (click)="removeBomLine(idx)" [disabled]="bomLines.controls.length <= 1" [class.disabled]="bomLines.controls.length <= 1" title="Remove line">
+            <mat-icon style="font-size: 20px; width: 20px; height: 20px;">cancel</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn-ghost-mini" style="align-self: flex-start; margin-top: 8px;" type="button" (click)="addBomLine()">+ add material line</button>
     </div>
-  </div>
-</div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="onCancel()">Cancel</button>
+  <button mat-flat-button class="btn-primary" type="button" (click)="onSubmit()" [disabled]="form.invalid || nameExistsError || loading()">
+    {{ sku && sku.id && !sku.isAddSpec ? 'Save Product' : (sku?.isAddSpec ? 'Add Spec' : 'Create Product') }}
+  </button>
+</mat-dialog-actions>

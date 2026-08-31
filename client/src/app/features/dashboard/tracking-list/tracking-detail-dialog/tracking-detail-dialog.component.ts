@@ -2,13 +2,14 @@ import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PricingService, TrackingSummaryDto, TrackingLogDto } from '../../../../core/pricing.service';
 
 @Component({
   selector: 'app-tracking-detail-dialog',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
   templateUrl: './tracking-detail-dialog.component.html',
   styleUrls: ['./tracking-detail-dialog.component.scss']
 })

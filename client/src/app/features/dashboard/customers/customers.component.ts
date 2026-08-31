@@ -67,7 +67,7 @@ export class CustomersComponent implements OnInit {
 
   public showAddForm() {
     const dialogRef = this.dialog.open(CustomerEditDialogComponent, {
-      width: '95vw', maxWidth: '770px',
+      panelClass: 'dialog-tier-md',
       data: null
     });
 
@@ -80,7 +80,7 @@ export class CustomersComponent implements OnInit {
 
   public showEditForm(customer: CustomerSummary) {
     const dialogRef = this.dialog.open(CustomerEditDialogComponent, {
-      width: '95vw', maxWidth: '770px',
+      panelClass: 'dialog-tier-md',
       data: customer
     });
 
@@ -93,7 +93,7 @@ export class CustomersComponent implements OnInit {
 
   public deleteCustomer(customer: CustomerSummary) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '95vw', maxWidth: '400px',
+      panelClass: 'dialog-tier-sm',
       data: {
         title: 'Delete Customer',
         message: `Are you sure you want to delete customer ${customer.name}?`,

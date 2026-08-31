@@ -103,7 +103,7 @@ getModuleIcon(module: string): string {
   
   public openChangePasswordDialog() {
     this.dialog.open(ChangePasswordDialogComponent, {
-      width: '95vw', maxWidth: '520px',
+      width: '92vw', maxWidth: '420px',
       disableClose: true
     });
   }

@@ -121,7 +121,7 @@ export class MaterialsComponent implements OnInit {
   public openBackfill(material: Material) {
     if (!this.canUpdate()) return;
     const dialogRef = this.dialog.open(MaterialBackfillDialogComponent, {
-      width: '95vw', maxWidth: '750px',
+      panelClass: 'dialog-tier-md',
       data: material
     });
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
@@ -189,7 +189,7 @@ export class MaterialsComponent implements OnInit {
 
   public addMaterial() {
     const dialogRef = this.dialog.open(MaterialCreateEditDialogComponent, {
-      width: '95vw', maxWidth: '500px',
+      panelClass: 'dialog-tier-sm',
       data: null
     });
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
@@ -197,7 +197,7 @@ export class MaterialsComponent implements OnInit {
 
   public editMaterial(material: Material) {
     const dialogRef = this.dialog.open(MaterialCreateEditDialogComponent, {
-      width: '95vw', maxWidth: '500px',
+      panelClass: 'dialog-tier-sm',
       data: material
     });
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
@@ -209,7 +209,7 @@ export class MaterialsComponent implements OnInit {
     const material = group.selectedVariant;
     if (!material) return;
     this.dialog.open(MaterialHistoryDialogComponent, {
-      width: '95vw', maxWidth: '850px',
+      panelClass: 'dialog-tier-lg',
       data: {
         material: material,
         group: group,
@@ -223,7 +223,7 @@ export class MaterialsComponent implements OnInit {
     const material = group.selectedVariant;
     if (!material) return;
     this.dialog.open(MaterialTrendDialogComponent, {
-      width: '95vw', maxWidth: '800px',
+      panelClass: 'dialog-tier-md',
       data: material
     });
   }

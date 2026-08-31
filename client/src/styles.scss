@@ -97,21 +97,117 @@ html, body {
   border-bottom: 1px solid var(--border-glass) !important;
 }
 
-/* Material Dialog & Fields */
-.cdk-overlay-pane {
-  max-width: 90vw !important;
+/* Material Dialog & Modern Surface Styling - Premium Aesthetic System */
+.cdk-overlay-backdrop {
+  background: rgba(16, 29, 50, 0.45) !important;
+  backdrop-filter: blur(4px) !important;
 }
+
+.cdk-global-overlay-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.cdk-overlay-pane {
+  max-width: calc(100vw - 32px) !important;
+  margin: 16px !important;
+}
+
 .mat-mdc-dialog-container .mdc-dialog__surface {
   background: var(--bg-card) !important;
   border: 1px solid var(--border-glass) !important;
-  box-shadow: var(--shadow-premium) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
+
 .mat-mdc-dialog-title {
-  color: var(--text-primary) !important;
-  font-weight: 600 !important;
+  color: var(--primary-color) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 1.15rem !important;
+  letter-spacing: -0.01em !important;
+  margin: 0 !important;
+  padding: 18px 24px 16px 24px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
 }
+
 .mat-mdc-dialog-content {
   color: var(--text-secondary) !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 20px 24px !important;
+  max-height: calc(80vh - 120px) !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+}
+
+.mat-mdc-dialog-actions {
+  padding: 14px 24px !important;
+  border-top: 1px solid #f1f5f9 !important;
+  background: #f8fafc !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  box-sizing: border-box !important;
+
+  button[mat-flat-button], .btn-primary {
+    height: 38px !important;
+    padding: 0 20px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    background: var(--primary-color) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(16, 29, 50, 0.2) !important;
+    transition: all 0.2s ease !important;
+
+    &:hover:not([disabled]) {
+      background: #1c3256 !important;
+      box-shadow: 0 4px 12px rgba(16, 29, 50, 0.3) !important;
+      transform: translateY(-1px) !important;
+    }
+  }
+
+  button[mat-button], button[mat-stroked-button], .btn-cancel {
+    height: 38px !important;
+    padding: 0 18px !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    color: var(--text-secondary) !important;
+    border: 1px solid var(--border-glass) !important;
+    background: #ffffff !important;
+    transition: all 0.2s ease !important;
+
+    &:hover {
+      background: #f1f5f9 !important;
+      color: var(--primary-color) !important;
+    }
+  }
+}
+
+/* Symmetric Modal Width Tiers */
+.dialog-tier-sm {
+  width: 420px !important;
+  max-width: calc(100vw - 32px) !important;
+}
+.dialog-tier-md {
+  width: 600px !important;
+  max-width: calc(100vw - 32px) !important;
+}
+.dialog-tier-lg {
+  width: 780px !important;
+  max-width: calc(100vw - 32px) !important;
 }
 
 /* Input Fields Overlay */
