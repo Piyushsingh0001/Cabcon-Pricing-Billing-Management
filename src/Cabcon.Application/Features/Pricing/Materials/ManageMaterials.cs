@@ -54,7 +54,22 @@ public class CreateMaterialCommandHandler : IRequestHandler<CreateMaterialComman
     public async Task<Result<int>> Handle(CreateMaterialCommand request, CancellationToken cancellationToken)
     {
         var repository = _unitOfWork.Repository<Material>();
-        var exists = await repository.Query().AnyAsync(x => x.Name == request.Name && x.VendorName == request.VendorName, cancellationToken);
+        int? vendorId = null;
+        if (!string.IsNullOrWhiteSpace(request.VendorName))
+        {
+            var vendorRepo = _unitOfWork.Repository<Vendor>();
+            var vName = request.VendorName.Trim();
+            var vendor = await vendorRepo.Query().FirstOrDefaultAsync(v => v.Name.ToLower() == vName.ToLower(), cancellationToken);
+            if (vendor == null)
+            {
+                vendor = new Vendor { Name = vName };
+                await vendorRepo.AddAsync(vendor, cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+            }
+            vendorId = vendor.Id;
+        }
+
+        var exists = await repository.Query().AnyAsync(x => x.Name == request.Name && x.VendorId == vendorId, cancellationToken);
         if (exists)
         {
             return Result<int>.Failure("A material with this name and vendor already exists.");
@@ -63,7 +78,7 @@ public class CreateMaterialCommandHandler : IRequestHandler<CreateMaterialComman
         var material = new Material
         {
             Name = request.Name,
-            VendorName = request.VendorName,
+            VendorId = vendorId,
             Type = request.Type,
             LmeUsdPerMt = request.LmeUsdPerMt,
             PremiumUsdPerMt = request.PremiumUsdPerMt,
@@ -117,20 +132,34 @@ public class UpdateMaterialCommandHandler : IRequestHandler<UpdateMaterialComman
             return Result.Failure("Material not found.");
         }
 
+        int? vendorId = null;
+        if (!string.IsNullOrWhiteSpace(request.VendorName))
+        {
+            var vendorRepo = _unitOfWork.Repository<Vendor>();
+            var vName = request.VendorName.Trim();
+            var vendor = await vendorRepo.Query().FirstOrDefaultAsync(v => v.Name.ToLower() == vName.ToLower(), cancellationToken);
+            if (vendor == null)
+            {
+                vendor = new Vendor { Name = vName };
+                await vendorRepo.AddAsync(vendor, cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+            }
+            vendorId = vendor.Id;
+        }
+
         var duplicateName = await repository.Query()
-            .AnyAsync(x => x.Name == request.Name && x.VendorName == request.VendorName && x.Id != request.Id, cancellationToken);
+            .AnyAsync(x => x.Name == request.Name && x.VendorId == vendorId && x.Id != request.Id, cancellationToken);
         if (duplicateName)
         {
             return Result.Failure("Another material with this name and vendor already exists.");
         }
 
         material.Name = request.Name;
-        material.VendorName = request.VendorName;
+        material.VendorId = vendorId;
         material.Type = request.Type;
 
         repository.Update(material);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         return Result.Success();
     }
 }
@@ -208,7 +237,7 @@ public class BulkStampMaterialPricesCommandHandler : IRequestHandler<BulkStampMa
             {
                 MaterialId = m.Id,
                 Type = m.Type,
-                VendorName = m.VendorName,
+                VendorName = m.Vendor != null ? m.Vendor.Name : null,
                 LmeUsdPerMt = m.LmeUsdPerMt,
                 PremiumUsdPerMt = m.PremiumUsdPerMt,
                 FxRate = m.FxRate,
@@ -272,7 +301,7 @@ public class BackfillMaterialPricesCommandHandler : IRequestHandler<BackfillMate
             {
                 MaterialId = material.Id,
                 Type = material.Type,
-                VendorName = material.VendorName,
+                VendorName = material.Vendor != null ? material.Vendor.Name : null,
                 LmeUsdPerMt = price.LmeUsdPerMt,
                 PremiumUsdPerMt = price.PremiumUsdPerMt,
                 FxRate = price.FxRate,

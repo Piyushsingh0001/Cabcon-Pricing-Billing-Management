@@ -1,0 +1,67 @@
+<h2 mat-dialog-title class="dialog-header-title text-end">
+  <span>Manage Vendors & Material Association</span>
+</h2>
+
+<mat-dialog-content>
+  <p class="subtitle">
+    Check the box for each material to enable the vendor in the material card's Vendor dropdown.
+  </p>
+
+  <!-- Add New Vendor Row -->
+  <div class="add-vendor-row">
+    <mat-form-field appearance="outline" class="vendor-input-field">
+      <mat-label>New Vendor Name</mat-label>
+      <input matInput [(ngModel)]="newVendorName" placeholder="e.g. Tata Steel" (keyup.enter)="addVendor()">
+    </mat-form-field>
+    <button mat-flat-button class="btn-primary add-btn" (click)="addVendor()">
+      <mat-icon>add</mat-icon> Add Vendor
+    </button>
+  </div>
+
+  <!-- Vendor-Material Matrix Table -->
+  <div class="matrix-table-container">
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th class="vendor-col-header">Vendor Name</th>
+          <th *ngFor="let matName of materialNames" class="mat-col-header" [title]="matName">
+            {{ matName }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vendor of vendors">
+          <td class="vendor-name-cell">
+            <div class="vendor-name-row">
+              <span class="v-name">{{ vendor }}</span>
+              <button type="button" class="remove-vendor-btn" (click)="removeVendor(vendor)" [title]="'Remove ' + vendor">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </td>
+
+          <td *ngFor="let matName of materialNames" class="checkbox-cell">
+            <input
+              type="checkbox"
+              class="matrix-checkbox"
+              [checked]="isMapped(vendor, matName)"
+              (change)="toggleMapping(vendor, matName)"
+              [title]="'Enable ' + vendor + ' for ' + matName">
+          </td>
+        </tr>
+        <tr *ngIf="vendors.length === 0">
+          <td [attr.colspan]="materialNames.length + 1" class="no-vendors">
+            No vendors added yet. Use the field above to add a new vendor.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="onCancel()">Cancel</button>
+  <button mat-flat-button class="btn-primary" type="button" (click)="onSave()">
+    Save Mappings
+  </button>
+</mat-dialog-actions>

@@ -463,6 +463,64 @@ export class PricingService {
   public assignPermissionsToRole(roleId: number, permissionIds: number[]): Observable<void> {
     return this.http.put<void>(`${this.apiBase}/roles/${roleId}/permissions`, { permissionIds });
   }
+
+  // Vendor Management Helper Methods
+  public getStoredVendors(): string[] {
+    const defaultVendors = ['Hindalco', 'Vedanta', 'JSL', 'Vendor A', 'Vendor B'];
+    try {
+      const stored = localStorage.getItem('cabcon_vendors');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return Array.from(new Set([...defaultVendors, ...parsed]));
+        }
+      }
+    } catch {}
+    return defaultVendors;
+  }
+
+  public saveStoredVendors(vendors: string[]): void {
+    try {
+      localStorage.setItem('cabcon_vendors', JSON.stringify(vendors));
+    } catch {}
+  }
+
+  public getVendorMaterialMappings(): { [materialName: string]: string[] } {
+    try {
+      const stored = localStorage.getItem('cabcon_vendor_material_mappings');
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch {}
+    return {};
+  }
+
+  public saveVendorMaterialMappings(mappings: { [materialName: string]: string[] }): void {
+    try {
+      localStorage.setItem('cabcon_vendor_material_mappings', JSON.stringify(mappings));
+    } catch {}
+  }
+
+  // --- VENDORS API ---
+  public getVendorsApi(): Observable<{ id: number; name: string; isActive: boolean }[]> {
+    return this.http.get<{ id: number; name: string; isActive: boolean }[]>(`${this.apiBase}/vendors`);
+  }
+
+  public createVendorApi(name: string): Observable<{ id: number; name: string; isActive: boolean }> {
+    return this.http.post<{ id: number; name: string; isActive: boolean }>(`${this.apiBase}/vendors`, { name });
+  }
+
+  public deleteVendorApi(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.apiBase}/vendors/${id}`);
+  }
+
+  public getVendorMaterialMappingsApi(): Observable<{ materialName: string; vendorIds: number[]; vendorNames: string[] }[]> {
+    return this.http.get<{ materialName: string; vendorIds: number[]; vendorNames: string[] }[]>(`${this.apiBase}/vendors/material-mappings`);
+  }
+
+  public saveVendorMaterialMappingsApi(payload: { materialName: string; vendorNames: string[] }[]): Observable<boolean> {
+    return this.http.post<boolean>(`${this.apiBase}/vendors/material-mappings`, { mappings: payload });
+  }
 }
 
 export interface UserDto {

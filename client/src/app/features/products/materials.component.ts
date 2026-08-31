@@ -17,6 +17,7 @@ import { MaterialHistoryDialogComponent } from './material-history-dialog/materi
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { MaterialBackfillDialogComponent } from './material-backfill-dialog/material-backfill-dialog.component';
 import { MaterialTrendDialogComponent } from './material-trend-dialog/material-trend-dialog.component';
+import { VendorManageDialogComponent } from './vendor-manage-dialog/vendor-manage-dialog.component';
 
 @Component({
   selector: 'app-materials',
@@ -73,8 +74,27 @@ export class MaterialsComponent implements OnInit {
   }
 
   private updateGroupSelectedVariant(group: any) {
-    const selected = group.variants.find((v: any) => v.id === group.selectedVariantId) || group.variants[0];
-    group.selectedVariant = selected;
+    let selected = group.variants.find((v: any) => v.vendorName === group.selectedVendorName);
+    
+    if (!selected && group.variants.length > 0) {
+      const base = group.variants[0];
+      selected = {
+        ...base,
+        id: 0,
+        vendorName: group.selectedVendorName,
+        isPlaceholder: true,
+        lmeUsdPerMt: base.lmeUsdPerMt || 0,
+        premiumUsdPerMt: base.premiumUsdPerMt || 0,
+        fxRate: base.fxRate || 0,
+        freightInrPerMt: base.freightInrPerMt || 0,
+        directRateInrPerKg: base.directRateInrPerKg || 0
+      };
+    }
+    
+    group.selectedVariant = selected || group.variants[0];
+    if (group.selectedVariant) {
+      group.selectedVariantId = group.selectedVariant.id;
+    }
     this.calculateGroupAvg(group);
   }
 
@@ -127,7 +147,22 @@ export class MaterialsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
   }
 
-  // removed bulkStamp
+  public openManageVendors() {
+    const materialNames = this.materialGroups.map(g => g.name);
+    const dialogRef = this.dialog.open(VendorManageDialogComponent, {
+      panelClass: 'dialog-auto-fit',
+      data: {
+        materialNames: materialNames,
+        allMaterials: this.materials
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.loadMaterials();
+      }
+    });
+  }
 
   public canUpdate(): boolean {
     return this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
@@ -137,10 +172,10 @@ export class MaterialsComponent implements OnInit {
     this.loading.set(true);
 
     // Preserve current selections before reloading
-    const currentSelections = new Map<string, number>();
+    const currentSelections = new Map<string, string>();
     this.materialGroups.forEach(g => {
-      if (g.selectedVariantId) {
-        currentSelections.set(g.name, g.selectedVariantId);
+      if (g.selectedVendorName) {
+        currentSelections.set(g.name, g.selectedVendorName);
       }
     });
 
@@ -154,6 +189,7 @@ export class MaterialsComponent implements OnInit {
       100
     ).subscribe({
       next: (res) => {
+        this.materials = res.items || [];
         // Group materials by Name
         const groupsMap = new Map<string, any>();
         
@@ -162,7 +198,7 @@ export class MaterialsComponent implements OnInit {
             groupsMap.set(m.name, {
               name: m.name,
               variants: [],
-              selectedVariantId: currentSelections.get(m.name) || m.id, // Preserve selection or default
+              selectedVendorName: currentSelections.get(m.name) || m.vendorName || '',
               avgPriceRange: 'this_month',
               calculatedAvg: 0
             });
@@ -172,13 +208,52 @@ export class MaterialsComponent implements OnInit {
 
         this.materialGroups = Array.from(groupsMap.values());
         
-        // Ensure each group exposes the selected variant's properties for the template
-        this.materialGroups.forEach(group => {
-          this.updateGroupSelectedVariant(group);
-        });
+        this.pricingService.getVendorsApi().subscribe({
+          next: (vendorsRes) => {
+            const allDbVendors = (vendorsRes || []).map(v => v.name);
 
-        this.loading.set(false);
-        this.cdr.detectChanges();
+            this.pricingService.getVendorMaterialMappingsApi().subscribe({
+              next: (mappingsRes) => {
+                const vendorMappings: { [matName: string]: string[] } = {};
+                (mappingsRes || []).forEach(m => {
+                  vendorMappings[m.materialName] = m.vendorNames || [];
+                });
+
+                this.materialGroups.forEach(group => {
+                  const mappedVendors = vendorMappings[group.name];
+                  if (mappedVendors && Array.isArray(mappedVendors) && mappedVendors.length > 0) {
+                    group.vendorOptions = mappedVendors;
+                  } else {
+                    const variantVendors = group.variants.map((v: any) => v.vendorName).filter(Boolean);
+                    group.vendorOptions = variantVendors.length > 0 ? Array.from(new Set(variantVendors)) : allDbVendors;
+                  }
+
+                  if (!group.selectedVendorName || !group.vendorOptions.includes(group.selectedVendorName)) {
+                    group.selectedVendorName = group.vendorOptions[0] || 'Default Vendor';
+                  }
+
+                  this.updateGroupSelectedVariant(group);
+                });
+
+                this.loading.set(false);
+                this.cdr.detectChanges();
+              },
+              error: () => {
+                this.materialGroups.forEach(group => {
+                  const variantVendors = group.variants.map((v: any) => v.vendorName).filter(Boolean);
+                  group.vendorOptions = variantVendors.length > 0 ? Array.from(new Set(variantVendors)) : allDbVendors;
+                  this.updateGroupSelectedVariant(group);
+                });
+                this.loading.set(false);
+                this.cdr.detectChanges();
+              }
+            });
+          },
+          error: () => {
+            this.loading.set(false);
+            this.cdr.detectChanges();
+          }
+        });
       },
       error: () => {
         this.snackBar.open('Failed to load materials data.', 'Close', { duration: 3000 });
@@ -240,34 +315,61 @@ export class MaterialsComponent implements OnInit {
   public updatePrice(group: any) {
     if (!this.canUpdate()) return;
     const material = group.selectedVariant;
-    const metaPayload = {
-      name: material.name,
-      vendorName: material.vendorName,
-      type: material.type
-    };
+    this.loading.set(true);
 
-    const pricePayload = material.type === 0 ? {
-      materialId: material.id,
-      lmeUsdPerMt: Number(material.lmeUsdPerMt || 0),
-      premiumUsdPerMt: Number(material.premiumUsdPerMt || 0),
-      fxRate: Number(material.fxRate || 0),
-      freightInrPerMt: Number(material.freightInrPerMt || 0)
-    } : {
-      materialId: material.id,
-      directRateInrPerKg: Number(material.directRateInrPerKg || 0)
-    };
+    if (material.id === 0) {
+      const createPayload = {
+        name: material.name,
+        vendorName: material.vendorName,
+        type: material.type,
+        lmeUsdPerMt: Number(material.lmeUsdPerMt || 0),
+        premiumUsdPerMt: Number(material.premiumUsdPerMt || 0),
+        fxRate: Number(material.fxRate || 0),
+        freightInrPerMt: Number(material.freightInrPerMt || 0),
+        directRateInrPerKg: Number(material.directRateInrPerKg || 0)
+      };
 
-    this.pricingService.updateMaterial(material.id, metaPayload).pipe(
-      switchMap(() => this.pricingService.updateMaterialPrice(pricePayload))
-    ).subscribe({
-      next: () => {
-        this.snackBar.open(`${material.name} updated successfully.`, 'Close', { duration: 3000 });
-        this.loadMaterials();
-      },
-      error: (err) => {
-        this.snackBar.open(err.error?.message || 'Failed to update material.', 'Close', { duration: 3000 });
-      }
-    });
+      this.pricingService.createMaterial(createPayload).subscribe({
+        next: () => {
+          this.snackBar.open(`${material.name} (${material.vendorName}) updated successfully.`, 'Close', { duration: 3000 });
+          this.loadMaterials();
+        },
+        error: (err) => {
+          this.loading.set(false);
+          this.snackBar.open(err.error?.message || 'Failed to update price.', 'Close', { duration: 3000 });
+        }
+      });
+    } else {
+      const metaPayload = {
+        name: material.name,
+        vendorName: material.vendorName,
+        type: material.type
+      };
+
+      const pricePayload = material.type === 0 ? {
+        materialId: material.id,
+        lmeUsdPerMt: Number(material.lmeUsdPerMt || 0),
+        premiumUsdPerMt: Number(material.premiumUsdPerMt || 0),
+        fxRate: Number(material.fxRate || 0),
+        freightInrPerMt: Number(material.freightInrPerMt || 0)
+      } : {
+        materialId: material.id,
+        directRateInrPerKg: Number(material.directRateInrPerKg || 0)
+      };
+
+      this.pricingService.updateMaterial(material.id, metaPayload).pipe(
+        switchMap(() => this.pricingService.updateMaterialPrice(pricePayload))
+      ).subscribe({
+        next: () => {
+          this.snackBar.open(`${material.name} updated successfully.`, 'Close', { duration: 3000 });
+          this.loadMaterials();
+        },
+        error: (err) => {
+          this.loading.set(false);
+          this.snackBar.open(err.error?.message || 'Failed to update material.', 'Close', { duration: 3000 });
+        }
+      });
+    }
   }
 }
 

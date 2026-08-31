@@ -49,6 +49,8 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Material> Materials => Set<Material>();
     public DbSet<MaterialPriceHistory> MaterialPriceHistory => Set<MaterialPriceHistory>();
+    public DbSet<Vendor> Vendors => Set<Vendor>();
+    public DbSet<MaterialVendor> MaterialVendors => Set<MaterialVendor>();
     public DbSet<Sku> Skus => Set<Sku>();
     public DbSet<SkuBomLine> SkuBomLines => Set<SkuBomLine>();
 
@@ -124,7 +126,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
                     {
                         MaterialId = entry.Entity.Id,
                         Type = type,
-                        VendorName = entry.Entity.VendorName,
+                        VendorName = entry.Entity.Vendor?.Name ?? (entry.Entity.VendorId.HasValue ? Vendors.Find(entry.Entity.VendorId.Value)?.Name : null),
                         LmeUsdPerMt = entry.Entity.LmeUsdPerMt,
                         PremiumUsdPerMt = entry.Entity.PremiumUsdPerMt,
                         FxRate = entry.Entity.FxRate,
@@ -154,7 +156,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
                 {
                     Material = entry.Entity,
                     Type = type,
-                    VendorName = entry.Entity.VendorName,
+                    VendorName = entry.Entity.Vendor?.Name ?? (entry.Entity.VendorId.HasValue ? Vendors.Find(entry.Entity.VendorId.Value)?.Name : null),
                     LmeUsdPerMt = entry.Entity.LmeUsdPerMt,
                     PremiumUsdPerMt = entry.Entity.PremiumUsdPerMt,
                     FxRate = entry.Entity.FxRate,

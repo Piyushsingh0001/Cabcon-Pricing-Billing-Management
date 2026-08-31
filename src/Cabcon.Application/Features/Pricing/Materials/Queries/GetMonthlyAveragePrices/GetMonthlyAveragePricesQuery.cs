@@ -23,12 +23,13 @@ public class GetMonthlyAveragePricesQueryHandler : IRequestHandler<GetMonthlyAve
         // Get all price history for the given month and year
         var histories = await _db.MaterialPriceHistory
             .Include(x => x.Material)
+            .ThenInclude(m => m.Vendor)
             .Where(x => x.EffectiveDate.Month == request.Month && x.EffectiveDate.Year == request.Year)
             .ToListAsync(cancellationToken);
 
         // Group by material and calculate average landed cost
         var averages = histories
-            .GroupBy(x => new { x.MaterialId, x.Material.Name, VendorName = x.VendorName ?? x.Material.VendorName })
+            .GroupBy(x => new { x.MaterialId, x.Material.Name, VendorName = x.VendorName ?? x.Material.Vendor?.Name })
             .Select(g => new MonthlyAveragePriceDto(
                 g.Key.MaterialId,
                 g.Key.Name,

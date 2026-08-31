@@ -5,9 +5,9 @@
       <p class="subtitle">Update inputs, then stamp the date. Exchange metals build up from LME; others are a direct ₹/kg.</p>
     </div>
     <div style="display: flex; gap: 8px;">
-      <!-- <button class="btn-ghost" (click)="toggleAverages()">
-    <mat-icon style="vertical-align: middle;">calendar_month</mat-icon> Monthly Averages
-  </button> -->
+      <button class="btn-ghost" (click)="openManageVendors()" *ngIf="canUpdate()">
+        <mat-icon style="vertical-align: middle; font-size: 18px; width: 18px; height: 18px;">storefront</mat-icon> Manage Vendors
+      </button>
       <button class="btn-ghost" (click)="addMaterial()" *ngIf="canUpdate()">
         + Add material
       </button>
@@ -79,10 +79,10 @@
       <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
         Vendor: 
         <select class="bare" style="width: auto; font-size: 12px; font-weight: normal; background: transparent; padding: 2px;" 
-                [(ngModel)]="group.selectedVariantId" 
+                [(ngModel)]="group.selectedVendorName" 
                 (ngModelChange)="onVendorChange(group)">
-          <option *ngFor="let variant of group.variants" [ngValue]="variant.id">
-            {{ variant.vendorName || 'Default Vendor' }}
+          <option *ngFor="let vName of group.vendorOptions" [value]="vName">
+            {{ vName || 'Default Vendor' }}
           </option>
         </select>
       </div>

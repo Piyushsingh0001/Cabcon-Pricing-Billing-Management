@@ -79,6 +79,9 @@ export class SkuEditDialogComponent implements OnInit {
   public errorMessage = signal<string | null>(null);
   public nameExistsError = false;
 
+  public dbVendors: string[] = [];
+  public dbVendorMappings: { [matName: string]: string[] } = {};
+
   private loadDropdowns() {
     this.pricingService.getCategories().subscribe(res => this.categories = res);
     this.pricingService.getSkus(undefined, undefined, undefined, false, 1, 1000).subscribe(res => {
@@ -87,6 +90,26 @@ export class SkuEditDialogComponent implements OnInit {
         this.checkUniqueness();
       }
     });
+
+    this.pricingService.getVendorsApi().subscribe({
+      next: (vendorsRes) => {
+        this.dbVendors = (vendorsRes || []).map(v => v.name);
+
+        this.pricingService.getVendorMaterialMappingsApi().subscribe({
+          next: (mappingsRes) => {
+            (mappingsRes || []).forEach(m => {
+              this.dbVendorMappings[m.materialName] = m.vendorNames || [];
+            });
+            this.fetchMaterials();
+          },
+          error: () => this.fetchMaterials()
+        });
+      },
+      error: () => this.fetchMaterials()
+    });
+  }
+
+  private fetchMaterials() {
     this.pricingService.getMaterials(undefined, undefined, undefined, false, 1, 100).subscribe(res => {
       this.materials = res.items;
 
@@ -94,16 +117,29 @@ export class SkuEditDialogComponent implements OnInit {
       if (this.sku && this.sku.bomLines) {
         this.sku.bomLines.forEach((line: any) => {
           const mat = this.materials.find(m => m.id === line.materialId);
-          this.bomLines.push(this.fb.group({
-            materialName: [mat ? mat.name : '', Validators.required],
-            vendorName: [{value: mat ? (mat.vendorName || 'Default') : '', disabled: !mat}, Validators.required],
+          const matName = mat ? mat.name : (line.materialName || '');
+          let vendName = mat ? (mat.vendorName || '') : (line.vendorName || '');
+
+          const group = this.fb.group({
+            materialName: [matName, Validators.required],
+            vendorName: [{value: vendName, disabled: !matName}, Validators.required],
             materialId: [line.materialId, Validators.required],
             weightKg: [line.weightKg ?? 1, [Validators.required, Validators.min(0.0001)]],
             priceType: [line.priceType ?? (mat ? mat.type : 0), Validators.required],
             pricingMethod: [line.pricingMethod ?? 1, Validators.required],
             pricingMonth: [line.pricingMonth ?? 0],
             manualPrice: [line.manualPrice ?? 0]
-          }));
+          });
+
+          this.bomLines.push(group);
+          const idx = this.bomLines.length - 1;
+
+          if (matName && (!vendName || vendName === 'Default')) {
+            const avail = this.getAvailableVendors(idx);
+            if (avail.length > 0) {
+              group.patchValue({ vendorName: avail[0] });
+            }
+          }
         });
       } else {
         this.addBomLine();
@@ -138,12 +174,12 @@ export class SkuEditDialogComponent implements OnInit {
 
   public getLandedCost(materialId: any, priceType?: any): number {
     if (!materialId) return 0;
-    const mat = this.materials.find(m => m.id === Number(materialId));
+    const mat = this.materials.find(m => m.id === materialId);
     if (!mat) return 0;
     
-    const typeToUse = priceType !== undefined && priceType !== null && priceType !== '' ? Number(priceType) : mat.type;
+    const pType = priceType !== undefined ? Number(priceType) : mat.type;
 
-    if (typeToUse === 0) {
+    if (pType === 0) {
       const lme = Number(mat.lmeUsdPerMt || 0);
       const premium = Number(mat.premiumUsdPerMt || 0);
       const fx = Number(mat.fxRate || 0);
@@ -169,7 +205,6 @@ export class SkuEditDialogComponent implements OnInit {
     if (method === 1) { // Actual
       unitPrice = this.getLandedCost(matId, pType);
     } else {
-      // For Manual or Average, use the manualPrice field
       unitPrice = Number(line.get('manualPrice')?.value || 0);
     }
 
@@ -207,9 +242,6 @@ export class SkuEditDialogComponent implements OnInit {
     
     if (!matId) return;
 
-    // Call service to get history/missing dates
-    // For now, we will fetch average from the pricing service or calculate it
-    // Wait, we need to get average from backend.
     this.pricingService.getMissingDates(matId, pType).subscribe(res => {
       this.pricingService.getMaterials(undefined, pType, undefined, false, 1, 1000).subscribe(mats => {
         const mat = mats.items.find(m => m.id === matId);
@@ -231,20 +263,37 @@ export class SkuEditDialogComponent implements OnInit {
     const line = this.bomLines.at(idx);
     const matName = line.get('materialName')?.value;
     if (!matName) return [];
-    const vendors = this.materials
-      .filter(m => m.name === matName)
-      .map(m => m.vendorName || 'Default');
-    return Array.from(new Set(vendors));
+
+    const mappedVendors = this.dbVendorMappings[matName];
+    if (mappedVendors && Array.isArray(mappedVendors) && mappedVendors.length > 0) {
+      return mappedVendors;
+    }
+
+    const existingVendors = this.materials
+      .filter(m => m.name === matName && m.vendorName)
+      .map(m => m.vendorName!);
+    
+    if (existingVendors.length > 0) {
+      return Array.from(new Set(existingVendors));
+    }
+
+    return this.dbVendors;
   }
 
   public onMaterialNameChange(idx: number) {
     const line = this.bomLines.at(idx);
     const vendorCtrl = line.get('vendorName');
+    const matName = line.get('materialName')?.value;
     
     line.patchValue({ vendorName: '', materialId: null });
     
-    if (line.get('materialName')?.value) {
+    if (matName) {
       vendorCtrl?.enable();
+      const available = this.getAvailableVendors(idx);
+      if (available.length > 0) {
+        line.patchValue({ vendorName: available[0] });
+        this.onVendorNameChange(idx);
+      }
     } else {
       vendorCtrl?.disable();
     }
@@ -258,12 +307,11 @@ export class SkuEditDialogComponent implements OnInit {
     const matName = line.get('materialName')?.value;
     const vendName = line.get('vendorName')?.value;
     if (matName && vendName) {
-      const mat = this.materials.find(m => m.name === matName && (m.vendorName || 'Default') === vendName);
+      const mat = this.materials.find(m => m.name === matName && m.vendorName === vendName)
+                || this.materials.find(m => m.name === matName);
       if (mat) {
         line.patchValue({ materialId: mat.id });
         this.onPricingMethodChange(idx);
-      } else {
-        line.patchValue({ materialId: null });
       }
     }
     this.checkUniqueness();

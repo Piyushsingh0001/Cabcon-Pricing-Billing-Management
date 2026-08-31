@@ -23,6 +23,7 @@ public record MaterialDto
     public decimal LandedCost { get; init; }
     public string? UpdatedBy { get; init; }
     public string? VendorName { get; init; }
+    public int? VendorId { get; init; }
     public int MissingDaysCountLme { get; init; }
     public int MissingDaysCountDirect { get; init; }
     public decimal ThisMonthAvgLme { get; init; }
@@ -86,6 +87,7 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
 
         var count = await query.CountAsync(cancellationToken);
         var items = await query
+            .Include(m => m.Vendor)
             .Skip((request.PageNumber - 1) * request.PageSize)
             .Take(request.PageSize)
             .ToListAsync(cancellationToken);
@@ -146,7 +148,8 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                 IsPlaceholder = m.IsPlaceholder,
                 LandedCost = _pricingService.LandedCost(m),
                 UpdatedBy = m.UpdatedBy ?? m.CreatedBy,
-                VendorName = m.VendorName,
+                VendorName = m.Vendor?.Name,
+                VendorId = m.VendorId,
                 MissingDaysCountLme = missingCountLme,
                 MissingDaysCountDirect = missingCountDirect,
                 ThisMonthAvgLme = thisMonthAvgLme,

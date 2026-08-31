@@ -32,6 +32,8 @@ public interface IApplicationDbContext
     DbSet<QuotationLine> QuotationLines { get; }
     DbSet<MaterialPriceHistory> MaterialPriceHistory { get; }
     DbSet<QuotationTracking> QuotationTrackings { get; }
+    DbSet<Vendor> Vendors { get; }
+    DbSet<MaterialVendor> MaterialVendors { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

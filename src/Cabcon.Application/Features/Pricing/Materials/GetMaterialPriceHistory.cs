@@ -46,7 +46,7 @@ public class GetMaterialPriceHistoryQueryHandler : IRequestHandler<GetMaterialPr
             .Select(x => new MaterialPriceHistoryDto
             {
                 Id = x.Id,
-                VendorName = x.VendorName ?? x.Material.VendorName,
+                VendorName = x.VendorName ?? (x.Material.Vendor != null ? x.Material.Vendor.Name : null),
                 LmeUsdPerMt = x.LmeUsdPerMt,
                 PremiumUsdPerMt = x.PremiumUsdPerMt,
                 FxRate = x.FxRate,

@@ -76,7 +76,7 @@ public class GetSkusQueryHandler : IRequestHandler<GetSkusQuery, PaginatedList<S
                                      s.Spec.ToLower().Contains(search) || 
                                      s.Category.Name.ToLower().Contains(search) ||
                                      s.BomLines.Any(b => b.Material.Name.ToLower().Contains(search) ||
-                                                         (b.Material.VendorName != null && b.Material.VendorName.ToLower().Contains(search))));
+                                                         (b.Material.Vendor != null && b.Material.Vendor.Name.ToLower().Contains(search))));
         }
 
         if (request.CategoryId.HasValue)

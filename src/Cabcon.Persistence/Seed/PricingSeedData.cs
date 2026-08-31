@@ -23,6 +23,14 @@ public static class PricingSeedData
             new Category { Id = 3, Name = "LT Cable", CreatedDate = SeedDate }
         );
 
+        modelBuilder.Entity<Vendor>().HasData(
+            new Vendor { Id = 1, Name = "Hindalco", CreatedDate = SeedDate },
+            new Vendor { Id = 2, Name = "Vedanta", CreatedDate = SeedDate },
+            new Vendor { Id = 3, Name = "JSL", CreatedDate = SeedDate },
+            new Vendor { Id = 4, Name = "Vendor A", CreatedDate = SeedDate },
+            new Vendor { Id = 5, Name = "Vendor B", CreatedDate = SeedDate }
+        );
+
         modelBuilder.Entity<Material>().HasData(
             new Material { Id = 1, Name = "Copper", Type = MaterialType.Exchange, LmeUsdPerMt = 13400, PremiumUsdPerMt = 410, FxRate = 95, FreightInrPerMt = 6500, AsOnDate = SeedDate, IsPlaceholder = false, CreatedDate = SeedDate },
             new Material { Id = 2, Name = "Aluminium (EC)", Type = MaterialType.Exchange, LmeUsdPerMt = 2650, PremiumUsdPerMt = 250, FxRate = 87, FreightInrPerMt = 6500, AsOnDate = SeedDate, IsPlaceholder = true, CreatedDate = SeedDate },

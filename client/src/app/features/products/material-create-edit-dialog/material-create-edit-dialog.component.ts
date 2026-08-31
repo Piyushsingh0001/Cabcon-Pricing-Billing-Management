@@ -34,13 +34,14 @@ import { MaterialHistoryDialogComponent } from '../material-history-dialog/mater
     templateUrl: './material-create-edit-dialog.component.html',
     styleUrls: ['./material-create-edit-dialog.component.scss']
 })
-export class MaterialCreateEditDialogComponent {
+export class MaterialCreateEditDialogComponent implements OnInit {
   private fb = inject(FormBuilder);
   private pricingService = inject(PricingService);
   private snackBar = inject(MatSnackBar);
   public loading = signal(false);
 
   public form: FormGroup;
+  public availableVendors: string[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<MaterialCreateEditDialogComponent>,
@@ -58,6 +59,24 @@ export class MaterialCreateEditDialogComponent {
     });
 
     this.onTypeChange(this.form.get('type')?.value);
+  }
+
+  ngOnInit(): void {
+    this.pricingService.getVendorsApi().subscribe({
+      next: (res) => {
+        const dbVendors = (res || []).map(v => v.name);
+        this.availableVendors = Array.from(new Set([...dbVendors]));
+        if (this.material?.vendorName && !this.availableVendors.includes(this.material.vendorName)) {
+          this.availableVendors.push(this.material.vendorName);
+        }
+      },
+      error: () => {
+        this.availableVendors = [];
+        if (this.material?.vendorName) {
+          this.availableVendors.push(this.material.vendorName);
+        }
+      }
+    });
   }
 
   public onTypeChange(type: number) {

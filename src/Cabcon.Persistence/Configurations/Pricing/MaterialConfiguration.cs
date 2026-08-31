@@ -23,8 +23,9 @@ public class MaterialConfiguration : IEntityTypeConfiguration<Material>
             b.Property(prop).HasColumnType("decimal(18,4)");
         }
 
-        b.HasIndex(x => new { x.Name, x.VendorName }).IsUnique();
+        b.HasIndex(x => new { x.Name, x.VendorId }).IsUnique();
 
+        b.HasOne(x => x.Vendor).WithMany(v => v.Materials).HasForeignKey(x => x.VendorId).OnDelete(DeleteBehavior.SetNull);
         b.HasMany(x => x.PriceHistory).WithOne(x => x.Material).HasForeignKey(x => x.MaterialId).OnDelete(DeleteBehavior.Cascade);
         // Restrict: a Material referenced by a live BOM line cannot be hard-deleted -
         // only soft-deleted (IsDeleted=true), preserving cost-history integrity.

@@ -4,6 +4,7 @@ using Cabcon.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cabcon.Persistence.Migrations
 {
     [DbContext(typeof(CabconDbContext))]
-    partial class CabconDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260831121346_AddVendorWorkflowAndRelationships")]
+    partial class AddVendorWorkflowAndRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1473,13 +1476,16 @@ namespace Cabcon.Persistence.Migrations
                     b.Property<int?>("VendorId")
                         .HasColumnType("int");
 
+                    b.Property<string>("VendorName")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("VendorId");
 
-                    b.HasIndex("Name", "VendorId")
+                    b.HasIndex("Name", "VendorName")
                         .IsUnique()
-                        .HasFilter("[VendorId] IS NOT NULL");
+                        .HasFilter("[VendorName] IS NOT NULL");
 
                     b.ToTable("Materials", (string)null);
 
@@ -2418,8 +2424,7 @@ namespace Cabcon.Persistence.Migrations
                 {
                     b.HasOne("Cabcon.Domain.Entities.Pricing.Vendor", "Vendor")
                         .WithMany("Materials")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("VendorId");
 
                     b.Navigation("Vendor");
                 });
