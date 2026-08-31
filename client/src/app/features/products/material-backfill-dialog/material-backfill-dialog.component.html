@@ -1,7 +1,13 @@
 <h2 mat-dialog-title>Backfill Prices - {{ material.name }} {{ material.vendorName ? '(' + material.vendorName + ')' : '' }}</h2>
 <mat-dialog-content>
-  <p class="subtitle">Enter the missing prices for the dates below.</p>
-  
+  <div class="top-info-bar">
+    <p class="subtitle">Enter the missing prices for the dates below.</p>
+    <div class="top-type-badge">
+      <span class="type-lbl">Material Type:</span>
+      <span class="type-val">{{ material.type === 0 ? 'Exchange-linked' : 'Direct Rate' }}</span>
+    </div>
+  </div>
+
   <form [formGroup]="form" class="backfill-form">
     <div formArrayName="prices">
       <div *ngFor="let priceGroup of pricesArray.controls; let i = index" [formGroupName]="i" class="price-row">
@@ -10,15 +16,7 @@
         </div>
 
         <div class="fields-column">
-          <mat-form-field appearance="outline" class="sm-field-type">
-            <mat-label>Type</mat-label>
-            <mat-select formControlName="type">
-              <mat-option [value]="0">LME-linked</mat-option>
-              <mat-option [value]="1">Direct ₹/kg</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <ng-container *ngIf="priceGroup.get('type')?.value === 0">
+          <ng-container *ngIf="material.type === 0">
             <mat-form-field appearance="outline" class="sm-field">
               <mat-label>LME (₹)</mat-label>
               <input matInput formControlName="lmeUsdPerMt" type="number">
@@ -37,8 +35,8 @@
             </mat-form-field>
           </ng-container>
 
-          <ng-container *ngIf="priceGroup.get('type')?.value === 1">
-            <mat-form-field appearance="outline" class="sm-field">
+          <ng-container *ngIf="material.type === 1">
+            <mat-form-field appearance="outline" class="sm-field-direct">
               <mat-label>Direct Rate (₹/kg)</mat-label>
               <input matInput formControlName="directRateInrPerKg" type="number" step="0.01">
             </mat-form-field>

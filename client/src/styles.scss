@@ -209,6 +209,10 @@ html, body {
   width: 780px !important;
   max-width: calc(100vw - 32px) !important;
 }
+.dialog-auto-fit {
+  width: auto !important;
+  max-width: calc(100vw - 32px) !important;
+}
 
 /* Input Fields Overlay */
 .mat-mdc-form-field {

@@ -29,17 +29,22 @@
   padding: 4px 0;
 }
 
-.form-row {
+.form-row-3col {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 0;
+  }
 }
 
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.total-price-input {
+  font-weight: 700 !important;
+  color: var(--primary-color) !important;
+  text-align: right !important;
 }
 
 .lbl {

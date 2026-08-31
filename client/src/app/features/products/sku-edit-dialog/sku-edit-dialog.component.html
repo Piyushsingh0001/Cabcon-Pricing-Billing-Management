@@ -6,41 +6,45 @@
   </div>
 
   <form [formGroup]="form">
-    <div class="form-row">
-      <div class="input-group">
-        <div class="lbl">Category</div>
-        <input class="in" formControlName="categoryName" (blur)="checkUniqueness()" (change)="checkUniqueness()">
-      </div>
+    <!-- Row 1: Category, Variant, Spec -->
+    <div class="form-row-3col">
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <input matInput formControlName="categoryName" placeholder="e.g. New category" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+      </mat-form-field>
       
-      <div class="input-group">
-        <div class="lbl">Variant</div>
-        <input class="in" formControlName="name" (blur)="checkUniqueness()" (change)="checkUniqueness()">
-      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Variant</mat-label>
+        <input matInput formControlName="name" placeholder="e.g. Item" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+      </mat-form-field>
       
-      <div class="input-group">
-        <div class="lbl">Spec</div>
-        <input class="in" formControlName="spec" (blur)="checkUniqueness()" (change)="checkUniqueness()">
-      </div>
-      
-      <div class="input-group">
-        <div class="lbl">Unit</div>
-        <select class="sel" formControlName="unit" (blur)="checkUniqueness()" (change)="checkUniqueness()">
-          <option value="coil">coil</option>
-          <option value="100m">100m</option>
-          <option value="km">km</option>
-          <option value="MT">MT</option>
-        </select>
-      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Spec</mat-label>
+        <input matInput formControlName="spec" placeholder="e.g. spec" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+      </mat-form-field>
+    </div>
+    
+    <!-- Row 2: Unit, Quantity (matching Variant width), Total Price (₹) -->
+    <div class="form-row-3col">
+      <mat-form-field appearance="outline">
+        <mat-label>Unit</mat-label>
+        <mat-select formControlName="unit" (selectionChange)="checkUniqueness()">
+          <mat-option value="coil">coil</mat-option>
+          <mat-option value="100m">100m</mat-option>
+          <mat-option value="km">km</mat-option>
+          <mat-option value="MT">MT</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-      <div class="input-group">
-        <div class="lbl">Quantity</div>
-        <input class="in" type="number" formControlName="quantity" min="1" step="1" style="width: 80px; text-align: right;">
-      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Quantity</mat-label>
+        <input matInput type="number" formControlName="quantity" min="1" step="1" placeholder="1" style="text-align: right;">
+      </mat-form-field>
       
-      <div class="input-group">
-        <div class="lbl">Total Price (₹)</div>
-        <input class="in" type="text" [value]="getTotalPrice() | number:'1.2-2'" readonly disabled style="width: 110px; font-weight: 700; color: var(--primary-color); background: #f8fafc; text-align: right;">
-      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Total Price (₹)</mat-label>
+        <input matInput type="text" [value]="getTotalPrice() | number:'1.2-2'" readonly disabled class="total-price-input">
+      </mat-form-field>
     </div>
 
     <div class="warning-banner" *ngIf="nameExistsError">
