@@ -36,6 +36,7 @@ export class MaterialBackfillDialogComponent implements OnInit {
 
   public form: FormGroup;
   public missingDates: Date[] = [];
+  public availableVendors: string[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<MaterialBackfillDialogComponent>,
@@ -48,6 +49,21 @@ export class MaterialBackfillDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading.set(true);
+
+    this.pricingService.getVendorsApi().subscribe({
+      next: (res) => {
+        this.availableVendors = (res || []).map(v => v.name);
+        if (this.material.vendorName && !this.availableVendors.includes(this.material.vendorName)) {
+          this.availableVendors.push(this.material.vendorName);
+        }
+      },
+      error: () => {
+        if (this.material.vendorName) {
+          this.availableVendors = [this.material.vendorName];
+        }
+      }
+    });
+
     this.pricingService.getMissingDates(this.material.id, this.material.type).subscribe({
       next: (dates) => {
         this.missingDates = dates.map(d => new Date(d));
@@ -76,6 +92,7 @@ export class MaterialBackfillDialogComponent implements OnInit {
     const dateStr = date.toISOString().substring(0, 10);
     return this.fb.group({
       date: [dateStr],
+      vendorName: [this.material.vendorName || ''],
       type: [{ value: this.material.type, disabled: true }],
       lmeUsdPerMt: [this.material.lmeUsdPerMt || 0, [Validators.min(0)]],
       premiumUsdPerMt: [this.material.premiumUsdPerMt || 0, [Validators.min(0)]],
@@ -95,7 +112,6 @@ export class MaterialBackfillDialogComponent implements OnInit {
     this.loading.set(true);
     const formValues = this.form.value.prices;
 
-    // Convert date string to actual Date object or leave as ISO string for backend
     const payload = formValues.map((p: any) => {
       const result: any = { date: p.date, type: this.material.type };
       if (this.material.type === 0) {
@@ -104,6 +120,7 @@ export class MaterialBackfillDialogComponent implements OnInit {
         result.fxRate = p.fxRate;
         result.freightInrPerMt = p.freightInrPerMt;
       } else {
+        result.vendorName = p.vendorName;
         result.directRateInrPerKg = p.directRateInrPerKg;
       }
       return result;

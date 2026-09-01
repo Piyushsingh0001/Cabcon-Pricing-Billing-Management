@@ -36,6 +36,16 @@
           </ng-container>
 
           <ng-container *ngIf="material.type === 1">
+            <mat-form-field appearance="outline" class="sm-field">
+              <mat-label>Vendor Name</mat-label>
+              <mat-select formControlName="vendorName">
+                <mat-option value="">Default Vendor</mat-option>
+                <mat-option *ngFor="let vendor of availableVendors" [value]="vendor">
+                  {{ vendor }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
             <mat-form-field appearance="outline" class="sm-field-direct">
               <mat-label>Direct Rate (₹/kg)</mat-label>
               <input matInput formControlName="directRateInrPerKg" type="number" step="0.01">

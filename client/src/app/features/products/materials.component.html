@@ -76,7 +76,7 @@
       <div class="material-name-row" style="margin-bottom: 4px;">
         <input class="bare" [value]="group.name" disabled placeholder="Material Name">
       </div>
-      <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
+      <div *ngIf="group.selectedVariant?.type === 1" style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
         Vendor: 
         <select class="bare" style="width: auto; font-size: 12px; font-weight: normal; background: transparent; padding: 2px;" 
                 [(ngModel)]="group.selectedVendorName" 

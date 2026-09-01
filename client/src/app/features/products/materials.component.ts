@@ -139,10 +139,22 @@ export class MaterialsComponent implements OnInit {
   }
 
   public openBackfill(material: Material) {
-    if (!this.canUpdate()) return;
+    if (!this.canUpdate() || !material) return;
+    
+    let targetMaterial = material;
+    if (!targetMaterial.id || targetMaterial.id === 0) {
+      const found = this.materials.find(m => m.name === targetMaterial.name && m.vendorName === targetMaterial.vendorName);
+      if (found) {
+        targetMaterial = found;
+      } else {
+        this.snackBar.open(`Please update and save price for vendor "${targetMaterial.vendorName || 'selected'}" first before backfilling.`, 'Close', { duration: 3500 });
+        return;
+      }
+    }
+
     const dialogRef = this.dialog.open(MaterialBackfillDialogComponent, {
       panelClass: 'dialog-auto-fit',
-      data: material
+      data: targetMaterial
     });
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
   }

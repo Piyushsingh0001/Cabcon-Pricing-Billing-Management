@@ -61,7 +61,7 @@
             <option value="" disabled>Select Material</option>
             <option *ngFor="let name of uniqueMaterialNames" [value]="name">{{ name }}</option>
           </select>
-          <select class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)" style="width: 140px;">
+          <select *ngIf="line.get('priceType')?.value === 1" class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)" style="width: 140px;">
             <option value="" disabled>Select Vendor</option>
             <option *ngFor="let vendor of getAvailableVendors(idx)" [value]="vendor">{{ vendor }}</option>
           </select>

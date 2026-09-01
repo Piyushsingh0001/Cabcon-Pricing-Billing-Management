@@ -81,6 +81,7 @@ export class MaterialCreateEditDialogComponent implements OnInit {
 
   public onTypeChange(type: number) {
     if (type === 0) {
+      this.form.get('vendorName')?.setValue('');
       this.form.get('lmeUsdPerMt')?.setValidators([Validators.required, Validators.min(0)]);
       this.form.get('premiumUsdPerMt')?.setValidators([Validators.required, Validators.min(0)]);
       this.form.get('fxRate')?.setValidators([Validators.required, Validators.min(0)]);

@@ -4,13 +4,13 @@
       <form [formGroup]="form" class="edit-form">
         <!-- Row 1: Material Name & Vendor Name -->
         <div class="form-row-2col">
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" [class.full-width]="form.get('type')?.value === 0">
             <mat-label>Material Name</mat-label>
             <input matInput formControlName="name" placeholder="e.g. Copper wire">
             <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" *ngIf="form.get('type')?.value === 1">
             <mat-label>Vendor Name</mat-label>
             <mat-select formControlName="vendorName">
               <mat-option value="">Default Vendor (None)</mat-option>

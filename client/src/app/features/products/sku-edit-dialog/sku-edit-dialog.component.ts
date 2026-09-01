@@ -240,7 +240,7 @@ export class SkuEditDialogComponent implements OnInit {
     const pType = Number(line.get('priceType')?.value || 0);
     const pMonth = Number(line.get('pricingMonth')?.value || 0);
     
-    if (!matId) return;
+    if (!matId || matId === 0) return;
 
     this.pricingService.getMissingDates(matId, pType).subscribe(res => {
       this.pricingService.getMaterials(undefined, pType, undefined, false, 1, 1000).subscribe(mats => {
@@ -288,11 +288,21 @@ export class SkuEditDialogComponent implements OnInit {
     line.patchValue({ vendorName: '', materialId: null });
     
     if (matName) {
-      vendorCtrl?.enable();
-      const available = this.getAvailableVendors(idx);
-      if (available.length > 0) {
-        line.patchValue({ vendorName: available[0] });
-        this.onVendorNameChange(idx);
+      const mat = this.materials.find(m => m.name === matName);
+      if (mat) {
+        line.patchValue({ materialId: mat.id, priceType: mat.type });
+        if (mat.type === 0) { // LME-linked
+          vendorCtrl?.disable();
+          line.patchValue({ vendorName: '' });
+          this.onPricingMethodChange(idx);
+        } else { // Direct Rate
+          vendorCtrl?.enable();
+          const available = this.getAvailableVendors(idx);
+          if (available.length > 0) {
+            line.patchValue({ vendorName: available[0] });
+            this.onVendorNameChange(idx);
+          }
+        }
       }
     } else {
       vendorCtrl?.disable();

@@ -261,6 +261,7 @@ public class BulkStampMaterialPricesCommandHandler : IRequestHandler<BulkStampMa
 // --- BACKFILL MATERIAL PRICES ---
 public record BackfillPriceDto(
     DateTime Date,
+    string? VendorName,
     decimal? LmeUsdPerMt,
     decimal? PremiumUsdPerMt,
     decimal? FxRate,
@@ -301,7 +302,7 @@ public class BackfillMaterialPricesCommandHandler : IRequestHandler<BackfillMate
             {
                 MaterialId = material.Id,
                 Type = material.Type,
-                VendorName = material.Vendor != null ? material.Vendor.Name : null,
+                VendorName = !string.IsNullOrWhiteSpace(price.VendorName) ? price.VendorName : (material.Vendor != null ? material.Vendor.Name : null),
                 LmeUsdPerMt = price.LmeUsdPerMt,
                 PremiumUsdPerMt = price.PremiumUsdPerMt,
                 FxRate = price.FxRate,
