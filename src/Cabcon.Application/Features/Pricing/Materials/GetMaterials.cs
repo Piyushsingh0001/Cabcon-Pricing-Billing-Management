@@ -17,6 +17,7 @@ public record MaterialDto
     public decimal? PremiumUsdPerMt { get; init; }
     public decimal? FxRate { get; init; }
     public decimal? FreightInrPerKg { get; init; }
+    public decimal? FreightInrPerMt => FreightInrPerKg.HasValue ? FreightInrPerKg.Value * 1000m : null;
     public decimal? DirectRateInrPerKg { get; init; }
     public DateTime AsOnDate { get; init; }
     public bool IsPlaceholder { get; init; }

@@ -264,6 +264,10 @@ export class MaterialsComponent implements OnInit {
         res.items.forEach(m => {
           if (!groupsMap.has(m.name)) {
             const prev = currentSelections.get(m.name);
+            const freightVal = m.freightInrPerMt != null
+              ? m.freightInrPerMt
+              : (m.freightInrPerKg != null ? Number((m.freightInrPerKg * 1000).toFixed(2)) : null);
+
             groupsMap.set(m.name, {
               name: m.name,
               selectedType: prev?.type !== undefined ? prev.type : m.type,
@@ -276,7 +280,7 @@ export class MaterialsComponent implements OnInit {
                 lmeUsdPerMt: m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
                 premiumUsdPerMt: m.premiumUsdPerMt ? m.premiumUsdPerMt : null,
                 fxRate: m.fxRate ? m.fxRate : null,
-                freightInrPerMt: m.freightInrPerMt ? m.freightInrPerMt : null,
+                freightInrPerMt: freightVal ? freightVal : null,
                 isTodayUpdatedLme: m.isTodayUpdatedLme,
                 missingDaysCountLme: m.missingDaysCountLme,
                 thisMonthAvgLme: m.thisMonthAvgLme,
@@ -291,13 +295,17 @@ export class MaterialsComponent implements OnInit {
           }
           group.variants.push(m);
           // If this variant has LME data, use it for lmeState
-          if (m.type === 0 || (m.lmeUsdPerMt && m.lmeUsdPerMt > 0)) {
+          if (m.type === 0 || (m.lmeUsdPerMt && m.lmeUsdPerMt > 0) || m.freightInrPerKg) {
+            const lmeFreight = m.freightInrPerMt != null
+              ? m.freightInrPerMt
+              : (m.freightInrPerKg != null ? Number((m.freightInrPerKg * 1000).toFixed(2)) : null);
+
             group.lmeState = {
               materialId: m.id,
               lmeUsdPerMt: m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
               premiumUsdPerMt: m.premiumUsdPerMt ? m.premiumUsdPerMt : null,
               fxRate: m.fxRate ? m.fxRate : null,
-              freightInrPerMt: m.freightInrPerMt ? m.freightInrPerMt : null,
+              freightInrPerMt: lmeFreight ? lmeFreight : null,
               isTodayUpdatedLme: m.isTodayUpdatedLme,
               missingDaysCountLme: m.missingDaysCountLme,
               thisMonthAvgLme: m.thisMonthAvgLme,
