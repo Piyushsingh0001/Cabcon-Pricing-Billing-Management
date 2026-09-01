@@ -81,9 +81,13 @@
         Vendor: 
         <select class="bare" style="width: auto; font-size: 12px; font-weight: normal; background: transparent; padding: 2px;" 
                 [(ngModel)]="group.selectedVendorName" 
-                (ngModelChange)="onVendorChange(group)">
+                (ngModelChange)="onVendorChange(group)"
+                [disabled]="!canUpdate() || !group.vendorOptions || group.vendorOptions.length === 0">
+          <option *ngIf="!group.vendorOptions || group.vendorOptions.length === 0" value="">
+            No vendor associated
+          </option>
           <option *ngFor="let vName of group.vendorOptions" [value]="vName">
-            {{ vName || 'Default Vendor' }}
+            {{ vName }}
           </option>
         </select>
       </div>
@@ -127,7 +131,8 @@
         <ng-container *ngIf="group.selectedType === 1">
           <div class="field-row">
             <span class="field-label">Price (₹/kg)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.selectedDirectVariant.directRateInrPerKg" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.selectedDirectVariant.directRateInrPerKg" [disabled]="!canUpdate() || !group.vendorOptions || group.vendorOptions.length === 0" *ngIf="group.selectedDirectVariant">
+            <input type="number" class="field-input" disabled value="0" *ngIf="!group.selectedDirectVariant">
           </div>
         </ng-container>
       </div>
@@ -145,7 +150,7 @@
             ⚠️ Prices missing for {{ getMissingDays(group) }} day(s)
           </div>
           
-          <button class="btn-update" style="margin-top: 4px;" (click)="updatePrice(group)" [disabled]="!canUpdate() || isTodayUpdated(group)">Update today's price</button>
+          <button class="btn-update" style="margin-top: 4px;" (click)="updatePrice(group)" [disabled]="!canUpdate() || isTodayUpdated(group) || (group.selectedType === 1 && (!group.vendorOptions || group.vendorOptions.length === 0))">Update today's price</button>
         </div>
       </div>
     </div>

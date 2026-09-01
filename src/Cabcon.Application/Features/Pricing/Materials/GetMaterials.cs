@@ -147,25 +147,11 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             bool isTodayUpdatedLme = mHistoryDatesLme.Contains(today) || mHistoryDatesLme.Contains(localToday);
 
             var mappedVendors = m.MaterialVendors
-                .Where(mv => mv.Vendor != null && !mv.Vendor.IsDeleted)
+                .Where(mv => !mv.IsDeleted && mv.Vendor != null && !mv.Vendor.IsDeleted)
                 .Select(mv => mv.Vendor)
                 .ToList();
 
-            // Also collect any vendors present in Direct history
-            var historyVendorEntries = mHistoriesDirect
-                .Where(h => !string.IsNullOrWhiteSpace(h.VendorName))
-                .Select(h => new { Id = h.VendorId, Name = h.VendorName! })
-                .Distinct()
-                .ToList();
-
             var allVendorEntries = mappedVendors.Select(v => new { Id = (int?)v.Id, Name = v.Name }).ToList();
-            foreach (var hve in historyVendorEntries)
-            {
-                if (!allVendorEntries.Any(v => v.Name.Equals(hve.Name, StringComparison.OrdinalIgnoreCase)))
-                {
-                    allVendorEntries.Add(new { Id = hve.Id, Name = hve.Name });
-                }
-            }
 
             if (allVendorEntries.Count == 0)
             {

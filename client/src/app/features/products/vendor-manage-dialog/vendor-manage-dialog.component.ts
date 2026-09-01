@@ -50,7 +50,7 @@ export class VendorManageDialogComponent implements OnInit {
     // Fetch Vendors strictly from Database API
     this.pricingService.getVendorsApi().subscribe({
       next: (res) => {
-        this.vendors = (res || []).map(v => v.name);
+        this.vendors = (res || []).filter(v => v.isActive).map(v => v.name);
 
         // Fetch Mappings strictly from Database API
         this.pricingService.getVendorMaterialMappingsApi().subscribe({

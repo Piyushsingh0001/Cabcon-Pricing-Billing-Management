@@ -27,6 +27,7 @@ public class GetVendorsQueryHandler : IRequestHandler<GetVendorsQuery, Result<Li
     {
         var repo = _unitOfWork.Repository<Vendor>();
         var vendors = await repo.Query()
+            .Where(v => !v.IsDeleted)
             .OrderBy(v => v.Name)
             .Select(v => new VendorDto(v.Id, v.Name, !v.IsDeleted))
             .ToListAsync(cancellationToken);
@@ -60,6 +61,7 @@ public class CreateVendorCommandHandler : IRequestHandler<CreateVendorCommand, R
         var trimmedName = request.Name.Trim();
         var repo = _unitOfWork.Repository<Vendor>();
         var existing = await repo.Query()
+            .IgnoreQueryFilters()
             .FirstOrDefaultAsync(v => v.Name.ToLower() == trimmedName.ToLower(), cancellationToken);
 
         if (existing != null)
@@ -128,7 +130,7 @@ public class GetVendorMaterialMappingsQueryHandler : IRequestHandler<GetVendorMa
         var mappings = await repo.Query()
             .Include(mv => mv.Material)
             .Include(mv => mv.Vendor)
-            .Where(mv => !mv.Vendor.IsDeleted && !mv.Material.IsDeleted)
+            .Where(mv => !mv.IsDeleted && mv.Vendor != null && !mv.Vendor.IsDeleted && mv.Material != null && !mv.Material.IsDeleted)
             .GroupBy(mv => new { mv.MaterialId, mv.Material.Name })
             .Select(g => new VendorMaterialMappingDto(
                 g.Key.Name,
@@ -161,14 +163,12 @@ public class SaveVendorMaterialMappingsCommandHandler : IRequestHandler<SaveVend
         var vendorRepo = _unitOfWork.Repository<Vendor>();
         var mappingRepo = _unitOfWork.Repository<MaterialVendor>();
 
-        var existingMaterials = await matRepo.Query().ToListAsync(cancellationToken);
-        var existingVendors = await vendorRepo.Query().ToListAsync(cancellationToken);
-        var existingMappings = await mappingRepo.Query().ToListAsync(cancellationToken);
+        var existingMaterials = await matRepo.Query().Where(m => !m.IsDeleted).ToListAsync(cancellationToken);
+        var existingVendors = await vendorRepo.Query().Where(v => !v.IsDeleted).ToListAsync(cancellationToken);
+        var allDbMappings = await mappingRepo.Query().IgnoreQueryFilters().ToListAsync(cancellationToken);
 
-        foreach (var oldMap in existingMappings)
-        {
-            mappingRepo.Delete(oldMap);
-        }
+        // Track desired pairs: (MaterialId, VendorId)
+        var desiredPairs = new HashSet<(int MaterialId, int VendorId)>();
 
         foreach (var item in request.Mappings)
         {
@@ -194,11 +194,41 @@ public class SaveVendorMaterialMappingsCommandHandler : IRequestHandler<SaveVend
                     existingVendors.Add(vendor);
                 }
 
-                await mappingRepo.AddAsync(new MaterialVendor
+                desiredPairs.Add((material.Id, vendor.Id));
+            }
+        }
+
+        // 1. Reactivate or add desired pairs
+        foreach (var (matId, vId) in desiredPairs)
+        {
+            var existingMapping = allDbMappings.FirstOrDefault(m => m.MaterialId == matId && m.VendorId == vId);
+            if (existingMapping != null)
+            {
+                if (existingMapping.IsDeleted)
                 {
-                    MaterialId = material.Id,
-                    VendorId = vendor.Id
-                }, cancellationToken);
+                    existingMapping.IsDeleted = false;
+                    mappingRepo.Update(existingMapping);
+                }
+            }
+            else
+            {
+                var newMapping = new MaterialVendor
+                {
+                    MaterialId = matId,
+                    VendorId = vId
+                };
+                await mappingRepo.AddAsync(newMapping, cancellationToken);
+                allDbMappings.Add(newMapping);
+            }
+        }
+
+        // 2. Soft-delete any mappings no longer in desiredPairs
+        foreach (var mapping in allDbMappings)
+        {
+            if (!desiredPairs.Contains((mapping.MaterialId, mapping.VendorId)) && !mapping.IsDeleted)
+            {
+                mapping.IsDeleted = true;
+                mappingRepo.Update(mapping);
             }
         }
 

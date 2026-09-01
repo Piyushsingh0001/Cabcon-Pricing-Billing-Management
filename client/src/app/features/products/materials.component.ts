@@ -73,6 +73,13 @@ export class MaterialsComponent implements OnInit {
   }
 
   private updateGroupSelectedVariant(group: any) {
+    if (!group.selectedVendorName || !group.vendorOptions || group.vendorOptions.length === 0) {
+      group.selectedDirectVariant = null;
+      group.selectedVariant = group.selectedType === 0 ? (group.lmeVariant || {}) : null;
+      this.calculateGroupAvg(group);
+      return;
+    }
+
     let selected = group.variants.find((v: any) => v.vendorName === group.selectedVendorName);
     
     if (!selected && group.variants.length > 0) {
@@ -136,6 +143,7 @@ export class MaterialsComponent implements OnInit {
     if (group.selectedType === 0) {
       return group.lmeState?.missingDaysCountLme ?? (group.variants?.find((v: any) => v.type === 0)?.missingDaysCountLme || 0);
     } else {
+      if (!group.selectedVendorName || !group.vendorOptions || group.vendorOptions.length === 0) return 0;
       return group.selectedDirectVariant?.missingDaysCountDirect || 0;
     }
   }
@@ -158,6 +166,7 @@ export class MaterialsComponent implements OnInit {
       }
       return false;
     } else {
+      if (!group.selectedVendorName || !group.vendorOptions || group.vendorOptions.length === 0) return false;
       const v = group.selectedDirectVariant;
       if (!v) return false;
       if (v.isTodayUpdatedDirect) return true;
@@ -297,26 +306,26 @@ export class MaterialsComponent implements OnInit {
         
         this.pricingService.getVendorsApi().subscribe({
           next: (vendorsRes) => {
-            const allDbVendors = (vendorsRes || []).map(v => v.name);
+            const activeVendors = (vendorsRes || []).filter(v => v.isActive).map(v => v.name);
 
             this.pricingService.getVendorMaterialMappingsApi().subscribe({
               next: (mappingsRes) => {
                 const vendorMappings: { [matName: string]: string[] } = {};
                 (mappingsRes || []).forEach(m => {
-                  vendorMappings[m.materialName] = m.vendorNames || [];
+                  const activeMapped = (m.vendorNames || []).filter(vn => activeVendors.includes(vn));
+                  vendorMappings[m.materialName] = activeMapped;
                 });
 
                 this.materialGroups.forEach(group => {
-                  const mappedVendors = vendorMappings[group.name];
-                  if (mappedVendors && Array.isArray(mappedVendors) && mappedVendors.length > 0) {
-                    group.vendorOptions = mappedVendors;
-                  } else {
-                    const variantVendors = group.variants.map((v: any) => v.vendorName).filter(Boolean);
-                    group.vendorOptions = variantVendors.length > 0 ? Array.from(new Set(variantVendors)) : allDbVendors;
-                  }
+                  const mapped = vendorMappings[group.name] || [];
+                  group.vendorOptions = mapped;
 
-                  if (!group.selectedVendorName || !group.vendorOptions.includes(group.selectedVendorName)) {
-                    group.selectedVendorName = group.vendorOptions[0] || 'Default Vendor';
+                  if (group.vendorOptions.length > 0) {
+                    if (!group.selectedVendorName || !group.vendorOptions.includes(group.selectedVendorName)) {
+                      group.selectedVendorName = group.vendorOptions[0];
+                    }
+                  } else {
+                    group.selectedVendorName = '';
                   }
 
                   this.updateGroupSelectedVariant(group);
@@ -327,8 +336,8 @@ export class MaterialsComponent implements OnInit {
               },
               error: () => {
                 this.materialGroups.forEach(group => {
-                  const variantVendors = group.variants.map((v: any) => v.vendorName).filter(Boolean);
-                  group.vendorOptions = variantVendors.length > 0 ? Array.from(new Set(variantVendors)) : allDbVendors;
+                  group.vendorOptions = [];
+                  group.selectedVendorName = '';
                   this.updateGroupSelectedVariant(group);
                 });
                 this.loading.set(false);
@@ -443,6 +452,11 @@ export class MaterialsComponent implements OnInit {
       });
     } else {
       // Update Direct Price (Vendor-specific)
+      if (!group.selectedVendorName || !group.vendorOptions || group.vendorOptions.length === 0) {
+        this.snackBar.open('Please associate a vendor in Manage Vendors before updating Direct price.', 'Close', { duration: 3500 });
+        this.loading.set(false);
+        return;
+      }
       const variant = group.selectedDirectVariant;
       const matId = (variant && variant.id > 0) ? variant.id : (group.variants?.[0]?.id || 0);
       const pricePayload = {
