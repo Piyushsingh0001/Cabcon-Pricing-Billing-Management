@@ -28,10 +28,12 @@ export interface Material {
   id: number;
   name: string;
   vendorName?: string;
+  vendorId?: number;
   type: number; // 0 = Exchange, 1 = Direct
   lmeUsdPerMt?: number;
   premiumUsdPerMt?: number;
   fxRate?: number;
+  freightInrPerKg?: number;
   freightInrPerMt?: number;
   directRateInrPerKg?: number;
   asOnDate: string;
@@ -53,14 +55,16 @@ export interface Material {
 export interface MaterialPriceHistory {
   id: number;
   type?: number;
+  vendorId?: number;
+  vendorName?: string;
   lmeUsdPerMt?: number;
   premiumUsdPerMt?: number;
   fxRate?: number;
+  freightInrPerKg?: number;
   freightInrPerMt?: number;
   directRateInrPerKg?: number;
   landedCostInrPerKg: number;
   effectiveDate: string;
-  vendorName?: string;
   updatedBy?: string;
 }
 

@@ -8,11 +8,13 @@ namespace Cabcon.Application.Features.Pricing.Materials;
 public record MaterialPriceHistoryDto
 {
     public int Id { get; init; }
+    public int? VendorId { get; init; }
     public string? VendorName { get; init; }
     public decimal? LmeUsdPerMt { get; init; }
     public decimal? PremiumUsdPerMt { get; init; }
     public decimal? FxRate { get; init; }
-    public decimal? FreightInrPerMt { get; init; }
+    public decimal? FreightInrPerKg { get; init; }
+    public decimal? FreightInrPerMt => FreightInrPerKg * 1000m;
     public decimal? DirectRateInrPerKg { get; init; }
     public decimal LandedCostInrPerKg { get; init; }
     public DateTime EffectiveDate { get; init; }
@@ -34,6 +36,7 @@ public class GetMaterialPriceHistoryQueryHandler : IRequestHandler<GetMaterialPr
     public async Task<IReadOnlyList<MaterialPriceHistoryDto>> Handle(GetMaterialPriceHistoryQuery request, CancellationToken cancellationToken)
     {
         var query = _repository.Query()
+            .Include(x => x.Vendor)
             .Where(x => x.MaterialId == request.MaterialId);
 
         if (request.Type.HasValue)
@@ -46,11 +49,12 @@ public class GetMaterialPriceHistoryQueryHandler : IRequestHandler<GetMaterialPr
             .Select(x => new MaterialPriceHistoryDto
             {
                 Id = x.Id,
-                VendorName = x.VendorName ?? (x.Material.Vendor != null ? x.Material.Vendor.Name : null),
+                VendorId = x.VendorId,
+                VendorName = x.Vendor != null ? x.Vendor.Name : null,
                 LmeUsdPerMt = x.LmeUsdPerMt,
                 PremiumUsdPerMt = x.PremiumUsdPerMt,
                 FxRate = x.FxRate,
-                FreightInrPerMt = x.FreightInrPerMt,
+                FreightInrPerKg = x.FreightInrPerKg,
                 DirectRateInrPerKg = x.DirectRateInrPerKg,
                 LandedCostInrPerKg = x.LandedCostInrPerKg,
                 EffectiveDate = x.EffectiveDate,

@@ -9,7 +9,7 @@ namespace Cabcon.Application.Features.Vendors;
 
 public record VendorDto(int Id, string Name, bool IsActive);
 
-public record VendorMaterialMappingDto(string MaterialName, List<int> VendorIds, List<string> VendorNames);
+public record VendorMaterialMappingDto(string MaterialName, List<int> VendorIds, List<string> VendorNames, int MaterialId = 0);
 
 // --- GET ALL VENDORS ---
 public record GetVendorsQuery : IRequest<Result<List<VendorDto>>>;
@@ -126,13 +126,15 @@ public class GetVendorMaterialMappingsQueryHandler : IRequestHandler<GetVendorMa
     {
         var repo = _unitOfWork.Repository<MaterialVendor>();
         var mappings = await repo.Query()
+            .Include(mv => mv.Material)
             .Include(mv => mv.Vendor)
-            .Where(mv => !mv.Vendor.IsDeleted)
-            .GroupBy(mv => mv.MaterialName)
+            .Where(mv => !mv.Vendor.IsDeleted && !mv.Material.IsDeleted)
+            .GroupBy(mv => new { mv.MaterialId, mv.Material.Name })
             .Select(g => new VendorMaterialMappingDto(
-                g.Key,
+                g.Key.Name,
                 g.Select(x => x.VendorId).ToList(),
-                g.Select(x => x.Vendor.Name).ToList()
+                g.Select(x => x.Vendor.Name).ToList(),
+                g.Key.MaterialId
             ))
             .ToListAsync(cancellationToken);
 
@@ -141,7 +143,7 @@ public class GetVendorMaterialMappingsQueryHandler : IRequestHandler<GetVendorMa
 }
 
 // --- SAVE VENDOR MATERIAL MAPPINGS ---
-public record SaveVendorMaterialMappingsRequestItem(string MaterialName, List<string> VendorNames);
+public record SaveVendorMaterialMappingsRequestItem(string MaterialName, List<string> VendorNames, int? MaterialId = null);
 public record SaveVendorMaterialMappingsCommand(List<SaveVendorMaterialMappingsRequestItem> Mappings) : IRequest<Result<bool>>;
 
 public class SaveVendorMaterialMappingsCommandHandler : IRequestHandler<SaveVendorMaterialMappingsCommand, Result<bool>>
@@ -155,9 +157,11 @@ public class SaveVendorMaterialMappingsCommandHandler : IRequestHandler<SaveVend
 
     public async Task<Result<bool>> Handle(SaveVendorMaterialMappingsCommand request, CancellationToken cancellationToken)
     {
+        var matRepo = _unitOfWork.Repository<Material>();
         var vendorRepo = _unitOfWork.Repository<Vendor>();
         var mappingRepo = _unitOfWork.Repository<MaterialVendor>();
 
+        var existingMaterials = await matRepo.Query().ToListAsync(cancellationToken);
         var existingVendors = await vendorRepo.Query().ToListAsync(cancellationToken);
         var existingMappings = await mappingRepo.Query().ToListAsync(cancellationToken);
 
@@ -169,6 +173,15 @@ public class SaveVendorMaterialMappingsCommandHandler : IRequestHandler<SaveVend
         foreach (var item in request.Mappings)
         {
             var matName = item.MaterialName.Trim();
+            var material = existingMaterials.FirstOrDefault(m => m.Name.Equals(matName, StringComparison.OrdinalIgnoreCase));
+            if (material == null)
+            {
+                material = new Material { Name = matName };
+                await matRepo.AddAsync(material, cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+                existingMaterials.Add(material);
+            }
+
             foreach (var vName in item.VendorNames)
             {
                 var trimmedVName = vName.Trim();
@@ -183,7 +196,7 @@ public class SaveVendorMaterialMappingsCommandHandler : IRequestHandler<SaveVend
 
                 await mappingRepo.AddAsync(new MaterialVendor
                 {
-                    MaterialName = matName,
+                    MaterialId = material.Id,
                     VendorId = vendor.Id
                 }, cancellationToken);
             }

@@ -12,19 +12,40 @@ namespace Cabcon.Domain.Services;
 /// </summary>
 public class PricingCalculationService
 {
-    /// <summary>HTML: landed(material) - ₹ per kg.</summary>
-    public decimal LandedCost(Material material)
+    /// <summary>Calculate landed cost in ₹ per kg from parameters.</summary>
+    public decimal LandedCost(MaterialType type, decimal? lmeUsdPerMt, decimal? premiumUsdPerMt, decimal? fxRate, decimal? freightInrPerKg, decimal? directRateInrPerKg)
     {
-        if (material.Type == MaterialType.Exchange)
+        if (type == MaterialType.Exchange)
         {
-            var lme = material.LmeUsdPerMt ?? 0;
-            var premium = material.PremiumUsdPerMt ?? 0;
-            var fx = material.FxRate ?? 0;
-            var freight = material.FreightInrPerMt ?? 0;
-            return ((lme + premium) * fx + freight) / 1000m;
+            var lme = lmeUsdPerMt ?? 0;
+            var premium = premiumUsdPerMt ?? 0;
+            var fx = fxRate ?? 0;
+            var freight = freightInrPerKg ?? 0;
+            return ((lme + premium) * fx) / 1000m + freight;
         }
 
-        return material.DirectRateInrPerKg ?? 0;
+        return directRateInrPerKg ?? 0;
+    }
+
+    /// <summary>Calculate landed cost in ₹ per kg from a price history snapshot.</summary>
+    public decimal LandedCost(MaterialPriceHistory history)
+    {
+        if (history.LandedCostInrPerKg > 0)
+        {
+            return history.LandedCostInrPerKg;
+        }
+        return LandedCost(history.Type, history.LmeUsdPerMt, history.PremiumUsdPerMt, history.FxRate, history.FreightInrPerKg, history.DirectRateInrPerKg);
+    }
+
+    /// <summary>Calculate landed cost in ₹ per kg from latest history on a material entity.</summary>
+    public decimal LandedCost(Material material)
+    {
+        var latest = material.PriceHistory?.OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
+        if (latest != null)
+        {
+            return LandedCost(latest);
+        }
+        return 0;
     }
 
     /// <summary>HTML: skuRM(sku) - sum of BOM weight * landed cost.</summary>
@@ -35,7 +56,19 @@ public class PricingCalculationService
             {
                 return b.WeightKg * (b.ManualPrice ?? 0);
             }
-            return b.WeightKg * LandedCost(b.Material);
+            if (b.Material != null)
+            {
+                var priceTypeHistory = b.Material.PriceHistory?
+                    .Where(h => h.Type == b.PriceType)
+                    .OrderByDescending(h => h.EffectiveDate)
+                    .FirstOrDefault();
+                if (priceTypeHistory != null)
+                {
+                    return b.WeightKg * LandedCost(priceTypeHistory);
+                }
+                return b.WeightKg * LandedCost(b.Material);
+            }
+            return 0;
         });
 
     /// <summary>HTML: skuWt(sku) - total BOM weight in kg.</summary>

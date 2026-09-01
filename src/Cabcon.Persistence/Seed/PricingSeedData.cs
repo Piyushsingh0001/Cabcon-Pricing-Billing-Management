@@ -32,11 +32,11 @@ public static class PricingSeedData
         );
 
         modelBuilder.Entity<Material>().HasData(
-            new Material { Id = 1, Name = "Copper", Type = MaterialType.Exchange, LmeUsdPerMt = 13400, PremiumUsdPerMt = 410, FxRate = 95, FreightInrPerMt = 6500, AsOnDate = SeedDate, IsPlaceholder = false, CreatedDate = SeedDate },
-            new Material { Id = 2, Name = "Aluminium (EC)", Type = MaterialType.Exchange, LmeUsdPerMt = 2650, PremiumUsdPerMt = 250, FxRate = 87, FreightInrPerMt = 6500, AsOnDate = SeedDate, IsPlaceholder = true, CreatedDate = SeedDate },
-            new Material { Id = 3, Name = "PVC-FR", Type = MaterialType.Direct, DirectRateInrPerKg = 100, AsOnDate = SeedDate, IsPlaceholder = false, CreatedDate = SeedDate },
-            new Material { Id = 4, Name = "GI Steel Wire", Type = MaterialType.Direct, DirectRateInrPerKg = 75, AsOnDate = SeedDate, IsPlaceholder = true, CreatedDate = SeedDate },
-            new Material { Id = 5, Name = "XLPE", Type = MaterialType.Direct, DirectRateInrPerKg = 150, AsOnDate = SeedDate, IsPlaceholder = true, CreatedDate = SeedDate }
+            new Material { Id = 1, Name = "Copper", CreatedDate = SeedDate },
+            new Material { Id = 2, Name = "Aluminium (EC)", CreatedDate = SeedDate },
+            new Material { Id = 3, Name = "PVC-FR", CreatedDate = SeedDate },
+            new Material { Id = 4, Name = "GI Steel Wire", CreatedDate = SeedDate },
+            new Material { Id = 5, Name = "XLPE", CreatedDate = SeedDate }
         );
 
         // Housing Wire FR coil range (HTML's HW array: spec, cu-weight, pvc-weight)

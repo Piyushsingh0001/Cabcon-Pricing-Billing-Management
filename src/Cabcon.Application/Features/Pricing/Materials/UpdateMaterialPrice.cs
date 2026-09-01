@@ -14,9 +14,12 @@ public record UpdateMaterialPriceCommand : IRequest<Result>
 {
     public int MaterialId { get; init; }
     public MaterialType? Type { get; init; }
+    public int? VendorId { get; init; }
+    public string? VendorName { get; init; }
     public decimal? LmeUsdPerMt { get; init; }
     public decimal? PremiumUsdPerMt { get; init; }
     public decimal? FxRate { get; init; }
+    public decimal? FreightInrPerKg { get; init; }
     public decimal? FreightInrPerMt { get; init; }
     public decimal? DirectRateInrPerKg { get; init; }
 }
@@ -33,6 +36,8 @@ public class UpdateMaterialPriceCommandValidator : AbstractValidator<UpdateMater
             .GreaterThanOrEqualTo(0).When(x => x.PremiumUsdPerMt.HasValue);
         RuleFor(x => x.FxRate)
             .GreaterThanOrEqualTo(0).When(x => x.FxRate.HasValue);
+        RuleFor(x => x.FreightInrPerKg)
+            .GreaterThanOrEqualTo(0).When(x => x.FreightInrPerKg.HasValue);
         RuleFor(x => x.FreightInrPerMt)
             .GreaterThanOrEqualTo(0).When(x => x.FreightInrPerMt.HasValue);
         RuleFor(x => x.DirectRateInrPerKg)
@@ -56,7 +61,6 @@ public class UpdateMaterialPriceCommandHandler : IRequestHandler<UpdateMaterialP
     {
         var repository = _unitOfWork.Repository<Material>();
         var material = await repository.Query()
-            .Include(m => m.Vendor)
             .FirstOrDefaultAsync(m => m.Id == request.MaterialId, cancellationToken);
 
         if (material == null)
@@ -65,59 +69,101 @@ public class UpdateMaterialPriceCommandHandler : IRequestHandler<UpdateMaterialP
         }
 
         var today = _dateTime.UtcNow.Date;
-        var targetType = request.Type ?? material.Type;
+        var localToday = DateTime.Today;
+        var targetType = request.Type ?? MaterialType.Exchange;
 
-        // Guard: only one price stamp allowed per material per type per day
-        var hasUpdatedTodayForType = await _unitOfWork.Repository<MaterialPriceHistory>().Query()
-            .AnyAsync(x => x.MaterialId == request.MaterialId && x.EffectiveDate.Date == today && x.Type == targetType, cancellationToken);
+        int? resolvedVendorId = null;
+        if (targetType == MaterialType.Direct)
+        {
+            resolvedVendorId = request.VendorId;
+            if (!resolvedVendorId.HasValue && !string.IsNullOrWhiteSpace(request.VendorName))
+            {
+                var trimmedVName = request.VendorName.Trim();
+                var vendorRepo = _unitOfWork.Repository<Vendor>();
+                var vendor = await vendorRepo.Query().FirstOrDefaultAsync(v => v.Name.ToLower() == trimmedVName.ToLower(), cancellationToken);
+                if (vendor == null)
+                {
+                    vendor = new Vendor { Name = trimmedVName };
+                    await vendorRepo.AddAsync(vendor, cancellationToken);
+                    await _unitOfWork.SaveChangesAsync(cancellationToken);
+                }
+                resolvedVendorId = vendor.Id;
+            }
+        }
 
-        if (hasUpdatedTodayForType && !material.IsPlaceholder)
+        var historyRepo = _unitOfWork.Repository<MaterialPriceHistory>();
+
+        // Guard: only one price stamp allowed per material per type (and per vendor for Direct) per day
+        bool hasUpdatedTodayForType;
+        if (targetType == MaterialType.Direct)
+        {
+            hasUpdatedTodayForType = await historyRepo.Query()
+                .AnyAsync(x => x.MaterialId == request.MaterialId 
+                            && (x.EffectiveDate.Date == today || x.EffectiveDate.Date == localToday) 
+                            && x.Type == MaterialType.Direct 
+                            && x.VendorId == resolvedVendorId, cancellationToken);
+        }
+        else
+        {
+            hasUpdatedTodayForType = await historyRepo.Query()
+                .AnyAsync(x => x.MaterialId == request.MaterialId 
+                            && (x.EffectiveDate.Date == today || x.EffectiveDate.Date == localToday) 
+                            && x.Type == MaterialType.Exchange, cancellationToken);
+        }
+
+        if (hasUpdatedTodayForType)
         {
             return Result.Failure("Price has already been updated today. You can only update the price once per day.");
         }
 
-        // Apply new price values to the material entity
-        if (targetType == Cabcon.Domain.Enums.MaterialType.Exchange)
+        // Determine freight in ₹/kg (convert from ₹/MT if provided as FreightInrPerMt)
+        decimal? freightPerKg = request.FreightInrPerKg;
+        if (!freightPerKg.HasValue && request.FreightInrPerMt.HasValue)
         {
-            material.LmeUsdPerMt = request.LmeUsdPerMt;
-            material.PremiumUsdPerMt = request.PremiumUsdPerMt;
-            material.FxRate = request.FxRate;
-            material.FreightInrPerMt = request.FreightInrPerMt;
+            freightPerKg = request.FreightInrPerMt.Value / 1000m;
         }
-        else
-        {
-            material.DirectRateInrPerKg = request.DirectRateInrPerKg;
-        }
+
+        var landedCost = targetType == MaterialType.Exchange
+            ? _pricingService.LandedCost(MaterialType.Exchange, request.LmeUsdPerMt, request.PremiumUsdPerMt, request.FxRate, freightPerKg, null)
+            : (request.DirectRateInrPerKg ?? 0);
 
         var stampTime = _dateTime.UtcNow;
-        material.AsOnDate = stampTime;
-        material.IsPlaceholder = false;
-        material.Type = targetType;
-
-        repository.Update(material);
-
-        // Append a history row for every stamp (domain contract: each stamp is immutable audit trail)
-        var landedCost = targetType == MaterialType.Exchange
-            ? (((material.LmeUsdPerMt ?? 0) + (material.PremiumUsdPerMt ?? 0)) * (material.FxRate ?? 0) + (material.FreightInrPerMt ?? 0)) / 1000m
-            : (material.DirectRateInrPerKg ?? 0);
 
         var history = new MaterialPriceHistory
         {
             MaterialId = material.Id,
             Type = targetType,
-            VendorName = targetType == MaterialType.Direct ? material.Vendor?.Name : null,
-            LmeUsdPerMt = material.LmeUsdPerMt,
-            PremiumUsdPerMt = material.PremiumUsdPerMt,
-            FxRate = material.FxRate,
-            FreightInrPerMt = material.FreightInrPerMt,
-            DirectRateInrPerKg = material.DirectRateInrPerKg,
+            VendorId = targetType == MaterialType.Direct ? resolvedVendorId : null,
+            LmeUsdPerMt = request.LmeUsdPerMt,
+            PremiumUsdPerMt = request.PremiumUsdPerMt,
+            FxRate = request.FxRate,
+            FreightInrPerKg = freightPerKg,
+            DirectRateInrPerKg = request.DirectRateInrPerKg,
             LandedCostInrPerKg = landedCost,
             EffectiveDate = today,
             CreatedDate = stampTime,
             CreatedBy = "price-update"
         };
 
-        await _unitOfWork.Repository<MaterialPriceHistory>().AddAsync(history, cancellationToken);
+        await historyRepo.AddAsync(history, cancellationToken);
+
+        // Ensure vendor mapping is registered if vendor was resolved for Direct
+        if (targetType == MaterialType.Direct && resolvedVendorId.HasValue)
+        {
+            var mvRepo = _unitOfWork.Repository<MaterialVendor>();
+            var mappingExists = await mvRepo.Query()
+                .AnyAsync(mv => mv.MaterialId == material.Id && mv.VendorId == resolvedVendorId.Value, cancellationToken);
+
+            if (!mappingExists)
+            {
+                await mvRepo.AddAsync(new MaterialVendor
+                {
+                    MaterialId = material.Id,
+                    VendorId = resolvedVendorId.Value
+                }, cancellationToken);
+            }
+        }
+
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();

@@ -118,12 +118,16 @@ export class MaterialCreateEditDialogComponent implements OnInit {
       // 2. Prepare Price updates conditional layout parameters
       const pricePayload = formValues.type === 0 ? {
         materialId: this.material.id,
+        type: 0,
         lmeUsdPerMt: formValues.lmeUsdPerMt,
         premiumUsdPerMt: formValues.premiumUsdPerMt,
         fxRate: formValues.fxRate,
-        freightInrPerMt: formValues.freightInrPerMt
+        freightInrPerMt: formValues.freightInrPerMt,
+        freightInrPerKg: formValues.freightInrPerMt ? formValues.freightInrPerMt / 1000 : 0
       } : {
         materialId: this.material.id,
+        type: 1,
+        vendorName: formValues.vendorName,
         directRateInrPerKg: formValues.directRateInrPerKg
       };
 

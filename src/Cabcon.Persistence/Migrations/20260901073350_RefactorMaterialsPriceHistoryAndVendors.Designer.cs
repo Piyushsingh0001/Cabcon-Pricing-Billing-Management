@@ -4,6 +4,7 @@ using Cabcon.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cabcon.Persistence.Migrations
 {
     [DbContext(typeof(CabconDbContext))]
-    partial class CabconDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260901073350_RefactorMaterialsPriceHistoryAndVendors")]
+    partial class RefactorMaterialsPriceHistoryAndVendors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1546,12 +1549,10 @@ namespace Cabcon.Persistence.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("VendorId")
-                        .HasColumnType("int");
+                    b.Property<string>("VendorName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("VendorId");
 
                     b.HasIndex("MaterialId", "EffectiveDate");
 
@@ -2367,14 +2368,7 @@ namespace Cabcon.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cabcon.Domain.Entities.Pricing.Vendor", "Vendor")
-                        .WithMany("PriceHistories")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.Navigation("Material");
-
-                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("Cabcon.Domain.Entities.Pricing.MaterialVendor", b =>
@@ -2476,8 +2470,6 @@ namespace Cabcon.Persistence.Migrations
             modelBuilder.Entity("Cabcon.Domain.Entities.Pricing.Vendor", b =>
                 {
                     b.Navigation("MaterialVendors");
-
-                    b.Navigation("PriceHistories");
                 });
 #pragma warning restore 612, 618
         }

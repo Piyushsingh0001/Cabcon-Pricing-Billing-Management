@@ -67,6 +67,7 @@ public class GetSkusQueryHandler : IRequestHandler<GetSkusQuery, PaginatedList<S
             .Include(s => s.Category)
             .Include(s => s.BomLines)
                 .ThenInclude(b => b.Material)
+                    .ThenInclude(m => m.PriceHistory)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(request.Search))
@@ -76,7 +77,7 @@ public class GetSkusQueryHandler : IRequestHandler<GetSkusQuery, PaginatedList<S
                                      s.Spec.ToLower().Contains(search) || 
                                      s.Category.Name.ToLower().Contains(search) ||
                                      s.BomLines.Any(b => b.Material.Name.ToLower().Contains(search) ||
-                                                         (b.Material.Vendor != null && b.Material.Vendor.Name.ToLower().Contains(search))));
+                                                         b.Material.MaterialVendors.Any(mv => mv.Vendor.Name.ToLower().Contains(search))));
         }
 
         if (request.CategoryId.HasValue)

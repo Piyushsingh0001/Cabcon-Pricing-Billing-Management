@@ -60,6 +60,7 @@ public class CalculateQuotationCommandHandler : IRequestHandler<CalculateQuotati
             .Include(s => s.Category)
             .Include(s => s.BomLines)
                 .ThenInclude(b => b.Material)
+                    .ThenInclude(m => m.PriceHistory)
             .Where(s => skuIds.Contains(s.Id))
             .ToDictionaryAsync(s => s.Id, cancellationToken);
 

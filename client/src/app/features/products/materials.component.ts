@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, inject, signal } from '@angular/core';
+﻿import { ChangeDetectorRef, Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { forkJoin, switchMap } from 'rxjs';
 import { PricingService, Material } from '../../core/pricing.service';
 import { AuthService } from '../../core/auth.service';
 import { MaterialCreateEditDialogComponent } from './material-create-edit-dialog/material-create-edit-dialog.component';
@@ -417,103 +416,56 @@ export class MaterialsComponent implements OnInit {
     this.loading.set(true);
 
     if (group.selectedType === 0) {
-      // Update LME Price (independent of vendor)
-      const lmeMatId = group.lmeState?.materialId || group.variants?.find((v: any) => v.id > 0)?.id || 0;
-      
-      if (lmeMatId === 0) {
-        const createPayload = {
-          name: group.name,
-          type: 0,
-          lmeUsdPerMt: Number(group.lmeState.lmeUsdPerMt || 0),
-          premiumUsdPerMt: Number(group.lmeState.premiumUsdPerMt || 0),
-          fxRate: Number(group.lmeState.fxRate || 0),
-          freightInrPerMt: Number(group.lmeState.freightInrPerMt || 0)
-        };
-        this.pricingService.createMaterial(createPayload).subscribe({
-          next: () => {
-            this.snackBar.open(`${group.name} (LME) updated successfully.`, 'Close', { duration: 3000 });
-            if (group.lmeState) {
-              group.lmeState.isTodayUpdatedLme = true;
-              group.lmeState.asOnDate = new Date().toISOString();
-            }
-            this.loadMaterials();
-          },
-          error: (err) => {
-            this.loading.set(false);
-            this.snackBar.open(err.error?.message || 'Failed to update LME price.', 'Close', { duration: 3000 });
+      // Update LME Price
+      const lmeMatId = group.lmeState?.materialId || group.variants?.find((v: any) => v.type === 0)?.id || group.variants?.[0]?.id;
+      const pricePayload = {
+        materialId: lmeMatId,
+        type: 0,
+        lmeUsdPerMt: Number(group.lmeState.lmeUsdPerMt || 0),
+        premiumUsdPerMt: Number(group.lmeState.premiumUsdPerMt || 0),
+        fxRate: Number(group.lmeState.fxRate || 0),
+        freightInrPerKg: Number(group.lmeState.freightInrPerMt || 0) / 1000,
+        freightInrPerMt: Number(group.lmeState.freightInrPerMt || 0)
+      };
+      this.pricingService.updateMaterialPrice(pricePayload).subscribe({
+        next: () => {
+          this.snackBar.open(`${group.name} (LME) updated successfully.`, 'Close', { duration: 3000 });
+          if (group.lmeState) {
+            group.lmeState.isTodayUpdatedLme = true;
+            group.lmeState.asOnDate = new Date().toISOString();
           }
-        });
-      } else {
-        const pricePayload = {
-          materialId: lmeMatId,
-          type: 0,
-          lmeUsdPerMt: Number(group.lmeState.lmeUsdPerMt || 0),
-          premiumUsdPerMt: Number(group.lmeState.premiumUsdPerMt || 0),
-          fxRate: Number(group.lmeState.fxRate || 0),
-          freightInrPerMt: Number(group.lmeState.freightInrPerMt || 0)
-        };
-        this.pricingService.updateMaterialPrice(pricePayload).subscribe({
-          next: () => {
-            this.snackBar.open(`${group.name} (LME) updated successfully.`, 'Close', { duration: 3000 });
-            if (group.lmeState) {
-              group.lmeState.isTodayUpdatedLme = true;
-              group.lmeState.asOnDate = new Date().toISOString();
-            }
-            this.loadMaterials();
-          },
-          error: (err) => {
-            this.loading.set(false);
-            this.snackBar.open(err.error?.message || 'Failed to update LME price.', 'Close', { duration: 3000 });
-          }
-        });
-      }
+          this.loadMaterials();
+        },
+        error: (err) => {
+          this.loading.set(false);
+          this.snackBar.open(err.error?.message || 'Failed to update LME price.', 'Close', { duration: 3000 });
+        }
+      });
     } else {
       // Update Direct Price (Vendor-specific)
       const variant = group.selectedDirectVariant;
-      if (!variant || variant.id === 0) {
-        const createPayload = {
-          name: group.name,
-          vendorName: group.selectedVendorName,
-          type: 1,
-          directRateInrPerKg: Number(variant?.directRateInrPerKg || 0)
-        };
-        this.pricingService.createMaterial(createPayload).subscribe({
-          next: () => {
-            this.snackBar.open(`${group.name} (${group.selectedVendorName}) updated successfully.`, 'Close', { duration: 3000 });
-            if (variant) {
-              variant.isTodayUpdatedDirect = true;
-              variant.isPlaceholder = false;
-              variant.asOnDate = new Date().toISOString();
-            }
-            this.loadMaterials();
-          },
-          error: (err) => {
-            this.loading.set(false);
-            this.snackBar.open(err.error?.message || 'Failed to update Direct price.', 'Close', { duration: 3000 });
+      const matId = (variant && variant.id > 0) ? variant.id : (group.variants?.[0]?.id || 0);
+      const pricePayload = {
+        materialId: matId,
+        type: 1,
+        vendorId: variant?.vendorId,
+        vendorName: group.selectedVendorName,
+        directRateInrPerKg: Number(variant?.directRateInrPerKg || 0)
+      };
+      this.pricingService.updateMaterialPrice(pricePayload).subscribe({
+        next: () => {
+          this.snackBar.open(`${group.name} (${group.selectedVendorName}) updated successfully.`, 'Close', { duration: 3000 });
+          if (variant) {
+            variant.isTodayUpdatedDirect = true;
+            variant.asOnDate = new Date().toISOString();
           }
-        });
-      } else {
-        const pricePayload = {
-          materialId: variant.id,
-          type: 1,
-          directRateInrPerKg: Number(variant.directRateInrPerKg || 0)
-        };
-        this.pricingService.updateMaterialPrice(pricePayload).subscribe({
-          next: () => {
-            this.snackBar.open(`${group.name} (${group.selectedVendorName}) updated successfully.`, 'Close', { duration: 3000 });
-            if (variant) {
-              variant.isTodayUpdatedDirect = true;
-              variant.asOnDate = new Date().toISOString();
-            }
-            this.loadMaterials();
-          },
-          error: (err) => {
-            this.loading.set(false);
-            this.snackBar.open(err.error?.message || 'Failed to update Direct price.', 'Close', { duration: 3000 });
-          }
-        });
-      }
+          this.loadMaterials();
+        },
+        error: (err) => {
+          this.loading.set(false);
+          this.snackBar.open(err.error?.message || 'Failed to update Direct price.', 'Close', { duration: 3000 });
+        }
+      });
     }
   }
 }
-

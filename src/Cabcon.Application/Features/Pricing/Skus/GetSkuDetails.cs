@@ -59,6 +59,7 @@ public class GetSkuDetailsQueryHandler : IRequestHandler<GetSkuDetailsQuery, Sku
             .Include(s => s.Category)
             .Include(s => s.BomLines)
                 .ThenInclude(b => b.Material)
+                    .ThenInclude(m => m.PriceHistory)
             .FirstOrDefaultAsync(s => s.Id == request.Id, cancellationToken);
 
         if (sku == null)
@@ -72,7 +73,7 @@ public class GetSkuDetailsQueryHandler : IRequestHandler<GetSkuDetailsQuery, Sku
             {
                 MaterialId = b.MaterialId,
                 MaterialName = b.Material.Name,
-                MaterialType = b.Material.Type,
+                MaterialType = b.PriceType,
                 WeightKg = b.WeightKg,
                 MaterialLandedCost = _pricingService.LandedCost(b.Material),
                 LineOrder = b.LineOrder,

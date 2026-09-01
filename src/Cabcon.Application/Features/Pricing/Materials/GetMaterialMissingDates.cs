@@ -25,7 +25,7 @@ public class GetMaterialMissingDatesQueryHandler : IRequestHandler<GetMaterialMi
     public async Task<IReadOnlyList<DateTime>> Handle(GetMaterialMissingDatesQuery request, CancellationToken cancellationToken)
     {
         var material = await _materialRepository.GetByIdAsync(request.MaterialId, cancellationToken);
-        if (material == null || material.IsPlaceholder)
+        if (material == null)
             return Array.Empty<DateTime>();
 
         // Calculate missing dates in the last 30 days
