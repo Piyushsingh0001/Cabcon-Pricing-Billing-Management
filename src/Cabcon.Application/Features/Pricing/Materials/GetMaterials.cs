@@ -30,6 +30,10 @@ public record MaterialDto
     public decimal PrevMonthAvgLme { get; init; }
     public decimal ThisMonthAvgDirect { get; init; }
     public decimal PrevMonthAvgDirect { get; init; }
+    /// <summary>True when a history record for today already exists for LME/Exchange type.</summary>
+    public bool IsTodayUpdatedLme { get; init; }
+    /// <summary>True when a history record for today already exists for Direct type.</summary>
+    public bool IsTodayUpdatedDirect { get; init; }
 }
 
 public record GetMaterialsQuery : IRequest<PaginatedList<MaterialDto>>
@@ -94,6 +98,7 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
 
         var materialIds = items.Select(x => x.Id).ToList();
         var today = DateTime.UtcNow.Date;
+        var localToday = DateTime.Today;
         var thirtyDaysAgo = today.AddDays(-30);
         var startOfThisMonth = new DateTime(today.Year, today.Month, 1);
         var startOfPrevMonth = startOfThisMonth.AddMonths(-1);
@@ -102,7 +107,7 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
         
         var histories = await _historyRepo.Query()
             .Where(h => materialIds.Contains(h.MaterialId) && h.EffectiveDate >= earliestDate)
-            .Select(h => new { h.MaterialId, Date = h.EffectiveDate.Date, h.LandedCostInrPerKg, h.Type })
+            .Select(h => new { h.MaterialId, EffectiveDate = h.EffectiveDate, h.LandedCostInrPerKg, h.Type })
             .ToListAsync(cancellationToken);
 
         var dtos = items.Select(m => {
@@ -111,8 +116,8 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             var mHistoriesLme = mHistories.Where(h => h.Type == MaterialType.Exchange).ToList();
             var mHistoriesDirect = mHistories.Where(h => h.Type == MaterialType.Direct).ToList();
 
-            var mHistoryDatesLme = mHistoriesLme.Where(h => h.Date >= thirtyDaysAgo).Select(h => h.Date).Distinct().ToList();
-            var mHistoryDatesDirect = mHistoriesDirect.Where(h => h.Date >= thirtyDaysAgo).Select(h => h.Date).Distinct().ToList();
+            var mHistoryDatesLme = mHistoriesLme.Where(h => h.EffectiveDate.Date >= thirtyDaysAgo).Select(h => h.EffectiveDate.Date).Distinct().ToList();
+            var mHistoryDatesDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date >= thirtyDaysAgo).Select(h => h.EffectiveDate.Date).Distinct().ToList();
             
             // Calculate missing days in the last 30 days (or since creation)
             var startDate = m.CreatedDate.Date > thirtyDaysAgo ? m.CreatedDate.Date : thirtyDaysAgo;
@@ -121,18 +126,26 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             
             for (var d = startDate; d <= today; d = d.AddDays(1))
             {
-                bool hasLme = mHistoryDatesLme.Contains(d) || (!m.IsPlaceholder && m.Type == MaterialType.Exchange && m.AsOnDate.Date == d);
-                bool hasDirect = mHistoryDatesDirect.Contains(d) || (!m.IsPlaceholder && m.Type == MaterialType.Direct && m.AsOnDate.Date == d);
+                bool hasLme = mHistoryDatesLme.Contains(d) || (!m.IsPlaceholder && m.Type == MaterialType.Exchange && (m.AsOnDate.Date == d || m.AsOnDate.Date == localToday));
+                bool hasDirect = mHistoryDatesDirect.Contains(d) || (!m.IsPlaceholder && m.Type == MaterialType.Direct && (m.AsOnDate.Date == d || m.AsOnDate.Date == localToday));
 
                 if (!hasLme) missingCountLme++;
                 if (!hasDirect) missingCountDirect++;
             }
 
-            var thisMonthAvgLme = mHistoriesLme.Where(h => h.Date >= startOfThisMonth && h.Date <= today).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
-            var prevMonthAvgLme = mHistoriesLme.Where(h => h.Date >= startOfPrevMonth && h.Date < startOfThisMonth).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+            var thisMonthAvgLme = mHistoriesLme.Where(h => h.EffectiveDate.Date >= startOfThisMonth && h.EffectiveDate.Date <= today).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+            var prevMonthAvgLme = mHistoriesLme.Where(h => h.EffectiveDate.Date >= startOfPrevMonth && h.EffectiveDate.Date < startOfThisMonth).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
 
-            var thisMonthAvgDirect = mHistoriesDirect.Where(h => h.Date >= startOfThisMonth && h.Date <= today).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
-            var prevMonthAvgDirect = mHistoriesDirect.Where(h => h.Date >= startOfPrevMonth && h.Date < startOfThisMonth).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+            var thisMonthAvgDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date >= startOfThisMonth && h.EffectiveDate.Date <= today).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+            var prevMonthAvgDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date >= startOfPrevMonth && h.EffectiveDate.Date < startOfThisMonth).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+
+            // Today-updated flags: true if today's date already has a history entry for that type, or material was stamped today
+            bool isTodayUpdatedLme = mHistoryDatesLme.Contains(today)
+                || mHistoryDatesLme.Contains(localToday)
+                || (!m.IsPlaceholder && m.Type == MaterialType.Exchange && (m.AsOnDate.Date == today || m.AsOnDate.Date == localToday));
+            bool isTodayUpdatedDirect = mHistoryDatesDirect.Contains(today)
+                || mHistoryDatesDirect.Contains(localToday)
+                || (!m.IsPlaceholder && m.Type == MaterialType.Direct && (m.AsOnDate.Date == today || m.AsOnDate.Date == localToday));
 
             return new MaterialDto
             {
@@ -155,7 +168,9 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                 ThisMonthAvgLme = thisMonthAvgLme,
                 PrevMonthAvgLme = prevMonthAvgLme,
                 ThisMonthAvgDirect = thisMonthAvgDirect,
-                PrevMonthAvgDirect = prevMonthAvgDirect
+                PrevMonthAvgDirect = prevMonthAvgDirect,
+                IsTodayUpdatedLme = isTodayUpdatedLme,
+                IsTodayUpdatedDirect = isTodayUpdatedDirect
             };
         }).ToList();
 

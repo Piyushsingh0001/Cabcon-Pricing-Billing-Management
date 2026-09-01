@@ -83,29 +83,29 @@ export class MaterialsComponent implements OnInit {
         id: 0,
         vendorName: group.selectedVendorName,
         isPlaceholder: true,
-        lmeUsdPerMt: base.lmeUsdPerMt || 0,
-        premiumUsdPerMt: base.premiumUsdPerMt || 0,
-        fxRate: base.fxRate || 0,
-        freightInrPerMt: base.freightInrPerMt || 0,
-        directRateInrPerKg: base.directRateInrPerKg || 0
+        directRateInrPerKg: base.directRateInrPerKg || 0,
+        isTodayUpdatedDirect: false,
+        missingDaysCountDirect: 1
       };
     }
     
-    group.selectedVariant = selected || group.variants[0];
-    if (group.selectedVariant) {
-      group.selectedVariantId = group.selectedVariant.id;
-    }
+    group.selectedDirectVariant = selected || group.variants[0] || {};
+    group.selectedVariant = group.selectedType === 0 ? (group.lmeVariant || group.selectedDirectVariant) : group.selectedDirectVariant;
     this.calculateGroupAvg(group);
   }
 
   public calculateGroupAvg(group: any) {
-    if (!group.selectedVariant) return;
-    const isLme = group.selectedVariant.type === 0;
-    
-    if (group.avgPriceRange === 'prev_month') {
-      group.calculatedAvg = isLme ? (group.selectedVariant.prevMonthAvgLme || 0) : (group.selectedVariant.prevMonthAvgDirect || 0);
+    if (!group) return;
+    if (group.selectedType === 0) {
+      const lmeSource = group.lmeState || group.variants?.find((v: any) => v.type === 0) || group.variants?.[0];
+      group.calculatedAvg = group.avgPriceRange === 'prev_month'
+        ? (lmeSource?.prevMonthAvgLme || 0)
+        : (lmeSource?.thisMonthAvgLme || 0);
     } else {
-      group.calculatedAvg = isLme ? (group.selectedVariant.thisMonthAvgLme || 0) : (group.selectedVariant.thisMonthAvgDirect || 0);
+      const directSource = group.selectedDirectVariant || group.variants?.[0];
+      group.calculatedAvg = group.avgPriceRange === 'prev_month'
+        ? (directSource?.prevMonthAvgDirect || 0)
+        : (directSource?.thisMonthAvgDirect || 0);
     }
   }
 
@@ -133,28 +133,73 @@ export class MaterialsComponent implements OnInit {
   }
 
   public getMissingDays(group: any): number {
-    if (!group.selectedVariant) return 0;
-    const isLme = group.selectedVariant.type === 0;
-    return isLme ? (group.selectedVariant.missingDaysCountLme || 0) : (group.selectedVariant.missingDaysCountDirect || 0);
+    if (!group) return 0;
+    if (group.selectedType === 0) {
+      return group.lmeState?.missingDaysCountLme ?? (group.variants?.find((v: any) => v.type === 0)?.missingDaysCountLme || 0);
+    } else {
+      return group.selectedDirectVariant?.missingDaysCountDirect || 0;
+    }
   }
 
-  public openBackfill(material: Material) {
-    if (!this.canUpdate() || !material) return;
-    
-    let targetMaterial = material;
-    if (!targetMaterial.id || targetMaterial.id === 0) {
-      const found = this.materials.find(m => m.name === targetMaterial.name && m.vendorName === targetMaterial.vendorName);
-      if (found) {
-        targetMaterial = found;
-      } else {
-        this.snackBar.open(`Please update and save price for vendor "${targetMaterial.vendorName || 'selected'}" first before backfilling.`, 'Close', { duration: 3500 });
-        return;
+  /** Returns true if today's price for this group's selected price type is already stamped. */
+  public isTodayUpdated(group: any): boolean {
+    if (!group) return false;
+
+    if (group.selectedType === 0) {
+      const lme = group.lmeState;
+      if (lme?.isTodayUpdatedLme) return true;
+      if (lme?.asOnDate) {
+        const asOn = new Date(lme.asOnDate);
+        const now = new Date();
+        if (asOn.getFullYear() === now.getFullYear() &&
+            asOn.getMonth() === now.getMonth() &&
+            asOn.getDate() === now.getDate()) {
+          return true;
+        }
       }
+      return false;
+    } else {
+      const v = group.selectedDirectVariant;
+      if (!v) return false;
+      if (v.isTodayUpdatedDirect) return true;
+      if (!v.isPlaceholder && v.asOnDate) {
+        const asOn = new Date(v.asOnDate);
+        const now = new Date();
+        if (asOn.getFullYear() === now.getFullYear() &&
+            asOn.getMonth() === now.getMonth() &&
+            asOn.getDate() === now.getDate()) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+
+  public openBackfill(group: any) {
+    if (!this.canUpdate() || !group) return;
+
+    const targetType = group.selectedType; // 0 for LME, 1 for Direct
+    let matId = 0;
+    if (targetType === 0) {
+      matId = group.lmeState?.materialId || group.variants?.find((v: any) => v.id > 0)?.id || 0;
+    } else {
+      matId = group.selectedDirectVariant?.id || group.variants?.find((v: any) => v.id > 0)?.id || 0;
+    }
+
+    if (matId === 0) {
+      this.snackBar.open('Please save a price first before backfilling.', 'Close', { duration: 3500 });
+      return;
     }
 
     const dialogRef = this.dialog.open(MaterialBackfillDialogComponent, {
       panelClass: 'dialog-auto-fit',
-      data: targetMaterial
+      data: {
+        materialId: matId,
+        materialName: group.name,
+        type: targetType,
+        vendorOptions: group.vendorOptions || [],
+        currentVendorName: targetType === 1 ? group.selectedVendorName : ''
+      }
     });
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
   }
@@ -184,11 +229,12 @@ export class MaterialsComponent implements OnInit {
     this.loading.set(true);
 
     // Preserve current selections before reloading
-    const currentSelections = new Map<string, string>();
+    const currentSelections = new Map<string, { vendor?: string; type?: number }>();
     this.materialGroups.forEach(g => {
-      if (g.selectedVendorName) {
-        currentSelections.set(g.name, g.selectedVendorName);
-      }
+      currentSelections.set(g.name, {
+        vendor: g.selectedVendorName,
+        type: g.selectedType
+      });
     });
 
     // Request up to 100 materials on page 1 sorted by name (asc) to ensure all display together
@@ -207,15 +253,45 @@ export class MaterialsComponent implements OnInit {
         
         res.items.forEach(m => {
           if (!groupsMap.has(m.name)) {
+            const prev = currentSelections.get(m.name);
             groupsMap.set(m.name, {
               name: m.name,
+              selectedType: prev?.type !== undefined ? prev.type : m.type,
               variants: [],
-              selectedVendorName: currentSelections.get(m.name) || m.vendorName || '',
+              selectedVendorName: prev?.vendor || m.vendorName || '',
               avgPriceRange: 'this_month',
-              calculatedAvg: 0
+              calculatedAvg: 0,
+              lmeState: {
+                materialId: m.id,
+                lmeUsdPerMt: m.lmeUsdPerMt || 0,
+                premiumUsdPerMt: m.premiumUsdPerMt || 0,
+                fxRate: m.fxRate || 0,
+                freightInrPerMt: m.freightInrPerMt || 0,
+                isTodayUpdatedLme: m.isTodayUpdatedLme,
+                missingDaysCountLme: m.missingDaysCountLme,
+                thisMonthAvgLme: m.thisMonthAvgLme,
+                prevMonthAvgLme: m.prevMonthAvgLme,
+                asOnDate: m.asOnDate
+              }
             });
           }
-          groupsMap.get(m.name).variants.push(m);
+          const group = groupsMap.get(m.name);
+          group.variants.push(m);
+          // If this variant has LME data, use it for lmeState
+          if (m.type === 0 || (m.lmeUsdPerMt && m.lmeUsdPerMt > 0)) {
+            group.lmeState = {
+              materialId: m.id,
+              lmeUsdPerMt: m.lmeUsdPerMt || 0,
+              premiumUsdPerMt: m.premiumUsdPerMt || 0,
+              fxRate: m.fxRate || 0,
+              freightInrPerMt: m.freightInrPerMt || 0,
+              isTodayUpdatedLme: m.isTodayUpdatedLme,
+              missingDaysCountLme: m.missingDaysCountLme,
+              thisMonthAvgLme: m.thisMonthAvgLme,
+              prevMonthAvgLme: m.prevMonthAvgLme,
+              asOnDate: m.asOnDate
+            };
+          }
         });
 
         this.materialGroups = Array.from(groupsMap.values());
@@ -293,94 +369,150 @@ export class MaterialsComponent implements OnInit {
   // removed delete method
 
   public viewHistory(group: any) {
-    const material = group.selectedVariant;
-    if (!material) return;
+    const targetType = group.selectedType;
+    const targetMaterial = targetType === 0
+      ? (group.variants?.find((v: any) => v.type === 0) || group.variants[0])
+      : group.selectedDirectVariant;
+
+    if (!targetMaterial) return;
     this.dialog.open(MaterialHistoryDialogComponent, {
       panelClass: 'dialog-tier-lg',
       data: {
-        material: material,
+        material: targetMaterial,
         group: group,
         variants: group.variants,
-        selectedVariantId: group.selectedVariantId
+        selectedVariantId: targetMaterial.id
       }
     });
   }
 
   public openTrendChart(group: any) {
-    const material = group.selectedVariant;
-    if (!material) return;
+    const targetType = group.selectedType;
+    const targetMaterial = targetType === 0
+      ? (group.variants?.find((v: any) => v.type === 0) || group.variants[0])
+      : group.selectedDirectVariant;
+
+    if (!targetMaterial) return;
     this.dialog.open(MaterialTrendDialogComponent, {
       panelClass: 'dialog-tier-md',
-      data: material
+      data: targetMaterial
     });
   }
 
   public calculateLandedCost(group: any): number {
-    const material = group.selectedVariant;
-    if (!material) return 0;
-    if (material.type === 0) {
-      return (((material.lmeUsdPerMt || 0) + (material.premiumUsdPerMt || 0)) * (material.fxRate || 0) + (material.freightInrPerMt || 0)) / 1000;
+    if (!group) return 0;
+    if (group.selectedType === 0) {
+      const lme = Number(group.lmeState?.lmeUsdPerMt || 0);
+      const prem = Number(group.lmeState?.premiumUsdPerMt || 0);
+      const fx = Number(group.lmeState?.fxRate || 0);
+      const freight = Number(group.lmeState?.freightInrPerMt || 0);
+      return ((lme + prem) * fx + freight) / 1000;
+    } else {
+      return Number(group.selectedDirectVariant?.directRateInrPerKg || 0);
     }
-    return material.directRateInrPerKg || 0;
   }
 
   public updatePrice(group: any) {
-    if (!this.canUpdate()) return;
-    const material = group.selectedVariant;
+    if (!this.canUpdate() || !group) return;
     this.loading.set(true);
 
-    if (material.id === 0) {
-      const createPayload = {
-        name: material.name,
-        vendorName: material.vendorName,
-        type: material.type,
-        lmeUsdPerMt: Number(material.lmeUsdPerMt || 0),
-        premiumUsdPerMt: Number(material.premiumUsdPerMt || 0),
-        fxRate: Number(material.fxRate || 0),
-        freightInrPerMt: Number(material.freightInrPerMt || 0),
-        directRateInrPerKg: Number(material.directRateInrPerKg || 0)
-      };
-
-      this.pricingService.createMaterial(createPayload).subscribe({
-        next: () => {
-          this.snackBar.open(`${material.name} (${material.vendorName}) updated successfully.`, 'Close', { duration: 3000 });
-          this.loadMaterials();
-        },
-        error: (err) => {
-          this.loading.set(false);
-          this.snackBar.open(err.error?.message || 'Failed to update price.', 'Close', { duration: 3000 });
-        }
-      });
+    if (group.selectedType === 0) {
+      // Update LME Price (independent of vendor)
+      const lmeMatId = group.lmeState?.materialId || group.variants?.find((v: any) => v.id > 0)?.id || 0;
+      
+      if (lmeMatId === 0) {
+        const createPayload = {
+          name: group.name,
+          type: 0,
+          lmeUsdPerMt: Number(group.lmeState.lmeUsdPerMt || 0),
+          premiumUsdPerMt: Number(group.lmeState.premiumUsdPerMt || 0),
+          fxRate: Number(group.lmeState.fxRate || 0),
+          freightInrPerMt: Number(group.lmeState.freightInrPerMt || 0)
+        };
+        this.pricingService.createMaterial(createPayload).subscribe({
+          next: () => {
+            this.snackBar.open(`${group.name} (LME) updated successfully.`, 'Close', { duration: 3000 });
+            if (group.lmeState) {
+              group.lmeState.isTodayUpdatedLme = true;
+              group.lmeState.asOnDate = new Date().toISOString();
+            }
+            this.loadMaterials();
+          },
+          error: (err) => {
+            this.loading.set(false);
+            this.snackBar.open(err.error?.message || 'Failed to update LME price.', 'Close', { duration: 3000 });
+          }
+        });
+      } else {
+        const pricePayload = {
+          materialId: lmeMatId,
+          type: 0,
+          lmeUsdPerMt: Number(group.lmeState.lmeUsdPerMt || 0),
+          premiumUsdPerMt: Number(group.lmeState.premiumUsdPerMt || 0),
+          fxRate: Number(group.lmeState.fxRate || 0),
+          freightInrPerMt: Number(group.lmeState.freightInrPerMt || 0)
+        };
+        this.pricingService.updateMaterialPrice(pricePayload).subscribe({
+          next: () => {
+            this.snackBar.open(`${group.name} (LME) updated successfully.`, 'Close', { duration: 3000 });
+            if (group.lmeState) {
+              group.lmeState.isTodayUpdatedLme = true;
+              group.lmeState.asOnDate = new Date().toISOString();
+            }
+            this.loadMaterials();
+          },
+          error: (err) => {
+            this.loading.set(false);
+            this.snackBar.open(err.error?.message || 'Failed to update LME price.', 'Close', { duration: 3000 });
+          }
+        });
+      }
     } else {
-      const metaPayload = {
-        name: material.name,
-        vendorName: material.vendorName,
-        type: material.type
-      };
-
-      const pricePayload = material.type === 0 ? {
-        materialId: material.id,
-        lmeUsdPerMt: Number(material.lmeUsdPerMt || 0),
-        premiumUsdPerMt: Number(material.premiumUsdPerMt || 0),
-        fxRate: Number(material.fxRate || 0),
-        freightInrPerMt: Number(material.freightInrPerMt || 0)
-      } : {
-        materialId: material.id,
-        directRateInrPerKg: Number(material.directRateInrPerKg || 0)
-      };
-
-      this.pricingService.updateMaterial(material.id, metaPayload).pipe(
-        switchMap(() => this.pricingService.updateMaterialPrice(pricePayload))
-      ).subscribe({
-        next: () => {
-          this.snackBar.open(`${material.name} updated successfully.`, 'Close', { duration: 3000 });
-          this.loadMaterials();
-        },
-        error: (err) => {
-          this.loading.set(false);
-          this.snackBar.open(err.error?.message || 'Failed to update material.', 'Close', { duration: 3000 });
-        }
-      });
+      // Update Direct Price (Vendor-specific)
+      const variant = group.selectedDirectVariant;
+      if (!variant || variant.id === 0) {
+        const createPayload = {
+          name: group.name,
+          vendorName: group.selectedVendorName,
+          type: 1,
+          directRateInrPerKg: Number(variant?.directRateInrPerKg || 0)
+        };
+        this.pricingService.createMaterial(createPayload).subscribe({
+          next: () => {
+            this.snackBar.open(`${group.name} (${group.selectedVendorName}) updated successfully.`, 'Close', { duration: 3000 });
+            if (variant) {
+              variant.isTodayUpdatedDirect = true;
+              variant.isPlaceholder = false;
+              variant.asOnDate = new Date().toISOString();
+            }
+            this.loadMaterials();
+          },
+          error: (err) => {
+            this.loading.set(false);
+            this.snackBar.open(err.error?.message || 'Failed to update Direct price.', 'Close', { duration: 3000 });
+          }
+        });
+      } else {
+        const pricePayload = {
+          materialId: variant.id,
+          type: 1,
+          directRateInrPerKg: Number(variant.directRateInrPerKg || 0)
+        };
+        this.pricingService.updateMaterialPrice(pricePayload).subscribe({
+          next: () => {
+            this.snackBar.open(`${group.name} (${group.selectedVendorName}) updated successfully.`, 'Close', { duration: 3000 });
+            if (variant) {
+              variant.isTodayUpdatedDirect = true;
+              variant.asOnDate = new Date().toISOString();
+            }
+            this.loadMaterials();
+          },
+          error: (err) => {
+            this.loading.set(false);
+            this.snackBar.open(err.error?.message || 'Failed to update Direct price.', 'Close', { duration: 3000 });
+          }
+        });
+      }
     }
   }
 }

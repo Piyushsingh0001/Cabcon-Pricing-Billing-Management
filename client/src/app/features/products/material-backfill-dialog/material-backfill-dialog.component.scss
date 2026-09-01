@@ -19,25 +19,39 @@
   }
 }
 
-.top-type-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #f1f5f9;
-  border: 1px solid var(--border-glass);
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 12px;
+.type-pill {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  vertical-align: middle;
+}
 
-  .type-lbl {
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
+.lme-pill {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
 
-  .type-val {
-    color: var(--primary-color);
-    font-weight: 700;
-  }
+.direct-pill {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.loading-state {
+  padding: 24px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.no-missing {
+  padding: 20px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-align: center;
 }
 
 .price-row {

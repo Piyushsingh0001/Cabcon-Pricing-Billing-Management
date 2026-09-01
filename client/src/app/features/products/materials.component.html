@@ -57,7 +57,7 @@
   <div class="grid">
     <div class="card glass-card" *ngFor="let group of materialGroups">
       <div class="card-header">
-        <select class="sel" [(ngModel)]="group.selectedVariant.type" (ngModelChange)="onTypeChange(group)">
+        <select class="sel" [(ngModel)]="group.selectedType" (ngModelChange)="onTypeChange(group)">
           <option [ngValue]="0">LME-linked</option>
           <option [ngValue]="1">Direct ₹/kg</option>
         </select>
@@ -76,7 +76,8 @@
       <div class="material-name-row" style="margin-bottom: 4px;">
         <input class="bare" [value]="group.name" disabled placeholder="Material Name">
       </div>
-      <div *ngIf="group.selectedVariant?.type === 1" style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
+      <!-- Vendor selector: only shown for Direct price input -->
+      <div *ngIf="group.selectedType === 1" style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
         Vendor: 
         <select class="bare" style="width: auto; font-size: 12px; font-weight: normal; background: transparent; padding: 2px;" 
                 [(ngModel)]="group.selectedVendorName" 
@@ -98,35 +99,35 @@
         <span style="font-weight: 600; color: var(--text-primary);">₹{{ group.calculatedAvg | number:'1.2-2' }}</span>
       </div>
 
-      <div class="badge-row" *ngIf="group.selectedVariant.isPlaceholder">
+      <div class="badge-row" *ngIf="group.selectedType === 1 && group.selectedDirectVariant?.isPlaceholder">
         <span class="tag">example — set price today</span>
       </div>
 
       <div class="fields-container">
-        <!-- LME-linked fields -->
-        <ng-container *ngIf="group.selectedVariant.type === 0">
+        <!-- LME-linked fields (Independent of vendor) -->
+        <ng-container *ngIf="group.selectedType === 0">
           <div class="field-row">
             <span class="field-label">LME (USD/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.selectedVariant.lmeUsdPerMt" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.lmeUsdPerMt" [disabled]="!canUpdate()">
           </div>
           <div class="field-row">
             <span class="field-label">Premium (USD/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.selectedVariant.premiumUsdPerMt" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.premiumUsdPerMt" [disabled]="!canUpdate()">
           </div>
           <div class="field-row">
             <span class="field-label">FX (₹/USD)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.selectedVariant.fxRate" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.fxRate" [disabled]="!canUpdate()">
           </div>
           <div class="field-row">
             <span class="field-label">Freight (₹/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.selectedVariant.freightInrPerMt" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.freightInrPerMt" [disabled]="!canUpdate()">
           </div>
         </ng-container>
-        <!-- Direct fields -->
-        <ng-container *ngIf="group.selectedVariant.type === 1">
+        <!-- Direct fields (Vendor-specific) -->
+        <ng-container *ngIf="group.selectedType === 1">
           <div class="field-row">
             <span class="field-label">Price (₹/kg)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.selectedVariant.directRateInrPerKg" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.selectedDirectVariant.directRateInrPerKg" [disabled]="!canUpdate()">
           </div>
         </ng-container>
       </div>
@@ -139,23 +140,12 @@
           </div>
         </div>
         <div class="footer-right">
-          <ng-container *ngIf="getMissingDays(group) > 1; else checkOneDay">
-            <div class="warning-badge cursor-pointer" (click)="openBackfill(group.selectedVariant)" title="Click to fill missing prices">
-              ⚠️ Prices missing for {{ getMissingDays(group) }} day(s)
-            </div>
-          </ng-container>
-          <ng-template #checkOneDay>
-            <ng-container *ngIf="getMissingDays(group) === 1; else updatedOk">
-              <div class="warning-badge" style="cursor: default;" title="Please use the 'Update today's price' button below">
-                ⚠️ Update today price
-              </div>
-            </ng-container>
-          </ng-template>
-          <ng-template #updatedOk>
-            <div class="footer-as-on">Updated today</div>
-          </ng-template>
+          <div *ngIf="isTodayUpdated(group)" class="footer-as-on">Updated today</div>
+          <div *ngIf="getMissingDays(group) > 0" class="warning-badge cursor-pointer" (click)="openBackfill(group)" title="Click to fill missing prices">
+            ⚠️ Prices missing for {{ getMissingDays(group) }} day(s)
+          </div>
           
-          <button class="btn-update" style="margin-top: 4px;" (click)="updatePrice(group)" [disabled]="!canUpdate() || getMissingDays(group) === 0">Update today's price</button>
+          <button class="btn-update" style="margin-top: 4px;" (click)="updatePrice(group)" [disabled]="!canUpdate() || isTodayUpdated(group)">Update today's price</button>
         </div>
       </div>
     </div>

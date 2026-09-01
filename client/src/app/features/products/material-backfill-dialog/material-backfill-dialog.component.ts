@@ -8,8 +8,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { switchMap } from 'rxjs';
-import { PricingService, Material } from '../../../core/pricing.service';
+import { PricingService } from '../../../core/pricing.service';
+
+export interface BackfillDialogData {
+  /** ID of the material (first real variant) */
+  materialId: number;
+  materialName: string;
+  /** 0 = LME/Exchange, 1 = Direct */
+  type: number;
+  /** All vendor options for Direct type rows */
+  vendorOptions: string[];
+  /** Currently selected vendor name */
+  currentVendorName: string;
+}
 
 @Component({
   selector: 'app-material-backfill-dialog',
@@ -40,7 +51,7 @@ export class MaterialBackfillDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<MaterialBackfillDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public material: Material
+    @Inject(MAT_DIALOG_DATA) public data: BackfillDialogData
   ) {
     this.form = this.fb.group({
       prices: this.fb.array([])
@@ -50,21 +61,11 @@ export class MaterialBackfillDialogComponent implements OnInit {
   ngOnInit(): void {
     this.loading.set(true);
 
-    this.pricingService.getVendorsApi().subscribe({
-      next: (res) => {
-        this.availableVendors = (res || []).map(v => v.name);
-        if (this.material.vendorName && !this.availableVendors.includes(this.material.vendorName)) {
-          this.availableVendors.push(this.material.vendorName);
-        }
-      },
-      error: () => {
-        if (this.material.vendorName) {
-          this.availableVendors = [this.material.vendorName];
-        }
-      }
-    });
+    // Populate vendor options from data
+    this.availableVendors = this.data.vendorOptions || [];
 
-    this.pricingService.getMissingDates(this.material.id, this.material.type).subscribe({
+    // Load missing dates for this material + type from the backend
+    this.pricingService.getMissingDates(this.data.materialId, this.data.type).subscribe({
       next: (dates) => {
         this.missingDates = dates.map(d => new Date(d));
         this.buildFormArray();
@@ -90,16 +91,24 @@ export class MaterialBackfillDialogComponent implements OnInit {
 
   private createPriceGroup(date: Date): FormGroup {
     const dateStr = date.toISOString().substring(0, 10);
-    return this.fb.group({
-      date: [dateStr],
-      vendorName: [this.material.vendorName || ''],
-      type: [{ value: this.material.type, disabled: true }],
-      lmeUsdPerMt: [this.material.lmeUsdPerMt || 0, [Validators.min(0)]],
-      premiumUsdPerMt: [this.material.premiumUsdPerMt || 0, [Validators.min(0)]],
-      fxRate: [this.material.fxRate || 0, [Validators.min(0)]],
-      freightInrPerMt: [this.material.freightInrPerMt || 0, [Validators.min(0)]],
-      directRateInrPerKg: [this.material.directRateInrPerKg || 0, [Validators.min(0)]]
-    });
+
+    if (this.data.type === 0) {
+      // LME/Exchange — no vendor field
+      return this.fb.group({
+        date: [dateStr],
+        lmeUsdPerMt: [0, [Validators.min(0)]],
+        premiumUsdPerMt: [0, [Validators.min(0)]],
+        fxRate: [0, [Validators.min(0)]],
+        freightInrPerMt: [0, [Validators.min(0)]]
+      });
+    } else {
+      // Direct — vendor dropdown per row
+      return this.fb.group({
+        date: [dateStr],
+        vendorName: [this.data.currentVendorName || (this.availableVendors[0] || ''), [Validators.required]],
+        directRateInrPerKg: [0, [Validators.min(0)]]
+      });
+    }
   }
 
   public onCancel(): void {
@@ -113,28 +122,22 @@ export class MaterialBackfillDialogComponent implements OnInit {
     const formValues = this.form.value.prices;
 
     const payload = formValues.map((p: any) => {
-      const result: any = { date: p.date, type: this.material.type };
-      if (this.material.type === 0) {
+      const result: any = { date: p.date, type: this.data.type };
+      if (this.data.type === 0) {
+        // LME — no vendor
         result.lmeUsdPerMt = p.lmeUsdPerMt;
         result.premiumUsdPerMt = p.premiumUsdPerMt;
         result.fxRate = p.fxRate;
         result.freightInrPerMt = p.freightInrPerMt;
       } else {
+        // Direct — vendor per row
         result.vendorName = p.vendorName;
         result.directRateInrPerKg = p.directRateInrPerKg;
       }
       return result;
     });
 
-    const metaPayload = {
-      name: this.material.name,
-      vendorName: this.material.vendorName,
-      type: this.material.type
-    };
-
-    this.pricingService.updateMaterial(this.material.id, metaPayload).pipe(
-      switchMap(() => this.pricingService.backfillMaterialPrices(this.material.id, payload))
-    ).subscribe({
+    this.pricingService.backfillMaterialPrices(this.data.materialId, payload).subscribe({
       next: () => {
         this.loading.set(false);
         this.snackBar.open('Material prices backfilled successfully.', 'Close', { duration: 3000 });

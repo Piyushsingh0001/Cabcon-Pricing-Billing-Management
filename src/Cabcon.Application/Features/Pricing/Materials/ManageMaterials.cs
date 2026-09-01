@@ -92,6 +92,27 @@ public class CreateMaterialCommandHandler : IRequestHandler<CreateMaterialComman
         await repository.AddAsync(material, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+        // Record initial price history snapshot
+        var pricingService = new Cabcon.Domain.Services.PricingCalculationService();
+        var landedCost = pricingService.LandedCost(material);
+        var history = new MaterialPriceHistory
+        {
+            MaterialId = material.Id,
+            Type = material.Type,
+            VendorName = request.VendorName,
+            LmeUsdPerMt = material.LmeUsdPerMt,
+            PremiumUsdPerMt = material.PremiumUsdPerMt,
+            FxRate = material.FxRate,
+            FreightInrPerMt = material.FreightInrPerMt,
+            DirectRateInrPerKg = material.DirectRateInrPerKg,
+            LandedCostInrPerKg = landedCost,
+            EffectiveDate = DateTime.UtcNow.Date,
+            CreatedDate = DateTime.UtcNow,
+            CreatedBy = "material-create"
+        };
+        await _unitOfWork.Repository<MaterialPriceHistory>().AddAsync(history, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
         return Result<int>.Success(material.Id);
     }
 }
@@ -266,7 +287,8 @@ public record BackfillPriceDto(
     decimal? PremiumUsdPerMt,
     decimal? FxRate,
     decimal? FreightInrPerMt,
-    decimal? DirectRateInrPerKg
+    decimal? DirectRateInrPerKg,
+    MaterialType? Type = null
 );
 
 public record BackfillMaterialPricesCommand(int MaterialId, List<BackfillPriceDto> Prices) : IRequest<Result>;
@@ -288,21 +310,22 @@ public class BackfillMaterialPricesCommandHandler : IRequestHandler<BackfillMate
 
         foreach (var price in request.Prices)
         {
+            var targetType = price.Type ?? material.Type;
             var lme = price.LmeUsdPerMt ?? 0;
             var premium = price.PremiumUsdPerMt ?? 0;
             var fx = price.FxRate ?? 0;
             var freight = price.FreightInrPerMt ?? 0;
             var direct = price.DirectRateInrPerKg ?? 0;
 
-            decimal landedCost = material.Type == Cabcon.Domain.Enums.MaterialType.Exchange
+            decimal landedCost = targetType == Cabcon.Domain.Enums.MaterialType.Exchange
                 ? ((lme + premium) * fx + freight) / 1000m
                 : direct;
 
             var history = new MaterialPriceHistory
             {
                 MaterialId = material.Id,
-                Type = material.Type,
-                VendorName = !string.IsNullOrWhiteSpace(price.VendorName) ? price.VendorName : (material.Vendor != null ? material.Vendor.Name : null),
+                Type = targetType,
+                VendorName = targetType == MaterialType.Direct ? (!string.IsNullOrWhiteSpace(price.VendorName) ? price.VendorName : (material.Vendor != null ? material.Vendor.Name : null)) : null,
                 LmeUsdPerMt = price.LmeUsdPerMt,
                 PremiumUsdPerMt = price.PremiumUsdPerMt,
                 FxRate = price.FxRate,

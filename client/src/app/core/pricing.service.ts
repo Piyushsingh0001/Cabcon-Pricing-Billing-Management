@@ -44,6 +44,10 @@ export interface Material {
   prevMonthAvgLme?: number;
   thisMonthAvgDirect?: number;
   prevMonthAvgDirect?: number;
+  /** True when today's LME price has already been stamped — button should be disabled */
+  isTodayUpdatedLme?: boolean;
+  /** True when today's Direct price has already been stamped — button should be disabled */
+  isTodayUpdatedDirect?: boolean;
 }
 
 export interface MaterialPriceHistory {
