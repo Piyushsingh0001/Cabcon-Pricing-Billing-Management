@@ -209,6 +209,15 @@ html, body {
   width: 780px !important;
   max-width: calc(100vw - 32px) !important;
 }
+.dialog-tier-xl {
+  width: 900px !important;
+  max-width: calc(100vw - 32px) !important;
+}
+.dialog-tier-backfill {
+  width: max-content !important;
+  min-width: 640px !important;
+  max-width: min(94vw, 920px) !important;
+}
 .dialog-auto-fit {
   width: auto !important;
   max-width: calc(100vw - 32px) !important;

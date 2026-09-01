@@ -1,4 +1,4 @@
-﻿import { ChangeDetectorRef, Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -200,7 +200,7 @@ export class MaterialsComponent implements OnInit {
     }
 
     const dialogRef = this.dialog.open(MaterialBackfillDialogComponent, {
-      panelClass: 'dialog-auto-fit',
+      panelClass: 'dialog-tier-backfill',
       data: {
         materialId: matId,
         materialName: group.name,
@@ -377,33 +377,33 @@ export class MaterialsComponent implements OnInit {
   // removed delete method
 
   public viewHistory(group: any) {
-    const targetType = group.selectedType;
-    const targetMaterial = targetType === 0
-      ? (group.variants?.find((v: any) => v.type === 0) || group.variants[0])
-      : group.selectedDirectVariant;
+    const matId = group.lmeState?.materialId || group.variants?.find((v: any) => v.id > 0)?.id || group.variants?.[0]?.id || 0;
+    if (matId === 0) return;
 
-    if (!targetMaterial) return;
     this.dialog.open(MaterialHistoryDialogComponent, {
       panelClass: 'dialog-tier-lg',
       data: {
-        material: targetMaterial,
+        materialId: matId,
+        materialName: group.name,
         group: group,
-        variants: group.variants,
-        selectedVariantId: targetMaterial.id
+        selectedType: group.selectedType,
+        selectedVendorName: group.selectedVendorName,
+        vendorOptions: group.vendorOptions || []
       }
     });
   }
 
   public openTrendChart(group: any) {
-    const targetType = group.selectedType;
-    const targetMaterial = targetType === 0
-      ? (group.variants?.find((v: any) => v.type === 0) || group.variants[0])
-      : group.selectedDirectVariant;
+    const matId = group.lmeState?.materialId || group.variants?.find((v: any) => v.id > 0)?.id || group.variants?.[0]?.id || 0;
+    if (matId === 0) return;
 
-    if (!targetMaterial) return;
     this.dialog.open(MaterialTrendDialogComponent, {
       panelClass: 'dialog-tier-md',
-      data: targetMaterial
+      data: {
+        id: matId,
+        name: group.name,
+        type: group.selectedType
+      }
     });
   }
 

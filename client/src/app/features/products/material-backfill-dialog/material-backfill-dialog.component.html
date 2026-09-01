@@ -1,5 +1,5 @@
-<h2 mat-dialog-title>
-  Backfill Prices — {{ data.materialName }}
+<h2 mat-dialog-title class="dialog-title-row">
+  <span>Backfill Prices — {{ data.materialName }}</span>
   <span class="type-pill" [class.lme-pill]="data.type === 0" [class.direct-pill]="data.type === 1">
     {{ data.type === 0 ? 'LME / Exchange' : 'Direct ₹/kg' }}
   </span>
@@ -17,47 +17,48 @@
       No missing dates found. All prices are up to date.
     </div>
 
-    <div formArrayName="prices">
+    <div formArrayName="prices" class="prices-list">
       <div *ngFor="let priceGroup of pricesArray.controls; let i = index" [formGroupName]="i" class="price-row">
         <div class="date-column">
-          <span class="date-label">{{ missingDates[i] | date:'mediumDate' }}</span>
+          <mat-icon class="date-icon">calendar_today</mat-icon>
+          <span class="date-label">{{ missingDates[i] | date:'dd MMM yyyy' }}</span>
         </div>
 
         <div class="fields-column">
           <!-- LME fields — no vendor -->
           <ng-container *ngIf="data.type === 0">
-            <mat-form-field appearance="outline" class="sm-field">
+            <mat-form-field appearance="outline" class="lme-field">
               <mat-label>LME (USD/MT)</mat-label>
-              <input matInput formControlName="lmeUsdPerMt" type="number">
+              <input matInput formControlName="lmeUsdPerMt" type="number" placeholder="e.g. 2500">
             </mat-form-field>
-            <mat-form-field appearance="outline" class="sm-field">
-              <mat-label>Prem. (USD/MT)</mat-label>
-              <input matInput formControlName="premiumUsdPerMt" type="number">
+            <mat-form-field appearance="outline" class="lme-field">
+              <mat-label>Premium (USD/MT)</mat-label>
+              <input matInput formControlName="premiumUsdPerMt" type="number" placeholder="e.g. 150">
             </mat-form-field>
-            <mat-form-field appearance="outline" class="sm-field">
+            <mat-form-field appearance="outline" class="lme-field">
               <mat-label>FX (₹/USD)</mat-label>
-              <input matInput formControlName="fxRate" type="number" step="0.01">
+              <input matInput formControlName="fxRate" type="number" step="0.01" placeholder="e.g. 86.50">
             </mat-form-field>
-            <mat-form-field appearance="outline" class="sm-field">
+            <mat-form-field appearance="outline" class="lme-field">
               <mat-label>Freight (₹/MT)</mat-label>
-              <input matInput formControlName="freightInrPerMt" type="number">
+              <input matInput formControlName="freightInrPerMt" type="number" placeholder="e.g. 1200">
             </mat-form-field>
           </ng-container>
 
           <!-- Direct fields — vendor dropdown per row -->
           <ng-container *ngIf="data.type === 1">
-            <mat-form-field appearance="outline" class="sm-field">
+            <mat-form-field appearance="outline" class="vendor-field">
               <mat-label>Vendor</mat-label>
-              <mat-select formControlName="vendorName">
+              <mat-select formControlName="vendorName" placeholder="Select vendor">
                 <mat-option *ngFor="let vendor of availableVendors" [value]="vendor">
                   {{ vendor }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="sm-field-direct">
+            <mat-form-field appearance="outline" class="direct-rate-field">
               <mat-label>Direct Rate (₹/kg)</mat-label>
-              <input matInput formControlName="directRateInrPerKg" type="number" step="0.01">
+              <input matInput formControlName="directRateInrPerKg" type="number" step="0.01" placeholder="e.g. 245.50">
             </mat-form-field>
           </ng-container>
         </div>

@@ -96,17 +96,17 @@ export class MaterialBackfillDialogComponent implements OnInit {
       // LME/Exchange — no vendor field
       return this.fb.group({
         date: [dateStr],
-        lmeUsdPerMt: [0, [Validators.min(0)]],
-        premiumUsdPerMt: [0, [Validators.min(0)]],
-        fxRate: [0, [Validators.min(0)]],
-        freightInrPerMt: [0, [Validators.min(0)]]
+        lmeUsdPerMt: [null, [Validators.min(0)]],
+        premiumUsdPerMt: [null, [Validators.min(0)]],
+        fxRate: [null, [Validators.min(0)]],
+        freightInrPerMt: [null, [Validators.min(0)]]
       });
     } else {
       // Direct — vendor dropdown per row
       return this.fb.group({
         date: [dateStr],
         vendorName: [this.data.currentVendorName || (this.availableVendors[0] || ''), [Validators.required]],
-        directRateInrPerKg: [0, [Validators.min(0)]]
+        directRateInrPerKg: [null, [Validators.min(0)]]
       });
     }
   }
@@ -125,14 +125,14 @@ export class MaterialBackfillDialogComponent implements OnInit {
       const result: any = { date: p.date, type: this.data.type };
       if (this.data.type === 0) {
         // LME — no vendor
-        result.lmeUsdPerMt = p.lmeUsdPerMt;
-        result.premiumUsdPerMt = p.premiumUsdPerMt;
-        result.fxRate = p.fxRate;
-        result.freightInrPerMt = p.freightInrPerMt;
+        result.lmeUsdPerMt = p.lmeUsdPerMt != null && p.lmeUsdPerMt !== '' ? Number(p.lmeUsdPerMt) : 0;
+        result.premiumUsdPerMt = p.premiumUsdPerMt != null && p.premiumUsdPerMt !== '' ? Number(p.premiumUsdPerMt) : 0;
+        result.fxRate = p.fxRate != null && p.fxRate !== '' ? Number(p.fxRate) : 0;
+        result.freightInrPerMt = p.freightInrPerMt != null && p.freightInrPerMt !== '' ? Number(p.freightInrPerMt) : 0;
       } else {
         // Direct — vendor per row
         result.vendorName = p.vendorName;
-        result.directRateInrPerKg = p.directRateInrPerKg;
+        result.directRateInrPerKg = p.directRateInrPerKg != null && p.directRateInrPerKg !== '' ? Number(p.directRateInrPerKg) : 0;
       }
       return result;
     });

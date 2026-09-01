@@ -9,8 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
-import { forkJoin } from 'rxjs';
-import { PricingService, Material, MaterialPriceHistory } from '../../../core/pricing.service';
+import { PricingService, MaterialPriceHistory } from '../../../core/pricing.service';
 
 @Component({
   selector: 'app-material-history',
@@ -38,12 +37,13 @@ export class MaterialHistoryDialogComponent implements OnInit {
   private datePipe = inject(DatePipe);
   private decimalPipe = inject(DecimalPipe);
 
-  public material: Material | null = null;
+  public materialId: number = 0;
   public groupName: string = '';
-  public vendors: Array<{ id: number; vendorName: string }> = [];
+  public vendors: string[] = [];
 
   // Filter state
-  public selectedVendorId: number | string = 'ALL';
+  public selectedVendor: string = 'ALL';
+  public selectedType: string | number = 'ALL';
   public selectedYear: number | string = new Date().getFullYear();
   public selectedMonth: number | string = new Date().getMonth() + 1;
   public startDate: string = '';
@@ -60,7 +60,7 @@ export class MaterialHistoryDialogComponent implements OnInit {
 
   public allRawHistory: MaterialPriceHistory[] = [];
   public historyData = new MatTableDataSource<any>();
-  public columns = ['effectiveDate', 'lmeRate', 'lmeLandedCost', 'directLandedCost', 'updatedBy'];
+  public columns = ['effectiveDate', 'type', 'vendorName', 'lmeRate', 'lmeLandedCost', 'directLandedCost', 'updatedBy'];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -70,70 +70,42 @@ export class MaterialHistoryDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.data && this.data.variants) {
-      this.groupName = this.data.group?.name || this.data.material?.name || '';
-      this.material = this.data.material;
-      this.vendors = (this.data.variants || []).map((v: any) => ({
-        id: v.id,
-        vendorName: v.vendorName || 'Default Vendor'
-      }));
-      this.selectedVendorId = this.data.selectedVariantId || this.material?.id || (this.vendors[0]?.id ?? 'ALL');
-    } else if (this.data) {
-      this.material = this.data;
-      this.groupName = this.data.name || '';
-      this.vendors = [{ id: this.data.id, vendorName: this.data.vendorName || 'Default Vendor' }];
-      this.selectedVendorId = this.data.id;
+    this.materialId = this.data?.materialId || this.data?.material?.id || this.data?.id || 0;
+    this.groupName = this.data?.materialName || this.data?.group?.name || this.data?.material?.name || this.data?.name || '';
+    
+    if (this.data?.selectedType !== undefined) {
+      this.selectedType = this.data.selectedType;
+    }
+    if (this.data?.selectedVendorName) {
+      this.selectedVendor = this.data.selectedVendorName;
     }
 
     this.loadHistory();
   }
 
   public loadHistory() {
-    if (this.selectedVendorId === 'ALL') {
-      if (this.vendors.length === 0) {
+    if (!this.materialId || this.materialId === 0) {
+      this.allRawHistory = [];
+      this.applyFilters();
+      return;
+    }
+
+    this.pricingService.getMaterialHistory(this.materialId).subscribe({
+      next: (res: MaterialPriceHistory[]) => {
+        this.allRawHistory = res || [];
+
+        // Build list of distinct vendors from history + dialog inputs
+        const historyVendors = this.allRawHistory.map(h => h.vendorName).filter(Boolean) as string[];
+        const optionsVendors = this.data?.vendorOptions || [];
+        this.vendors = Array.from(new Set([...historyVendors, ...optionsVendors])).filter(Boolean);
+
+        this.applyFilters();
+      },
+      error: () => {
         this.allRawHistory = [];
         this.applyFilters();
-        return;
       }
-      const requests = this.vendors.map(v => this.pricingService.getMaterialHistory(v.id));
-      forkJoin(requests).subscribe({
-        next: (results: MaterialPriceHistory[][]) => {
-          let combined: MaterialPriceHistory[] = [];
-          results.forEach((list, idx) => {
-            const vName = this.vendors[idx]?.vendorName;
-            list.forEach(item => {
-              combined.push({ ...item, vendorName: item.vendorName || vName });
-            });
-          });
-          this.allRawHistory = combined;
-          this.applyFilters();
-        },
-        error: () => {
-          this.allRawHistory = [];
-          this.applyFilters();
-        }
-      });
-    } else {
-      const vendorId = Number(this.selectedVendorId);
-      const vendorObj = this.vendors.find(v => v.id === vendorId);
-      this.pricingService.getMaterialHistory(vendorId).subscribe({
-        next: (res: MaterialPriceHistory[]) => {
-          this.allRawHistory = res.map(item => ({
-            ...item,
-            vendorName: item.vendorName || vendorObj?.vendorName
-          }));
-          this.applyFilters();
-        },
-        error: () => {
-          this.allRawHistory = [];
-          this.applyFilters();
-        }
-      });
-    }
-  }
-
-  public onVendorChange() {
-    this.loadHistory();
+    });
   }
 
   public onFilterChange() {
@@ -145,16 +117,24 @@ export class MaterialHistoryDialogComponent implements OnInit {
     this.selectedMonth = new Date().getMonth() + 1;
     this.startDate = '';
     this.endDate = '';
-    if (this.data && this.data.selectedVariantId) {
-      this.selectedVendorId = this.data.selectedVariantId;
-    } else if (this.vendors.length > 0) {
-      this.selectedVendorId = this.vendors[0].id;
-    }
-    this.loadHistory();
+    this.selectedVendor = 'ALL';
+    this.selectedType = 'ALL';
+    this.applyFilters();
   }
 
   public applyFilters() {
     let filtered = [...this.allRawHistory];
+
+    // Filter by Price Type (0 = LME, 1 = Direct)
+    if (this.selectedType !== 'ALL') {
+      const typeNum = Number(this.selectedType);
+      filtered = filtered.filter(item => item.type === typeNum);
+    }
+
+    // Filter by Vendor
+    if (this.selectedVendor !== 'ALL') {
+      filtered = filtered.filter(item => item.vendorName === this.selectedVendor);
+    }
 
     // Filter by Custom Date Range if specified
     if (this.startDate) {
@@ -181,33 +161,17 @@ export class MaterialHistoryDialogComponent implements OnInit {
     // Sort descending by date
     filtered.sort((a, b) => new Date(b.effectiveDate).getTime() - new Date(a.effectiveDate).getTime());
 
-    const groupedMap = new Map<string, any>();
-    for (const item of filtered) {
-      const dateKey = new Date(item.effectiveDate).toISOString().split('T')[0];
-      const key = `${dateKey}_${item.vendorName || ''}`;
-      
-      if (!groupedMap.has(key)) {
-        groupedMap.set(key, {
-          effectiveDate: item.effectiveDate,
-          vendorName: item.vendorName,
-          lmeUsdPerMt: item.type === 0 ? item.lmeUsdPerMt : null,
-          lmeLandedCost: item.type === 0 ? item.landedCostInrPerKg : null,
-          directLandedCost: item.type === 1 ? item.landedCostInrPerKg : null,
-          updatedBy: item.updatedBy || 'System'
-        });
-      } else {
-        const existing = groupedMap.get(key);
-        if (item.type === 0 && existing.lmeLandedCost == null) {
-          existing.lmeUsdPerMt = item.lmeUsdPerMt;
-          existing.lmeLandedCost = item.landedCostInrPerKg;
-        } else if (item.type === 1 && existing.directLandedCost == null) {
-          existing.directLandedCost = item.landedCostInrPerKg;
-        }
-      }
-    }
-    
-    const groupedArr = Array.from(groupedMap.values());
-    this.historyData = new MatTableDataSource<any>(groupedArr);
+    const tableRows = filtered.map(item => ({
+      effectiveDate: item.effectiveDate,
+      type: item.type === 0 ? 'LME-linked' : 'Direct ₹/kg',
+      vendorName: item.type === 1 ? (item.vendorName || '-') : 'LME / Exchange',
+      lmeUsdPerMt: item.type === 0 ? item.lmeUsdPerMt : null,
+      lmeLandedCost: item.type === 0 ? item.landedCostInrPerKg : null,
+      directLandedCost: item.type === 1 ? item.landedCostInrPerKg : null,
+      updatedBy: item.updatedBy || 'System'
+    }));
+
+    this.historyData = new MatTableDataSource<any>(tableRows);
     this.cdr.detectChanges();
   }
 
@@ -215,9 +179,10 @@ export class MaterialHistoryDialogComponent implements OnInit {
     const data = this.historyData.data;
     if (!data || data.length === 0) return;
 
-    const headers = ['Date', 'Vendor', 'LME Rate ($/MT)', 'LME Landed Cost (₹/kg)', 'Direct Landed Cost (₹/kg)', 'Updated By'];
+    const headers = ['Date', 'Type', 'Vendor', 'LME Rate ($/MT)', 'LME Landed Cost (₹/kg)', 'Direct Landed Cost (₹/kg)', 'Updated By'];
     const rows = data.map(item => [
       this.datePipe.transform(item.effectiveDate, 'dd/MM/yyyy') || '',
+      `"${item.type}"`,
       `"${(item.vendorName || '').replace(/"/g, '""')}"`,
       item.lmeUsdPerMt != null ? item.lmeUsdPerMt.toFixed(2) : '-',
       item.lmeLandedCost != null ? item.lmeLandedCost.toFixed(2) : '-',
@@ -245,11 +210,12 @@ export class MaterialHistoryDialogComponent implements OnInit {
     const printWindow = window.open('', '_blank');
     if (!printWindow) return;
 
-    const title = `Price Stamp Log: ${this.groupName || this.material?.name || 'Material'}`;
+    const title = `Price Stamp Log: ${this.groupName || 'Material'}`;
     const generatedOn = new Date().toLocaleString();
 
     let tableRows = data.map(item => {
       const dateStr = this.datePipe.transform(item.effectiveDate, 'dd/MM/yyyy') || '';
+      const typeStr = item.type;
       const vendorStr = item.vendorName || '-';
       const lmeRateStr = item.lmeUsdPerMt != null ? `$${this.decimalPipe.transform(item.lmeUsdPerMt, '1.2-2')}/MT` : '-';
       const lmeLandedStr = item.lmeLandedCost != null ? `₹${this.decimalPipe.transform(item.lmeLandedCost, '1.2-2')}/kg` : '-';
@@ -259,6 +225,7 @@ export class MaterialHistoryDialogComponent implements OnInit {
       return `
         <tr>
           <td>${dateStr}</td>
+          <td>${typeStr}</td>
           <td>${vendorStr}</td>
           <td>${lmeRateStr}</td>
           <td>${lmeLandedStr}</td>
@@ -294,6 +261,7 @@ export class MaterialHistoryDialogComponent implements OnInit {
           <thead>
             <tr>
               <th>Date</th>
+              <th>Type</th>
               <th>Vendor</th>
               <th>LME Rate</th>
               <th>LME Landed Cost</th>
