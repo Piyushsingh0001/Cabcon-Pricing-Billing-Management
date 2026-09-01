@@ -112,27 +112,27 @@
         <ng-container *ngIf="group.selectedType === 0">
           <div class="field-row">
             <span class="field-label">LME (USD/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.lmeState.lmeUsdPerMt" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.lmeUsdPerMt" [disabled]="!canUpdate()" placeholder="0.00">
           </div>
           <div class="field-row">
             <span class="field-label">Premium (USD/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.lmeState.premiumUsdPerMt" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.premiumUsdPerMt" [disabled]="!canUpdate()" placeholder="0.00">
           </div>
           <div class="field-row">
             <span class="field-label">FX (₹/USD)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.lmeState.fxRate" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.fxRate" [disabled]="!canUpdate()" placeholder="0.00">
           </div>
           <div class="field-row">
             <span class="field-label">Freight (₹/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.lmeState.freightInrPerMt" [disabled]="!canUpdate()">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.freightInrPerMt" [disabled]="!canUpdate()" placeholder="0.00">
           </div>
         </ng-container>
         <!-- Direct fields (Vendor-specific) -->
         <ng-container *ngIf="group.selectedType === 1">
           <div class="field-row">
             <span class="field-label">Price (₹/kg)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.selectedDirectVariant.directRateInrPerKg" [disabled]="!canUpdate() || !group.vendorOptions || group.vendorOptions.length === 0" *ngIf="group.selectedDirectVariant">
-            <input type="number" class="field-input" disabled value="0" *ngIf="!group.selectedDirectVariant">
+            <input type="number" class="field-input" [(ngModel)]="group.selectedDirectVariant.directRateInrPerKg" [disabled]="!canUpdate() || !group.vendorOptions || group.vendorOptions.length === 0" *ngIf="group.selectedDirectVariant" placeholder="0.00">
+            <input type="number" class="field-input" disabled value="" *ngIf="!group.selectedDirectVariant" placeholder="0.00">
           </div>
         </ng-container>
       </div>

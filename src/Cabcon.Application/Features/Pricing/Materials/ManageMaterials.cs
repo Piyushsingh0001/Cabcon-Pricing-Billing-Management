@@ -302,6 +302,40 @@ public record BackfillPriceDto(
 
 public record BackfillMaterialPricesCommand(int MaterialId, List<BackfillPriceDto> Prices) : IRequest<Result>;
 
+public class BackfillMaterialPricesCommandValidator : AbstractValidator<BackfillMaterialPricesCommand>
+{
+    public BackfillMaterialPricesCommandValidator()
+    {
+        RuleFor(x => x.MaterialId).GreaterThan(0);
+        RuleFor(x => x.Prices).NotEmpty().WithMessage("At least one price entry must be provided.");
+        RuleForEach(x => x.Prices).ChildRules(price =>
+        {
+            price.When(p => (p.Type ?? MaterialType.Exchange) == MaterialType.Exchange, () =>
+            {
+                price.RuleFor(p => p.LmeUsdPerMt)
+                    .NotNull().WithMessage("LME (USD/MT) is required.")
+                    .GreaterThan(0).WithMessage("LME (USD/MT) must be greater than 0.");
+                price.RuleFor(p => p.FxRate)
+                    .NotNull().WithMessage("FX Rate is required.")
+                    .GreaterThan(0).WithMessage("FX Rate must be greater than 0.");
+                price.RuleFor(p => p.PremiumUsdPerMt)
+                    .NotNull().WithMessage("Premium (USD/MT) is required.")
+                    .GreaterThanOrEqualTo(0).WithMessage("Premium (USD/MT) cannot be negative.");
+            });
+
+            price.When(p => (p.Type ?? MaterialType.Exchange) == MaterialType.Direct, () =>
+            {
+                price.RuleFor(p => p.DirectRateInrPerKg)
+                    .NotNull().WithMessage("Direct Price (₹/kg) is required.")
+                    .GreaterThan(0).WithMessage("Direct Price (₹/kg) must be greater than 0.");
+                price.RuleFor(p => p.VendorName)
+                    .NotEmpty().WithMessage("Vendor is required for Direct price backfill.")
+                    .When(p => !p.VendorId.HasValue);
+            });
+        });
+    }
+}
+
 public class BackfillMaterialPricesCommandHandler : IRequestHandler<BackfillMaterialPricesCommand, Result>
 {
     private readonly IUnitOfWork _unitOfWork;

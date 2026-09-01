@@ -89,10 +89,12 @@ export class MaterialsComponent implements OnInit {
         id: 0,
         vendorName: group.selectedVendorName,
         isPlaceholder: true,
-        directRateInrPerKg: base.directRateInrPerKg || 0,
+        directRateInrPerKg: base.directRateInrPerKg ? base.directRateInrPerKg : null,
         isTodayUpdatedDirect: false,
         missingDaysCountDirect: 1
       };
+    } else if (selected && selected.directRateInrPerKg === 0) {
+      selected.directRateInrPerKg = null;
     }
     
     group.selectedDirectVariant = selected || group.variants[0] || {};
@@ -271,10 +273,10 @@ export class MaterialsComponent implements OnInit {
               calculatedAvg: 0,
               lmeState: {
                 materialId: m.id,
-                lmeUsdPerMt: m.lmeUsdPerMt || 0,
-                premiumUsdPerMt: m.premiumUsdPerMt || 0,
-                fxRate: m.fxRate || 0,
-                freightInrPerMt: m.freightInrPerMt || 0,
+                lmeUsdPerMt: m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
+                premiumUsdPerMt: m.premiumUsdPerMt ? m.premiumUsdPerMt : null,
+                fxRate: m.fxRate ? m.fxRate : null,
+                freightInrPerMt: m.freightInrPerMt ? m.freightInrPerMt : null,
                 isTodayUpdatedLme: m.isTodayUpdatedLme,
                 missingDaysCountLme: m.missingDaysCountLme,
                 thisMonthAvgLme: m.thisMonthAvgLme,
@@ -284,15 +286,18 @@ export class MaterialsComponent implements OnInit {
             });
           }
           const group = groupsMap.get(m.name);
+          if (m.directRateInrPerKg === 0) {
+            m.directRateInrPerKg = null as any;
+          }
           group.variants.push(m);
           // If this variant has LME data, use it for lmeState
           if (m.type === 0 || (m.lmeUsdPerMt && m.lmeUsdPerMt > 0)) {
             group.lmeState = {
               materialId: m.id,
-              lmeUsdPerMt: m.lmeUsdPerMt || 0,
-              premiumUsdPerMt: m.premiumUsdPerMt || 0,
-              fxRate: m.fxRate || 0,
-              freightInrPerMt: m.freightInrPerMt || 0,
+              lmeUsdPerMt: m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
+              premiumUsdPerMt: m.premiumUsdPerMt ? m.premiumUsdPerMt : null,
+              fxRate: m.fxRate ? m.fxRate : null,
+              freightInrPerMt: m.freightInrPerMt ? m.freightInrPerMt : null,
               isTodayUpdatedLme: m.isTodayUpdatedLme,
               missingDaysCountLme: m.missingDaysCountLme,
               thisMonthAvgLme: m.thisMonthAvgLme,
@@ -381,7 +386,7 @@ export class MaterialsComponent implements OnInit {
     if (matId === 0) return;
 
     this.dialog.open(MaterialHistoryDialogComponent, {
-      panelClass: 'dialog-tier-lg',
+      panelClass: 'dialog-tier-history',
       data: {
         materialId: matId,
         materialName: group.name,
@@ -422,19 +427,41 @@ export class MaterialsComponent implements OnInit {
 
   public updatePrice(group: any) {
     if (!this.canUpdate() || !group) return;
-    this.loading.set(true);
 
     if (group.selectedType === 0) {
-      // Update LME Price
+      // Validate LME Price
+      const lme = group.lmeState?.lmeUsdPerMt;
+      const fx = group.lmeState?.fxRate;
+      const prem = group.lmeState?.premiumUsdPerMt;
+      const freight = group.lmeState?.freightInrPerMt;
+
+      if (lme === null || lme === undefined || lme === '' || Number(lme) <= 0) {
+        this.snackBar.open('Please enter a valid LME (USD/MT) greater than 0.', 'Close', { duration: 3500 });
+        return;
+      }
+      if (fx === null || fx === undefined || fx === '' || Number(fx) <= 0) {
+        this.snackBar.open('Please enter a valid FX Rate (₹/USD) greater than 0.', 'Close', { duration: 3500 });
+        return;
+      }
+      if (prem === null || prem === undefined || prem === '' || Number(prem) < 0) {
+        this.snackBar.open('Please enter a valid Premium (USD/MT) >= 0.', 'Close', { duration: 3500 });
+        return;
+      }
+      if (freight === null || freight === undefined || freight === '' || Number(freight) < 0) {
+        this.snackBar.open('Please enter a valid Freight (₹/MT) >= 0.', 'Close', { duration: 3500 });
+        return;
+      }
+
+      this.loading.set(true);
       const lmeMatId = group.lmeState?.materialId || group.variants?.find((v: any) => v.type === 0)?.id || group.variants?.[0]?.id;
       const pricePayload = {
         materialId: lmeMatId,
         type: 0,
-        lmeUsdPerMt: Number(group.lmeState.lmeUsdPerMt || 0),
-        premiumUsdPerMt: Number(group.lmeState.premiumUsdPerMt || 0),
-        fxRate: Number(group.lmeState.fxRate || 0),
-        freightInrPerKg: Number(group.lmeState.freightInrPerMt || 0) / 1000,
-        freightInrPerMt: Number(group.lmeState.freightInrPerMt || 0)
+        lmeUsdPerMt: Number(lme),
+        premiumUsdPerMt: Number(prem),
+        fxRate: Number(fx),
+        freightInrPerKg: Number(freight) / 1000,
+        freightInrPerMt: Number(freight)
       };
       this.pricingService.updateMaterialPrice(pricePayload).subscribe({
         next: () => {
@@ -451,20 +478,26 @@ export class MaterialsComponent implements OnInit {
         }
       });
     } else {
-      // Update Direct Price (Vendor-specific)
+      // Validate Direct Price (Vendor-specific)
       if (!group.selectedVendorName || !group.vendorOptions || group.vendorOptions.length === 0) {
         this.snackBar.open('Please associate a vendor in Manage Vendors before updating Direct price.', 'Close', { duration: 3500 });
-        this.loading.set(false);
         return;
       }
       const variant = group.selectedDirectVariant;
+      const directRate = variant?.directRateInrPerKg;
+      if (directRate === null || directRate === undefined || directRate === '' || Number(directRate) <= 0) {
+        this.snackBar.open('Please enter a valid Direct Price (₹/kg) greater than 0.', 'Close', { duration: 3500 });
+        return;
+      }
+
+      this.loading.set(true);
       const matId = (variant && variant.id > 0) ? variant.id : (group.variants?.[0]?.id || 0);
       const pricePayload = {
         materialId: matId,
         type: 1,
         vendorId: variant?.vendorId,
         vendorName: group.selectedVendorName,
-        directRateInrPerKg: Number(variant?.directRateInrPerKg || 0)
+        directRateInrPerKg: Number(directRate)
       };
       this.pricingService.updateMaterialPrice(pricePayload).subscribe({
         next: () => {

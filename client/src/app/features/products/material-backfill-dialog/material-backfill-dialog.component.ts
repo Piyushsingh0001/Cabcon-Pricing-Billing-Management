@@ -96,17 +96,17 @@ export class MaterialBackfillDialogComponent implements OnInit {
       // LME/Exchange — no vendor field
       return this.fb.group({
         date: [dateStr],
-        lmeUsdPerMt: [null, [Validators.min(0)]],
-        premiumUsdPerMt: [null, [Validators.min(0)]],
-        fxRate: [null, [Validators.min(0)]],
-        freightInrPerMt: [null, [Validators.min(0)]]
+        lmeUsdPerMt: [null],
+        premiumUsdPerMt: [null],
+        fxRate: [null],
+        freightInrPerMt: [null]
       });
     } else {
       // Direct — vendor dropdown per row
       return this.fb.group({
         date: [dateStr],
-        vendorName: [this.data.currentVendorName || (this.availableVendors[0] || ''), [Validators.required]],
-        directRateInrPerKg: [null, [Validators.min(0)]]
+        vendorName: [this.data.currentVendorName || (this.availableVendors[0] || '')],
+        directRateInrPerKg: [null]
       });
     }
   }
@@ -116,31 +116,107 @@ export class MaterialBackfillDialogComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    if (this.form.invalid) return;
+    const formValues = this.form.value.prices || [];
+    const payload: any[] = [];
+
+    for (let i = 0; i < formValues.length; i++) {
+      const p = formValues[i];
+      const rowDate = this.missingDates[i]
+        ? new Date(this.missingDates[i]).toLocaleDateString('en-GB')
+        : p.date;
+
+      if (this.data.type === 0) {
+        // LME row checks
+        const isLmeSet = p.lmeUsdPerMt !== null && p.lmeUsdPerMt !== undefined && p.lmeUsdPerMt !== '';
+        const isPremSet = p.premiumUsdPerMt !== null && p.premiumUsdPerMt !== undefined && p.premiumUsdPerMt !== '';
+        const isFxSet = p.fxRate !== null && p.fxRate !== undefined && p.fxRate !== '';
+        const isFreightSet = p.freightInrPerMt !== null && p.freightInrPerMt !== undefined && p.freightInrPerMt !== '';
+
+        const hasAny = isLmeSet || isPremSet || isFxSet || isFreightSet;
+        const hasAll = isLmeSet && isPremSet && isFxSet && isFreightSet;
+
+        // If completely empty -> skip this row
+        if (!hasAny) {
+          continue;
+        }
+
+        // If partially filled -> validation error
+        if (!hasAll) {
+          this.snackBar.open(`Date ${rowDate}: Please enter all LME fields (LME, Premium, FX, Freight) or leave the entire row blank.`, 'Close', { duration: 4000 });
+          return;
+        }
+
+        const lmeVal = Number(p.lmeUsdPerMt);
+        const fxVal = Number(p.fxRate);
+        const premVal = Number(p.premiumUsdPerMt);
+        const freightVal = Number(p.freightInrPerMt);
+
+        if (isNaN(lmeVal) || lmeVal <= 0) {
+          this.snackBar.open(`Date ${rowDate}: LME (USD/MT) must be greater than 0.`, 'Close', { duration: 3500 });
+          return;
+        }
+        if (isNaN(fxVal) || fxVal <= 0) {
+          this.snackBar.open(`Date ${rowDate}: FX Rate (₹/USD) must be greater than 0.`, 'Close', { duration: 3500 });
+          return;
+        }
+        if (isNaN(premVal) || premVal < 0) {
+          this.snackBar.open(`Date ${rowDate}: Premium (USD/MT) cannot be negative.`, 'Close', { duration: 3500 });
+          return;
+        }
+        if (isNaN(freightVal) || freightVal < 0) {
+          this.snackBar.open(`Date ${rowDate}: Freight (₹/MT) cannot be negative.`, 'Close', { duration: 3500 });
+          return;
+        }
+
+        payload.push({
+          date: p.date,
+          type: 0,
+          lmeUsdPerMt: lmeVal,
+          premiumUsdPerMt: premVal,
+          fxRate: fxVal,
+          freightInrPerMt: freightVal,
+          freightInrPerKg: freightVal / 1000
+        });
+      } else {
+        // Direct row checks
+        const isRateSet = p.directRateInrPerKg !== null && p.directRateInrPerKg !== undefined && p.directRateInrPerKg !== '';
+        const isVendorSet = p.vendorName !== null && p.vendorName !== undefined && p.vendorName.trim() !== '';
+
+        // If rate is empty -> skip this row
+        if (!isRateSet) {
+          continue;
+        }
+
+        if (!isVendorSet) {
+          this.snackBar.open(`Date ${rowDate}: Please select a vendor.`, 'Close', { duration: 3500 });
+          return;
+        }
+
+        const rateVal = Number(p.directRateInrPerKg);
+        if (isNaN(rateVal) || rateVal <= 0) {
+          this.snackBar.open(`Date ${rowDate}: Direct Rate (₹/kg) must be greater than 0.`, 'Close', { duration: 3500 });
+          return;
+        }
+
+        payload.push({
+          date: p.date,
+          type: 1,
+          vendorName: p.vendorName.trim(),
+          directRateInrPerKg: rateVal
+        });
+      }
+    }
+
+    if (payload.length === 0) {
+      this.snackBar.open('Please fill all price fields for at least one date.', 'Close', { duration: 3500 });
+      return;
+    }
 
     this.loading.set(true);
-    const formValues = this.form.value.prices;
-
-    const payload = formValues.map((p: any) => {
-      const result: any = { date: p.date, type: this.data.type };
-      if (this.data.type === 0) {
-        // LME — no vendor
-        result.lmeUsdPerMt = p.lmeUsdPerMt != null && p.lmeUsdPerMt !== '' ? Number(p.lmeUsdPerMt) : 0;
-        result.premiumUsdPerMt = p.premiumUsdPerMt != null && p.premiumUsdPerMt !== '' ? Number(p.premiumUsdPerMt) : 0;
-        result.fxRate = p.fxRate != null && p.fxRate !== '' ? Number(p.fxRate) : 0;
-        result.freightInrPerMt = p.freightInrPerMt != null && p.freightInrPerMt !== '' ? Number(p.freightInrPerMt) : 0;
-      } else {
-        // Direct — vendor per row
-        result.vendorName = p.vendorName;
-        result.directRateInrPerKg = p.directRateInrPerKg != null && p.directRateInrPerKg !== '' ? Number(p.directRateInrPerKg) : 0;
-      }
-      return result;
-    });
-
     this.pricingService.backfillMaterialPrices(this.data.materialId, payload).subscribe({
       next: () => {
         this.loading.set(false);
-        this.snackBar.open('Material prices backfilled successfully.', 'Close', { duration: 3000 });
+        this.snackBar.open(`Successfully saved prices for ${payload.length} date(s).`, 'Close', { duration: 3000 });
         this.dialogRef.close(true);
       },
       error: (err: any) => {

@@ -30,18 +30,32 @@ public class UpdateMaterialPriceCommandValidator : AbstractValidator<UpdateMater
     {
         RuleFor(x => x.MaterialId).GreaterThan(0);
         
-        RuleFor(x => x.LmeUsdPerMt)
-            .GreaterThanOrEqualTo(0).When(x => x.LmeUsdPerMt.HasValue);
-        RuleFor(x => x.PremiumUsdPerMt)
-            .GreaterThanOrEqualTo(0).When(x => x.PremiumUsdPerMt.HasValue);
-        RuleFor(x => x.FxRate)
-            .GreaterThanOrEqualTo(0).When(x => x.FxRate.HasValue);
-        RuleFor(x => x.FreightInrPerKg)
-            .GreaterThanOrEqualTo(0).When(x => x.FreightInrPerKg.HasValue);
-        RuleFor(x => x.FreightInrPerMt)
-            .GreaterThanOrEqualTo(0).When(x => x.FreightInrPerMt.HasValue);
-        RuleFor(x => x.DirectRateInrPerKg)
-            .GreaterThanOrEqualTo(0).When(x => x.DirectRateInrPerKg.HasValue);
+        When(x => x.Type == MaterialType.Exchange, () =>
+        {
+            RuleFor(x => x.LmeUsdPerMt)
+                .NotNull().WithMessage("LME (USD/MT) is required.")
+                .GreaterThan(0).WithMessage("LME (USD/MT) must be greater than 0.");
+            RuleFor(x => x.FxRate)
+                .NotNull().WithMessage("FX Rate is required.")
+                .GreaterThan(0).WithMessage("FX Rate must be greater than 0.");
+            RuleFor(x => x.PremiumUsdPerMt)
+                .NotNull().WithMessage("Premium (USD/MT) is required.")
+                .GreaterThanOrEqualTo(0).WithMessage("Premium (USD/MT) cannot be negative.");
+            RuleFor(x => x.FreightInrPerKg)
+                .GreaterThanOrEqualTo(0).When(x => x.FreightInrPerKg.HasValue);
+            RuleFor(x => x.FreightInrPerMt)
+                .GreaterThanOrEqualTo(0).When(x => x.FreightInrPerMt.HasValue);
+        });
+
+        When(x => x.Type == MaterialType.Direct, () =>
+        {
+            RuleFor(x => x.DirectRateInrPerKg)
+                .NotNull().WithMessage("Direct Price (₹/kg) is required.")
+                .GreaterThan(0).WithMessage("Direct Price (₹/kg) must be greater than 0.");
+            RuleFor(x => x.VendorName)
+                .NotEmpty().WithMessage("Vendor is required for Direct price update.")
+                .When(x => !x.VendorId.HasValue);
+        });
     }
 }
 

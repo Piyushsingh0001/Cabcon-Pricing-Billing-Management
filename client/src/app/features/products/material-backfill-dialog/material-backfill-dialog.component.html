@@ -70,7 +70,7 @@
 <mat-dialog-actions align="end">
   <button mat-button (click)="onCancel()">Cancel</button>
   <button mat-flat-button class="btn-primary"
-          [disabled]="form.invalid || loading() || pricesArray.controls.length === 0"
+          [disabled]="loading() || pricesArray.controls.length === 0"
           (click)="onSubmit()">
     Save Prices
   </button>

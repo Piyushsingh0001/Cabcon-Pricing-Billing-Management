@@ -41,11 +41,11 @@ export class MaterialHistoryDialogComponent implements OnInit {
   public groupName: string = '';
   public vendors: string[] = [];
 
-  // Filter state
+  // Filter state (Defaults to 'ALL' to show all material history logs)
   public selectedVendor: string = 'ALL';
   public selectedType: string | number = 'ALL';
-  public selectedYear: number | string = new Date().getFullYear();
-  public selectedMonth: number | string = new Date().getMonth() + 1;
+  public selectedYear: number | string = 'ALL';
+  public selectedMonth: number | string = 'ALL';
   public startDate: string = '';
   public endDate: string = '';
 
@@ -73,12 +73,10 @@ export class MaterialHistoryDialogComponent implements OnInit {
     this.materialId = this.data?.materialId || this.data?.material?.id || this.data?.id || 0;
     this.groupName = this.data?.materialName || this.data?.group?.name || this.data?.material?.name || this.data?.name || '';
     
-    if (this.data?.selectedType !== undefined) {
-      this.selectedType = this.data.selectedType;
-    }
-    if (this.data?.selectedVendorName) {
-      this.selectedVendor = this.data.selectedVendorName;
-    }
+    this.selectedType = 'ALL';
+    this.selectedVendor = 'ALL';
+    this.selectedYear = 'ALL';
+    this.selectedMonth = 'ALL';
 
     this.loadHistory();
   }
@@ -113,8 +111,8 @@ export class MaterialHistoryDialogComponent implements OnInit {
   }
 
   public resetFilters() {
-    this.selectedYear = new Date().getFullYear();
-    this.selectedMonth = new Date().getMonth() + 1;
+    this.selectedYear = 'ALL';
+    this.selectedMonth = 'ALL';
     this.startDate = '';
     this.endDate = '';
     this.selectedVendor = 'ALL';
