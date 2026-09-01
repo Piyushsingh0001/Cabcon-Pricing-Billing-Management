@@ -89,9 +89,9 @@ export class MaterialsComponent implements OnInit {
         id: 0,
         vendorName: group.selectedVendorName,
         isPlaceholder: true,
-        directRateInrPerKg: base.directRateInrPerKg ? base.directRateInrPerKg : null,
-        isTodayUpdatedDirect: false,
-        missingDaysCountDirect: 1
+        directRateInrPerKg: null,
+        isTodayUpdatedDirect: group.isTodayUpdatedDirect ?? base.isTodayUpdatedDirect,
+        missingDaysCountDirect: group.directMissingDaysCount ?? base.missingDaysCountDirect
       };
     } else if (selected && selected.directRateInrPerKg === 0) {
       selected.directRateInrPerKg = null;
@@ -146,7 +146,7 @@ export class MaterialsComponent implements OnInit {
       return group.lmeState?.missingDaysCountLme ?? (group.variants?.find((v: any) => v.type === 0)?.missingDaysCountLme || 0);
     } else {
       if (!group.selectedVendorName || !group.vendorOptions || group.vendorOptions.length === 0) return 0;
-      return group.selectedDirectVariant?.missingDaysCountDirect || 0;
+      return group.directMissingDaysCount ?? group.selectedDirectVariant?.missingDaysCountDirect ?? (group.variants?.[0]?.missingDaysCountDirect || 0);
     }
   }
 
@@ -155,33 +155,10 @@ export class MaterialsComponent implements OnInit {
     if (!group) return false;
 
     if (group.selectedType === 0) {
-      const lme = group.lmeState;
-      if (lme?.isTodayUpdatedLme) return true;
-      if (lme?.asOnDate) {
-        const asOn = new Date(lme.asOnDate);
-        const now = new Date();
-        if (asOn.getFullYear() === now.getFullYear() &&
-            asOn.getMonth() === now.getMonth() &&
-            asOn.getDate() === now.getDate()) {
-          return true;
-        }
-      }
-      return false;
+      return !!group.lmeState?.isTodayUpdatedLme;
     } else {
       if (!group.selectedVendorName || !group.vendorOptions || group.vendorOptions.length === 0) return false;
-      const v = group.selectedDirectVariant;
-      if (!v) return false;
-      if (v.isTodayUpdatedDirect) return true;
-      if (!v.isPlaceholder && v.asOnDate) {
-        const asOn = new Date(v.asOnDate);
-        const now = new Date();
-        if (asOn.getFullYear() === now.getFullYear() &&
-            asOn.getMonth() === now.getMonth() &&
-            asOn.getDate() === now.getDate()) {
-          return true;
-        }
-      }
-      return false;
+      return !!(group.isTodayUpdatedDirect || group.selectedDirectVariant?.isTodayUpdatedDirect || group.variants?.some((v: any) => v.isTodayUpdatedDirect));
     }
   }
 
@@ -275,21 +252,29 @@ export class MaterialsComponent implements OnInit {
               selectedVendorName: prev?.vendor || m.vendorName || '',
               avgPriceRange: 'this_month',
               calculatedAvg: 0,
+              isTodayUpdatedDirect: !!m.isTodayUpdatedDirect,
+              directMissingDaysCount: m.missingDaysCountDirect,
               lmeState: {
                 materialId: m.id,
                 lmeUsdPerMt: m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
                 premiumUsdPerMt: m.premiumUsdPerMt ? m.premiumUsdPerMt : null,
                 fxRate: m.fxRate ? m.fxRate : null,
                 freightInrPerMt: freightVal ? freightVal : null,
-                isTodayUpdatedLme: m.isTodayUpdatedLme,
+                isTodayUpdatedLme: !!m.isTodayUpdatedLme,
                 missingDaysCountLme: m.missingDaysCountLme,
                 thisMonthAvgLme: m.thisMonthAvgLme,
                 prevMonthAvgLme: m.prevMonthAvgLme,
-                asOnDate: m.asOnDate
+                asOnDate: m.asOnDateLme || null
               }
             });
           }
           const group = groupsMap.get(m.name);
+          if (m.isTodayUpdatedDirect) {
+            group.isTodayUpdatedDirect = true;
+          }
+          if (m.missingDaysCountDirect !== undefined) {
+            group.directMissingDaysCount = m.missingDaysCountDirect;
+          }
           if (m.directRateInrPerKg === 0) {
             m.directRateInrPerKg = null as any;
           }
@@ -306,11 +291,11 @@ export class MaterialsComponent implements OnInit {
               premiumUsdPerMt: m.premiumUsdPerMt ? m.premiumUsdPerMt : null,
               fxRate: m.fxRate ? m.fxRate : null,
               freightInrPerMt: lmeFreight ? lmeFreight : null,
-              isTodayUpdatedLme: m.isTodayUpdatedLme,
+              isTodayUpdatedLme: !!m.isTodayUpdatedLme,
               missingDaysCountLme: m.missingDaysCountLme,
               thisMonthAvgLme: m.thisMonthAvgLme,
               prevMonthAvgLme: m.prevMonthAvgLme,
-              asOnDate: m.asOnDate
+              asOnDate: m.asOnDateLme || null
             };
           }
         });

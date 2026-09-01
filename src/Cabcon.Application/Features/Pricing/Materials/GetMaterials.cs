@@ -20,6 +20,8 @@ public record MaterialDto
     public decimal? FreightInrPerMt => FreightInrPerKg.HasValue ? FreightInrPerKg.Value * 1000m : null;
     public decimal? DirectRateInrPerKg { get; init; }
     public DateTime AsOnDate { get; init; }
+    public DateTime? AsOnDateLme { get; init; }
+    public DateTime? AsOnDateDirect { get; init; }
     public bool IsPlaceholder { get; init; }
     public decimal LandedCost { get; init; }
     public string? UpdatedBy { get; init; }
@@ -154,22 +156,23 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
 
             var allVendorEntries = mappedVendors.Select(v => new { Id = (int?)v.Id, Name = v.Name }).ToList();
 
+            // Material-wide Direct price metrics (independent of vendor)
+            var latestDirect = mHistoriesDirect.OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
+            var mHistoryDatesDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date >= thirtyDaysAgo).Select(h => h.EffectiveDate.Date).Distinct().ToList();
+
+            int missingCountDirect = 0;
+            for (var d = startDate; d <= today; d = d.AddDays(1))
+            {
+                if (!mHistoryDatesDirect.Contains(d)) missingCountDirect++;
+            }
+
+            var thisMonthAvgDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date >= startOfThisMonth && h.EffectiveDate.Date <= today).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+            var prevMonthAvgDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date >= startOfPrevMonth && h.EffectiveDate.Date < startOfThisMonth).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+            bool isTodayUpdatedDirect = mHistoryDatesDirect.Contains(today) || mHistoryDatesDirect.Contains(localToday);
+
             if (allVendorEntries.Count == 0)
             {
                 // Single base DTO for material
-                var latestDirect = mHistoriesDirect.OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
-                var mHistoryDatesDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date >= thirtyDaysAgo).Select(h => h.EffectiveDate.Date).Distinct().ToList();
-
-                int missingCountDirect = 0;
-                for (var d = startDate; d <= today; d = d.AddDays(1))
-                {
-                    if (!mHistoryDatesDirect.Contains(d)) missingCountDirect++;
-                }
-
-                var thisMonthAvgDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date >= startOfThisMonth && h.EffectiveDate.Date <= today).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
-                var prevMonthAvgDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date >= startOfPrevMonth && h.EffectiveDate.Date < startOfThisMonth).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
-                bool isTodayUpdatedDirect = mHistoryDatesDirect.Contains(today) || mHistoryDatesDirect.Contains(localToday);
-
                 dtos.Add(new MaterialDto
                 {
                     Id = m.Id,
@@ -181,6 +184,8 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                     FreightInrPerKg = latestLme?.FreightInrPerKg,
                     DirectRateInrPerKg = latestDirect?.DirectRateInrPerKg,
                     AsOnDate = latestLme?.EffectiveDate ?? latestDirect?.EffectiveDate ?? m.CreatedDate,
+                    AsOnDateLme = latestLme?.EffectiveDate,
+                    AsOnDateDirect = latestDirect?.EffectiveDate,
                     IsPlaceholder = latestLme == null && latestDirect == null,
                     LandedCost = latestLme?.LandedCostInrPerKg ?? latestDirect?.LandedCostInrPerKg ?? 0m,
                     UpdatedBy = latestLme?.UpdatedBy ?? latestDirect?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
@@ -205,18 +210,7 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                         .Where(h => (v.Id.HasValue && h.VendorId == v.Id.Value) || (h.VendorName != null && h.VendorName.Equals(v.Name, StringComparison.OrdinalIgnoreCase)))
                         .ToList();
 
-                    var vHistoryDates = vHistories.Where(h => h.EffectiveDate.Date >= thirtyDaysAgo).Select(h => h.EffectiveDate.Date).Distinct().ToList();
                     var vLatestDirect = vHistories.OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
-
-                    int vMissingCountDirect = 0;
-                    for (var d = startDate; d <= today; d = d.AddDays(1))
-                    {
-                        if (!vHistoryDates.Contains(d)) vMissingCountDirect++;
-                    }
-
-                    var thisMonthAvgDirect = vHistories.Where(h => h.EffectiveDate.Date >= startOfThisMonth && h.EffectiveDate.Date <= today).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
-                    var prevMonthAvgDirect = vHistories.Where(h => h.EffectiveDate.Date >= startOfPrevMonth && h.EffectiveDate.Date < startOfThisMonth).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
-                    bool isTodayUpdatedDirect = vHistoryDates.Contains(today) || vHistoryDates.Contains(localToday);
 
                     dtos.Add(new MaterialDto
                     {
@@ -229,13 +223,15 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                         FreightInrPerKg = latestLme?.FreightInrPerKg,
                         DirectRateInrPerKg = vLatestDirect?.DirectRateInrPerKg,
                         AsOnDate = vLatestDirect?.EffectiveDate ?? latestLme?.EffectiveDate ?? m.CreatedDate,
+                        AsOnDateLme = latestLme?.EffectiveDate,
+                        AsOnDateDirect = vLatestDirect?.EffectiveDate ?? latestDirect?.EffectiveDate,
                         IsPlaceholder = vLatestDirect == null,
                         LandedCost = vLatestDirect?.LandedCostInrPerKg ?? latestLme?.LandedCostInrPerKg ?? 0m,
                         UpdatedBy = vLatestDirect?.UpdatedBy ?? latestLme?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
                         VendorName = v.Name,
                         VendorId = v.Id,
                         MissingDaysCountLme = missingCountLme,
-                        MissingDaysCountDirect = vMissingCountDirect,
+                        MissingDaysCountDirect = missingCountDirect,
                         ThisMonthAvgLme = thisMonthAvgLme,
                         PrevMonthAvgLme = prevMonthAvgLme,
                         ThisMonthAvgDirect = thisMonthAvgDirect,

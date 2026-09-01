@@ -37,6 +37,8 @@ export interface Material {
   freightInrPerMt?: number;
   directRateInrPerKg?: number;
   asOnDate: string;
+  asOnDateLme?: string;
+  asOnDateDirect?: string;
   isPlaceholder: boolean;
   landedCost: number;
   updatedBy?: string;
