@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Inject, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,8 +17,6 @@ import { AuthService } from '../../../core/auth.service';
 import { MaterialsComponent } from '../materials.component';
 import { MaterialHistoryDialogComponent } from '../material-history-dialog/material-history-dialog.component';
 
-
-
 @Component({
   selector: 'app-material-create-edit-dialog',
   standalone: true,
@@ -33,35 +31,88 @@ import { MaterialHistoryDialogComponent } from '../material-history-dialog/mater
   ],
     templateUrl: './material-create-edit-dialog.component.html',
     styleUrls: ['./material-create-edit-dialog.component.scss']
-})
+  })
 export class MaterialCreateEditDialogComponent implements OnInit {
   private fb = inject(FormBuilder);
   private pricingService = inject(PricingService);
   private snackBar = inject(MatSnackBar);
   public loading = signal(false);
 
+  public material: Material | null = null;
+  public existingNames: string[] = [];
   public form: FormGroup;
   public availableVendors: string[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<MaterialCreateEditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public material: Material | null
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    if (data && 'name' in data && !('material' in data)) {
+      this.material = data as Material;
+      this.existingNames = [];
+    } else if (data) {
+      this.material = data.material || null;
+      this.existingNames = data.existingNames || [];
+    } else {
+      this.material = null;
+      this.existingNames = [];
+    }
+
     this.form = this.fb.group({
-      name: [material?.name || '', Validators.required],
-      vendorName: [material?.vendorName || ''],
-      type: [material?.type !== undefined ? material.type : 0, Validators.required],
-      lmeUsdPerMt: [material?.lmeUsdPerMt || 0],
-      premiumUsdPerMt: [material?.premiumUsdPerMt || 0],
-      fxRate: [material?.fxRate || 0],
-      freightInrPerMt: [material?.freightInrPerMt || 0],
-      directRateInrPerKg: [material?.directRateInrPerKg || 0]
+      name: [this.material?.name || '', [Validators.required, this.nonEmptyNameValidator(), this.uniqueMaterialNameValidator()]],
+      vendorName: [this.material?.vendorName || ''],
+      type: [this.material?.type !== undefined ? this.material.type : 0, Validators.required],
+      lmeUsdPerMt: [this.material ? this.material.lmeUsdPerMt : null],
+      premiumUsdPerMt: [this.material ? this.material.premiumUsdPerMt : null],
+      fxRate: [this.material ? this.material.fxRate : null],
+      freightInrPerMt: [this.material ? this.material.freightInrPerMt : null],
+      directRateInrPerKg: [this.material ? this.material.directRateInrPerKg : null]
     });
 
     this.onTypeChange(this.form.get('type')?.value);
   }
 
+  private nonEmptyNameValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value || control.value.toString().trim().length === 0) {
+        return { required: true };
+      }
+      return null;
+    };
+  }
+
+  private uniqueMaterialNameValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null;
+      }
+      const val = control.value.toString().trim().toLowerCase();
+      if (!val) {
+        return null;
+      }
+      const currentName = this.material?.name?.trim().toLowerCase() || '';
+      
+      const isDuplicate = this.existingNames.some(name => {
+        const item = (name || '').trim().toLowerCase();
+        return item === val && item !== currentName;
+      });
+
+      return isDuplicate ? { nameExists: true } : null;
+    };
+  }
+
   ngOnInit(): void {
+    if (!this.existingNames || this.existingNames.length === 0) {
+      this.pricingService.getMaterials(undefined, undefined, undefined, undefined, 1, 500).subscribe({
+        next: (res) => {
+          if (res && res.items) {
+            this.existingNames = Array.from(new Set(res.items.map(m => m.name)));
+            this.form.get('name')?.updateValueAndValidity();
+          }
+        }
+      });
+    }
+
     this.pricingService.getVendorsApi().subscribe({
       next: (res) => {
         const dbVendors = (res || []).map(v => v.name);

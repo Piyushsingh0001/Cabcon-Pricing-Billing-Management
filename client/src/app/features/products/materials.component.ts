@@ -357,17 +357,25 @@ export class MaterialsComponent implements OnInit {
   }
 
   public addMaterial() {
+    const existingNames = this.materialGroups.map(g => g.name);
     const dialogRef = this.dialog.open(MaterialCreateEditDialogComponent, {
       panelClass: 'dialog-tier-sm',
-      data: null
+      data: {
+        material: null,
+        existingNames: existingNames
+      }
     });
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
   }
 
   public editMaterial(material: Material) {
+    const existingNames = this.materialGroups.map(g => g.name);
     const dialogRef = this.dialog.open(MaterialCreateEditDialogComponent, {
       panelClass: 'dialog-tier-sm',
-      data: material
+      data: {
+        material: material,
+        existingNames: existingNames
+      }
     });
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
   }
