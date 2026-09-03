@@ -190,22 +190,66 @@ mat-form-field {
 }
 
 @media (max-width: 768px) {
-  .price-row {
+  .dialog-title-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
+    font-size: 16px;
+  }
+
+  .top-info-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+
+    .vendor-header-badge {
+      width: 100%;
+      box-sizing: border-box;
+      justify-content: flex-start;
+    }
+  }
+
+  .price-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .date-column {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px dashed #e2e8f0;
+    padding-bottom: 6px;
   }
 
   .fields-column {
-    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
-    flex-wrap: wrap;
+    width: 100%;
   }
 
-  .vendor-field,
-  .direct-rate-field,
   .lme-field {
     width: 100%;
-    min-width: 100%;
+    min-width: 0;
+  }
+
+  .direct-rate-field {
+    grid-column: span 2;
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 440px) {
+  .fields-column {
+    grid-template-columns: 1fr;
+  }
+
+  .direct-rate-field {
+    grid-column: span 1;
   }
 }

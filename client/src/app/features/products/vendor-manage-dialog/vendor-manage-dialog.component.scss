@@ -6,8 +6,8 @@
 
 .dialog-header-title {
   display: flex !important;
-  justify-content: flex-end !important;
-  text-align: right !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
   color: var(--primary-color) !important;
   font-weight: 700 !important;
   font-size: 1.15rem !important;
@@ -50,10 +50,10 @@
   max-height: 380px;
   overflow-x: auto;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   border-radius: 8px;
   border: 1px solid var(--border-glass);
-  width: fit-content;
-  min-width: 100%;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -79,6 +79,11 @@
   th.vendor-col-header {
     text-align: left;
     padding-left: 16px;
+    position: sticky;
+    left: 0;
+    z-index: 15;
+    background: #f8fafc;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.04);
   }
 
   td {
@@ -87,19 +92,30 @@
     vertical-align: middle;
   }
 
-  tbody tr:nth-child(even) {
-    background: #fafafa;
-  }
-
-  tbody tr:hover {
-    background: #f1f5f9;
-  }
-
   .vendor-name-cell {
     font-weight: 600;
     color: var(--primary-color);
     text-align: left;
     white-space: nowrap;
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    background: #ffffff;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.04);
+  }
+
+  tbody tr:nth-child(even) {
+    background: #fafafa;
+    .vendor-name-cell {
+      background: #fafafa;
+    }
+  }
+
+  tbody tr:hover {
+    background: #f1f5f9;
+    .vendor-name-cell {
+      background: #f1f5f9;
+    }
   }
 
   .vendor-name-row {
@@ -142,11 +158,12 @@
 
   .checkbox-cell {
     text-align: center;
+    min-width: 60px;
   }
 
   .matrix-checkbox {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     accent-color: var(--primary-color);
   }
@@ -155,5 +172,33 @@
     text-align: center;
     padding: 24px;
     color: var(--text-secondary);
+  }
+}
+
+@media (max-width: 600px) {
+  .add-vendor-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+
+    .add-btn {
+      width: 100%;
+      justify-content: center;
+      height: 40px;
+    }
+  }
+
+  .matrix-table {
+    font-size: 12px;
+
+    th, td {
+      padding: 8px 10px;
+    }
+
+    th.vendor-col-header,
+    .vendor-name-cell {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
 }

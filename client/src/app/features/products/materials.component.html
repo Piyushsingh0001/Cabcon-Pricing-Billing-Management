@@ -4,11 +4,11 @@
       <h1 class="sh-t">Daily raw-material prices</h1>
       <p class="subtitle">Update inputs, then stamp the date. Exchange metals build up from LME; others are a direct ₹/kg.</p>
     </div>
-    <div style="display: flex; gap: 8px;">
-      <button class="btn-ghost" (click)="openManageVendors()" *ngIf="canUpdate()">
+    <div class="header-actions" *ngIf="canUpdate()">
+      <button class="btn-ghost" (click)="openManageVendors()">
         <mat-icon style="vertical-align: middle; font-size: 18px; width: 18px; height: 18px;">storefront</mat-icon> Manage Vendors
       </button>
-      <button class="btn-ghost" (click)="addMaterial()" *ngIf="canUpdate()">
+      <button class="btn-ghost" (click)="addMaterial()">
         + Add material
       </button>
     </div>

@@ -14,7 +14,6 @@
           <mat-form-field appearance="outline" *ngIf="form.get('type')?.value === 1">
             <mat-label>Vendor Name</mat-label>
             <mat-select formControlName="vendorName">
-              <mat-option value="">Default Vendor (None)</mat-option>
               <mat-option *ngFor="let vendor of availableVendors" [value]="vendor">
                 {{ vendor }}
               </mat-option>

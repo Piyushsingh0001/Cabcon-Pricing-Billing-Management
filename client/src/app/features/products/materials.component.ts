@@ -425,7 +425,7 @@ export class MaterialsComponent implements OnInit {
     if (matId === 0) return;
 
     this.dialog.open(MaterialTrendDialogComponent, {
-      panelClass: 'dialog-tier-md',
+      panelClass: 'dialog-tier-lg',
       data: {
         id: matId,
         name: group.name,

@@ -4,15 +4,41 @@
   box-sizing: border-box;
 }
 
-.chart-container {
-  position: relative;
-  height: 260px;
-  width: 100%;
-  margin-top: 8px;
+.dialog-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-glass);
 }
 
-@media (max-width: 480px) {
+.chart-container {
+  position: relative;
+  height: 350px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.loading-state,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
   .chart-container {
-    height: 200px;
+    height: 260px;
+    margin-top: 8px;
   }
 }

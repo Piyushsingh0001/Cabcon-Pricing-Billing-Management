@@ -51,14 +51,22 @@ mat-form-field {
   margin-bottom: 0;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   :host {
     max-width: 100%;
+  }
+
+  .edit-form {
+    gap: 10px;
   }
 
   .form-row-2col,
   .metrics-grid {
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+
+  .rate-fields-section {
+    padding: 10px;
   }
 }

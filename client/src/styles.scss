@@ -227,6 +227,20 @@ html, body {
   max-width: calc(100vw - 32px) !important;
 }
 
+@media (max-width: 768px) {
+  .dialog-tier-sm,
+  .dialog-tier-md,
+  .dialog-tier-lg,
+  .dialog-tier-xl,
+  .dialog-tier-history,
+  .dialog-tier-backfill,
+  .dialog-auto-fit {
+    width: calc(100vw - 20px) !important;
+    min-width: 0 !important;
+    max-width: calc(100vw - 20px) !important;
+  }
+}
+
 /* Input Fields Overlay */
 .mat-mdc-form-field {
   width: 100%;
