@@ -56,6 +56,15 @@
 
   <div class="grid">
     <div class="card glass-card" *ngFor="let group of materialGroups">
+      <!-- Top notification for Direct price type missing vendors -->
+      <div class="card-top-alert cursor-pointer" 
+           *ngIf="group.selectedType === 1 && getMissingVendors(group).length > 0"
+           (click)="openBackfill(group)"
+           title="Click to fill missing prices">
+        <mat-icon class="alert-icon">warning_amber</mat-icon>
+        <span class="alert-text">{{ getMissingVendorsNotification(group) }}</span>
+      </div>
+
       <div class="card-header">
         <select class="sel" [(ngModel)]="group.selectedType" (ngModelChange)="onTypeChange(group)">
           <option [ngValue]="0">LME-linked</option>
@@ -82,7 +91,7 @@
         <select class="bare" style="width: auto; font-size: 12px; font-weight: normal; background: transparent; padding: 2px;" 
                 [(ngModel)]="group.selectedVendorName" 
                 (ngModelChange)="onVendorChange(group)"
-                [disabled]="!canUpdate() || isTodayUpdated(group) || !group.vendorOptions || group.vendorOptions.length === 0">
+                [disabled]="!group.vendorOptions || group.vendorOptions.length === 0">
           <option *ngIf="!group.vendorOptions || group.vendorOptions.length === 0" value="">
             No vendor associated
           </option>

@@ -103,9 +103,9 @@ public class MaterialsController : ControllerBase
 
     [HttpGet("{id:int}/missing-dates")]
     [HasPermission(AppPermissions.Pricing.View)]
-    public async Task<IActionResult> GetMissingDates(int id, [FromQuery] MaterialType? type, CancellationToken ct)
+    public async Task<IActionResult> GetMissingDates(int id, [FromQuery] MaterialType? type, [FromQuery] string? vendorName, [FromQuery] int? vendorId, CancellationToken ct)
     {
-        var result = await _mediator.Send(new GetMaterialMissingDatesQuery(id, type), ct);
+        var result = await _mediator.Send(new GetMaterialMissingDatesQuery(id, type, vendorName, vendorId), ct);
         return Ok(result);
     }
 }

@@ -170,6 +170,9 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             var prevMonthAvgDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date >= startOfPrevMonth && h.EffectiveDate.Date < startOfThisMonth).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
             bool isTodayUpdatedDirect = mHistoryDatesDirect.Contains(today) || mHistoryDatesDirect.Contains(localToday);
 
+            var todayLme = mHistoriesLme.Where(h => h.EffectiveDate.Date == today || h.EffectiveDate.Date == localToday).OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
+            var todayDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date == today || h.EffectiveDate.Date == localToday).OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
+
             if (allVendorEntries.Count == 0)
             {
                 // Single base DTO for material
@@ -178,17 +181,17 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                     Id = m.Id,
                     Name = m.Name,
                     Type = latestLme != null ? MaterialType.Exchange : MaterialType.Direct,
-                    LmeUsdPerMt = latestLme?.LmeUsdPerMt,
-                    PremiumUsdPerMt = latestLme?.PremiumUsdPerMt,
-                    FxRate = latestLme?.FxRate,
-                    FreightInrPerKg = latestLme?.FreightInrPerKg,
-                    DirectRateInrPerKg = latestDirect?.DirectRateInrPerKg,
-                    AsOnDate = latestLme?.EffectiveDate ?? latestDirect?.EffectiveDate ?? m.CreatedDate,
-                    AsOnDateLme = latestLme?.EffectiveDate,
-                    AsOnDateDirect = latestDirect?.EffectiveDate,
+                    LmeUsdPerMt = isTodayUpdatedLme ? todayLme?.LmeUsdPerMt : null,
+                    PremiumUsdPerMt = isTodayUpdatedLme ? todayLme?.PremiumUsdPerMt : null,
+                    FxRate = isTodayUpdatedLme ? todayLme?.FxRate : null,
+                    FreightInrPerKg = isTodayUpdatedLme ? todayLme?.FreightInrPerKg : null,
+                    DirectRateInrPerKg = isTodayUpdatedDirect ? todayDirect?.DirectRateInrPerKg : null,
+                    AsOnDate = todayLme?.EffectiveDate ?? todayDirect?.EffectiveDate ?? latestLme?.EffectiveDate ?? latestDirect?.EffectiveDate ?? m.CreatedDate,
+                    AsOnDateLme = todayLme?.EffectiveDate ?? latestLme?.EffectiveDate,
+                    AsOnDateDirect = todayDirect?.EffectiveDate ?? latestDirect?.EffectiveDate,
                     IsPlaceholder = latestLme == null && latestDirect == null,
-                    LandedCost = latestLme?.LandedCostInrPerKg ?? latestDirect?.LandedCostInrPerKg ?? 0m,
-                    UpdatedBy = latestLme?.UpdatedBy ?? latestDirect?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
+                    LandedCost = isTodayUpdatedLme ? (todayLme?.LandedCostInrPerKg ?? 0m) : (isTodayUpdatedDirect ? (todayDirect?.LandedCostInrPerKg ?? 0m) : 0m),
+                    UpdatedBy = todayLme?.UpdatedBy ?? todayDirect?.UpdatedBy ?? latestLme?.UpdatedBy ?? latestDirect?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
                     VendorName = null,
                     VendorId = null,
                     MissingDaysCountLme = missingCountLme,
@@ -203,13 +206,26 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             }
             else
             {
-                // DTO for each vendor mapping
+                // DTO for each vendor mapping with vendor-specific metrics
                 foreach (var v in allVendorEntries)
                 {
                     var vHistories = mHistoriesDirect
                         .Where(h => (v.Id.HasValue && h.VendorId == v.Id.Value) || (h.VendorName != null && h.VendorName.Equals(v.Name, StringComparison.OrdinalIgnoreCase)))
                         .ToList();
 
+                    var vHistoryDatesDirect = vHistories.Where(h => h.EffectiveDate.Date >= thirtyDaysAgo).Select(h => h.EffectiveDate.Date).Distinct().ToList();
+
+                    int vMissingCountDirect = 0;
+                    for (var d = startDate; d <= today; d = d.AddDays(1))
+                    {
+                        if (!vHistoryDatesDirect.Contains(d)) vMissingCountDirect++;
+                    }
+
+                    var vThisMonthAvgDirect = vHistories.Where(h => h.EffectiveDate.Date >= startOfThisMonth && h.EffectiveDate.Date <= today).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+                    var vPrevMonthAvgDirect = vHistories.Where(h => h.EffectiveDate.Date >= startOfPrevMonth && h.EffectiveDate.Date < startOfThisMonth).Average(h => (decimal?)h.LandedCostInrPerKg) ?? 0m;
+                    bool vIsTodayUpdatedDirect = vHistoryDatesDirect.Contains(today) || vHistoryDatesDirect.Contains(localToday);
+
+                    var vTodayDirect = vHistories.Where(h => h.EffectiveDate.Date == today || h.EffectiveDate.Date == localToday).OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
                     var vLatestDirect = vHistories.OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
 
                     dtos.Add(new MaterialDto
@@ -217,27 +233,27 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                         Id = m.Id,
                         Name = m.Name,
                         Type = MaterialType.Direct,
-                        LmeUsdPerMt = latestLme?.LmeUsdPerMt,
-                        PremiumUsdPerMt = latestLme?.PremiumUsdPerMt,
-                        FxRate = latestLme?.FxRate,
-                        FreightInrPerKg = latestLme?.FreightInrPerKg,
-                        DirectRateInrPerKg = vLatestDirect?.DirectRateInrPerKg,
-                        AsOnDate = vLatestDirect?.EffectiveDate ?? latestLme?.EffectiveDate ?? m.CreatedDate,
-                        AsOnDateLme = latestLme?.EffectiveDate,
-                        AsOnDateDirect = vLatestDirect?.EffectiveDate ?? latestDirect?.EffectiveDate,
+                        LmeUsdPerMt = isTodayUpdatedLme ? todayLme?.LmeUsdPerMt : null,
+                        PremiumUsdPerMt = isTodayUpdatedLme ? todayLme?.PremiumUsdPerMt : null,
+                        FxRate = isTodayUpdatedLme ? todayLme?.FxRate : null,
+                        FreightInrPerKg = isTodayUpdatedLme ? todayLme?.FreightInrPerKg : null,
+                        DirectRateInrPerKg = vIsTodayUpdatedDirect ? vTodayDirect?.DirectRateInrPerKg : null,
+                        AsOnDate = vTodayDirect?.EffectiveDate ?? todayLme?.EffectiveDate ?? vLatestDirect?.EffectiveDate ?? latestLme?.EffectiveDate ?? m.CreatedDate,
+                        AsOnDateLme = todayLme?.EffectiveDate ?? latestLme?.EffectiveDate,
+                        AsOnDateDirect = vTodayDirect?.EffectiveDate ?? vLatestDirect?.EffectiveDate ?? latestDirect?.EffectiveDate,
                         IsPlaceholder = vLatestDirect == null,
-                        LandedCost = vLatestDirect?.LandedCostInrPerKg ?? latestLme?.LandedCostInrPerKg ?? 0m,
-                        UpdatedBy = vLatestDirect?.UpdatedBy ?? latestLme?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
+                        LandedCost = vIsTodayUpdatedDirect ? (vTodayDirect?.LandedCostInrPerKg ?? 0m) : 0m,
+                        UpdatedBy = vTodayDirect?.UpdatedBy ?? todayLme?.UpdatedBy ?? vLatestDirect?.UpdatedBy ?? latestLme?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
                         VendorName = v.Name,
                         VendorId = v.Id,
                         MissingDaysCountLme = missingCountLme,
-                        MissingDaysCountDirect = missingCountDirect,
+                        MissingDaysCountDirect = vMissingCountDirect,
                         ThisMonthAvgLme = thisMonthAvgLme,
                         PrevMonthAvgLme = prevMonthAvgLme,
-                        ThisMonthAvgDirect = thisMonthAvgDirect,
-                        PrevMonthAvgDirect = prevMonthAvgDirect,
+                        ThisMonthAvgDirect = vThisMonthAvgDirect,
+                        PrevMonthAvgDirect = vPrevMonthAvgDirect,
                         IsTodayUpdatedLme = isTodayUpdatedLme,
-                        IsTodayUpdatedDirect = isTodayUpdatedDirect
+                        IsTodayUpdatedDirect = vIsTodayUpdatedDirect
                     });
                 }
             }

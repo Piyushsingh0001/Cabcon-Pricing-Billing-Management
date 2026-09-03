@@ -20,6 +20,8 @@ export interface BackfillDialogData {
   vendorOptions: string[];
   /** Currently selected vendor name */
   currentVendorName: string;
+  /** Currently selected vendor ID */
+  currentVendorId?: number;
 }
 
 @Component({
@@ -64,8 +66,10 @@ export class MaterialBackfillDialogComponent implements OnInit {
     // Populate vendor options from data
     this.availableVendors = this.data.vendorOptions || [];
 
-    // Load missing dates for this material + type from the backend
-    this.pricingService.getMissingDates(this.data.materialId, this.data.type).subscribe({
+    // Load missing dates for this material + type (+ vendor if Direct) from the backend
+    const vendorName = this.data.type === 1 ? this.data.currentVendorName : undefined;
+    const vendorId = this.data.type === 1 ? this.data.currentVendorId : undefined;
+    this.pricingService.getMissingDates(this.data.materialId, this.data.type, vendorName, vendorId).subscribe({
       next: (dates) => {
         this.missingDates = dates.map(d => new Date(d));
         this.buildFormArray();
@@ -102,10 +106,9 @@ export class MaterialBackfillDialogComponent implements OnInit {
         freightInrPerMt: [null]
       });
     } else {
-      // Direct — vendor dropdown per row
+      // Direct — rate only, vendor is displayed at top
       return this.fb.group({
         date: [dateStr],
-        vendorName: [this.data.currentVendorName || (this.availableVendors[0] || '')],
         directRateInrPerKg: [null]
       });
     }
@@ -180,16 +183,10 @@ export class MaterialBackfillDialogComponent implements OnInit {
       } else {
         // Direct row checks
         const isRateSet = p.directRateInrPerKg !== null && p.directRateInrPerKg !== undefined && p.directRateInrPerKg !== '';
-        const isVendorSet = p.vendorName !== null && p.vendorName !== undefined && p.vendorName.trim() !== '';
 
         // If rate is empty -> skip this row
         if (!isRateSet) {
           continue;
-        }
-
-        if (!isVendorSet) {
-          this.snackBar.open(`Date ${rowDate}: Please select a vendor.`, 'Close', { duration: 3500 });
-          return;
         }
 
         const rateVal = Number(p.directRateInrPerKg);
@@ -201,7 +198,8 @@ export class MaterialBackfillDialogComponent implements OnInit {
         payload.push({
           date: p.date,
           type: 1,
-          vendorName: p.vendorName.trim(),
+          vendorId: this.data.currentVendorId,
+          vendorName: this.data.currentVendorName || '',
           directRateInrPerKg: rateVal
         });
       }

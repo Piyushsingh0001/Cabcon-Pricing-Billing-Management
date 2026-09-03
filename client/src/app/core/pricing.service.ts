@@ -233,10 +233,20 @@ export class PricingService {
     return this.http.post<void>(`${this.apiBase}/materials/${materialId}/backfill`, prices);
   }
 
-  public getMissingDates(materialId: number, type?: number): Observable<string[]> {
+  public getMissingDates(materialId: number, type?: number, vendorName?: string, vendorId?: number): Observable<string[]> {
     let url = `${this.apiBase}/materials/${materialId}/missing-dates`;
+    const queryParams: string[] = [];
     if (type !== undefined && type !== null) {
-      url += `?type=${type}`;
+      queryParams.push(`type=${type}`);
+    }
+    if (vendorName) {
+      queryParams.push(`vendorName=${encodeURIComponent(vendorName)}`);
+    }
+    if (vendorId !== undefined && vendorId !== null) {
+      queryParams.push(`vendorId=${vendorId}`);
+    }
+    if (queryParams.length > 0) {
+      url += `?${queryParams.join('&')}`;
     }
     return this.http.get<string[]>(url);
   }

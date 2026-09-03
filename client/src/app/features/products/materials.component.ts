@@ -75,7 +75,7 @@ export class MaterialsComponent implements OnInit {
   private updateGroupSelectedVariant(group: any) {
     if (!group.selectedVendorName || !group.vendorOptions || group.vendorOptions.length === 0) {
       group.selectedDirectVariant = null;
-      group.selectedVariant = group.selectedType === 0 ? (group.lmeVariant || {}) : null;
+      group.selectedVariant = group.selectedType === 0 ? (group.lmeState || {}) : null;
       this.calculateGroupAvg(group);
       return;
     }
@@ -86,19 +86,24 @@ export class MaterialsComponent implements OnInit {
       const base = group.variants[0];
       selected = {
         ...base,
-        id: 0,
+        id: base.id,
         vendorName: group.selectedVendorName,
+        vendorId: undefined,
         isPlaceholder: true,
         directRateInrPerKg: null,
-        isTodayUpdatedDirect: group.isTodayUpdatedDirect ?? base.isTodayUpdatedDirect,
-        missingDaysCountDirect: group.directMissingDaysCount ?? base.missingDaysCountDirect
+        isTodayUpdatedDirect: false,
+        missingDaysCountDirect: 30,
+        thisMonthAvgDirect: 0,
+        prevMonthAvgDirect: 0
       };
-    } else if (selected && selected.directRateInrPerKg === 0) {
-      selected.directRateInrPerKg = null;
+    } else if (selected) {
+      if (!selected.isTodayUpdatedDirect || selected.directRateInrPerKg === 0) {
+        selected.directRateInrPerKg = null;
+      }
     }
     
-    group.selectedDirectVariant = selected || group.variants[0] || {};
-    group.selectedVariant = group.selectedType === 0 ? (group.lmeVariant || group.selectedDirectVariant) : group.selectedDirectVariant;
+    group.selectedDirectVariant = selected || null;
+    group.selectedVariant = group.selectedType === 0 ? (group.lmeState || group.selectedDirectVariant) : group.selectedDirectVariant;
     this.calculateGroupAvg(group);
   }
 
@@ -143,14 +148,14 @@ export class MaterialsComponent implements OnInit {
   public getMissingDays(group: any): number {
     if (!group) return 0;
     if (group.selectedType === 0) {
-      return group.lmeState?.missingDaysCountLme ?? (group.variants?.find((v: any) => v.type === 0)?.missingDaysCountLme || 0);
+      return group.lmeState?.missingDaysCountLme || 0;
     } else {
       if (!group.selectedVendorName || !group.vendorOptions || group.vendorOptions.length === 0) return 0;
-      return group.directMissingDaysCount ?? group.selectedDirectVariant?.missingDaysCountDirect ?? (group.variants?.[0]?.missingDaysCountDirect || 0);
+      return group.selectedDirectVariant?.missingDaysCountDirect || 0;
     }
   }
 
-  /** Returns true if today's price for this group's selected price type is already stamped. */
+  /** Returns true if today's price for this group's selected price type (and selected vendor if Direct) is already stamped. */
   public isTodayUpdated(group: any): boolean {
     if (!group) return false;
 
@@ -158,8 +163,31 @@ export class MaterialsComponent implements OnInit {
       return !!group.lmeState?.isTodayUpdatedLme;
     } else {
       if (!group.selectedVendorName || !group.vendorOptions || group.vendorOptions.length === 0) return false;
-      return !!(group.isTodayUpdatedDirect || group.selectedDirectVariant?.isTodayUpdatedDirect || group.variants?.some((v: any) => v.isTodayUpdatedDirect));
+      return !!group.selectedDirectVariant?.isTodayUpdatedDirect;
     }
+  }
+
+  /** Returns all vendors for this material that have missing price updates (missingDaysCountDirect > 0). */
+  public getMissingVendors(group: any): { name: string; days: number }[] {
+    if (!group || !group.vendorOptions || group.vendorOptions.length === 0) return [];
+
+    const result: { name: string; days: number }[] = [];
+    for (const vName of group.vendorOptions) {
+      const variant = group.variants?.find((v: any) => v.vendorName === vName);
+      const days = variant ? (variant.missingDaysCountDirect ?? 0) : 30;
+      if (days > 0) {
+        result.push({ name: vName, days });
+      }
+    }
+    return result;
+  }
+
+  /** Formats the missing price notification text for the top of the card. */
+  public getMissingVendorsNotification(group: any): string {
+    const missing = this.getMissingVendors(group);
+    if (missing.length === 0) return '';
+    const items = missing.map(m => `{${m.name} - ${m.days} ${m.days === 1 ? 'Day' : 'Days'}}`);
+    return `Price set missing for vendor ${items.join(', ')}`;
   }
 
   public openBackfill(group: any) {
@@ -185,7 +213,8 @@ export class MaterialsComponent implements OnInit {
         materialName: group.name,
         type: targetType,
         vendorOptions: group.vendorOptions || [],
-        currentVendorName: targetType === 1 ? group.selectedVendorName : ''
+        currentVendorName: targetType === 1 ? group.selectedVendorName : '',
+        currentVendorId: targetType === 1 ? group.selectedDirectVariant?.vendorId : undefined
       }
     });
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
@@ -252,8 +281,6 @@ export class MaterialsComponent implements OnInit {
               selectedVendorName: prev?.vendor || m.vendorName || '',
               avgPriceRange: 'this_month',
               calculatedAvg: 0,
-              isTodayUpdatedDirect: !!m.isTodayUpdatedDirect,
-              directMissingDaysCount: m.missingDaysCountDirect,
               lmeState: {
                 materialId: m.id,
                 lmeUsdPerMt: m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
@@ -261,20 +288,14 @@ export class MaterialsComponent implements OnInit {
                 fxRate: m.fxRate ? m.fxRate : null,
                 freightInrPerMt: freightVal ? freightVal : null,
                 isTodayUpdatedLme: !!m.isTodayUpdatedLme,
-                missingDaysCountLme: m.missingDaysCountLme,
-                thisMonthAvgLme: m.thisMonthAvgLme,
-                prevMonthAvgLme: m.prevMonthAvgLme,
+                missingDaysCountLme: m.missingDaysCountLme || 0,
+                thisMonthAvgLme: m.thisMonthAvgLme || 0,
+                prevMonthAvgLme: m.prevMonthAvgLme || 0,
                 asOnDate: m.asOnDateLme || null
               }
             });
           }
           const group = groupsMap.get(m.name);
-          if (m.isTodayUpdatedDirect) {
-            group.isTodayUpdatedDirect = true;
-          }
-          if (m.missingDaysCountDirect !== undefined) {
-            group.directMissingDaysCount = m.missingDaysCountDirect;
-          }
           if (m.directRateInrPerKg === 0) {
             m.directRateInrPerKg = null as any;
           }
@@ -287,14 +308,14 @@ export class MaterialsComponent implements OnInit {
 
             group.lmeState = {
               materialId: m.id,
-              lmeUsdPerMt: m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
-              premiumUsdPerMt: m.premiumUsdPerMt ? m.premiumUsdPerMt : null,
-              fxRate: m.fxRate ? m.fxRate : null,
-              freightInrPerMt: lmeFreight ? lmeFreight : null,
+              lmeUsdPerMt: m.isTodayUpdatedLme && m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
+              premiumUsdPerMt: m.isTodayUpdatedLme && m.premiumUsdPerMt ? m.premiumUsdPerMt : null,
+              fxRate: m.isTodayUpdatedLme && m.fxRate ? m.fxRate : null,
+              freightInrPerMt: m.isTodayUpdatedLme && lmeFreight ? lmeFreight : null,
               isTodayUpdatedLme: !!m.isTodayUpdatedLme,
-              missingDaysCountLme: m.missingDaysCountLme,
-              thisMonthAvgLme: m.thisMonthAvgLme,
-              prevMonthAvgLme: m.prevMonthAvgLme,
+              missingDaysCountLme: m.missingDaysCountLme || 0,
+              thisMonthAvgLme: m.thisMonthAvgLme || 0,
+              prevMonthAvgLme: m.prevMonthAvgLme || 0,
               asOnDate: m.asOnDateLme || null
             };
           }
