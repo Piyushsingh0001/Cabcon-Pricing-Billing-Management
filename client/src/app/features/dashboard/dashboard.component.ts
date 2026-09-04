@@ -127,7 +127,7 @@ export class DashboardComponent implements OnInit {
         this.partyAddress = quote.partyAddress || '';
         this.validityDays = quote.validityDays;
         
-        this.pricingService.selectedSkuIds.clear();
+        this.pricingService.clearSelectedSkus();
         this.overridesMap.clear();
         
         quote.lines.forEach(line => {
@@ -378,7 +378,7 @@ export class DashboardComponent implements OnInit {
           this.overridesMap = new Map<number, any>(parsed.overridesMap);
           
           // Sync service selectedSkuIds with draft overrides
-          this.pricingService.selectedSkuIds.clear();
+          this.pricingService.clearSelectedSkus();
           this.overridesMap.forEach((_, id) => {
             this.pricingService.selectedSkuIds.add(id);
           });
@@ -395,7 +395,7 @@ export class DashboardComponent implements OnInit {
     localStorage.removeItem('cabcon_draft_quotation');
     this.hasDraft = false;
     this.overridesMap.clear();
-    this.pricingService.selectedSkuIds.clear();
+    this.pricingService.clearSelectedSkus();
     this.recalculate();
   }
 
@@ -749,7 +749,7 @@ export class DashboardComponent implements OnInit {
 
             // Clear state and draft
             this.overridesMap.clear();
-            this.pricingService.selectedSkuIds.clear();
+            this.pricingService.clearSelectedSkus();
             this.rows = [];
             this.partyName = '';
             this.validityDays = 7;
@@ -768,7 +768,7 @@ export class DashboardComponent implements OnInit {
 
   public cancel() {
     this.overridesMap.clear();
-    this.pricingService.selectedSkuIds.clear();
+    this.pricingService.clearSelectedSkus();
     this.rows = [];
     this.partyName = '';
     this.validityDays = 7;

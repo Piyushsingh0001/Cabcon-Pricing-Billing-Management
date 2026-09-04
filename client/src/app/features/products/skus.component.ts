@@ -66,6 +66,10 @@ export class SkusComponent implements OnInit {
     this.pricingService.refreshSkus.subscribe(() => {
       this.loadSkus();
     });
+    this.pricingService.selectionCleared.subscribe(() => {
+      this.localSelections = {};
+      this.pricingService.selectedSkuIds.clear();
+    });
   }
 
   public toggleCategoryCollapse(categoryName: string) {

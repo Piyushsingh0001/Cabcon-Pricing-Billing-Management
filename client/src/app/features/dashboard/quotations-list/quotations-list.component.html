@@ -75,7 +75,7 @@
                 <mat-icon>visibility</mat-icon>
               </button>
               
-              <button mat-icon-button class="row-icon-btn edit-btn" (click)="editQuotation(element)" *ngIf="canModify && element.isActive" title="Edit Quotation" style="margin-left: 8px;">
+              <button mat-icon-button class="row-icon-btn edit-btn" (click)="editQuotation(element)" *ngIf="(canModify || element.approvalStatus === 3) && element.isActive" title="Edit Quotation" style="margin-left: 8px;">
                 <mat-icon style="color: #2196f3;">edit</mat-icon>
               </button>
               

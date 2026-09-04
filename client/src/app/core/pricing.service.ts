@@ -173,6 +173,12 @@ export class PricingService {
   public refreshMaterials = new Subject<void>();
   public refreshSkus = new Subject<void>();
   public selectedSkuIds = new Set<number>();
+  public selectionCleared = new Subject<void>();
+
+  public clearSelectedSkus() {
+    this.selectedSkuIds.clear();
+    this.selectionCleared.next();
+  }
   //private readonly apiBase = 'https://skuquotation.runasp.net/api';
 
   // --- Categories ---

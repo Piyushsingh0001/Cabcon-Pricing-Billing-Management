@@ -2,6 +2,7 @@ using Cabcon.Application.Features.Pricing.Quotations;
 using Cabcon.Shared.Constants;
 using Cabcon.WebApi.Authorization;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cabcon.WebApi.Controllers;
@@ -34,7 +35,7 @@ public class QuotationsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [HasPermission(AppPermissions.Quotation.Modify)]
+    [Authorize]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateQuotationCommand command, CancellationToken ct)
     {
         if (id != command.Id) return BadRequest("ID mismatch");

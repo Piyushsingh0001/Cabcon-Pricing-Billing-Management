@@ -2,6 +2,7 @@ using Cabcon.Application.Common.Interfaces;
 using Cabcon.Domain.Entities.Billing;
 using Cabcon.Domain.Entities.Pricing;
 using Cabcon.Domain.Enums;
+using Cabcon.Shared.Constants;
 using Cabcon.Shared.Wrappers;
 using FluentValidation;
 using MediatR;
@@ -73,6 +74,14 @@ public class UpdateQuotationCommandHandler : IRequestHandler<UpdateQuotationComm
 
         if (quotation == null)
             return Result<UpdateQuotationResponse>.Failure("Quotation not found.");
+
+        bool hasModifyPermission = _currentUser.Permissions.Contains(AppPermissions.Quotation.Modify);
+        bool isDraftOwner = quotation.ApprovalStatus == ApprovalStatus.Draft && quotation.CreatedBy == _currentUser.UserName;
+        
+        if (!hasModifyPermission && !isDraftOwner)
+        {
+            return Result<UpdateQuotationResponse>.Failure("You do not have permission to modify this quotation.");
+        }
 
         var skuRepo = _unitOfWork.Repository<Sku>();
         var skuIds = request.Lines.Select(l => l.SkuId).Distinct().ToList();

@@ -1,0 +1,199 @@
+2026-09-03 10:27:34.033 +05:30 [INF] GET / responded 404 in 77ms
+2026-09-03 10:28:16.616 +05:30 [INF] OPTIONS /api/materials responded 204 in 37ms
+2026-09-03 10:28:17.151 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-09-03 10:28:17.155 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-09-03 10:28:17.905 +05:30 [INF] GET /api/materials responded 401 in 47ms
+2026-09-03 10:28:17.948 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-09-03 10:28:18.007 +05:30 [INF] Handling RefreshTokenCommand
+2026-09-03 10:28:18.214 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-03 10:28:18.454 +05:30 [INF] Handled RefreshTokenCommand
+2026-09-03 10:28:18.467 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 504ms
+2026-09-03 10:28:18.505 +05:30 [INF] Handling GetMaterialsQuery
+2026-09-03 10:28:18.648 +05:30 [INF] Handled GetMaterialsQuery
+2026-09-03 10:28:18.671 +05:30 [INF] GET /api/materials responded 200 in 197ms
+2026-09-03 10:28:18.690 +05:30 [INF] OPTIONS /api/vendors responded 204 in 0ms
+2026-09-03 10:28:18.705 +05:30 [INF] Handling GetVendorsQuery
+2026-09-03 10:28:18.714 +05:30 [INF] Handled GetVendorsQuery
+2026-09-03 10:28:18.742 +05:30 [INF] GET /api/vendors responded 200 in 44ms
+2026-09-03 10:28:18.749 +05:30 [INF] OPTIONS /api/vendors/material-mappings responded 204 in 0ms
+2026-09-03 10:28:18.761 +05:30 [INF] Handling GetVendorMaterialMappingsQuery
+2026-09-03 10:28:18.789 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-03 10:28:18.846 +05:30 [INF] Handled GetVendorMaterialMappingsQuery
+2026-09-03 10:28:18.851 +05:30 [INF] GET /api/vendors/material-mappings responded 200 in 94ms
+2026-09-03 10:29:34.660 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-09-03 10:29:34.660 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-09-03 10:29:34.696 +05:30 [INF] OPTIONS /api/categories responded 204 in 35ms
+2026-09-03 10:29:34.795 +05:30 [INF] OPTIONS /api/skus responded 204 in 33ms
+2026-09-03 10:29:34.882 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-09-03 10:29:34.884 +05:30 [INF] Handling GetMaterialsQuery
+2026-09-03 10:29:34.891 +05:30 [INF] Handling GetSkusQuery
+2026-09-03 10:29:34.903 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-09-03 10:29:34.907 +05:30 [INF] GET /api/categories responded 200 in 69ms
+2026-09-03 10:29:34.944 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-09-03 10:29:34.979 +05:30 [INF] Handled GetMaterialsQuery
+2026-09-03 10:29:35.014 +05:30 [INF] GET /api/materials responded 200 in 131ms
+2026-09-03 10:29:35.015 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-09-03 10:29:35.017 +05:30 [INF] GET /api/categories responded 200 in 107ms
+2026-09-03 10:29:35.023 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-03 10:29:35.135 +05:30 [INF] Handled GetSkusQuery
+2026-09-03 10:29:35.148 +05:30 [INF] GET /api/skus responded 200 in 264ms
+2026-09-03 10:29:42.197 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-09-03 10:29:42.197 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-09-03 10:29:42.197 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-09-03 10:29:42.207 +05:30 [INF] Handling GetSkusQuery
+2026-09-03 10:29:42.208 +05:30 [INF] Handling GetMaterialsQuery
+2026-09-03 10:29:42.211 +05:30 [INF] Handling GetCustomersQuery
+2026-09-03 10:29:42.214 +05:30 [INF] Handled GetSkusQuery
+2026-09-03 10:29:42.215 +05:30 [INF] Handled GetMaterialsQuery
+2026-09-03 10:29:42.215 +05:30 [INF] GET /api/skus responded 200 in 9ms
+2026-09-03 10:29:42.216 +05:30 [INF] GET /api/materials responded 200 in 11ms
+2026-09-03 10:29:42.225 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-09-03 10:29:42.226 +05:30 [INF] Handled GetCustomersQuery
+2026-09-03 10:29:42.230 +05:30 [INF] GET /api/customers responded 200 in 25ms
+2026-09-03 10:29:42.245 +05:30 [INF] Handling CalculateQuotationCommand
+2026-09-03 10:29:42.254 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-03 10:29:42.313 +05:30 [INF] Handled CalculateQuotationCommand
+2026-09-03 10:29:42.315 +05:30 [INF] POST /api/quotations/calculate responded 200 in 84ms
+2026-09-03 10:29:54.097 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-09-03 10:29:54.123 +05:30 [INF] Handling SaveQuotationCommand
+2026-09-03 10:29:54.318 +05:30 [INF] Handled SaveQuotationCommand
+2026-09-03 10:29:54.321 +05:30 [INF] POST /api/quotations responded 200 in 215ms
+2026-09-03 10:29:59.331 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-09-03 10:29:59.342 +05:30 [INF] Handling CalculateQuotationCommand
+2026-09-03 10:29:59.346 +05:30 [INF] Handled CalculateQuotationCommand
+2026-09-03 10:29:59.348 +05:30 [INF] POST /api/quotations/calculate responded 200 in 7ms
+2026-09-03 10:30:01.363 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-09-03 10:30:01.376 +05:30 [INF] Handling GetQuotationsQuery
+2026-09-03 10:30:01.394 +05:30 [INF] Handled GetQuotationsQuery
+2026-09-03 10:30:01.398 +05:30 [INF] GET /api/quotations responded 200 in 27ms
+2026-09-03 10:30:08.609 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-09-03 10:30:08.609 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-09-03 10:30:08.609 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-09-03 10:30:08.617 +05:30 [INF] Handling GetMaterialsQuery
+2026-09-03 10:30:08.619 +05:30 [INF] Handling GetCustomersQuery
+2026-09-03 10:30:08.622 +05:30 [INF] Handled GetCustomersQuery
+2026-09-03 10:30:08.622 +05:30 [INF] Handling GetSkusQuery
+2026-09-03 10:30:08.623 +05:30 [INF] Handled GetMaterialsQuery
+2026-09-03 10:30:08.623 +05:30 [INF] GET /api/customers responded 200 in 4ms
+2026-09-03 10:30:08.625 +05:30 [INF] GET /api/materials responded 200 in 9ms
+2026-09-03 10:30:08.628 +05:30 [INF] Handled GetSkusQuery
+2026-09-03 10:30:08.629 +05:30 [INF] GET /api/skus responded 200 in 8ms
+2026-09-03 10:30:11.461 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-09-03 10:30:11.472 +05:30 [INF] Handling GetQuotationsQuery
+2026-09-03 10:30:11.475 +05:30 [INF] Handled GetQuotationsQuery
+2026-09-03 10:30:11.476 +05:30 [INF] GET /api/quotations responded 200 in 6ms
+2026-09-03 10:30:15.724 +05:30 [INF] OPTIONS /api/quotations/3 responded 204 in 0ms
+2026-09-03 10:30:15.737 +05:30 [INF] Handling GetQuotationDetailsQuery
+2026-09-03 10:30:15.758 +05:30 [INF] Handled GetQuotationDetailsQuery
+2026-09-03 10:30:15.762 +05:30 [INF] GET /api/quotations/3 responded 200 in 30ms
+2026-09-03 12:50:40.056 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-09-03 12:50:40.113 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-09-03 12:50:56.142 +05:30 [INF] GET / responded 404 in 120ms
+2026-09-03 12:51:58.101 +05:30 [INF] OPTIONS /api/materials responded 204 in 53ms
+2026-09-03 12:52:00.033 +05:30 [WRN] Entity 'Permission' has a global query filter defined and is the required end of a relationship with the entity 'RolePermission'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-09-03 12:52:00.053 +05:30 [WRN] Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-09-03 12:52:02.364 +05:30 [INF] GET /api/materials responded 401 in 155ms
+2026-09-03 12:52:02.519 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-09-03 12:52:02.723 +05:30 [INF] Handling RefreshTokenCommand
+2026-09-03 12:52:03.609 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-03 12:52:04.479 +05:30 [INF] Handled RefreshTokenCommand
+2026-09-03 12:52:04.535 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 1964ms
+2026-09-03 12:52:04.663 +05:30 [INF] Handling GetMaterialsQuery
+2026-09-03 12:52:05.154 +05:30 [INF] Handled GetMaterialsQuery
+2026-09-03 12:52:05.242 +05:30 [INF] GET /api/materials responded 200 in 683ms
+2026-09-03 12:52:05.376 +05:30 [INF] OPTIONS /api/vendors responded 204 in 0ms
+2026-09-03 12:52:05.424 +05:30 [INF] Handling GetVendorsQuery
+2026-09-03 12:52:05.452 +05:30 [INF] Handled GetVendorsQuery
+2026-09-03 12:52:05.460 +05:30 [INF] GET /api/vendors responded 200 in 69ms
+2026-09-03 12:52:05.475 +05:30 [INF] OPTIONS /api/vendors/material-mappings responded 204 in 0ms
+2026-09-03 12:52:05.505 +05:30 [INF] Handling GetVendorMaterialMappingsQuery
+2026-09-03 12:52:05.606 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-03 12:52:05.731 +05:30 [INF] Handled GetVendorMaterialMappingsQuery
+2026-09-03 12:52:05.748 +05:30 [INF] GET /api/vendors/material-mappings responded 200 in 260ms
+2026-09-03 12:52:19.212 +05:30 [INF] OPTIONS /api/materials/1/history responded 204 in 0ms
+2026-09-03 12:52:19.294 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-09-03 12:52:19.366 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-09-03 12:52:19.373 +05:30 [INF] GET /api/materials/1/history responded 200 in 102ms
+2026-09-03 12:52:23.861 +05:30 [INF] OPTIONS /api/materials/4/history responded 204 in 0ms
+2026-09-03 12:52:23.891 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-09-03 12:52:23.900 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-09-03 12:52:23.902 +05:30 [INF] GET /api/materials/4/history responded 200 in 20ms
+2026-09-03 12:52:26.682 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-09-03 12:52:26.718 +05:30 [INF] Handling GetQuotationsQuery
+2026-09-03 12:52:26.869 +05:30 [INF] Handled GetQuotationsQuery
+2026-09-03 12:52:26.888 +05:30 [INF] GET /api/quotations responded 200 in 189ms
+2026-09-03 12:52:27.756 +05:30 [INF] Handling GetQuotationsQuery
+2026-09-03 12:52:27.765 +05:30 [INF] Handled GetQuotationsQuery
+2026-09-03 12:52:27.768 +05:30 [INF] GET /api/quotations responded 200 in 17ms
+2026-09-03 12:52:35.538 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-09-03 12:52:35.538 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-09-03 12:52:35.538 +05:30 [INF] OPTIONS /api/categories responded 204 in 0ms
+2026-09-03 12:52:35.538 +05:30 [INF] OPTIONS /api/skus responded 204 in 0ms
+2026-09-03 12:52:35.618 +05:30 [INF] Handling GetMaterialsQuery
+2026-09-03 12:52:35.619 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-09-03 12:52:35.637 +05:30 [INF] Handled GetMaterialsQuery
+2026-09-03 12:52:35.642 +05:30 [INF] GET /api/materials responded 200 in 70ms
+2026-09-03 12:52:35.646 +05:30 [INF] Handling GetSkusQuery
+2026-09-03 12:52:35.650 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-09-03 12:52:35.655 +05:30 [INF] GET /api/categories responded 200 in 97ms
+2026-09-03 12:52:35.665 +05:30 [INF] Handling GetAllCategoriesQuery
+2026-09-03 12:52:35.669 +05:30 [INF] Handled GetAllCategoriesQuery
+2026-09-03 12:52:35.671 +05:30 [INF] GET /api/categories responded 200 in 13ms
+2026-09-03 12:52:35.710 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-03 12:52:36.076 +05:30 [INF] Handled GetSkusQuery
+2026-09-03 12:52:36.113 +05:30 [INF] GET /api/skus responded 200 in 490ms
+2026-09-03 12:52:40.246 +05:30 [INF] OPTIONS /api/customers responded 204 in 0ms
+2026-09-03 12:52:40.252 +05:30 [INF] Handling GetSkusQuery
+2026-09-03 12:52:40.253 +05:30 [INF] Handling GetMaterialsQuery
+2026-09-03 12:52:40.272 +05:30 [INF] Handled GetSkusQuery
+2026-09-03 12:52:40.273 +05:30 [INF] Handled GetMaterialsQuery
+2026-09-03 12:52:40.276 +05:30 [INF] GET /api/skus responded 200 in 29ms
+2026-09-03 12:52:40.276 +05:30 [INF] GET /api/materials responded 200 in 29ms
+2026-09-03 12:52:40.286 +05:30 [INF] Handling GetCustomersQuery
+2026-09-03 12:52:40.297 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-09-03 12:52:40.315 +05:30 [INF] Handled GetCustomersQuery
+2026-09-03 12:52:40.328 +05:30 [INF] GET /api/customers responded 200 in 58ms
+2026-09-03 12:52:40.389 +05:30 [INF] Handling CalculateQuotationCommand
+2026-09-03 12:52:40.421 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-03 12:52:40.513 +05:30 [INF] Handled CalculateQuotationCommand
+2026-09-03 12:52:40.521 +05:30 [INF] POST /api/quotations/calculate responded 200 in 207ms
+2026-09-03 12:52:49.623 +05:30 [INF] OPTIONS /api/quotations/calculate responded 204 in 0ms
+2026-09-03 12:52:49.681 +05:30 [INF] Handling CalculateQuotationCommand
+2026-09-03 12:52:49.750 +05:30 [INF] Handled CalculateQuotationCommand
+2026-09-03 12:52:49.754 +05:30 [INF] POST /api/quotations/calculate responded 200 in 85ms
+2026-09-03 12:52:51.331 +05:30 [INF] Handling CalculateQuotationCommand
+2026-09-03 12:52:51.404 +05:30 [INF] Handled CalculateQuotationCommand
+2026-09-03 12:52:51.407 +05:30 [INF] POST /api/quotations/calculate responded 200 in 89ms
+2026-09-03 12:52:51.835 +05:30 [INF] Handling CalculateQuotationCommand
+2026-09-03 12:52:51.901 +05:30 [INF] Handled CalculateQuotationCommand
+2026-09-03 12:52:51.906 +05:30 [INF] POST /api/quotations/calculate responded 200 in 82ms
+2026-09-03 12:52:56.800 +05:30 [INF] OPTIONS /api/quotations responded 204 in 0ms
+2026-09-03 12:52:56.896 +05:30 [INF] Handling SaveQuotationCommand
+2026-09-03 12:52:57.473 +05:30 [INF] Handled SaveQuotationCommand
+2026-09-03 12:52:57.479 +05:30 [INF] POST /api/quotations responded 200 in 654ms
+2026-09-03 12:53:39.881 +05:30 [INF] OPTIONS /api/materials responded 204 in 0ms
+2026-09-03 12:53:39.910 +05:30 [INF] GET /api/materials responded 401 in 2ms
+2026-09-03 12:53:39.961 +05:30 [INF] OPTIONS /api/auth/refresh-token responded 204 in 0ms
+2026-09-03 12:53:39.975 +05:30 [INF] Handling RefreshTokenCommand
+2026-09-03 12:53:40.056 +05:30 [INF] Handled RefreshTokenCommand
+2026-09-03 12:53:40.058 +05:30 [INF] POST /api/auth/refresh-token responded 200 in 86ms
+2026-09-03 12:53:40.077 +05:30 [INF] Handling GetMaterialsQuery
+2026-09-03 12:53:40.127 +05:30 [INF] Handled GetMaterialsQuery
+2026-09-03 12:53:40.133 +05:30 [INF] GET /api/materials responded 200 in 59ms
+2026-09-03 12:53:40.147 +05:30 [INF] OPTIONS /api/vendors responded 204 in 0ms
+2026-09-03 12:53:40.163 +05:30 [INF] Handling GetVendorsQuery
+2026-09-03 12:53:40.170 +05:30 [INF] Handled GetVendorsQuery
+2026-09-03 12:53:40.173 +05:30 [INF] GET /api/vendors responded 200 in 13ms
+2026-09-03 12:53:40.186 +05:30 [INF] OPTIONS /api/vendors/material-mappings responded 204 in 0ms
+2026-09-03 12:53:40.201 +05:30 [INF] Handling GetVendorMaterialMappingsQuery
+2026-09-03 12:53:40.258 +05:30 [INF] Handled GetVendorMaterialMappingsQuery
+2026-09-03 12:53:40.260 +05:30 [INF] GET /api/vendors/material-mappings responded 200 in 63ms
+2026-09-03 12:53:49.905 +05:30 [INF] OPTIONS /api/materials/2/history responded 204 in 0ms
+2026-09-03 12:53:49.949 +05:30 [INF] Handling GetMaterialPriceHistoryQuery
+2026-09-03 12:53:49.972 +05:30 [INF] Handled GetMaterialPriceHistoryQuery
+2026-09-03 12:53:49.984 +05:30 [INF] GET /api/materials/2/history responded 200 in 40ms
+2026-09-03 12:55:54.200 +05:30 [INF] OPTIONS /api/skus/5 responded 204 in 0ms
+2026-09-03 12:55:54.238 +05:30 [INF] Handling GetSkuDetailsQuery
+2026-09-03 12:55:54.255 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-09-03 12:55:54.346 +05:30 [INF] Handled GetSkuDetailsQuery
+2026-09-03 12:55:54.365 +05:30 [INF] GET /api/skus/5 responded 200 in 146ms
