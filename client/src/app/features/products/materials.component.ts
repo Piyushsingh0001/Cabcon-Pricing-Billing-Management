@@ -258,6 +258,7 @@ export class MaterialsComponent implements OnInit {
       'insulation material': 2,
       'inner sheath': 3,
       'armour wire': 4,
+      'pvc outer sheath': 5,
       'pvc outer shell': 5
     };
 

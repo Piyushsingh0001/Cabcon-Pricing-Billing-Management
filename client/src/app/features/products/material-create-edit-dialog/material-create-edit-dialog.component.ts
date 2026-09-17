@@ -40,7 +40,7 @@ export class MaterialCreateEditDialogComponent implements OnInit {
     'Insulation Material',
     'Inner Sheath',
     'Armour Wire',
-    'PVC Outer Shell'
+    'PVC Outer Sheath'
   ];
 
   private categoryDefaultDensities: { [key: string]: number } = {
@@ -48,6 +48,7 @@ export class MaterialCreateEditDialogComponent implements OnInit {
     'Insulation Material': 0.92,
     'Inner Sheath': 1.45,
     'Armour Wire': 7.85,
+    'PVC Outer Sheath': 1.45,
     'PVC Outer Shell': 1.45
   };
 
@@ -66,7 +67,8 @@ export class MaterialCreateEditDialogComponent implements OnInit {
       this.existingNames = [];
     }
 
-    const initialCategory = this.material?.categoryName || 'Core Material';
+    const rawCategory = this.material?.categoryName || 'Core Material';
+    const initialCategory = rawCategory.trim().toLowerCase() === 'pvc outer shell' ? 'PVC Outer Sheath' : rawCategory;
     const initialDensity = this.material?.density !== undefined && this.material?.density !== null && this.material.density > 0
       ? this.material.density
       : (this.categoryDefaultDensities[initialCategory] || 8.89);
@@ -117,16 +119,38 @@ export class MaterialCreateEditDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.existingNames || this.existingNames.length === 0) {
-      this.pricingService.getMaterials(undefined, undefined, undefined, undefined, 1, 500).subscribe({
-        next: (res) => {
-          if (res && res.items) {
+    this.pricingService.getMaterials(undefined, undefined, undefined, undefined, 1, 500).subscribe({
+      next: (res) => {
+        if (res && res.items) {
+          if (!this.existingNames || this.existingNames.length === 0) {
             this.existingNames = Array.from(new Set(res.items.map(m => m.name)));
             this.form.get('name')?.updateValueAndValidity();
           }
+          const catSet = new Set<string>(this.categories);
+          res.items.forEach(m => {
+            if (m.categoryName && m.categoryName.trim()) {
+              const norm = m.categoryName.trim().toLowerCase() === 'pvc outer shell' ? 'PVC Outer Sheath' : m.categoryName.trim();
+              catSet.add(norm);
+            }
+          });
+          const orderMap: { [cat: string]: number } = {
+            'core material': 1,
+            'insulation material': 2,
+            'inner sheath': 3,
+            'armour wire': 4,
+            'pvc outer sheath': 5
+          };
+          const catList = Array.from(catSet);
+          catList.sort((a, b) => {
+            const rankA = orderMap[a.toLowerCase()] ?? 99;
+            const rankB = orderMap[b.toLowerCase()] ?? 99;
+            if (rankA !== rankB) return rankA - rankB;
+            return a.localeCompare(b);
+          });
+          this.categories = catList;
         }
-      });
-    }
+      }
+    });
   }
 
   public onCancel() {

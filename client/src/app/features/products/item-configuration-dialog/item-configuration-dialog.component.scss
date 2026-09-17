@@ -152,94 +152,6 @@
   }
 }
 
-/* Density Settings Panel */
-.density-panel {
-  padding: 12px 24px;
-  background: #f1f5f9;
-  border-bottom: 1px solid var(--border-glass, #cbd5e1);
-  animation: fadeIn 0.2s ease;
-
-  .density-panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-
-    .dp-title {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--primary-color, #101d32);
-
-      mat-icon {
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-        color: #4f46e5;
-      }
-    }
-
-    .dp-hint {
-      font-size: 11px;
-      color: var(--text-secondary, #64748b);
-      font-style: italic;
-    }
-  }
-
-  .density-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 8px;
-
-    .density-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #ffffff;
-      padding: 6px 10px;
-      border-radius: 6px;
-      border: 1px solid #e2e8f0;
-
-      .density-item-info {
-        display: flex;
-        flex-direction: column;
-
-        .mat-name {
-          font-size: 12px;
-          font-weight: 700;
-          color: var(--text-primary, #1e293b);
-        }
-
-        .mat-cat {
-          font-size: 10px;
-          color: var(--text-secondary, #64748b);
-        }
-      }
-
-      .density-input-wrap {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-
-        .density-in {
-          width: 55px;
-          height: 26px;
-          padding: 2px 4px;
-          text-align: right;
-          font-size: 12px;
-          font-weight: 600;
-        }
-
-        .density-unit {
-          font-size: 9px;
-          color: #94a3b8;
-        }
-      }
-    }
-  }
-}
 
 /* Matrix Table Container */
 .matrix-table-container {
@@ -366,6 +278,22 @@
     .material-sub-header {
       padding: 4px 6px;
 
+      &.empty-cat-sub {
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.15s ease;
+
+        &:hover {
+          filter: brightness(0.95);
+        }
+
+        .empty-placeholder {
+          font-size: 11px;
+          font-style: italic;
+          opacity: 0.85;
+        }
+      }
+
       .mat-header-cell-inner {
         display: flex;
         flex-direction: column;
@@ -470,6 +398,18 @@
 
     .weight-cell {
       min-width: 75px;
+
+      &.empty-cat-cell {
+        color: #94a3b8;
+        font-size: 13px;
+        text-align: center;
+        user-select: none;
+
+        .empty-dash {
+          color: #cbd5e1;
+          font-weight: 600;
+        }
+      }
 
       .weight-input {
         text-align: right;
@@ -686,6 +626,37 @@
           }
         }
 
+        .searchable-mat-field {
+          width: 100%;
+          margin-bottom: -16px;
+
+          ::ng-deep .mat-mdc-text-field-wrapper {
+            background-color: #ffffff !important;
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+          }
+
+          .search-prefix-icon {
+            color: #94a3b8;
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
+          }
+
+          .clear-suffix-btn {
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            mat-icon {
+              font-size: 16px;
+              width: 16px;
+              height: 16px;
+              color: #94a3b8;
+            }
+          }
+        }
+
         .help-text {
           font-size: 11px;
           color: #94a3b8;
@@ -760,4 +731,33 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+.mat-option-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+
+  .option-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary, #1e293b);
+  }
+
+  .option-density {
+    font-size: 11px;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+  }
+}
+
+.option-custom {
+  font-size: 13px;
+  color: #2563eb;
+  font-weight: 600;
 }

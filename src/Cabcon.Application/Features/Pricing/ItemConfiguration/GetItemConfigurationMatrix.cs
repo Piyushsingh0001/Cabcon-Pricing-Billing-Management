@@ -42,7 +42,7 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
         "Insulation Material",
         "Inner Sheath",
         "Armour Wire",
-        "PVC Outer Shell"
+        "PVC Outer Sheath"
     };
 
     public GetItemConfigurationMatrixQueryHandler(IUnitOfWork unitOfWork)
@@ -66,12 +66,49 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
                 .ToListAsync(cancellationToken);
         }
 
+        // Migrate any legacy 'PVC Outer Shell' to 'PVC Outer Sheath'
+        bool needsSave = false;
+        foreach (var m in materials)
+        {
+            if (string.Equals(m.CategoryName, "PVC Outer Shell", StringComparison.OrdinalIgnoreCase))
+            {
+                m.CategoryName = "PVC Outer Sheath";
+                materialRepo.Update(m);
+                needsSave = true;
+            }
+        }
+        if (needsSave)
+        {
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+        }
+
         var materialDtos = materials.Select(m => new ItemConfigMaterialDto(
             m.Id,
             m.Name,
             string.IsNullOrWhiteSpace(m.CategoryName) ? "Core Material" : m.CategoryName,
             m.Density
         )).ToList();
+
+        // Dynamically extract all distinct categories from materials
+        var dynamicCategories = materials
+            .Where(m => !string.IsNullOrWhiteSpace(m.CategoryName))
+            .Select(m => m.CategoryName!.Trim())
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        var standardCategoriesList = new List<string>();
+        foreach (var defCat in DefaultCategoryOrder)
+        {
+            var matched = dynamicCategories.FirstOrDefault(c => c.Equals(defCat, StringComparison.OrdinalIgnoreCase));
+            standardCategoriesList.Add(matched ?? defCat);
+        }
+        foreach (var dynCat in dynamicCategories)
+        {
+            if (!standardCategoriesList.Any(c => c.Equals(dynCat, StringComparison.OrdinalIgnoreCase)))
+            {
+                standardCategoriesList.Add(dynCat);
+            }
+        }
 
         var skuRepo = _unitOfWork.Repository<Sku>();
         var skus = await skuRepo.Query()
@@ -102,7 +139,7 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
         }
 
         var result = new ItemConfigMatrixDto(
-            DefaultCategoryOrder.ToList(),
+            standardCategoriesList,
             materialDtos,
             rows
         );
@@ -123,7 +160,7 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
             ("PVC-FRLSH(I/SH)", "Inner Sheath", 1.48m),
             ("AL ARMOUR", "Armour Wire", 2.703m),
             ("G.S. ARMOUR", "Armour Wire", 7.85m),
-            ("PVC-ST-2 FRLSH (O/SH)", "PVC Outer Shell", 1.45m)
+            ("PVC-ST-2 FRLSH (O/SH)", "PVC Outer Sheath", 1.45m)
         };
 
         bool hasChanges = false;
