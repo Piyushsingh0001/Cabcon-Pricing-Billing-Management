@@ -9,6 +9,10 @@
         <mat-icon style="position: absolute; left: 10px; top: 5px; color: var(--text-secondary);">search</mat-icon>
         <input type="text" class="in" style="padding-left: 36px; width: 220px;" placeholder="Search products..." [(ngModel)]="searchQuery" (keyup)="onSearchChange()">
       </div>
+      <button class="btn-ghost" (click)="openItemConfiguration()" *ngIf="canCreate()" title="Configure correlation of weight (kg/km) per specification and variant">
+        <mat-icon style="font-size: 18px; width: 18px; height: 18px; margin-right: 4px; vertical-align: middle;">tune</mat-icon>
+        Item Configuration
+      </button>
       <button class="btn-ghost" (click)="addSku()" *ngIf="canCreate()">
         + Add product
       </button>

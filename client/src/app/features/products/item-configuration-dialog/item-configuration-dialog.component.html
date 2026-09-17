@@ -1,0 +1,253 @@
+<div class="item-config-dialog">
+  <!-- Dialog Header -->
+  <div class="dialog-header">
+    <div class="header-left">
+      <div class="title-row">
+        <mat-icon class="header-icon">tune</mat-icon>
+        <h2 class="dialog-title">Item Configuration & Weight Matrix</h2>
+        <span class="sync-badge" *ngIf="loading()" style="font-size: 11px; color: #2563eb; display: inline-flex; align-items: center; gap: 4px; background: #eff6ff; padding: 2px 8px; border-radius: 4px; font-weight: 600;">
+          <mat-icon class="spin-icon" style="font-size: 14px; width: 14px; height: 14px;">sync</mat-icon> Syncing...
+        </span>
+      </div>
+      <p class="dialog-subtitle">
+        Configure correlation of weight (kg/km) required per specification and variant. Auto-calculate from Area & Density concept or override manually.
+      </p>
+    </div>
+    <div class="header-right">
+      <button mat-icon-button (click)="close()" title="Close" class="close-btn">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Control Bar -->
+  <div class="control-bar">
+    <div class="search-box">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" class="in search-input" placeholder="Search spec or variant..." [(ngModel)]="searchQuery">
+    </div>
+
+    <div class="action-buttons-group">
+      <button class="btn-secondary" (click)="showDensitySettings = !showDensitySettings" [class.active-btn]="showDensitySettings">
+        <mat-icon class="btn-icon">science</mat-icon>
+        {{ showDensitySettings ? 'Hide Material Density' : 'Material Density' }}
+      </button>
+
+      <button class="btn-secondary" (click)="autoCalculateAll()" title="Auto-calculate weights for all rows based on Area & Density">
+        <mat-icon class="btn-icon">bolt</mat-icon>
+        Auto-Calculate
+      </button>
+
+      <button class="btn-secondary" (click)="openAddRowModal()">
+        <mat-icon class="btn-icon">add_circle</mat-icon>
+        + Add Specification
+      </button>
+
+      <button class="btn-primary" (click)="saveConfiguration()" [disabled]="saving()">
+        <mat-icon class="btn-icon">save</mat-icon>
+        {{ saving() ? 'Saving...' : 'Save Configuration' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Density Settings Collapsible Panel -->
+  <div class="density-panel" *ngIf="showDensitySettings">
+    <div class="density-panel-header">
+      <div class="dp-title">
+        <mat-icon>science</mat-icon>
+        <span>Material Density Configuration (g/cm³ or kg/dm³)</span>
+      </div>
+      <span class="dp-hint">Used for physics-based weight auto-calculation: Weight (kg/km) = Conductor Area (mm²) × Density</span>
+    </div>
+    <div class="density-grid">
+      <div class="density-item" *ngFor="let mat of materials">
+        <div class="density-item-info">
+          <span class="mat-name">{{ mat.name }}</span>
+          <span class="mat-cat">{{ mat.categoryName }}</span>
+        </div>
+        <div class="density-input-wrap">
+          <input type="number" step="0.001" min="0" class="in density-in" [(ngModel)]="mat.density" (ngModelChange)="onDensityChange()">
+          <span class="density-unit">g/cm³</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matrix Table Scroll Wrapper (Always rendered) -->
+  <div class="matrix-table-container">
+    <table class="matrix-table">
+      <thead>
+        <!-- Level 1 Headers (Categories) -->
+        <tr class="header-level-1">
+          <th rowspan="2" class="sticky-col col-spec">Specification</th>
+          <th rowspan="2" class="sticky-col col-variant">Variant</th>
+
+          <ng-container *ngFor="let group of groupedCategories">
+            <th [attr.colspan]="group.materials.length" [ngClass]="group.headerColorClass" class="category-header-cell">
+              <div class="cat-header-content">
+                <span class="cat-title">{{ group.categoryName }}</span>
+                <button class="add-mat-mini-btn" (click)="openAddMaterialModal(group.categoryName)" title="Add new material under {{ group.categoryName }}">
+                  + Add
+                </button>
+              </div>
+            </th>
+          </ng-container>
+
+          <th rowspan="2" class="col-total">Total (kg/km)</th>
+          <th rowspan="2" class="col-actions"></th>
+        </tr>
+
+        <!-- Level 2 Headers (Specific Materials) -->
+        <tr class="header-level-2">
+          <ng-container *ngFor="let group of groupedCategories">
+            <th *ngFor="let mat of group.materials" class="material-sub-header" [ngClass]="group.headerColorClass + '-sub'">
+              <div class="mat-header-cell-inner">
+                <span class="mat-name-label" [title]="mat.name">{{ mat.name }}</span>
+                <span class="density-pill" [title]="'Density: ' + mat.density + ' g/cm³'">d: {{ mat.density }}</span>
+              </div>
+            </th>
+          </ng-container>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let row of filteredRows; let rowIndex = index" class="data-row">
+          <!-- Specification Column -->
+          <td class="sticky-col col-spec spec-cell">
+            <input type="text" class="cell-input spec-input" [(ngModel)]="row.spec" (blur)="autoCalculateRowWeight(row)" placeholder="e.g. 2 C X 4 sq.mm.">
+          </td>
+
+          <!-- Variant Column -->
+          <td class="sticky-col col-variant variant-cell">
+            <input type="text" class="cell-input variant-input" [(ngModel)]="row.variant" (blur)="autoCalculateRowWeight(row)" placeholder="e.g. 2XWY">
+          </td>
+
+          <!-- Dynamic Material Columns -->
+          <ng-container *ngFor="let group of groupedCategories">
+            <td *ngFor="let mat of group.materials" class="weight-cell" [class.has-weight]="(row.weights[mat.id] || 0) > 0">
+              <input
+                type="number"
+                step="1"
+                min="0"
+                class="cell-input weight-input"
+                [ngModel]="row.weights[mat.id] !== undefined ? row.weights[mat.id] : 0"
+                (ngModelChange)="setWeight(row, mat.id, $event)"
+                placeholder="0"
+              >
+            </td>
+          </ng-container>
+
+          <!-- Total Weight Column -->
+          <td class="col-total total-cell">
+            <span class="total-badge">{{ getRowTotalWeight(row) | number:'1.0-2' }}</span>
+          </td>
+
+          <!-- Actions Column -->
+          <td class="col-actions actions-cell">
+            <button mat-icon-button class="row-delete-btn" (click)="deleteRow(rowIndex)" title="Delete Row">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </td>
+        </tr>
+
+        <!-- Empty State -->
+        <tr *ngIf="filteredRows.length === 0">
+          <td [attr.colspan]="materials.length + 4" class="empty-cell">
+            <div class="empty-state">
+              <mat-icon>inventory_2</mat-icon>
+              <span>No specifications found matching search query.</span>
+              <button class="btn-secondary" (click)="openAddRowModal()">+ Add New Specification</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Dialog Footer -->
+  <div class="dialog-footer">
+    <div class="footer-summary">
+      <span><strong>{{ rows.length }}</strong> Specifications / Variants</span>
+      <span class="dot-sep">•</span>
+      <span><strong>{{ materials.length }}</strong> Raw Materials</span>
+      <span class="dot-sep">•</span>
+      <span class="hint-text">Weights are in kg per km. Overridden values are directly saved.</span>
+    </div>
+    <div class="footer-actions">
+      <button class="btn-ghost" (click)="close()">Cancel</button>
+      <button class="btn-primary" (click)="saveConfiguration()" [disabled]="saving()">
+        <mat-icon class="btn-icon">check_circle</mat-icon>
+        {{ saving() ? 'Saving Changes...' : 'Save Configuration' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Add Material Modal Overlay -->
+  <div class="custom-modal-overlay" *ngIf="showAddMaterialModal">
+    <div class="custom-modal-card glass-card">
+      <div class="modal-card-header">
+        <h3>+ Add Material to {{ newMaterial.categoryName }}</h3>
+        <button mat-icon-button (click)="closeAddMaterialModal()"><mat-icon>close</mat-icon></button>
+      </div>
+      <div class="modal-card-body">
+        <div class="form-group">
+          <label>Material Name</label>
+          <input type="text" class="in" [(ngModel)]="newMaterial.name" placeholder="e.g. PVC-FRLS (ST-2)">
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select class="sel" [(ngModel)]="newMaterial.categoryName">
+            <option *ngFor="let cat of standardCategories" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Density (g/cm³ or kg/dm³)</label>
+          <input type="number" step="0.001" class="in" [(ngModel)]="newMaterial.density" placeholder="e.g. 1.45">
+          <small class="help-text">CU: 8.89, AL: 2.703, XLPE: 0.92, PVC: 1.45, GI Steel: 7.85</small>
+        </div>
+      </div>
+      <div class="modal-card-footer">
+        <button class="btn-ghost" (click)="closeAddMaterialModal()">Cancel</button>
+        <button class="btn-primary" (click)="confirmAddMaterial()">Add Material</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Specification / Row Modal Overlay -->
+  <div class="custom-modal-overlay" *ngIf="showAddRowModal">
+    <div class="custom-modal-card glass-card">
+      <div class="modal-card-header">
+        <h3>+ Add New Specification Row</h3>
+        <button mat-icon-button (click)="closeAddRowModal()"><mat-icon>close</mat-icon></button>
+      </div>
+      <div class="modal-card-body">
+        <div class="form-group">
+          <label>Specification</label>
+          <input type="text" class="in" [(ngModel)]="newRow.spec" placeholder="e.g. 3.5 C X 95 sq.mm. or 4 C X 10 sq.mm.">
+          <small class="help-text">Format: [Cores] C X [Area] sq.mm. (e.g. 3 C X 2.5 sq.mm.)</small>
+        </div>
+        <div class="form-group">
+          <label>Variant</label>
+          <input type="text" class="in" [(ngModel)]="newRow.variant" placeholder="e.g. 2XWY, 2XFY, A2XFY">
+          <div class="variant-tags">
+            <span class="v-tag" *ngFor="let v of availableVariants" (click)="newRow.variant = v">{{ v }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select class="sel" [(ngModel)]="newRow.categoryName">
+            <option value="LT Cable">LT Cable</option>
+            <option value="Housing Wire FR">Housing Wire FR</option>
+            <option value="Conductor">Conductor</option>
+            <option value="HT Cable">HT Cable</option>
+            <option value="Control Cable">Control Cable</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-card-footer">
+        <button class="btn-ghost" (click)="closeAddRowModal()">Cancel</button>
+        <button class="btn-primary" (click)="confirmAddRow()">Add Specification</button>
+      </div>
+    </div>
+  </div>
+</div>

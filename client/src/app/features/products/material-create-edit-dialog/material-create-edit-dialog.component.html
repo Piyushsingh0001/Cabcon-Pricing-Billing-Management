@@ -1,83 +1,39 @@
+<h2 mat-dialog-title>{{ material ? 'Edit Material Details' : 'Add Material' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="edit-form">
+    <!-- Row 1: Material Name -->
+    <mat-form-field appearance="outline" class="full-width-field">
+      <mat-label>Material Name</mat-label>
+      <input matInput formControlName="name" placeholder="e.g. Copper wire, XLPE, GI Steel Wire">
+      <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+      <mat-error *ngIf="form.get('name')?.hasError('nameExists')">Material name already exists</mat-error>
+    </mat-form-field>
 
-    <h2 mat-dialog-title>{{ material ? 'Edit Material Details' : 'Add Material' }}</h2>
-    <mat-dialog-content>
-      <form [formGroup]="form" class="edit-form">
-        <!-- Row 1: Material Name & Vendor Name -->
-        <div class="form-row-2col">
-          <mat-form-field appearance="outline" [class.full-width]="form.get('type')?.value === 0">
-            <mat-label>Material Name</mat-label>
-            <input matInput formControlName="name" placeholder="e.g. Copper wire">
-            <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
-            <mat-error *ngIf="form.get('name')?.hasError('nameExists')">Material name already exists</mat-error>
-          </mat-form-field>
+    <!-- Row 2: Category Name & Density -->
+    <div class="form-row-2col">
+      <mat-form-field appearance="outline">
+        <mat-label>Category Name</mat-label>
+        <mat-select formControlName="categoryName" (selectionChange)="onCategoryChange($event.value)">
+          <mat-option *ngFor="let cat of categories" [value]="cat">
+            {{ cat }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('categoryName')?.hasError('required')">Category is required</mat-error>
+      </mat-form-field>
 
-          <mat-form-field appearance="outline" *ngIf="form.get('type')?.value === 1">
-            <mat-label>Vendor Name</mat-label>
-            <mat-select formControlName="vendorName">
-              <mat-option *ngFor="let vendor of availableVendors" [value]="vendor">
-                {{ vendor }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <!-- Row 2: Material Type -->
-        <mat-form-field appearance="outline" class="full-width-field">
-          <mat-label>Material Type</mat-label>
-          <mat-select formControlName="type" (selectionChange)="onTypeChange($event.value)">
-            <mat-option [value]="0">Exchange-linked</mat-option>
-            <mat-option [value]="1">Direct Rate</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <!-- Row 3: Section of Material Type -->
-        <div class="rate-fields-section">
-          <ng-container *ngIf="form.get('type')?.value === 0">
-            <h3 class="section-title">Section of Material Type: Exchange-linked Metrics</h3>
-            <div class="metrics-grid">
-              <mat-form-field appearance="outline">
-                <mat-label>LME (USD/MT)</mat-label>
-                <input matInput formControlName="lmeUsdPerMt" type="number" placeholder="0.00">
-                <mat-error *ngIf="form.get('lmeUsdPerMt')?.hasError('required')">LME is required</mat-error>
-                <mat-error *ngIf="form.get('lmeUsdPerMt')?.hasError('min')">Must be ≥ 0</mat-error>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Premium (USD/MT)</mat-label>
-                <input matInput formControlName="premiumUsdPerMt" type="number" placeholder="0.00">
-                <mat-error *ngIf="form.get('premiumUsdPerMt')?.hasError('required')">Premium is required</mat-error>
-                <mat-error *ngIf="form.get('premiumUsdPerMt')?.hasError('min')">Must be ≥ 0</mat-error>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Fx Rate (₹/$)</mat-label>
-                <input matInput formControlName="fxRate" type="number" step="0.01" placeholder="0.00">
-                <mat-error *ngIf="form.get('fxRate')?.hasError('required')">FX Rate is required</mat-error>
-                <mat-error *ngIf="form.get('fxRate')?.hasError('min')">Must be ≥ 0</mat-error>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Freight (₹/MT)</mat-label>
-                <input matInput formControlName="freightInrPerMt" type="number" placeholder="0.00">
-                <mat-error *ngIf="form.get('freightInrPerMt')?.hasError('required')">Freight is required</mat-error>
-                <mat-error *ngIf="form.get('freightInrPerMt')?.hasError('min')">Must be ≥ 0</mat-error>
-              </mat-form-field>
-            </div>
-          </ng-container>
-
-          <ng-container *ngIf="form.get('type')?.value === 1">
-            <h3 class="section-title">Section of Material Type: Direct Pricing</h3>
-            <mat-form-field appearance="outline">
-              <mat-label>Direct Rate (₹/kg)</mat-label>
-              <input matInput formControlName="directRateInrPerKg" type="number" step="0.01" placeholder="0.00">
-              <mat-error *ngIf="form.get('directRateInrPerKg')?.hasError('required')">Direct Rate is required</mat-error>
-              <mat-error *ngIf="form.get('directRateInrPerKg')?.hasError('min')">Must be ≥ 0</mat-error>
-            </mat-form-field>
-          </ng-container>
-        </div>
-      </form>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-flat-button class="btn-primary" [disabled]="form.invalid || loading()" (click)="onSubmit()">
-        {{ material ? 'Save Changes' : 'Create Material' }}
-      </button>
-    </mat-dialog-actions>
-  
+      <mat-form-field appearance="outline">
+        <mat-label>Density</mat-label>
+        <input matInput formControlName="density" type="number" step="0.001" placeholder="e.g. 8.89">
+        <span matTextSuffix style="font-size: 11px; color: var(--text-secondary); margin-right: 6px;">g/cm³</span>
+        <mat-error *ngIf="form.get('density')?.hasError('required')">Density is required</mat-error>
+        <mat-error *ngIf="form.get('density')?.hasError('min')">Must be ≥ 0</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button class="btn-primary" [disabled]="form.invalid || loading()" (click)="onSubmit()">
+    {{ material ? 'Save Changes' : 'Create Material' }}
+  </button>
+</mat-dialog-actions>

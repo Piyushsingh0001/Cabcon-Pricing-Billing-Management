@@ -13,6 +13,7 @@ import { PricingService, Sku, Category, Material } from '../../core/pricing.serv
 import { AuthService } from '../../core/auth.service';
 import { SkuEditDialogComponent } from './sku-edit-dialog/sku-edit-dialog.component';
 import { CategoryManageDialogComponent } from './category-manage-dialog/category-manage-dialog.component';
+import { ItemConfigurationDialogComponent } from './item-configuration-dialog/item-configuration-dialog.component';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -29,7 +30,8 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dial
     MatIconModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    ItemConfigurationDialogComponent
   ],
   templateUrl: './skus.component.html',
   styleUrls: ['./skus.component.scss']
@@ -293,6 +295,19 @@ export class SkusComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => {
       this.loadCategories();
+    });
+  }
+
+  public openItemConfiguration() {
+    const dialogRef = this.dialog.open(ItemConfigurationDialogComponent, {
+      panelClass: 'dialog-tier-matrix',
+      data: null
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadSkus();
+      }
     });
   }
 

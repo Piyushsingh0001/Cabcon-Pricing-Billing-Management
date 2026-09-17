@@ -222,6 +222,18 @@ html, body {
   min-width: 640px !important;
   max-width: min(94vw, 920px) !important;
 }
+.dialog-tier-matrix {
+  width: 96vw !important;
+  max-width: 1600px !important;
+  height: 90vh !important;
+  max-height: 920px !important;
+
+  .mat-mdc-dialog-surface {
+    padding: 0 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+}
 .dialog-auto-fit {
   width: auto !important;
   max-width: calc(100vw - 32px) !important;

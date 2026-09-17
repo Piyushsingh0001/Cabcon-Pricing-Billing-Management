@@ -33,6 +33,8 @@ public record MaterialDto
     public decimal PrevMonthAvgLme { get; init; }
     public decimal ThisMonthAvgDirect { get; init; }
     public decimal PrevMonthAvgDirect { get; init; }
+    public string? CategoryName { get; init; }
+    public decimal Density { get; init; }
     /// <summary>True when a history record for today already exists for LME/Exchange type.</summary>
     public bool IsTodayUpdatedLme { get; init; }
     /// <summary>True when a history record for today already exists for Direct type.</summary>
@@ -194,6 +196,8 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                     UpdatedBy = todayLme?.UpdatedBy ?? todayDirect?.UpdatedBy ?? latestLme?.UpdatedBy ?? latestDirect?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
                     VendorName = null,
                     VendorId = null,
+                    CategoryName = m.CategoryName,
+                    Density = m.Density,
                     MissingDaysCountLme = missingCountLme,
                     MissingDaysCountDirect = missingCountDirect,
                     ThisMonthAvgLme = thisMonthAvgLme,
@@ -246,6 +250,8 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                         UpdatedBy = vTodayDirect?.UpdatedBy ?? todayLme?.UpdatedBy ?? vLatestDirect?.UpdatedBy ?? latestLme?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
                         VendorName = v.Name,
                         VendorId = v.Id,
+                        CategoryName = m.CategoryName,
+                        Density = m.Density,
                         MissingDaysCountLme = missingCountLme,
                         MissingDaysCountDirect = vMissingCountDirect,
                         ThisMonthAvgLme = thisMonthAvgLme,

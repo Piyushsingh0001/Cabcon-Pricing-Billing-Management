@@ -27,6 +27,8 @@ export interface Category {
 export interface Material {
   id: number;
   name: string;
+  categoryName?: string;
+  density?: number;
   vendorName?: string;
   vendorId?: number;
   type: number; // 0 = Exchange, 1 = Direct
@@ -264,7 +266,10 @@ export class PricingService {
 
   public createMaterial(payload: {
     name: string;
-    type: number;
+    categoryName?: string;
+    density?: number;
+    type?: number;
+    vendorName?: string;
     lmeUsdPerMt?: number;
     premiumUsdPerMt?: number;
     fxRate?: number;
@@ -274,7 +279,13 @@ export class PricingService {
     return this.http.post<number>(`${this.apiBase}/materials`, payload);
   }
 
-  public updateMaterial(id: number, payload: { name: string; type: number }): Observable<void> {
+  public updateMaterial(id: number, payload: {
+    name: string;
+    categoryName?: string;
+    density?: number;
+    type?: number;
+    vendorName?: string;
+  }): Observable<void> {
     return this.http.put<void>(`${this.apiBase}/materials/${id}`, payload);
   }
 
@@ -547,6 +558,53 @@ export class PricingService {
   public saveVendorMaterialMappingsApi(payload: { materialName: string; vendorNames: string[] }[]): Observable<boolean> {
     return this.http.post<boolean>(`${this.apiBase}/vendors/material-mappings`, { mappings: payload });
   }
+
+  // --- ITEM CONFIGURATION MATRIX API ---
+  public getItemConfigMatrix(): Observable<ItemConfigMatrix> {
+    return this.http.get<ItemConfigMatrix>(`${this.apiBase}/item-configuration/matrix`);
+  }
+
+  public saveItemConfigMatrix(payload: SaveItemConfigPayload): Observable<any> {
+    return this.http.post<any>(`${this.apiBase}/item-configuration/matrix`, payload);
+  }
+}
+
+export interface ItemConfigMaterial {
+  id: number;
+  name: string;
+  categoryName: string;
+  density: number;
+}
+
+export interface ItemConfigRow {
+  skuId?: number | null;
+  spec: string;
+  variant: string;
+  categoryId?: number;
+  categoryName?: string;
+  weights: { [materialId: number]: number };
+}
+
+export interface ItemConfigMatrix {
+  standardCategories: string[];
+  materials: ItemConfigMaterial[];
+  rows: ItemConfigRow[];
+}
+
+export interface SaveItemConfigPayload {
+  materials: {
+    id?: number | null;
+    name: string;
+    categoryName: string;
+    density: number;
+  }[];
+  rows: {
+    skuId?: number | null;
+    spec: string;
+    variant: string;
+    categoryId?: number;
+    weights: { [materialId: number]: number };
+  }[];
 }
 
 export interface UserDto {

@@ -64,7 +64,7 @@ public class MaterialsController : ControllerBase
     [HasPermission(AppPermissions.Pricing.Update)]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateMaterialRequest request, CancellationToken ct)
     {
-        var result = await _mediator.Send(new UpdateMaterialCommand(id, request.Name, request.VendorName, request.Type), ct);
+        var result = await _mediator.Send(new UpdateMaterialCommand(id, request.Name, request.VendorName, request.Type, request.CategoryName, request.Density), ct);
         return result.Succeeded ? NoContent() : BadRequest(result.Errors);
     }
 
@@ -110,7 +110,7 @@ public class MaterialsController : ControllerBase
     }
 }
 
-public record UpdateMaterialRequest(string Name, string? VendorName, MaterialType Type);
+public record UpdateMaterialRequest(string Name, string? VendorName = null, MaterialType? Type = null, string? CategoryName = null, decimal? Density = null);
 
 public record GetMaterialsRequest(
     string? Search = null,

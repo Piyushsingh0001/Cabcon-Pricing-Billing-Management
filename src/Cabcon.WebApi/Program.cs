@@ -144,6 +144,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Automatically apply any pending EF Core database migrations on startup
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<CabconDbContext>();
+        await db.Database.MigrateAsync();
+    }
+    catch (Exception ex)
+    {
+        Log.Error(ex, "An error occurred while applying database migrations on startup.");
+    }
+}
+
 // ---- Middleware pipeline (order matters - matches Request Flow in architecture doc) ----
 // GlobalException wraps everything so it can catch exceptions from any later
 // middleware too. RequestResponseLogging captures the raw HTTP exchange.

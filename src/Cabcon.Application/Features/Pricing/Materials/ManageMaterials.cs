@@ -12,14 +12,16 @@ namespace Cabcon.Application.Features.Pricing.Materials;
 // --- CREATE MATERIAL ---
 public record CreateMaterialCommand(
     string Name,
-    string? VendorName,
-    MaterialType? Type,
-    decimal? LmeUsdPerMt,
-    decimal? PremiumUsdPerMt,
-    decimal? FxRate,
-    decimal? FreightInrPerKg,
-    decimal? FreightInrPerMt,
-    decimal? DirectRateInrPerKg
+    string? VendorName = null,
+    MaterialType? Type = null,
+    decimal? LmeUsdPerMt = null,
+    decimal? PremiumUsdPerMt = null,
+    decimal? FxRate = null,
+    decimal? FreightInrPerKg = null,
+    decimal? FreightInrPerMt = null,
+    decimal? DirectRateInrPerKg = null,
+    string? CategoryName = null,
+    decimal? Density = null
 ) : IRequest<Result<int>>;
 
 public class CreateMaterialCommandValidator : AbstractValidator<CreateMaterialCommand>
@@ -65,7 +67,9 @@ public class CreateMaterialCommandHandler : IRequestHandler<CreateMaterialComman
         {
             material = new Material
             {
-                Name = trimmedName
+                Name = trimmedName,
+                CategoryName = request.CategoryName,
+                Density = request.Density ?? 0m
             };
             await repository.AddAsync(material, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -73,6 +77,16 @@ public class CreateMaterialCommandHandler : IRequestHandler<CreateMaterialComman
         else
         {
             material = existingMaterial;
+            if (!string.IsNullOrWhiteSpace(request.CategoryName))
+            {
+                material.CategoryName = request.CategoryName;
+            }
+            if (request.Density.HasValue)
+            {
+                material.Density = request.Density.Value;
+            }
+            repository.Update(material);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
         // Check if vendor mapping is supplied
@@ -147,7 +161,9 @@ public record UpdateMaterialCommand(
     int Id,
     string Name,
     string? VendorName = null,
-    MaterialType? Type = null
+    MaterialType? Type = null,
+    string? CategoryName = null,
+    decimal? Density = null
 ) : IRequest<Result>;
 
 public class UpdateMaterialCommandValidator : AbstractValidator<UpdateMaterialCommand>
@@ -187,6 +203,14 @@ public class UpdateMaterialCommandHandler : IRequestHandler<UpdateMaterialComman
         }
 
         material.Name = trimmedName;
+        if (!string.IsNullOrWhiteSpace(request.CategoryName))
+        {
+            material.CategoryName = request.CategoryName;
+        }
+        if (request.Density.HasValue)
+        {
+            material.Density = request.Density.Value;
+        }
         repository.Update(material);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Success();

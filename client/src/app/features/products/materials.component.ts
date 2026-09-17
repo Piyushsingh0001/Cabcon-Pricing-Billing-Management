@@ -190,6 +190,17 @@ export class MaterialsComponent implements OnInit {
     return `Price set missing for vendor ${items.join(', ')}`;
   }
 
+  public getCategoryThemeClass(categoryName?: string): string {
+    if (!categoryName) return 'theme-default';
+    const norm = categoryName.trim().toLowerCase();
+    if (norm.includes('core')) return 'theme-core';
+    if (norm.includes('insulation')) return 'theme-insulation';
+    if (norm.includes('inner')) return 'theme-inner-sheath';
+    if (norm.includes('armour') || norm.includes('armor')) return 'theme-armour';
+    if (norm.includes('outer') || norm.includes('pvc') || norm.includes('shell') || norm.includes('sheath')) return 'theme-outer-shell';
+    return 'theme-default';
+  }
+
   public openBackfill(group: any) {
     if (!this.canUpdate() || !group) return;
 
@@ -241,6 +252,40 @@ export class MaterialsComponent implements OnInit {
     return this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
   }
 
+  private sortMaterialGroups(): void {
+    const categoryOrder: { [cat: string]: number } = {
+      'core material': 1,
+      'insulation material': 2,
+      'inner sheath': 3,
+      'armour wire': 4,
+      'pvc outer shell': 5
+    };
+
+    const getCategoryRank = (cat?: string): number => {
+      if (!cat || !cat.trim()) return 99;
+      const lower = cat.trim().toLowerCase();
+      for (const key in categoryOrder) {
+        if (lower.includes(key) || key.includes(lower)) {
+          return categoryOrder[key];
+        }
+      }
+      return 50;
+    };
+
+    this.materialGroups.sort((a, b) => {
+      const rankA = getCategoryRank(a.categoryName);
+      const rankB = getCategoryRank(b.categoryName);
+      if (rankA !== rankB) {
+        return rankA - rankB;
+      }
+      const catCompare = (a.categoryName || '').localeCompare(b.categoryName || '');
+      if (catCompare !== 0) {
+        return catCompare;
+      }
+      return (a.name || '').localeCompare(b.name || '');
+    });
+  }
+
   public loadMaterials() {
     this.loading.set(true);
 
@@ -276,6 +321,8 @@ export class MaterialsComponent implements OnInit {
 
             groupsMap.set(m.name, {
               name: m.name,
+              categoryName: m.categoryName || '',
+              density: m.density || 0,
               selectedType: prev?.type !== undefined ? prev.type : m.type,
               variants: [],
               selectedVendorName: prev?.vendor || m.vendorName || '',
@@ -296,6 +343,12 @@ export class MaterialsComponent implements OnInit {
             });
           }
           const group = groupsMap.get(m.name);
+          if (m.categoryName && !group.categoryName) {
+            group.categoryName = m.categoryName;
+          }
+          if (m.density && !group.density) {
+            group.density = m.density;
+          }
           if (m.directRateInrPerKg === 0) {
             m.directRateInrPerKg = null as any;
           }
@@ -322,6 +375,7 @@ export class MaterialsComponent implements OnInit {
         });
 
         this.materialGroups = Array.from(groupsMap.values());
+        this.sortMaterialGroups();
         
         this.pricingService.getVendorsApi().subscribe({
           next: (vendorsRes) => {
@@ -350,6 +404,7 @@ export class MaterialsComponent implements OnInit {
                   this.updateGroupSelectedVariant(group);
                 });
 
+                this.sortMaterialGroups();
                 this.loading.set(false);
                 this.cdr.detectChanges();
               },
@@ -359,6 +414,7 @@ export class MaterialsComponent implements OnInit {
                   group.selectedVendorName = '';
                   this.updateGroupSelectedVariant(group);
                 });
+                this.sortMaterialGroups();
                 this.loading.set(false);
                 this.cdr.detectChanges();
               }
@@ -395,6 +451,24 @@ export class MaterialsComponent implements OnInit {
       panelClass: 'dialog-tier-sm',
       data: {
         material: material,
+        existingNames: existingNames
+      }
+    });
+    dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });
+  }
+
+  public editMaterialGroup(group: any) {
+    const mat = group.variants?.find((v: any) => v.id > 0) || { id: group.lmeState?.materialId || 0, name: group.name, categoryName: group.categoryName, density: group.density };
+    const existingNames = this.materialGroups.map(g => g.name);
+    const dialogRef = this.dialog.open(MaterialCreateEditDialogComponent, {
+      panelClass: 'dialog-tier-sm',
+      data: {
+        material: {
+          id: mat.id || group.lmeState?.materialId,
+          name: group.name,
+          categoryName: group.categoryName,
+          density: group.density
+        },
         existingNames: existingNames
       }
     });

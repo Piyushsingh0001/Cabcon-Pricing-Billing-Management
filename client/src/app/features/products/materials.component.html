@@ -55,7 +55,7 @@
   </div>
 
   <div class="grid">
-    <div class="card glass-card" *ngFor="let group of materialGroups">
+    <div class="card glass-card" [ngClass]="getCategoryThemeClass(group.categoryName)" *ngFor="let group of materialGroups">
       <!-- Top notification for Direct price type missing vendors -->
       <div class="card-top-alert cursor-pointer" 
            *ngIf="group.selectedType === 1 && getMissingVendors(group).length > 0"
@@ -82,8 +82,18 @@
         </div>
       </div>
 
-      <div class="material-name-row" style="margin-bottom: 4px;">
+      <div class="material-name-row">
         <input class="bare" [value]="group.name" disabled placeholder="Material Name">
+        <button mat-icon-button *ngIf="canUpdate()" (click)="editMaterialGroup(group)" title="Edit Material Details" class="edit-mat-btn">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+
+      <div class="material-meta-row" *ngIf="group.categoryName || group.density">
+        <span class="category-chip" *ngIf="group.categoryName">{{ group.categoryName }}</span>
+        <span class="density-chip" *ngIf="group.density">
+          <mat-icon class="density-icon">straighten</mat-icon> {{ group.density }} g/cm³
+        </span>
       </div>
       <!-- Vendor selector: only shown for Direct price input -->
       <div *ngIf="group.selectedType === 1" style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
