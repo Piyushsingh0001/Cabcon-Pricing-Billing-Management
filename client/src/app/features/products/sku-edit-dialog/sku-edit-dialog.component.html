@@ -73,14 +73,15 @@
             <option *ngFor="let name of uniqueMaterialNames" [value]="name">{{ name }}</option>
           </select>
 
-          <!-- LME-linked / Direct dropdown (equal width: 170px) -->
-          <select *ngIf="line.get('pricingMethod')?.value === 0 || line.get('pricingMethod')?.value === 1"
-                  class="sel" formControlName="priceType" (change)="onPricingMethodChange(idx)" style="width: 170px;">
+          <!-- LME-linked / Direct dropdown (width: 140px) -->
+          <select *ngIf="line.get('pricingMethod')?.value == 0 || line.get('pricingMethod')?.value == 1"
+                  class="sel" formControlName="priceType" (change)="onPriceTypeChange(idx)" style="width: 140px;">
             <option [value]="0">LME-linked</option>
             <option [value]="1">Direct ₹/kg</option>
           </select>
 
-          <select *ngIf="line.get('priceType')?.value === 1" class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)" style="width: 140px;">
+          <!-- Vendor dropdown (shown only if Direct ₹/kg is selected) -->
+          <select *ngIf="line.get('priceType')?.value == 1" class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)" style="width: 140px;">
             <option value="" disabled>Select Vendor</option>
             <option *ngFor="let vendor of getAvailableVendors(idx)" [value]="vendor">{{ vendor }}</option>
           </select>
@@ -96,21 +97,21 @@
         <div class="bom-line-row" style="margin-top: 8px;">
 
           <!-- Dynamic Value / Rate based on Pricing Method -->
-          <div *ngIf="line.get('pricingMethod')?.value === 0" style="display: flex; gap: 8px; align-items: center; width: 360px;">
+          <div *ngIf="line.get('pricingMethod')?.value == 0" style="display: flex; gap: 8px; align-items: center; width: 360px;">
             <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Rate ₹/kg:</span>
-            <select class="sel" formControlName="pricingMonth" (change)="onPricingMethodChange(idx)" style="flex: 1; min-width: 140px;">
+            <select class="sel" formControlName="pricingMonth" (change)="onPricingMonthChange(idx)" style="flex: 1; min-width: 140px;">
               <option [value]="0">This month avg</option>
               <option [value]="1">Prev month avg</option>
             </select>
             <span class="bom-mult-text" style="font-weight: 600; white-space: nowrap;">₹{{ line.get('manualPrice')?.value | number:'1.2-2' }}</span>
           </div>
 
-          <div *ngIf="line.get('pricingMethod')?.value === 1" style="display: flex; gap: 4px; align-items: center;">
+          <div *ngIf="line.get('pricingMethod')?.value == 1" style="display: flex; gap: 4px; align-items: center;">
             <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">Rate ₹/kg:</span>
-            <span class="bom-mult-text" style="font-weight: 600;">₹{{ getLandedCost(line.get('materialId')?.value, line.get('priceType')?.value) | number:'1.2-2' }}</span>
+            <span class="bom-mult-text" style="font-weight: 600;">₹{{ getLandedCost(line.get('materialId')?.value, line.get('priceType')?.value, line.get('vendorName')?.value, line.get('materialName')?.value) | number:'1.2-2' }}</span>
           </div>
 
-          <div *ngIf="line.get('pricingMethod')?.value === 2" style="display: flex; gap: 6px; align-items: center; width: 170px;">
+          <div *ngIf="line.get('pricingMethod')?.value == 2" style="display: flex; gap: 6px; align-items: center; width: 170px;">
             <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Rate ₹/kg:</span>
             <input class="in" style="flex: 1; min-width: 0; text-align: right;" type="number" formControlName="manualPrice" placeholder="0.00" min="0" step="0.01">
           </div>

@@ -458,21 +458,37 @@ export class SkuEditDialogComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  public getLandedCost(materialId: any, priceType?: any): number {
-    if (!materialId) return 0;
-    const mat = this.materials.find(m => m.id === materialId);
+  public getLandedCost(materialId: any, priceType?: any, vendorName?: string, matName?: string): number {
+    let mat = this.materials.find(m => m.id === materialId);
+    const pType = priceType !== undefined ? Number(priceType) : (mat?.type ?? 0);
+
+    if (matName) {
+      if (pType === 1 && vendorName) {
+        const vendorMat = this.materials.find(m => m.name.toLowerCase() === matName.toLowerCase() && m.vendorName?.toLowerCase() === vendorName.toLowerCase());
+        if (vendorMat) mat = vendorMat;
+      } else if (pType === 0) {
+        const lmeMat = this.materials.find(m => m.name.toLowerCase() === matName.toLowerCase() && m.type === 0);
+        if (lmeMat) mat = lmeMat;
+      }
+    }
+
     if (!mat) return 0;
-    
-    const pType = priceType !== undefined ? Number(priceType) : mat.type;
 
     if (pType === 0) {
       const lme = Number(mat.lmeUsdPerMt || 0);
       const premium = Number(mat.premiumUsdPerMt || 0);
       const fx = Number(mat.fxRate || 0);
       const freight = Number(mat.freightInrPerMt || 0);
-      return ((lme + premium) * fx + freight) / 1000;
+      const landed = ((lme + premium) * fx + freight) / 1000;
+      return landed > 0 ? landed : Number(mat.directRateInrPerKg || 0);
     } else {
-      return Number(mat.directRateInrPerKg || 0);
+      const direct = Number(mat.directRateInrPerKg || 0);
+      if (direct > 0) return direct;
+      const lme = Number(mat.lmeUsdPerMt || 0);
+      const premium = Number(mat.premiumUsdPerMt || 0);
+      const fx = Number(mat.fxRate || 0);
+      const freight = Number(mat.freightInrPerMt || 0);
+      return ((lme + premium) * fx + freight) / 1000;
     }
   }
 
@@ -480,8 +496,8 @@ export class SkuEditDialogComponent implements OnInit {
     const line = this.bomLines.at(idx);
     if (!line) return 0;
     const matId = line.get('materialId')?.value;
-    if (!matId) return 0;
-    
+    const matName = line.get('materialName')?.value;
+    const vendName = line.get('vendorName')?.value;
     const weightKg = Number(line.get('weightKg')?.value || 0);
 
     const method = Number(line.get('pricingMethod')?.value);
@@ -489,7 +505,7 @@ export class SkuEditDialogComponent implements OnInit {
     let unitPrice = 0;
 
     if (method === 1) { // Actual
-      unitPrice = this.getLandedCost(matId, pType);
+      unitPrice = this.getLandedCost(matId, pType, vendName, matName);
     } else {
       unitPrice = Number(line.get('manualPrice')?.value || 0);
     }
@@ -510,33 +526,119 @@ export class SkuEditDialogComponent implements OnInit {
     return this.getTotalBomCost() * (qty > 0 ? qty : 1);
   }
 
+  public onPriceTypeChange(idx: number) {
+    const line = this.bomLines.at(idx);
+    if (!line) return;
+    const pType = Number(line.get('priceType')?.value || 0);
+    line.patchValue({ priceType: pType }, { emitEvent: false });
+    const vendorCtrl = line.get('vendorName');
+    const matName = line.get('materialName')?.value;
+
+    if (pType === 0) { // LME-linked
+      vendorCtrl?.disable();
+      line.patchValue({ vendorName: '' });
+      const mat = this.materials.find(m => m.name.toLowerCase() === matName?.toLowerCase() && m.type === 0)
+               || this.materials.find(m => m.name.toLowerCase() === matName?.toLowerCase());
+      if (mat) {
+        line.patchValue({ materialId: mat.id });
+      }
+    } else { // Direct Rate
+      vendorCtrl?.enable();
+      const available = this.getAvailableVendors(idx);
+      if (available.length > 0) {
+        const currentVend = line.get('vendorName')?.value;
+        const selectedVend = (currentVend && available.includes(currentVend)) ? currentVend : available[0];
+        line.patchValue({ vendorName: selectedVend });
+        const mat = this.materials.find(m => m.name.toLowerCase() === matName?.toLowerCase() && m.vendorName?.toLowerCase() === selectedVend.toLowerCase())
+                 || this.materials.find(m => m.name.toLowerCase() === matName?.toLowerCase());
+        if (mat) {
+          line.patchValue({ materialId: mat.id });
+        }
+      } else {
+        const mat = this.materials.find(m => m.name.toLowerCase() === matName?.toLowerCase() && m.type === 1)
+                 || this.materials.find(m => m.name.toLowerCase() === matName?.toLowerCase());
+        if (mat) {
+          line.patchValue({ materialId: mat.id });
+        }
+      }
+    }
+
+    const method = Number(line.get('pricingMethod')?.value);
+    if (method === 0) {
+      this.calculateAveragePrice(idx);
+    }
+    this.checkUniqueness();
+    this.cdr.detectChanges();
+  }
+
+  public onPricingMonthChange(idx: number) {
+    this.calculateAveragePrice(idx);
+  }
+
   public onPricingMethodChange(idx: number) {
     const line = this.bomLines.at(idx);
+    if (!line) return;
     const method = Number(line.get('pricingMethod')?.value);
     
     if (method === 0) { // Average
       this.calculateAveragePrice(idx);
+    } else if (method === 2) { // Manual
+      const currentManual = Number(line.get('manualPrice')?.value || 0);
+      if (currentManual === 0) {
+        const matId = line.get('materialId')?.value;
+        const pType = Number(line.get('priceType')?.value);
+        const vendName = line.get('vendorName')?.value;
+        const matName = line.get('materialName')?.value;
+        const actualCost = this.getLandedCost(matId, pType, vendName, matName);
+        line.patchValue({ manualPrice: actualCost });
+      }
     }
     this.cdr.detectChanges();
   }
 
   public calculateAveragePrice(idx: number) {
     const line = this.bomLines.at(idx);
-    const matId = line.get('materialId')?.value;
+    if (!line) return;
+    const matName = line.get('materialName')?.value;
+    const vendName = line.get('vendorName')?.value;
+    let matId = line.get('materialId')?.value;
     const pType = Number(line.get('priceType')?.value || 0);
     const pMonth = Number(line.get('pricingMonth')?.value || 0);
-    
+
+    let mat = this.materials.find(m => m.id === matId);
+    if (matName) {
+      if (pType === 1 && vendName) {
+        const vMat = this.materials.find(m => m.name.toLowerCase() === matName.toLowerCase() && m.vendorName?.toLowerCase() === vendName.toLowerCase());
+        if (vMat) { mat = vMat; matId = vMat.id; line.patchValue({ materialId: vMat.id }, { emitEvent: false }); }
+      } else if (pType === 0) {
+        const lMat = this.materials.find(m => m.name.toLowerCase() === matName.toLowerCase() && m.type === 0);
+        if (lMat) { mat = lMat; matId = lMat.id; line.patchValue({ materialId: lMat.id }, { emitEvent: false }); }
+      }
+    }
+
+    if (mat) {
+      let avg = 0;
+      if (pType === 0) {
+        avg = pMonth === 0 ? (mat.thisMonthAvgLme || 0) : (mat.prevMonthAvgLme || 0);
+      } else {
+        avg = pMonth === 0 ? (mat.thisMonthAvgDirect || 0) : (mat.prevMonthAvgDirect || 0);
+      }
+      line.patchValue({ manualPrice: avg });
+      this.cdr.detectChanges();
+    }
+
     if (!matId || matId === 0) return;
 
-    this.pricingService.getMissingDates(matId, pType).subscribe(res => {
+    this.pricingService.getMissingDates(matId, pType).subscribe(() => {
       this.pricingService.getMaterials(undefined, pType, undefined, false, 1, 1000).subscribe(mats => {
-        const mat = mats.items.find(m => m.id === matId);
-        if (mat) {
+        const updatedMat = mats.items.find(m => m.id === matId)
+                        || mats.items.find(m => m.name.toLowerCase() === matName?.toLowerCase());
+        if (updatedMat) {
           let avg = 0;
           if (pType === 0) {
-            avg = pMonth === 0 ? (mat.thisMonthAvgLme || 0) : (mat.prevMonthAvgLme || 0);
+            avg = pMonth === 0 ? (updatedMat.thisMonthAvgLme || 0) : (updatedMat.prevMonthAvgLme || 0);
           } else {
-            avg = pMonth === 0 ? (mat.thisMonthAvgDirect || 0) : (mat.prevMonthAvgDirect || 0);
+            avg = pMonth === 0 ? (updatedMat.thisMonthAvgDirect || 0) : (updatedMat.prevMonthAvgDirect || 0);
           }
           line.patchValue({ manualPrice: avg });
           this.cdr.detectChanges();
