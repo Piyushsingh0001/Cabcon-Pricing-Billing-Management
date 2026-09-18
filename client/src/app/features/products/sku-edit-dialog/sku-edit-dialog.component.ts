@@ -164,8 +164,10 @@ export class SkuEditDialogComponent implements OnInit {
             ) || null;
           }
 
-          // Trigger BOM population if variant and spec are already set
-          this.onVariantOrSpecChange();
+          // Only trigger BOM auto-population for new products/specs, NOT when editing an existing product
+          if (!this.sku || !this.sku.id || this.sku.isAddSpec) {
+            this.onVariantOrSpecChange();
+          }
         }
       }
     });
@@ -218,9 +220,13 @@ export class SkuEditDialogComponent implements OnInit {
 
     if (!variant || !spec) return;
 
-    // Only auto-populate BOM if creating new product/spec (or if BOM is not custom saved)
-    if (this.sku && this.sku.id && !this.sku.isAddSpec && this.bomLines.length > 0 && !this.isAutoPopulatedFromMatrix) {
-      return;
+    // If editing an existing product and variant & spec have not changed, do NOT overwrite saved BOM lines
+    if (this.sku && this.sku.id && !this.sku.isAddSpec && !this.isAutoPopulatedFromMatrix) {
+      const origV = (this.sku.name || '').trim().toLowerCase();
+      const origS = (this.sku.spec || '').trim().toLowerCase();
+      if (variant.toLowerCase() === origV && spec.toLowerCase() === origS) {
+        return;
+      }
     }
 
     let matched = this.matrixRows.find(r =>
@@ -385,18 +391,23 @@ export class SkuEditDialogComponent implements OnInit {
       this.materials = res.items;
 
       // Populate form lines if editing
-      if (this.sku && this.sku.bomLines) {
+      if (this.sku && this.sku.bomLines && this.sku.bomLines.length > 0 && !this.isAutoPopulatedFromMatrix) {
+        while (this.bomLines.length !== 0) {
+          this.bomLines.removeAt(0);
+        }
+
         this.sku.bomLines.forEach((line: any) => {
-          const mat = this.materials.find(m => m.id === line.materialId);
+          const mat = this.materials.find(m => m.id === line.materialId)
+                   || this.matrixMaterials.find(m => m.id === line.materialId);
           const matName = mat ? mat.name : (line.materialName || '');
-          let vendName = mat ? (mat.vendorName || '') : (line.vendorName || '');
+          let vendName = line.vendorName || (mat as any)?.vendorName || '';
 
           const group = this.fb.group({
             materialName: [matName, Validators.required],
-            vendorName: [{value: vendName, disabled: !matName}, Validators.required],
+            vendorName: [{value: vendName, disabled: (!matName || line.priceType === 0 || (mat as any)?.type === 0)}, Validators.required],
             materialId: [line.materialId, Validators.required],
             weightKg: [line.weightKg ?? 1, [Validators.required, Validators.min(0.0001)]],
-            priceType: [line.priceType ?? (mat ? mat.type : 0), Validators.required],
+            priceType: [line.priceType ?? (mat ? (mat as any).type : 0), Validators.required],
             pricingMethod: [line.pricingMethod ?? 1, Validators.required],
             pricingMonth: [line.pricingMonth ?? 0],
             manualPrice: [line.manualPrice ?? 0]
@@ -412,7 +423,7 @@ export class SkuEditDialogComponent implements OnInit {
             }
           }
         });
-      } else {
+      } else if (this.bomLines.length === 0) {
         this.addBomLine();
       }
       this.cdr.detectChanges();

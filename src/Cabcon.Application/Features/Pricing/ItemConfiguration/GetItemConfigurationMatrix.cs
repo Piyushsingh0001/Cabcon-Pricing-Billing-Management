@@ -129,6 +129,8 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
                 .ToListAsync(cancellationToken);
         }
 
+        var matMap = materials.ToDictionary(m => m.Name.ToUpper(), m => m.Id);
+
         var rows = new List<ItemConfigRowDto>();
         foreach (var r in matrixRows)
         {
@@ -136,6 +138,34 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
             foreach (var w in r.Weights)
             {
                 weightsMap[w.MaterialId] = w.WeightKg;
+            }
+
+            // If a standard specification row currently has 0 weights in database, auto-fill baseline template values
+            if (weightsMap.Count == 0 || weightsMap.Values.All(v => v == 0))
+            {
+                var sample = StandardBaselineData.FirstOrDefault(s =>
+                    s.Spec.Equals(r.Spec, StringComparison.OrdinalIgnoreCase) &&
+                    s.Variant.Equals(r.Variant, StringComparison.OrdinalIgnoreCase));
+
+                if (sample != default)
+                {
+                    void AddDef(string matKey, decimal? weight)
+                    {
+                        if (!weight.HasValue || weight.Value <= 0) return;
+                        var matchedKey = matMap.Keys.FirstOrDefault(k => k.Contains(matKey));
+                        if (matchedKey != null && matMap.TryGetValue(matchedKey, out var matId))
+                        {
+                            weightsMap[matId] = weight.Value;
+                        }
+                    }
+
+                    AddDef("AL", sample.Al);
+                    AddDef("CU", sample.Cu);
+                    AddDef("XLPE", sample.Xlpe);
+                    AddDef("PVC-ST-2 (I/SH)", sample.Ish);
+                    AddDef("G.S. ARMOUR", sample.Gs);
+                    AddDef("PVC-ST-2 FRLSH (O/SH)", sample.Osh);
+                }
             }
 
             rows.Add(new ItemConfigRowDto(
@@ -157,27 +187,27 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
         return Result<ItemConfigMatrixDto>.Success(result);
     }
 
+    private static readonly (string Spec, string Variant, int? Al, int? Cu, int? Xlpe, int? Ish, int? Gs, int? Osh)[] StandardBaselineData = new[]
+    {
+        ("2 C X 4 sq.mm.", "2XWY", (int?)null, (int?)68, (int?)24, (int?)51, (int?)253, (int?)96),
+        ("2 C X 2.5 sq.mm.", "2XWY", null, 44, 15, 44, 210, 83),
+        ("3 C X 2.5 sq.mm.", "2XWY", null, 65, 23, 21, 226, 86),
+        ("4 C X 2.5 sq.mm.", "2XWY", null, 87, 30, 23, 251, 92),
+        ("4 C X 6 sq.mm.", "2XWY", null, 202, 54, 32, 332, 133),
+        ("7 C X 2.5 sq.mm.", "2XWY", null, 152, 53, 29, 304, 104),
+        ("12 C X 2.5 sq.mm.", "2XFY", null, 261, 90, 38, 236, 142),
+        ("19 C X 2.5 sq.mm.", "2XFY", null, 414, 143, 44, 281, 166),
+        ("4 C X 16 sq.mm.", "2XFY", null, 533, 76, 42, 317, 157),
+        ("3.5 C X 70 sq.mm.", "A2XFY", 623, null, 145, 78, 491, 271),
+        ("3.5 C X 300 sq.mm.", "A2XFY", 2670, null, 447, 195, 907, 693)
+    };
+
     private async Task EnsureDefaultMatrixRowsAsync(List<Material> materials, IRepository<WeightMatrixRow> matrixRowRepo, CancellationToken cancellationToken)
     {
         var matMap = materials.ToDictionary(m => m.Name.ToUpper(), m => m.Id);
 
-        var sampleData = new (string Spec, string Variant, int? Al, int? Cu, int? Xlpe, int? Ish, int? Gs, int? Osh)[]
-        {
-            ("2 C X 4 sq.mm.", "2XWY", null, 68, 24, 51, 253, 96),
-            ("2 C X 2.5 sq.mm.", "2XWY", null, 44, 15, 44, 210, 83),
-            ("3 C X 2.5 sq.mm.", "2XWY", null, 65, 23, 21, 226, 86),
-            ("4 C X 2.5 sq.mm.", "2XWY", null, 87, 30, 23, 251, 92),
-            ("4 C X 6 sq.mm.", "2XWY", null, 202, 54, 32, 332, 133),
-            ("7 C X 2.5 sq.mm.", "2XWY", null, 152, 53, 29, 304, 104),
-            ("12 C X 2.5 sq.mm.", "2XFY", null, 261, 90, 38, 236, 142),
-            ("19 C X 2.5 sq.mm.", "2XFY", null, 414, 143, 44, 281, 166),
-            ("4 C X 16 sq.mm.", "2XFY", null, 533, 76, 42, 317, 157),
-            ("3.5 C X 70 sq.mm.", "A2XFY", 623, null, 145, 78, 491, 271),
-            ("3.5 C X 300 sq.mm.", "A2XFY", 2670, null, 447, 195, 907, 693)
-        };
-
         int sortOrder = 0;
-        foreach (var s in sampleData)
+        foreach (var s in StandardBaselineData)
         {
             var row = new WeightMatrixRow
             {
