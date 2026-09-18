@@ -18,7 +18,7 @@ import { SkuEditDialogComponent } from '../sku-edit-dialog/sku-edit-dialog.compo
 
 
 
-import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogService } from '../../../shared/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-category-manage',
@@ -42,6 +42,7 @@ export class CategoryManageDialogComponent implements OnInit {
   private fb = inject(FormBuilder);
   private cdr = inject(ChangeDetectorRef);
   private dialog = inject(MatDialog);
+  private confirmDialog = inject(ConfirmDialogService);
   
   public categories: Category[] = [];
   public displayedColumns = ['name', 'actions'];
@@ -85,18 +86,13 @@ export class CategoryManageDialogComponent implements OnInit {
   }
 
   public deleteCategory(category: Category) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '95vw', maxWidth: '450px',
-      data: {
-        title: 'Delete Category',
-        message: `Are you sure you want to delete category "${category.name}"? This action cannot be undone.`,
-        type: 'confirm',
-        confirmText: 'Delete',
-        cancelText: 'Cancel'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(confirmed => {
+    this.confirmDialog.open({
+      title: 'Delete Category',
+      message: `Are you sure you want to delete category "${category.name}"? This action cannot be undone.`,
+      type: 'confirm',
+      confirmText: 'Delete',
+      cancelText: 'Cancel'
+    }).subscribe(confirmed => {
       if (confirmed) {
         this.loading.set(true);
         this.pricingService.deleteCategory(category.id).subscribe({

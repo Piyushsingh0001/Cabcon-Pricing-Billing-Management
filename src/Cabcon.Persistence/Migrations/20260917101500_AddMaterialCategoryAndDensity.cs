@@ -1,28 +1,28 @@
+using Cabcon.Persistence.Context;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Cabcon.Persistence.Migrations
 {
-    /// <inheritdoc />
+    [DbContext(typeof(CabconDbContext))]
+    [Migration("20260917101500_AddMaterialCategoryAndDensity")]
     public partial class AddMaterialCategoryAndDensity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "CategoryName",
-                table: "Materials",
-                type: "nvarchar(150)",
-                maxLength: 150,
-                nullable: true);
-
-            migrationBuilder.AddColumn<decimal>(
-                name: "Density",
-                table: "Materials",
-                type: "decimal(18,4)",
-                nullable: false,
-                defaultValue: 0m);
+            migrationBuilder.Sql(@"
+                IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID(N'[Materials]') AND name = 'CategoryName')
+                BEGIN
+                    ALTER TABLE [Materials] ADD [CategoryName] nvarchar(150) NULL;
+                END
+                IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID(N'[Materials]') AND name = 'Density')
+                BEGIN
+                    ALTER TABLE [Materials] ADD [Density] decimal(18,4) NOT NULL CONSTRAINT DF_Materials_Density DEFAULT 0;
+                END
+            ");
         }
 
         /// <inheritdoc />

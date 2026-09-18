@@ -53,6 +53,8 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
     public DbSet<MaterialVendor> MaterialVendors => Set<MaterialVendor>();
     public DbSet<Sku> Skus => Set<Sku>();
     public DbSet<SkuBomLine> SkuBomLines => Set<SkuBomLine>();
+    public DbSet<WeightMatrixRow> WeightMatrixRows => Set<WeightMatrixRow>();
+    public DbSet<WeightMatrixWeight> WeightMatrixWeights => Set<WeightMatrixWeight>();
 
     // Billing
     public DbSet<Quotation> Quotations => Set<Quotation>();

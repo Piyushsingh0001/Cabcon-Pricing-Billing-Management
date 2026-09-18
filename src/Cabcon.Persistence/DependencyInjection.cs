@@ -17,8 +17,11 @@ public static class DependencyInjection
                 "Connection string 'DefaultConnection' was not found in configuration.");
 
         services.AddDbContext<Context.CabconDbContext>(options =>
+        {
             options.UseSqlServer(connectionString, sql =>
-                sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)));
+                sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName));
+            options.ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
+        });
 
         services.AddScoped<Application.Common.Interfaces.IApplicationDbContext>(provider =>
             provider.GetRequiredService<Context.CabconDbContext>());

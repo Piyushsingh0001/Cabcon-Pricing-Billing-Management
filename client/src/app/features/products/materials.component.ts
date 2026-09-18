@@ -13,7 +13,6 @@ import { PricingService, Material } from '../../core/pricing.service';
 import { AuthService } from '../../core/auth.service';
 import { MaterialCreateEditDialogComponent } from './material-create-edit-dialog/material-create-edit-dialog.component';
 import { MaterialHistoryDialogComponent } from './material-history-dialog/material-history-dialog.component';
-import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { MaterialBackfillDialogComponent } from './material-backfill-dialog/material-backfill-dialog.component';
 import { MaterialTrendDialogComponent } from './material-trend-dialog/material-trend-dialog.component';
 import { VendorManageDialogComponent } from './vendor-manage-dialog/vendor-manage-dialog.component';

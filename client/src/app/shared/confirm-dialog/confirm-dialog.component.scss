@@ -1,8 +1,15 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+}
+
 .confirm-dialog-wrapper {
-  padding: 20px 24px;
+  padding: 22px 24px;
   background: var(--bg-card);
   border-radius: 14px;
   width: 100%;
+  max-width: 440px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

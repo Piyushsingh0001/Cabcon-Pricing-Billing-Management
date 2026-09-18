@@ -16,7 +16,7 @@ import {
   ItemConfigRow,
   SaveItemConfigPayload
 } from '../../../core/pricing.service';
-import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogService } from '../../../shared/confirm-dialog/confirm-dialog.service';
 
 export interface MaterialCategoryGroup {
   categoryName: string;
@@ -46,6 +46,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<ItemConfigurationDialogComponent>);
   private pricingService = inject(PricingService);
   private dialog = inject(MatDialog);
+  private confirmDialog = inject(ConfirmDialogService);
   private snackBar = inject(MatSnackBar);
   private cdr = inject(ChangeDetectorRef);
 
@@ -90,8 +91,6 @@ export class ItemConfigurationDialogComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.initDefaultMaterials();
-    this.initDefaultRows();
     this.updateGroupedCategories();
     this.loadMatrix();
     this.loadAllDbMaterials();
@@ -190,17 +189,15 @@ export class ItemConfigurationDialogComponent implements OnInit {
     this.pricingService.getItemConfigMatrix().subscribe({
       next: (res: ItemConfigMatrix) => {
         this.loading.set(false);
-        if (res && res.materials && res.materials.length > 0) {
+        if (res) {
           if (res.standardCategories && res.standardCategories.length > 0) {
             this.standardCategories = res.standardCategories;
           }
-          this.materials = res.materials;
-          if (res.rows && res.rows.length > 0) {
-            this.rows = res.rows.map(r => ({
-              ...r,
-              weights: r.weights || {}
-            }));
-          }
+          this.materials = res.materials || [];
+          this.rows = (res.rows || []).map(r => ({
+            ...r,
+            weights: r.weights || {}
+          }));
         }
 
         this.updateGroupedCategories();
@@ -211,50 +208,6 @@ export class ItemConfigurationDialogComponent implements OnInit {
         this.updateGroupedCategories();
         this.cdr.detectChanges();
       }
-    });
-  }
-
-  private initDefaultRows(): void {
-    const sampleData = [
-      { spec: '2 C X 4 sq.mm.', variant: '2XWY', cu: 68, xlpe: 24, ish: 51, gs: 253, osh: 96 },
-      { spec: '2 C X 2.5 sq.mm.', variant: '2XWY', cu: 44, xlpe: 15, ish: 44, gs: 210, osh: 83 },
-      { spec: '3 C X 2.5 sq.mm.', variant: '2XWY', cu: 65, xlpe: 23, ish: 21, gs: 226, osh: 86 },
-      { spec: '4 C X 2.5 sq.mm.', variant: '2XWY', cu: 87, xlpe: 30, ish: 23, gs: 251, osh: 92 },
-      { spec: '4 C X 6 sq.mm.', variant: '2XWY', cu: 202, xlpe: 54, ish: 32, gs: 332, osh: 133 },
-      { spec: '7 C X 2.5 sq.mm.', variant: '2XWY', cu: 152, xlpe: 53, ish: 29, gs: 304, osh: 104 },
-      { spec: '12 C X 2.5 sq.mm.', variant: '2XFY', cu: 261, xlpe: 90, ish: 38, gs: 236, osh: 142 },
-      { spec: '19 C X 2.5 sq.mm.', variant: '2XFY', cu: 414, xlpe: 143, ish: 44, gs: 281, osh: 166 },
-      { spec: '4 C X 16 sq.mm.', variant: '2XFY', cu: 533, xlpe: 76, ish: 42, gs: 317, osh: 157 },
-      { spec: '3.5 C X 70 sq.mm.', variant: 'A2XFY', al: 623, xlpe: 145, ish: 78, gs: 491, osh: 271 },
-      { spec: '3.5 C X 300 sq.mm.', variant: 'A2XFY', al: 2670, xlpe: 447, ish: 195, gs: 907, osh: 693 }
-    ];
-
-    if (this.materials.length === 0) {
-      this.initDefaultMaterials();
-    }
-
-    const matMap: { [name: string]: number } = {};
-    this.materials.forEach(m => {
-      matMap[m.name] = m.id;
-    });
-
-    this.rows = sampleData.map(s => {
-      const weights: { [key: number]: number } = {};
-      if (s.al && matMap['AL'] !== undefined) weights[matMap['AL']] = s.al;
-      if (s.cu && matMap['CU'] !== undefined) weights[matMap['CU']] = s.cu;
-      if (s.xlpe && matMap['LT XLPE'] !== undefined) weights[matMap['LT XLPE']] = s.xlpe;
-      if (s.ish && matMap['PVC-ST-2 (I/SH)'] !== undefined) weights[matMap['PVC-ST-2 (I/SH)']] = s.ish;
-      if (s.gs && matMap['G.S. ARMOUR'] !== undefined) weights[matMap['G.S. ARMOUR']] = s.gs;
-      if (s.osh && matMap['PVC-ST-2 FRLSH (O/SH)'] !== undefined) weights[matMap['PVC-ST-2 FRLSH (O/SH)']] = s.osh;
-
-      return {
-        skuId: null,
-        spec: s.spec,
-        variant: s.variant,
-        categoryId: 3,
-        categoryName: 'LT Cable',
-        weights
-      };
     });
   }
 
@@ -418,6 +371,31 @@ export class ItemConfigurationDialogComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  public removeMaterial(mat: ItemConfigMaterial, event?: MouseEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.confirmDialog.open({
+      title: 'Remove Material',
+      message: `Remove "${mat.name}" from ${mat.categoryName || 'matrix'}? Correlation weights for this material will be cleared.`,
+      type: 'confirm',
+      confirmText: 'Remove',
+      cancelText: 'Cancel'
+    }).subscribe(confirmed => {
+      if (confirmed) {
+        this.materials = this.materials.filter(m => m.id !== mat.id && m.name.toLowerCase() !== mat.name.toLowerCase());
+        this.rows.forEach(r => {
+          if (r.weights && r.weights[mat.id] !== undefined) {
+            delete r.weights[mat.id];
+          }
+        });
+        this.updateGroupedCategories();
+        this.snackBar.open(`Removed "${mat.name}". Click "Save Configuration" to persist changes.`, 'Close', { duration: 3000 });
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
   // --- ADD SPECIFICATION / ROW ---
   public openAddRowModal(): void {
     this.newRow = {
@@ -450,9 +428,6 @@ export class ItemConfigurationDialogComponent implements OnInit {
       weights: {}
     };
 
-    // Auto calculate initial weights for this row
-    this.autoCalculateRowWeight(newRowObj);
-
     this.rows.push(newRowObj);
 
     this.closeAddRowModal();
@@ -464,18 +439,13 @@ export class ItemConfigurationDialogComponent implements OnInit {
     const target = this.rows[index];
     if (!target) return;
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '95vw', maxWidth: '420px',
-      data: {
-        title: 'Delete Row',
-        message: `Remove "${target.spec}" (${target.variant}) from matrix?`,
-        type: 'confirm',
-        confirmText: 'Remove',
-        cancelText: 'Cancel'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(confirmed => {
+    this.confirmDialog.open({
+      title: 'Delete Row',
+      message: `Remove "${target.spec}" (${target.variant}) from matrix?`,
+      type: 'confirm',
+      confirmText: 'Remove',
+      cancelText: 'Cancel'
+    }).subscribe(confirmed => {
       if (confirmed) {
         this.rows.splice(index, 1);
         this.snackBar.open('Row removed.', 'Close', { duration: 2000 });
@@ -605,7 +575,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
     this.pricingService.saveItemConfigMatrix(payload).subscribe({
       next: () => {
         this.saving.set(false);
-        this.snackBar.open('Item configuration saved successfully to database!', 'Close', { duration: 3500 });
+        this.snackBar.open('Specification and Variant Weight Matrix saved successfully to database!', 'Close', { duration: 3500 });
         this.pricingService.refreshSkus.next();
         this.dialogRef.close(true);
       },

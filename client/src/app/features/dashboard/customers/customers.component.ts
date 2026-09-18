@@ -10,7 +10,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule, FormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { PricingService, CustomerSummary } from '../../../core/pricing.service';
 import { AuthService } from '../../../core/auth.service';
-import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogService } from '../../../shared/confirm-dialog/confirm-dialog.service';
 import { CustomerEditDialogComponent } from './customer-edit-dialog/customer-edit-dialog.component';
 
 @Component({
@@ -36,6 +36,7 @@ export class CustomersComponent implements OnInit {
   private pricingService = inject(PricingService);
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
+  private confirmDialog = inject(ConfirmDialogService);
   private snackBar = inject(MatSnackBar);
   private fb = inject(FormBuilder);
 
@@ -92,18 +93,13 @@ export class CustomersComponent implements OnInit {
   }
 
   public deleteCustomer(customer: CustomerSummary) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      panelClass: 'dialog-tier-sm',
-      data: {
-        title: 'Delete Customer',
-        message: `Are you sure you want to delete customer ${customer.name}?`,
-        confirmText: 'Delete',
-        cancelText: 'Cancel',
-        theme: 'red'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(confirmed => {
+    this.confirmDialog.open({
+      title: 'Delete Customer',
+      message: `Are you sure you want to delete customer ${customer.name}? This action cannot be undone.`,
+      type: 'confirm',
+      confirmText: 'Delete',
+      cancelText: 'Cancel'
+    }).subscribe(confirmed => {
       if (confirmed) {
         this.pricingService.deleteCustomer(customer.id).subscribe({
           next: () => {

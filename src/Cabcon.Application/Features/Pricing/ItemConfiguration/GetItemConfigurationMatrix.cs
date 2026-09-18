@@ -82,12 +82,14 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
-        var materialDtos = materials.Select(m => new ItemConfigMaterialDto(
-            m.Id,
-            m.Name,
-            string.IsNullOrWhiteSpace(m.CategoryName) ? "Core Material" : m.CategoryName,
-            m.Density
-        )).ToList();
+        var materialDtos = materials
+            .Where(m => !string.IsNullOrWhiteSpace(m.CategoryName))
+            .Select(m => new ItemConfigMaterialDto(
+                m.Id,
+                m.Name,
+                m.CategoryName!.Trim(),
+                m.Density
+            )).ToList();
 
         // Dynamically extract all distinct categories from materials
         var dynamicCategories = materials
@@ -110,30 +112,38 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
             }
         }
 
-        var skuRepo = _unitOfWork.Repository<Sku>();
-        var skus = await skuRepo.Query()
-            .Include(s => s.Category)
-            .Include(s => s.BomLines)
-            .OrderBy(s => s.CategoryId)
-            .ThenBy(s => s.Name)
-            .ThenBy(s => s.Spec)
+        var matrixRowRepo = _unitOfWork.Repository<WeightMatrixRow>();
+        var matrixRows = await matrixRowRepo.Query()
+            .Include(r => r.Weights)
+            .OrderBy(r => r.SortOrder)
+            .ThenBy(r => r.Id)
             .ToListAsync(cancellationToken);
 
+        if (matrixRows.Count == 0)
+        {
+            await EnsureDefaultMatrixRowsAsync(materials, matrixRowRepo, cancellationToken);
+            matrixRows = await matrixRowRepo.Query()
+                .Include(r => r.Weights)
+                .OrderBy(r => r.SortOrder)
+                .ThenBy(r => r.Id)
+                .ToListAsync(cancellationToken);
+        }
+
         var rows = new List<ItemConfigRowDto>();
-        foreach (var sku in skus)
+        foreach (var r in matrixRows)
         {
             var weightsMap = new Dictionary<int, decimal>();
-            foreach (var bom in sku.BomLines)
+            foreach (var w in r.Weights)
             {
-                weightsMap[bom.MaterialId] = bom.WeightKg;
+                weightsMap[w.MaterialId] = w.WeightKg;
             }
 
             rows.Add(new ItemConfigRowDto(
-                sku.Id,
-                sku.Spec,
-                sku.Name,
-                sku.CategoryId,
-                sku.Category?.Name ?? "General",
+                r.Id,
+                r.Spec,
+                r.Variant,
+                3,
+                "LT Cable",
                 weightsMap
             ));
         }
@@ -145,6 +155,62 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
         );
 
         return Result<ItemConfigMatrixDto>.Success(result);
+    }
+
+    private async Task EnsureDefaultMatrixRowsAsync(List<Material> materials, IRepository<WeightMatrixRow> matrixRowRepo, CancellationToken cancellationToken)
+    {
+        var matMap = materials.ToDictionary(m => m.Name.ToUpper(), m => m.Id);
+
+        var sampleData = new (string Spec, string Variant, int? Al, int? Cu, int? Xlpe, int? Ish, int? Gs, int? Osh)[]
+        {
+            ("2 C X 4 sq.mm.", "2XWY", null, 68, 24, 51, 253, 96),
+            ("2 C X 2.5 sq.mm.", "2XWY", null, 44, 15, 44, 210, 83),
+            ("3 C X 2.5 sq.mm.", "2XWY", null, 65, 23, 21, 226, 86),
+            ("4 C X 2.5 sq.mm.", "2XWY", null, 87, 30, 23, 251, 92),
+            ("4 C X 6 sq.mm.", "2XWY", null, 202, 54, 32, 332, 133),
+            ("7 C X 2.5 sq.mm.", "2XWY", null, 152, 53, 29, 304, 104),
+            ("12 C X 2.5 sq.mm.", "2XFY", null, 261, 90, 38, 236, 142),
+            ("19 C X 2.5 sq.mm.", "2XFY", null, 414, 143, 44, 281, 166),
+            ("4 C X 16 sq.mm.", "2XFY", null, 533, 76, 42, 317, 157),
+            ("3.5 C X 70 sq.mm.", "A2XFY", 623, null, 145, 78, 491, 271),
+            ("3.5 C X 300 sq.mm.", "A2XFY", 2670, null, 447, 195, 907, 693)
+        };
+
+        int sortOrder = 0;
+        foreach (var s in sampleData)
+        {
+            var row = new WeightMatrixRow
+            {
+                Spec = s.Spec,
+                Variant = s.Variant,
+                SortOrder = ++sortOrder
+            };
+
+            void AddWeight(string matKey, decimal? weight)
+            {
+                if (!weight.HasValue || weight.Value <= 0) return;
+                var matchedKey = matMap.Keys.FirstOrDefault(k => k.Contains(matKey));
+                if (matchedKey != null && matMap.TryGetValue(matchedKey, out var matId))
+                {
+                    row.Weights.Add(new WeightMatrixWeight
+                    {
+                        MaterialId = matId,
+                        WeightKg = weight.Value
+                    });
+                }
+            }
+
+            AddWeight("AL", s.Al);
+            AddWeight("CU", s.Cu);
+            AddWeight("XLPE", s.Xlpe);
+            AddWeight("PVC-ST-2 (I/SH)", s.Ish);
+            AddWeight("G.S. ARMOUR", s.Gs);
+            AddWeight("PVC-ST-2 FRLSH (O/SH)", s.Osh);
+
+            await matrixRowRepo.AddAsync(row, cancellationToken);
+        }
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     private async Task EnsureDefaultMaterialsAsync(List<Material> existing, IRepository<Material> materialRepo, CancellationToken cancellationToken)

@@ -10,15 +10,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { PricingService, Sku, Category, Material } from '../../../core/pricing.service';
+import { PricingService, Sku, Category, Material, ItemConfigRow, ItemConfigMaterial } from '../../../core/pricing.service';
 import { AuthService } from '../../../core/auth.service';
 import { SkusComponent } from '../skus.component';
 import { CategoryManageDialogComponent } from '../category-manage-dialog/category-manage-dialog.component';
-
-
-
-import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogService } from '../../../shared/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-sku-edit',
@@ -31,7 +29,8 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatAutocompleteModule
   ],
   templateUrl: './sku-edit-dialog.component.html',
   styleUrls: ['./sku-edit-dialog.component.scss']
@@ -41,12 +40,24 @@ export class SkuEditDialogComponent implements OnInit {
   private pricingService = inject(PricingService);
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
+  private confirmDialog = inject(ConfirmDialogService);
   private cdr = inject(ChangeDetectorRef);
   public loading = signal(false);
 
   public form: FormGroup;
   public categories: Category[] = [];
   public materials: Material[] = [];
+
+  // Matrix Master configuration
+  public matrixRows: ItemConfigRow[] = [];
+  public matrixMaterials: ItemConfigMaterial[] = [];
+  public matrixVariants: string[] = [];
+  public matrixSpecs: string[] = [];
+  public filteredVariants: string[] = [];
+  public filteredSpecs: string[] = [];
+  public filteredCategories: Category[] = [];
+  public isAutoPopulatedFromMatrix = false;
+  public matchedMatrixRow: ItemConfigRow | null = null;
 
   constructor(
     public dialogRef: MatDialogRef<SkuEditDialogComponent>,
@@ -58,17 +69,43 @@ export class SkuEditDialogComponent implements OnInit {
       categoryName: [{value: sku?.categoryName || 'New category', disabled: !sku?.isGlobalAdd}, Validators.required],
       name: [{value: sku?.name || '', disabled: sku?.isAddSpec}, Validators.required],
       spec: [sku?.spec || '', Validators.required],
-      unit: [sku?.unit || 'coil', Validators.required],
-      quantity: [sku?.quantity || 1, [Validators.required, Validators.min(1)]],
+      unit: [sku?.unit || 'km', Validators.required],
+      quantity: [sku?.quantity || 1, [Validators.required, Validators.min(0.0001)]],
       conversionType: [sku?.conversionType ?? 0],
       conversionValue: [0],
       gstPercent: [isGstPct],
       bomLines: this.fb.array([], Validators.required)
     });
+
+    // Automatically trigger BOM population / recalculation whenever name, spec, quantity, or unit changes
+    this.form.get('name')?.valueChanges.subscribe(() => {
+      this.onVariantOrSpecChange();
+    });
+
+    this.form.get('spec')?.valueChanges.subscribe(() => {
+      this.onVariantOrSpecChange();
+    });
+
+    this.form.get('quantity')?.valueChanges.subscribe(() => {
+      if (this.isAutoPopulatedFromMatrix && this.matchedMatrixRow && (!this.sku || !this.sku.id || this.sku.isAddSpec)) {
+        this.recalculateMatrixBomWeights();
+      } else {
+        this.onVariantOrSpecChange();
+      }
+    });
+
+    this.form.get('unit')?.valueChanges.subscribe(() => {
+      if (this.isAutoPopulatedFromMatrix && this.matchedMatrixRow && (!this.sku || !this.sku.id || this.sku.isAddSpec)) {
+        this.recalculateMatrixBomWeights();
+      } else {
+        this.onVariantOrSpecChange();
+      }
+    });
   }
 
   ngOnInit() {
     this.loadDropdowns();
+    this.loadMatrixData();
   }
 
   public get bomLines() {
@@ -82,8 +119,242 @@ export class SkuEditDialogComponent implements OnInit {
   public dbVendors: string[] = [];
   public dbVendorMappings: { [matName: string]: string[] } = {};
 
+  private loadMatrixData() {
+    this.pricingService.getItemConfigMatrix().subscribe({
+      next: (res) => {
+        if (res) {
+          this.matrixMaterials = res.materials || [];
+          this.matrixRows = res.rows || [];
+
+          const vSet = new Set<string>();
+          const sSet = new Set<string>();
+
+          this.matrixRows.forEach(r => {
+            if (r.variant && r.variant.trim()) vSet.add(r.variant.trim());
+            if (r.spec && r.spec.trim()) sSet.add(r.spec.trim());
+          });
+
+          // Ensure standard options exist in list
+          ['2XWY', '2XFY', 'A2XFY'].forEach(v => vSet.add(v));
+          [
+            '2 C X 4 sq.mm.',
+            '2 C X 2.5 sq.mm.',
+            '3 C X 2.5 sq.mm.',
+            '4 C X 2.5 sq.mm.',
+            '4 C X 6 sq.mm.',
+            '7 C X 2.5 sq.mm.',
+            '12 C X 2.5 sq.mm.',
+            '19 C X 2.5 sq.mm.',
+            '4 C X 16 sq.mm.',
+            '3.5 C X 70 sq.mm.',
+            '3.5 C X 300 sq.mm.'
+          ].forEach(s => sSet.add(s));
+
+          this.matrixVariants = Array.from(vSet);
+          this.matrixSpecs = Array.from(sSet);
+          this.filteredVariants = [...this.matrixVariants];
+          this.filteredSpecs = [...this.matrixSpecs];
+
+          if (this.sku) {
+            const currentVariant = (this.sku.name || '').trim();
+            const currentSpec = (this.sku.spec || '').trim();
+            this.matchedMatrixRow = this.matrixRows.find(r =>
+              r.variant?.trim().toLowerCase() === currentVariant.toLowerCase() &&
+              r.spec?.trim().toLowerCase() === currentSpec.toLowerCase()
+            ) || null;
+          }
+
+          // Trigger BOM population if variant and spec are already set
+          this.onVariantOrSpecChange();
+        }
+      }
+    });
+  }
+
+  public filterVariants(term: any) {
+    const val = typeof term === 'string' ? term : (term?.target?.value || '');
+    if (!val || !val.trim()) {
+      this.filteredVariants = [...this.matrixVariants];
+      return;
+    }
+    const q = val.toLowerCase().trim();
+    this.filteredVariants = this.matrixVariants.filter(v => v.toLowerCase().includes(q));
+  }
+
+  public filterSpecs(term: any) {
+    const val = typeof term === 'string' ? term : (term?.target?.value || '');
+    if (!val || !val.trim()) {
+      this.filteredSpecs = [...this.matrixSpecs];
+      return;
+    }
+    const q = val.toLowerCase().trim();
+    this.filteredSpecs = this.matrixSpecs.filter(s => s.toLowerCase().includes(q));
+  }
+
+  public filterCategories(term: any) {
+    const val = typeof term === 'string' ? term : (term?.target?.value || '');
+    if (!val || !val.trim()) {
+      this.filteredCategories = [...this.categories];
+      return;
+    }
+    const q = val.toLowerCase().trim();
+    this.filteredCategories = this.categories.filter(c => c.name.toLowerCase().includes(q));
+  }
+
+  public onVariantSelected(variant: string) {
+    this.form.patchValue({ name: variant });
+    this.onVariantOrSpecChange();
+  }
+
+  public onSpecSelected(spec: string) {
+    this.form.patchValue({ spec: spec });
+    this.onVariantOrSpecChange();
+  }
+
+  public onVariantOrSpecChange() {
+    this.checkUniqueness();
+    const variant = (this.form.get('name')?.value || '').trim();
+    const spec = (this.form.get('spec')?.value || '').trim();
+
+    if (!variant || !spec) return;
+
+    // Only auto-populate BOM if creating new product/spec (or if BOM is not custom saved)
+    if (this.sku && this.sku.id && !this.sku.isAddSpec && this.bomLines.length > 0 && !this.isAutoPopulatedFromMatrix) {
+      return;
+    }
+
+    let matched = this.matrixRows.find(r =>
+      r.variant?.trim().toLowerCase() === variant.toLowerCase() &&
+      r.spec?.trim().toLowerCase() === spec.toLowerCase()
+    );
+
+    if (!matched || !matched.weights || Object.keys(matched.weights).length === 0) {
+      matched = this.getFallbackMatrixRow(spec, variant) || matched;
+    }
+
+    if (matched && matched.weights && Object.keys(matched.weights).length > 0) {
+      this.populateBomFromMatrixRow(matched);
+    }
+  }
+
+  private getFallbackMatrixRow(spec: string, variant: string): ItemConfigRow | null {
+    const sNorm = spec.trim().toLowerCase();
+    const vNorm = variant.trim().toLowerCase();
+
+    const fallbackTemplates: { [key: string]: { [matName: string]: number } } = {
+      '2 c x 4 sq.mm.|2xwy': { 'CU': 68, 'LT XLPE': 24, 'PVC-ST-2 (I/SH)': 51, 'G.S. ARMOUR': 253, 'PVC-ST-2 FRLSH (O/SH)': 96 },
+      '2 c x 2.5 sq.mm.|2xwy': { 'CU': 44, 'LT XLPE': 15, 'PVC-ST-2 (I/SH)': 44, 'G.S. ARMOUR': 210, 'PVC-ST-2 FRLSH (O/SH)': 83 },
+      '3 c x 2.5 sq.mm.|2xwy': { 'CU': 65, 'LT XLPE': 23, 'PVC-ST-2 (I/SH)': 21, 'G.S. ARMOUR': 226, 'PVC-ST-2 FRLSH (O/SH)': 86 },
+      '4 c x 2.5 sq.mm.|2xwy': { 'CU': 87, 'LT XLPE': 30, 'PVC-ST-2 (I/SH)': 23, 'G.S. ARMOUR': 251, 'PVC-ST-2 FRLSH (O/SH)': 92 },
+      '4 c x 6 sq.mm.|2xwy': { 'CU': 202, 'LT XLPE': 54, 'PVC-ST-2 (I/SH)': 32, 'G.S. ARMOUR': 332, 'PVC-ST-2 FRLSH (O/SH)': 133 },
+      '7 c x 2.5 sq.mm.|2xwy': { 'CU': 152, 'LT XLPE': 53, 'PVC-ST-2 (I/SH)': 29, 'G.S. ARMOUR': 304, 'PVC-ST-2 FRLSH (O/SH)': 104 },
+      '12 c x 2.5 sq.mm.|2xfy': { 'CU': 261, 'LT XLPE': 90, 'PVC-ST-2 (I/SH)': 38, 'G.S. ARMOUR': 236, 'PVC-ST-2 FRLSH (O/SH)': 142 },
+      '19 c x 2.5 sq.mm.|2xfy': { 'CU': 414, 'LT XLPE': 143, 'PVC-ST-2 (I/SH)': 44, 'G.S. ARMOUR': 281, 'PVC-ST-2 FRLSH (O/SH)': 166 },
+      '4 c x 16 sq.mm.|2xfy': { 'CU': 533, 'LT XLPE': 76, 'PVC-ST-2 (I/SH)': 42, 'G.S. ARMOUR': 317, 'PVC-ST-2 FRLSH (O/SH)': 157 },
+      '3.5 c x 70 sq.mm.|a2xfy': { 'AL': 623, 'LT XLPE': 145, 'PVC-ST-2 (I/SH)': 78, 'G.S. ARMOUR': 491, 'PVC-ST-2 FRLSH (O/SH)': 271 },
+      '3.5 c x 300 sq.mm.|a2xfy': { 'AL': 2670, 'LT XLPE': 447, 'PVC-ST-2 (I/SH)': 195, 'G.S. ARMOUR': 907, 'PVC-ST-2 FRLSH (O/SH)': 693 }
+    };
+
+    const key = `${sNorm}|${vNorm}`;
+    const weightsByName = fallbackTemplates[key];
+    if (!weightsByName) return null;
+
+    const weightsMap: { [matId: number]: number } = {};
+    for (const [matName, wt] of Object.entries(weightsByName)) {
+      const mat = this.materials.find(m => m.name.toLowerCase().includes(matName.toLowerCase()))
+        || this.matrixMaterials.find(m => m.name.toLowerCase().includes(matName.toLowerCase()));
+      if (mat) {
+        weightsMap[mat.id] = wt;
+      }
+    }
+
+    return {
+      spec: spec,
+      variant: variant,
+      weights: weightsMap
+    };
+  }
+
+  public populateBomFromMatrixRow(row: ItemConfigRow) {
+    this.matchedMatrixRow = row;
+    this.isAutoPopulatedFromMatrix = true;
+
+    // Clear existing BOM lines
+    while (this.bomLines.length !== 0) {
+      this.bomLines.removeAt(0);
+    }
+
+    const qty = Number(this.form.get('quantity')?.value || 1);
+    const unit = (this.form.get('unit')?.value || 'km').toLowerCase();
+    const multiplier = (unit === '100m' || unit === 'coil') ? (qty * 0.1) : qty;
+
+    const populatedMatIds = Object.keys(row.weights)
+      .map(k => Number(k))
+      .filter(k => Number(row.weights[k]) > 0);
+
+    populatedMatIds.forEach(matId => {
+      const weightPerKm = Number(row.weights[matId]);
+      const mat = this.materials.find(m => m.id === matId)
+        || this.matrixMaterials.find(m => m.id === matId);
+
+      const matName = mat?.name || `Material #${matId}`;
+      const calculatedWeight = Math.round(weightPerKm * multiplier * 1000) / 1000;
+      const priceType = (mat as any)?.type ?? 0;
+      const defaultVendor = (mat as any)?.vendorName || '';
+
+      const group = this.fb.group({
+        materialName: [matName, Validators.required],
+        vendorName: [{value: defaultVendor, disabled: (priceType === 0)}, Validators.required],
+        materialId: [matId, Validators.required],
+        weightKg: [calculatedWeight, [Validators.required, Validators.min(0.0001)]],
+        priceType: [priceType, Validators.required],
+        pricingMethod: [1, Validators.required], // Actual
+        pricingMonth: [0],
+        manualPrice: [0]
+      });
+
+      this.bomLines.push(group);
+      const idx = this.bomLines.length - 1;
+
+      if (priceType === 1) {
+        const availVendors = this.getAvailableVendors(idx);
+        if (availVendors.length > 0 && !defaultVendor) {
+          group.patchValue({ vendorName: availVendors[0] });
+        }
+      }
+    });
+
+    if (this.bomLines.length === 0) {
+      this.addBomLine();
+    }
+
+    this.checkUniqueness();
+    this.cdr.detectChanges();
+  }
+
+  public recalculateMatrixBomWeights() {
+    if (!this.matchedMatrixRow || !this.matchedMatrixRow.weights) return;
+    const qty = Number(this.form.get('quantity')?.value || 1);
+    const unit = (this.form.get('unit')?.value || 'km').toLowerCase();
+    const multiplier = (unit === '100m' || unit === 'coil') ? (qty * 0.1) : qty;
+
+    for (let i = 0; i < this.bomLines.length; i++) {
+      const line = this.bomLines.at(i);
+      const matId = Number(line.get('materialId')?.value);
+      if (matId && this.matchedMatrixRow.weights[matId] !== undefined) {
+        const weightPerKm = Number(this.matchedMatrixRow.weights[matId]);
+        const calculatedWeight = Math.round(weightPerKm * multiplier * 1000) / 1000;
+        line.patchValue({ weightKg: calculatedWeight }, { emitEvent: false });
+      }
+    }
+    this.cdr.detectChanges();
+  }
+
   private loadDropdowns() {
-    this.pricingService.getCategories().subscribe(res => this.categories = res);
+    this.pricingService.getCategories().subscribe(res => {
+      this.categories = res;
+      this.filteredCategories = [...res];
+    });
     this.pricingService.getSkus(undefined, undefined, undefined, false, 1, 1000).subscribe(res => {
       this.existingSkus = res.items;
       if (this.sku) {
@@ -149,7 +420,11 @@ export class SkuEditDialogComponent implements OnInit {
   }
 
   public get uniqueMaterialNames(): string[] {
-    return Array.from(new Set(this.materials.map(m => m.name)));
+    const list = this.materials.map(m => m.name);
+    this.matrixMaterials.forEach(m => {
+      if (m.name) list.push(m.name);
+    });
+    return Array.from(new Set(list)).filter(n => !!n);
   }
 
   public addBomLine() {
@@ -356,18 +631,13 @@ export class SkuEditDialogComponent implements OnInit {
 
   public deleteProduct() {
     if (!this.sku) return;
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '95vw', maxWidth: '450px',
-      data: {
-        title: 'Delete Product',
-        message: `Are you sure you want to delete product "${this.sku.name}"? This action cannot be undone.`,
-        type: 'confirm',
-        confirmText: 'Delete',
-        cancelText: 'Cancel'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(confirmed => {
+    this.confirmDialog.open({
+      title: 'Delete Product',
+      message: `Are you sure you want to delete product "${this.sku.name}"? This action cannot be undone.`,
+      type: 'confirm',
+      confirmText: 'Delete',
+      cancelText: 'Cancel'
+    }).subscribe(confirmed => {
       if (confirmed) {
         this.loading.set(true);
         this.errorMessage.set(null);

@@ -110,8 +110,8 @@ html, body {
 }
 
 .cdk-overlay-pane {
-  max-width: calc(100vw - 32px) !important;
-  margin: 16px !important;
+  max-width: calc(100vw - 32px);
+  margin: 16px;
 }
 
 .mat-mdc-dialog-container .mdc-dialog__surface {
@@ -198,8 +198,8 @@ html, body {
 
 /* Symmetric Modal Width Tiers */
 .dialog-tier-sm {
-  width: 420px !important;
-  max-width: calc(100vw - 32px) !important;
+  width: 440px !important;
+  max-width: min(440px, calc(100vw - 32px)) !important;
 }
 .dialog-tier-md {
   width: 600px !important;

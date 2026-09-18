@@ -6,21 +6,27 @@
   </div>
 
   <form [formGroup]="form">
-    <!-- Row 1: Category, Variant, Spec -->
+    <!-- Row 1: Product Name, Variant, Spec -->
     <div class="form-row-3col">
       <mat-form-field appearance="outline">
-        <mat-label>Category</mat-label>
-        <input matInput formControlName="categoryName" placeholder="e.g. New category" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+        <mat-label>Product Name</mat-label>
+        <input matInput formControlName="categoryName" placeholder="Enter Product Name (e.g. LT Cable)" (blur)="checkUniqueness()">
       </mat-form-field>
       
       <mat-form-field appearance="outline">
-        <mat-label>Variant</mat-label>
-        <input matInput formControlName="name" placeholder="e.g. Item" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+        <mat-label>Variant (from Weight Matrix)</mat-label>
+        <input matInput formControlName="name" placeholder="Search/select variant (e.g. 2XWY)" [matAutocomplete]="autoVariant" (blur)="onVariantOrSpecChange()" (input)="filterVariants($event)">
+        <mat-autocomplete #autoVariant="matAutocomplete" (optionSelected)="onVariantSelected($event.option.value)">
+          <mat-option *ngFor="let v of filteredVariants" [value]="v">{{ v }}</mat-option>
+        </mat-autocomplete>
       </mat-form-field>
       
       <mat-form-field appearance="outline">
-        <mat-label>Spec</mat-label>
-        <input matInput formControlName="spec" placeholder="e.g. spec" (blur)="checkUniqueness()" (change)="checkUniqueness()">
+        <mat-label>Spec (from Weight Matrix)</mat-label>
+        <input matInput formControlName="spec" placeholder="Search/select spec (e.g. 2 C X 4 sq.mm.)" [matAutocomplete]="autoSpec" (blur)="onVariantOrSpecChange()" (input)="filterSpecs($event)">
+        <mat-autocomplete #autoSpec="matAutocomplete" (optionSelected)="onSpecSelected($event.option.value)">
+          <mat-option *ngFor="let s of filteredSpecs" [value]="s">{{ s }}</mat-option>
+        </mat-autocomplete>
       </mat-form-field>
     </div>
     
@@ -28,17 +34,17 @@
     <div class="form-row-3col">
       <mat-form-field appearance="outline">
         <mat-label>Unit</mat-label>
-        <mat-select formControlName="unit" (selectionChange)="checkUniqueness()">
-          <mat-option value="coil">coil</mat-option>
-          <mat-option value="100m">100m</mat-option>
+        <mat-select formControlName="unit" (selectionChange)="onVariantOrSpecChange()">
           <mat-option value="km">km</mat-option>
+          <mat-option value="100m">100m</mat-option>
+          <mat-option value="coil">coil</mat-option>
           <mat-option value="MT">MT</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Quantity</mat-label>
-        <input matInput type="number" formControlName="quantity" min="1" step="1" placeholder="1" style="text-align: right;">
+        <input matInput type="number" formControlName="quantity" min="0.001" step="any" placeholder="1" style="text-align: right;">
       </mat-form-field>
       
       <mat-form-field appearance="outline">
@@ -49,6 +55,11 @@
 
     <div class="warning-banner" *ngIf="nameExistsError">
       Product Name already Exists! Give Different name.
+    </div>
+
+    <div class="matrix-sync-banner" *ngIf="isAutoPopulatedFromMatrix && matchedMatrixRow" style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 6px 12px; border-radius: 6px; font-size: 11.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; font-weight: 500;">
+      <mat-icon style="font-size: 16px; width: 16px; height: 16px; color: #2563eb;">check_circle</mat-icon>
+      BOM weights auto-calculated from Weight Matrix for <strong>{{ matchedMatrixRow.spec }} ({{ matchedMatrixRow.variant }})</strong> &times; {{ form.get('quantity')?.value }} {{ form.get('unit')?.value }}
     </div>
 
     <div class="bom-section-title">Bill of materials (kg per {{ form.get('unit')?.value }})</div>

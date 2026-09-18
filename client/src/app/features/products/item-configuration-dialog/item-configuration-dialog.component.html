@@ -4,13 +4,13 @@
     <div class="header-left">
       <div class="title-row">
         <mat-icon class="header-icon">tune</mat-icon>
-        <h2 class="dialog-title">Item Configuration & Weight Matrix</h2>
+        <h2 class="dialog-title">Specification and Variant Weight Matrix</h2>
         <span class="sync-badge" *ngIf="loading()" style="font-size: 11px; color: #2563eb; display: inline-flex; align-items: center; gap: 4px; background: #eff6ff; padding: 2px 8px; border-radius: 4px; font-weight: 600;">
           <mat-icon class="spin-icon" style="font-size: 14px; width: 14px; height: 14px;">sync</mat-icon> Syncing...
         </span>
       </div>
       <p class="dialog-subtitle">
-        Configure correlation of weight (kg/km) required per specification and variant. Auto-calculate from Area & Density concept or override manually.
+        Configure correlation of weight (kg/km) required per specification and variant. Configurations are directly persisted to database.
       </p>
     </div>
     <div class="header-right">
@@ -28,11 +28,6 @@
     </div>
 
     <div class="action-buttons-group">
-      <button class="btn-secondary" (click)="autoCalculateAll()" title="Auto-calculate weights for all rows based on Area & Density">
-        <mat-icon class="btn-icon">bolt</mat-icon>
-        Auto-Calculate
-      </button>
-
       <button class="btn-secondary" (click)="openAddRowModal()">
         <mat-icon class="btn-icon">add_circle</mat-icon>
         + Add Specification
@@ -69,7 +64,12 @@
             <ng-container *ngIf="group.materials.length > 0">
               <th *ngFor="let mat of group.materials" class="material-sub-header" [ngClass]="group.headerColorClass + '-sub'">
                 <div class="mat-header-cell-inner">
-                  <span class="mat-name-label" [title]="mat.name">{{ mat.name }}</span>
+                  <div class="mat-name-wrapper">
+                    <span class="mat-name-label" [title]="mat.name">{{ mat.name }}</span>
+                    <button type="button" class="remove-mat-mini-btn" (click)="removeMaterial(mat, $event)" title="Remove {{ mat.name }} from {{ group.categoryName }}">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </div>
                 </div>
               </th>
             </ng-container>
@@ -88,12 +88,12 @@
         <tr *ngFor="let row of filteredRows; let rowIndex = index" class="data-row">
           <!-- Specification Column -->
           <td class="sticky-col col-spec spec-cell">
-            <input type="text" class="cell-input spec-input" [(ngModel)]="row.spec" (blur)="autoCalculateRowWeight(row)" placeholder="e.g. 2 C X 4 sq.mm.">
+            <input type="text" class="cell-input spec-input" [(ngModel)]="row.spec" placeholder="e.g. 2 C X 4 sq.mm.">
           </td>
 
           <!-- Variant Column -->
           <td class="sticky-col col-variant variant-cell">
-            <input type="text" class="cell-input variant-input" [(ngModel)]="row.variant" (blur)="autoCalculateRowWeight(row)" placeholder="e.g. 2XWY">
+            <input type="text" class="cell-input variant-input" [(ngModel)]="row.variant" placeholder="e.g. 2XWY">
           </td>
 
           <!-- Dynamic Material Columns -->

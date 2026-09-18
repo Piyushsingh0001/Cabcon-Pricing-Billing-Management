@@ -12,7 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { PricingService, QuotationSummary, QuotationDetails, QuotationLine } from '../../../core/pricing.service';
 import { AuthService } from '../../../core/auth.service';
 import { QuotationDetailDialogComponent } from '../quotation-detail-dialog/quotation-detail-dialog.component';
-import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
 

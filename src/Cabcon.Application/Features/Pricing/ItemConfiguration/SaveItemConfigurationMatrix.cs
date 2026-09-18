@@ -64,6 +64,8 @@ public class SaveItemConfigurationMatrixCommandHandler : IRequestHandler<SaveIte
 
         var materialMap = new Dictionary<string, Material>(StringComparer.OrdinalIgnoreCase);
 
+        var activeMaterialIds = new HashSet<int>();
+
         // 1. Sync Materials
         foreach (var matInput in request.Materials)
         {
@@ -88,6 +90,7 @@ public class SaveItemConfigurationMatrixCommandHandler : IRequestHandler<SaveIte
                 targetMaterial.Density = matInput.Density;
                 materialRepo.Update(targetMaterial);
                 materialMap[trimmedName] = targetMaterial;
+                activeMaterialIds.Add(targetMaterial.Id);
             }
             else
             {
@@ -102,27 +105,34 @@ public class SaveItemConfigurationMatrixCommandHandler : IRequestHandler<SaveIte
             }
         }
 
+        // Detach category from any existing materials that were removed from the matrix
+        foreach (var existingMat in existingMaterials)
+        {
+            if (!string.IsNullOrEmpty(existingMat.CategoryName) && !activeMaterialIds.Contains(existingMat.Id))
+            {
+                // Check if it was matched by name
+                if (!request.Materials.Any(m => m.Name.Equals(existingMat.Name, StringComparison.OrdinalIgnoreCase)))
+                {
+                    existingMat.CategoryName = null;
+                    materialRepo.Update(existingMat);
+                }
+            }
+        }
+
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         // Re-query materials to ensure all generated IDs are loaded
         var allSavedMaterials = await materialRepo.Query().ToListAsync(cancellationToken);
         var materialIdMap = allSavedMaterials.ToDictionary(m => m.Id, m => m);
 
-        // 2. Ensure default product Category exists
-        var categoryRepo = _unitOfWork.Repository<Category>();
-        var defaultCategory = await categoryRepo.Query().FirstOrDefaultAsync(cancellationToken);
-        if (defaultCategory == null)
-        {
-            defaultCategory = new Category { Name = "LT Cable" };
-            await categoryRepo.AddAsync(defaultCategory, cancellationToken);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-        }
-
-        // 3. Sync SKUs and BOM lines
-        var skuRepo = _unitOfWork.Repository<Sku>();
-        var existingSkus = await skuRepo.Query()
-            .Include(s => s.BomLines)
+        // 2. Sync WeightMatrixRows and WeightMatrixWeights
+        var matrixRowRepo = _unitOfWork.Repository<WeightMatrixRow>();
+        var existingMatrixRows = await matrixRowRepo.Query()
+            .Include(r => r.Weights)
             .ToListAsync(cancellationToken);
+
+        var retainedRowIds = new HashSet<int>();
+        int sortOrder = 0;
 
         foreach (var row in request.Rows)
         {
@@ -133,53 +143,41 @@ public class SaveItemConfigurationMatrixCommandHandler : IRequestHandler<SaveIte
                 continue;
             }
 
-            Sku? sku = null;
+            WeightMatrixRow? matrixRow = null;
             if (row.SkuId.HasValue && row.SkuId.Value > 0)
             {
-                sku = existingSkus.FirstOrDefault(s => s.Id == row.SkuId.Value);
+                matrixRow = existingMatrixRows.FirstOrDefault(r => r.Id == row.SkuId.Value);
             }
 
-            if (sku == null)
+            if (matrixRow == null)
             {
-                sku = existingSkus.FirstOrDefault(s =>
-                    s.Spec.Equals(specTrimmed, StringComparison.OrdinalIgnoreCase) &&
-                    s.Name.Equals(variantTrimmed, StringComparison.OrdinalIgnoreCase));
+                matrixRow = existingMatrixRows.FirstOrDefault(r =>
+                    r.Spec.Equals(specTrimmed, StringComparison.OrdinalIgnoreCase) &&
+                    r.Variant.Equals(variantTrimmed, StringComparison.OrdinalIgnoreCase));
             }
 
-            int targetCategoryId = (row.CategoryId.HasValue && row.CategoryId.Value > 0)
-                ? row.CategoryId.Value
-                : (sku?.CategoryId ?? defaultCategory.Id);
-
-            if (sku == null)
+            if (matrixRow == null)
             {
-                sku = new Sku
+                matrixRow = new WeightMatrixRow
                 {
-                    CategoryId = targetCategoryId,
-                    Name = variantTrimmed,
                     Spec = specTrimmed,
-                    Unit = "km",
-                    ConversionType = ConversionType.PerKg,
-                    ConversionValue = 25m,
-                    GstRate = 0.18m,
-                    Quantity = 1m,
-                    IsPlaceholder = false
+                    Variant = variantTrimmed,
+                    SortOrder = ++sortOrder
                 };
-                await skuRepo.AddAsync(sku, cancellationToken);
+                await matrixRowRepo.AddAsync(matrixRow, cancellationToken);
             }
             else
             {
-                sku.Spec = specTrimmed;
-                sku.Name = variantTrimmed;
-                sku.CategoryId = targetCategoryId;
-                sku.Unit = string.IsNullOrWhiteSpace(sku.Unit) ? "km" : sku.Unit;
-                sku.IsPlaceholder = false;
-                skuRepo.Update(sku);
+                matrixRow.Spec = specTrimmed;
+                matrixRow.Variant = variantTrimmed;
+                matrixRow.SortOrder = ++sortOrder;
+                matrixRowRepo.Update(matrixRow);
+                retainedRowIds.Add(matrixRow.Id);
             }
 
-            // Clear and rebuild BOM lines for this SKU
-            sku.BomLines.Clear();
+            // Clear and rebuild weights for this matrix row
+            matrixRow.Weights.Clear();
 
-            int lineOrder = 0;
             if (row.Weights != null)
             {
                 foreach (var kvp in row.Weights)
@@ -189,17 +187,23 @@ public class SaveItemConfigurationMatrixCommandHandler : IRequestHandler<SaveIte
 
                     if (weight > 0 && materialIdMap.ContainsKey(materialId))
                     {
-                        sku.BomLines.Add(new SkuBomLine
+                        matrixRow.Weights.Add(new WeightMatrixWeight
                         {
-                            SkuId = sku.Id,
+                            WeightMatrixRowId = matrixRow.Id,
                             MaterialId = materialId,
-                            WeightKg = weight,
-                            PriceType = MaterialType.Exchange,
-                            PricingMethod = BomPricingMethod.Actual,
-                            LineOrder = ++lineOrder
+                            WeightKg = weight
                         });
                     }
                 }
+            }
+        }
+
+        // 3. Delete any existing matrix rows that were deleted from the matrix
+        foreach (var existingRow in existingMatrixRows)
+        {
+            if (!retainedRowIds.Contains(existingRow.Id))
+            {
+                matrixRowRepo.Delete(existingRow);
             }
         }
 

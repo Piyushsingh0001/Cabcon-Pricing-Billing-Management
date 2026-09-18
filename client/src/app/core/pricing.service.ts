@@ -559,7 +559,7 @@ export class PricingService {
     return this.http.post<boolean>(`${this.apiBase}/vendors/material-mappings`, { mappings: payload });
   }
 
-  // --- ITEM CONFIGURATION MATRIX API ---
+  // --- Specification and Variant Weight Matrix MATRIX API ---
   public getItemConfigMatrix(): Observable<ItemConfigMatrix> {
     return this.http.get<ItemConfigMatrix>(`${this.apiBase}/item-configuration/matrix`);
   }

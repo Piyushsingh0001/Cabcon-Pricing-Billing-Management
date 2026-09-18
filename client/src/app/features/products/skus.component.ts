@@ -14,7 +14,7 @@ import { AuthService } from '../../core/auth.service';
 import { SkuEditDialogComponent } from './sku-edit-dialog/sku-edit-dialog.component';
 import { CategoryManageDialogComponent } from './category-manage-dialog/category-manage-dialog.component';
 import { ItemConfigurationDialogComponent } from './item-configuration-dialog/item-configuration-dialog.component';
-import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogService } from '../../shared/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-skus',
@@ -30,8 +30,7 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dial
     MatIconModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatDialogModule,
-    ItemConfigurationDialogComponent
+    MatDialogModule
   ],
   templateUrl: './skus.component.html',
   styleUrls: ['./skus.component.scss']
@@ -40,6 +39,7 @@ export class SkusComponent implements OnInit {
   private pricingService = inject(PricingService);
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
+  private confirmDialog = inject(ConfirmDialogService);
   private snackBar = inject(MatSnackBar);
   private cdr = inject(ChangeDetectorRef);
 
@@ -89,18 +89,13 @@ export class SkusComponent implements OnInit {
   public deleteCategoryByName(categoryName: string) {
     const cat = this.categories().find(c => c.name.toLowerCase() === categoryName.toLowerCase());
     if (cat) {
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '95vw', maxWidth: '450px',
-        data: {
-          title: 'Delete Category',
-          message: `Are you sure you want to delete category "${cat.name}" and all its products? This action cannot be undone.`,
-          type: 'confirm',
-          confirmText: 'Delete',
-          cancelText: 'Cancel'
-        }
-      });
-
-      dialogRef.afterClosed().subscribe(confirmed => {
+      this.confirmDialog.open({
+        title: 'Delete Category',
+        message: `Are you sure you want to delete category "${cat.name}" and all its products? This action cannot be undone.`,
+        type: 'confirm',
+        confirmText: 'Delete Category',
+        cancelText: 'Cancel'
+      }).subscribe(confirmed => {
         if (confirmed) {
           this.loading.set(true);
           this.pricingService.deleteCategory(cat.id).subscribe({
@@ -109,9 +104,9 @@ export class SkusComponent implements OnInit {
               this.snackBar.open('Category deleted successfully.', 'Close', { duration: 3000 });
               this.loadSkus();
             },
-            error: (err: any) => {
+            error: () => {
               this.loading.set(false);
-              this.snackBar.open(`Failed to delete category: ${err.error?.message || 'Error occurred.'}`, 'Close', { duration: 5000 });
+              this.snackBar.open('Failed to delete category.', 'Close', { duration: 3000 });
             }
           });
         }
@@ -339,18 +334,13 @@ export class SkusComponent implements OnInit {
   }
 
   public deleteSku(skuId: number, name: string) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '95vw', maxWidth: '450px',
-      data: {
-        title: 'Delete Product Spec',
-        message: `Are you sure you want to delete product "${name}"? This action cannot be undone.`,
-        type: 'confirm',
-        confirmText: 'Delete',
-        cancelText: 'Cancel'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
+    this.confirmDialog.open({
+      title: 'Delete Product Spec',
+      message: `Are you sure you want to delete product "${name}"? This action cannot be undone.`,
+      type: 'confirm',
+      confirmText: 'Delete',
+      cancelText: 'Cancel'
+    }).subscribe(result => {
       if (result) {
         this.pricingService.deleteSku(skuId).subscribe({
           next: () => {
