@@ -1,7 +1,7 @@
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 .header-section {
@@ -11,20 +11,131 @@
 }
 
 .sh-t {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   margin: 0 0 4px 0;
   color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
   color: var(--text-secondary);
   margin: 0;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.draft-alert-card {
+  background: #fffbeb;
+  border: 1px solid #fef3c7;
+  padding: 12px 16px;
+  border-radius: 10px;
+}
+
+.draft-alert-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .draft-alert-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 13.5px;
+    color: #92400e;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+}
+
+.btn-discard-draft {
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  background: #ffffff;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #fef2f2;
+  }
+}
+
+.btn-load-draft {
+  background: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #1c3256;
+  }
+}
+
+.sku-selection-card {
+  padding: 16px;
+}
+
+.sku-selection-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .sku-selection-title {
+    margin: 0;
+    font-size: 15.5px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-primary);
+  }
+
+  .search-container {
+    position: relative;
+    width: 220px;
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+    }
+
+    .search-input {
+      padding-left: 34px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
 }
 
 .params-card {
   margin-bottom: 14px;
-  padding: 14px;
+  padding: 14px 16px;
 }
 
 .controls-row {
@@ -102,6 +213,7 @@
 .table-scroll-wrapper {
   overflow-x: auto;
   width: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tbl {
@@ -308,9 +420,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 48px;
+  padding: 40px 16px;
   text-align: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .no-products-placeholder h3 {
@@ -324,11 +436,6 @@
   font-size: 13px;
 }
 
-.draft-alert-card {
-  background: #fffbeb;
-  border: 1px solid #fef3c7;
-}
-
 .btn-ghost-mini {
   background: #ffffff;
   color: var(--text-secondary);
@@ -339,10 +446,10 @@
   cursor: pointer;
   font-size: 12px;
   transition: all 0.2s ease;
-}
 
-.btn-ghost-mini:hover {
-  background: #f1f5f9;
+  &:hover {
+    background: #f1f5f9;
+  }
 }
 
 .btn-save-product {
@@ -355,17 +462,17 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-}
 
-.btn-save-product:hover {
-  background: #1c3256;
+  &:hover {
+    background: #1c3256;
+  }
 }
 
 /* Product Selection Card Styles */
 .category-blocks {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .sku-category-card {
@@ -392,10 +499,10 @@
 
 .category-title-bar.clickable {
   transition: background-color 0.2s ease;
-}
 
-.category-title-bar.clickable:hover {
-  background: #1c3256; /* slightly darker navy */
+  &:hover {
+    background: #1c3256;
+  }
 }
 
 .header-icon-btn {
@@ -419,8 +526,8 @@
 
 /* Custom Scrollbar for independent scrolling regions */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
@@ -454,27 +561,130 @@
 }
 
 @media (max-width: 768px) {
-  .header-section {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+  .dashboard-container {
+    gap: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
-  .controls-row {
+
+  .sh-t {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+
+  .draft-alert-card {
+    padding: 10px 12px;
+  }
+
+  .draft-alert-content {
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
+
+    .draft-alert-text {
+      font-size: 13px;
+    }
+
+    .action-buttons {
+      width: 100%;
+      gap: 8px;
+
+      button {
+        flex: 1;
+        height: 36px;
+      }
+    }
   }
-  .footer-row {
+
+  .sku-selection-card {
+    padding: 12px;
+  }
+
+  .sku-selection-header {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
+
+    .sku-selection-title {
+      font-size: 14.5px;
+    }
+
+    .search-container {
+      width: 100%;
+    }
   }
-  .footer-inputs {
-    flex-direction: column;
-    width: 100%;
+
+  .sku-category-card {
+    .category-title-bar {
+      padding: 8px 12px;
+    }
+
+    .tbl {
+      min-width: 540px;
+    }
   }
-  .footer-inputs mat-form-field {
-    width: 100% !important;
+
+  .params-card {
+    padding: 12px;
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      .control-group {
+        flex: 1 1 calc(50% - 6px);
+        min-width: 110px;
+
+        .in, .sel {
+          width: 100% !important;
+          box-sizing: border-box;
+        }
+      }
+
+      .linkbtn-clear {
+        margin-top: 2px;
+        width: 100%;
+        text-align: right;
+      }
+    }
   }
-  .btn-generate-quotation {
-    width: 100%;
+
+  .table-card {
+    .tbl {
+      min-width: 820px;
+    }
+  }
+
+  .materials-card {
+    padding: 12px;
+
+    .tbl {
+      min-width: 540px;
+    }
+  }
+
+  .no-products-placeholder {
+    padding: 24px 12px;
+    gap: 8px;
+
+    mat-icon {
+      font-size: 38px !important;
+      width: 38px !important;
+      height: 38px !important;
+    }
+
+    h3 {
+      font-size: 15px;
+    }
+
+    p {
+      font-size: 12px;
+    }
   }
 }

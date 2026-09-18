@@ -1,28 +1,29 @@
+<div class="quotations-container animated-view">
+  <div class="header-section">
+    <div class="header-title-block">
+      <h1 class="sh-t">{{ draftOnly ? 'Draft Quotations' : (pendingOnly ? 'Pending Approvals' : 'Saved Quotations History') }}</h1>
+      <p class="subtitle">{{ draftOnly ? 'View and edit your draft quotations' : 'View and audit previously generated quotation snapshots' }}</p>
+    </div>
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search Quotations</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput (keyup)="applyFilter($event)" placeholder="By Quote #, Customer, Created By, Date...">
+    </mat-form-field>
+  </div>
 
-    <div class="quotations-container animated-view">
-      <div class="header-section" style="display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <h1>{{ draftOnly ? 'Draft Quotations' : (pendingOnly ? 'Pending Approvals' : 'Saved Quotations History') }}</h1>
-          <p class="subtitle">{{ draftOnly ? 'View and edit your draft quotations' : 'View and audit previously generated quotation snapshots' }}</p>
-        </div>
-        <mat-form-field appearance="outline" class="search-field" style="width: 350px;">
-          <mat-label>Search Quotations</mat-label>
-          <mat-icon matPrefix>search</mat-icon>
-          <input matInput (keyup)="applyFilter($event)" placeholder="By Quote #, Customer, Created By, Date...">
-        </mat-form-field>
-      </div>
-      <div class="table-container glass-card"  *ngIf="dataSource.data.length > 0; else noQuotations">
-        <div class="table-scroll-wrapper">
-        <table mat-table [dataSource]="dataSource" *ngIf="dataSource.data.length > 0">
-          <!-- Quote Number Column -->
-          <ng-container matColumnDef="quoteNumber">
-            <th mat-header-cell *matHeaderCellDef>Quotation Number</th>
-            <td mat-cell *matCellDef="let element" class="number-cell">
+  <div class="table-container glass-card" *ngIf="dataSource.data.length > 0; else noQuotations">
+    <div class="table-scroll-wrapper">
+      <table mat-table [dataSource]="dataSource" class="quotations-table">
+        <!-- Quote Number Column -->
+        <ng-container matColumnDef="quoteNumber">
+          <th mat-header-cell *matHeaderCellDef class="col-quote">Quotation Number</th>
+          <td mat-cell *matCellDef="let element" class="number-cell col-quote">
+            <div class="quote-number-wrapper">
               <span *ngIf="element.quotationNumber">{{element.quotationNumber}}</span>
-              <span *ngIf="!element.quotationNumber" style="color: gray; font-style: italic;">[Draft]</span>
+              <span *ngIf="!element.quotationNumber" class="draft-badge">[Draft]</span>
               <!-- Approval Status Icon with Menu -->
-              <button mat-icon-button *ngIf="canApprove && element.approvalStatus === 0" [matMenuTriggerFor]="approveMenu" style="width: 24px; height: 24px; line-height: 24px;">
-                <mat-icon style="color: orange; font-size: 16px; vertical-align: middle;" title="Pending Approval">pending_actions</mat-icon>
+              <button mat-icon-button *ngIf="canApprove && element.approvalStatus === 0" [matMenuTriggerFor]="approveMenu" class="status-menu-btn" title="Pending Approval">
+                <mat-icon class="status-icon pending">pending_actions</mat-icon>
               </button>
               
               <mat-menu #approveMenu="matMenu">
@@ -35,66 +36,65 @@
               </mat-menu>
 
               <!-- Readonly Status Icons for non-approvers or already actioned -->
-              <mat-icon *ngIf="(!canApprove && element.approvalStatus === 0)" style="color: orange; font-size: 16px; margin-left: 5px; vertical-align: middle;" title="Pending Approval">pending_actions</mat-icon>
-              <mat-icon *ngIf="element.approvalStatus === 1" style="color: green; font-size: 16px; margin-left: 5px; vertical-align: middle;" title="Approved">check_circle</mat-icon>
-              <mat-icon *ngIf="element.approvalStatus === 2" style="color: red; font-size: 16px; margin-left: 5px; vertical-align: middle;" title="Rejected">cancel</mat-icon>
-              <mat-icon *ngIf="element.approvalStatus === 3" style="color: gray; font-size: 16px; margin-left: 5px; vertical-align: middle;" title="Draft">edit_document</mat-icon>
-            </td>
-          </ng-container>
+              <mat-icon *ngIf="(!canApprove && element.approvalStatus === 0)" class="status-icon pending" title="Pending Approval">pending_actions</mat-icon>
+              <mat-icon *ngIf="element.approvalStatus === 1" class="status-icon approved" title="Approved">check_circle</mat-icon>
+              <mat-icon *ngIf="element.approvalStatus === 2" class="status-icon rejected" title="Rejected">cancel</mat-icon>
+              <mat-icon *ngIf="element.approvalStatus === 3" class="status-icon draft" title="Draft">edit_document</mat-icon>
+            </div>
+          </td>
+        </ng-container>
 
-          <!-- Customer Column -->
-          <ng-container matColumnDef="partyName">
-            <th mat-header-cell *matHeaderCellDef>Customer / Party Name</th>
-            <td mat-cell *matCellDef="let element" class="party-cell">{{element.partyName}}</td>
-          </ng-container>
+        <!-- Customer Column -->
+        <ng-container matColumnDef="partyName">
+          <th mat-header-cell *matHeaderCellDef class="col-party">Customer / Party Name</th>
+          <td mat-cell *matCellDef="let element" class="party-cell col-party">{{element.partyName}}</td>
+        </ng-container>
 
-          <!-- Date Column -->
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef>Generation Date</th>
-            <td mat-cell *matCellDef="let element">{{element.quotationDate | date:'mediumDate'}}</td>
-          </ng-container>
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef class="col-date">Generation Date</th>
+          <td mat-cell *matCellDef="let element" class="col-date">{{element.quotationDate | date:'mediumDate'}}</td>
+        </ng-container>
 
-          <!-- Total ex-GST Column -->
-          <ng-container matColumnDef="totalExGst">
-            <th mat-header-cell *matHeaderCellDef>Total ex-GST</th>
-            <td mat-cell *matCellDef="let element">₹{{element.totalExGst | number:'1.2-2'}}</td>
-          </ng-container>
+        <!-- Total ex-GST Column -->
+        <ng-container matColumnDef="totalExGst">
+          <th mat-header-cell *matHeaderCellDef class="col-total">Total ex-GST</th>
+          <td mat-cell *matCellDef="let element" class="col-total total-cell">₹{{element.totalExGst | number:'1.2-2'}}</td>
+        </ng-container>
 
+        <!-- Created By Column -->
+        <ng-container matColumnDef="createdBy">
+          <th mat-header-cell *matHeaderCellDef class="col-author">Created By</th>
+          <td mat-cell *matCellDef="let element" class="col-author">{{element.createdBy}}</td>
+        </ng-container>
 
-          <!-- Created By Column -->
-          <ng-container matColumnDef="createdBy">
-            <th mat-header-cell *matHeaderCellDef>Created By</th>
-            <td mat-cell *matCellDef="let element">{{element.createdBy}}</td>
-          </ng-container>
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="col-actions">Actions</th>
+          <td mat-cell *matCellDef="let element" class="col-actions" style="white-space: nowrap;">
+            <button mat-icon-button class="row-icon-btn view-btn" (click)="viewDetails(element)" title="View Quotation">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            
+            <button mat-icon-button class="row-icon-btn edit-btn" (click)="editQuotation(element)" *ngIf="(canModify || element.approvalStatus === 3) && element.isActive" title="Edit Quotation">
+              <mat-icon>edit</mat-icon>
+            </button>
+            
+            <span class="deleted-tag" *ngIf="!element.isActive">Deleted</span>
+          </td>
+        </ng-container>
 
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let element" style="white-space: nowrap;">
-              <button mat-icon-button class="row-icon-btn view-btn" (click)="viewDetails(element)" title="View Quotation">
-                <mat-icon>visibility</mat-icon>
-              </button>
-              
-              <button mat-icon-button class="row-icon-btn edit-btn" (click)="editQuotation(element)" *ngIf="(canModify || element.approvalStatus === 3) && element.isActive" title="Edit Quotation" style="margin-left: 8px;">
-                <mat-icon style="color: #2196f3;">edit</mat-icon>
-              </button>
-              
-              <span class="deleted-tag" *ngIf="!element.isActive">Deleted</span>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'inactive-row': !row.isActive}"></tr>
-          </table>
-        </div>
-      </div>
-
-      <ng-template #noQuotations>
-        <div class="no-quotes-placeholder glass-card animated-view">
-          <mat-icon>description</mat-icon>
-          <h3>No Saved Quotations Found</h3>
-          <p>Go to the Calculator Dashboard, select products, compute rates, and save a quotation.</p>
-        </div>
-      </ng-template>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'inactive-row': !row.isActive}"></tr>
+      </table>
     </div>
-  
+  </div>
+
+  <ng-template #noQuotations>
+    <div class="no-quotes-placeholder glass-card animated-view">
+      <mat-icon>description</mat-icon>
+      <h3>No Saved Quotations Found</h3>
+      <p>Go to the Calculator Dashboard, select products, compute rates, and save a quotation.</p>
+    </div>
+  </ng-template>
+</div>

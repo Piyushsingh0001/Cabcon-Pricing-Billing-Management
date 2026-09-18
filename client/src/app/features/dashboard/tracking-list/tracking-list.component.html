@@ -1,8 +1,8 @@
-<div class="animated-view">
+<div class="tracking-container animated-view">
   <!-- Header Section -->
   <div class="header-section">
-    <div>
-      <h1><mat-icon>manage_history</mat-icon> Quotation Tracking</h1>
+    <div class="header-title-block">
+      <h1 class="sh-t">Quotation Tracking</h1>
       <p class="subtitle">Complete activity log across all quotations.</p>
     </div>
   </div>
@@ -27,45 +27,45 @@
     <!-- Table Container -->
     <div class="table-container" *ngIf="!isLoading">
       <div class="table-scroll-wrapper">
-        <table mat-table [dataSource]="filteredSummaries">
+        <table mat-table [dataSource]="filteredSummaries" class="tracking-table">
 
         <!-- Quotation No Column -->
         <ng-container matColumnDef="quotationNumber">
-          <th mat-header-cell *matHeaderCellDef> Quotation No. </th>
-          <td mat-cell *matCellDef="let row">
+          <th mat-header-cell *matHeaderCellDef class="col-quote"> Quotation No. </th>
+          <td mat-cell *matCellDef="let row" class="col-quote">
             <strong class="text-primary" *ngIf="row.quotationNumber">{{ row.quotationNumber }}</strong>
-            <span *ngIf="!row.quotationNumber" style="color: gray; font-style: italic;">[Draft]</span>
+            <span *ngIf="!row.quotationNumber" class="draft-badge">[Draft]</span>
           </td>
         </ng-container>
 
         <!-- Customer Column -->
         <ng-container matColumnDef="partyName">
-          <th mat-header-cell *matHeaderCellDef> Customer </th>
-          <td mat-cell *matCellDef="let row"> {{ row.partyName || '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef class="col-customer"> Customer </th>
+          <td mat-cell *matCellDef="let row" class="col-customer"> {{ row.partyName || '-' }} </td>
         </ng-container>
 
         <!-- Created By Column -->
         <ng-container matColumnDef="createdBy">
-          <th mat-header-cell *matHeaderCellDef> Created By </th>
-          <td mat-cell *matCellDef="let row"> {{ row.createdBy || '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef class="col-author"> Created By </th>
+          <td mat-cell *matCellDef="let row" class="col-author"> {{ row.createdBy || '-' }} </td>
         </ng-container>
 
         <!-- Sent For Approval By Column -->
         <ng-container matColumnDef="sentForApprovalBy">
-          <th mat-header-cell *matHeaderCellDef> Sent For Approval By </th>
-          <td mat-cell *matCellDef="let row"> {{ row.sentForApprovalBy || '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef class="col-sent-approval"> Sent For Approval By </th>
+          <td mat-cell *matCellDef="let row" class="col-sent-approval"> {{ row.sentForApprovalBy || '-' }} </td>
         </ng-container>
 
         <!-- Approved By Column -->
         <ng-container matColumnDef="approvedBy">
-          <th mat-header-cell *matHeaderCellDef> Approved By </th>
-          <td mat-cell *matCellDef="let row"> {{ row.approvedBy || '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef class="col-approved-by"> Approved By </th>
+          <td mat-cell *matCellDef="let row" class="col-approved-by"> {{ row.approvedBy || '-' }} </td>
         </ng-container>
 
         <!-- Status Column -->
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Status </th>
-          <td mat-cell *matCellDef="let row">
+          <th mat-header-cell *matHeaderCellDef class="col-status"> Status </th>
+          <td mat-cell *matCellDef="let row" class="col-status">
             <span class="status-badge" [ngClass]="(row.status || '').toLowerCase()">
               {{ row.status || 'Unknown' }}
             </span>
@@ -74,16 +74,15 @@
 
         <!-- Quotation State Column -->
         <ng-container matColumnDef="quotationState">
-          <th mat-header-cell *matHeaderCellDef> Quotation State </th>
-          <td mat-cell *matCellDef="let row">
+          <th mat-header-cell *matHeaderCellDef class="col-state"> Quotation State </th>
+          <td mat-cell *matCellDef="let row" class="col-state">
             <ng-container *ngIf="row.status === 'Approved'; else notApproved">
               <ng-container *ngIf="hasStatePermission() && !isStateLocked(row.quotationState); else staticState">
                 <mat-select 
                   [value]="row.quotationState" 
                   (selectionChange)="onStateChange(row, $event.value)"
-                  class="glass-input" 
+                  class="glass-input state-select" 
                   [ngClass]="getStateClass(row.quotationState)"
-                  style="width: 140px; font-size: 0.85rem;"
                   placeholder="Set State">
                   <mat-option *ngFor="let state of quotationStates" [value]="state.value">
                     {{ state.label }}
@@ -108,27 +107,27 @@
 
         <!-- Creation Date Column -->
         <ng-container matColumnDef="createdDate">
-          <th mat-header-cell *matHeaderCellDef> Creation Date </th>
-          <td mat-cell *matCellDef="let row"> {{ row.createdDate | date:'mediumDate' }} </td>
+          <th mat-header-cell *matHeaderCellDef class="col-date"> Creation Date </th>
+          <td mat-cell *matCellDef="let row" class="col-date"> {{ row.createdDate | date:'mediumDate' }} </td>
         </ng-container>
 
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
-          <td mat-cell *matCellDef="let row" class="text-center">
+          <th mat-header-cell *matHeaderCellDef class="col-actions text-center"> Action </th>
+          <td mat-cell *matCellDef="let row" class="col-actions text-center" style="white-space: nowrap;">
             <button 
               mat-icon-button 
+              class="row-icon-btn history-btn"
               (click)="openTrackingTimeline(row)" 
-              matTooltip="View Activity Timeline"
-              color="primary">
+              matTooltip="View Activity Timeline">
               <mat-icon>history</mat-icon>
             </button>
             <button 
               *ngIf="row.quotationState === QuotationState.RequestForModification"
               mat-icon-button 
+              class="row-icon-btn edit-btn"
               (click)="editQuotation(row)" 
-              matTooltip="Edit Quotation"
-              color="accent">
+              matTooltip="Edit Quotation">
               <mat-icon>edit</mat-icon>
             </button>
           </td>

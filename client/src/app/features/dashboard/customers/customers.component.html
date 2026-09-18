@@ -2,15 +2,12 @@
 
   <!-- Header -->
   <div class="header-section">
-
-        <div>
-          <h1 class="sh-t">Customer Master</h1>
-          <p class="subtitle">Manage customers, contact numbers, GST details and addresses.
-          </p>
-        </div>
+    <div class="header-title-block">
+      <h1 class="sh-t">Customer Master</h1>
+      <p class="subtitle">Manage customers, contact numbers, GST details and addresses.</p>
+    </div>
 
     <div class="header-actions">
-
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>Search Customers</mat-label>
         <mat-icon matPrefix>search</mat-icon>
@@ -20,106 +17,89 @@
           placeholder="Search by Name, GST or Contact">
       </mat-form-field>
 
-      <button class="btn-ghost" *ngIf="canEdit" (click)="showAddForm()">
-        + Add Customer
-      </button>
-
-    </div>
-
-  </div>
-
-
-
- <div class="table-container glass-card">
-  <div class="table-scroll-wrapper">
-   <table mat-table [dataSource]="dataSource">
-
-  <!-- Name -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Customer Name</th>
-    <td mat-cell *matCellDef="let element">
-      <strong>{{ element.name }}</strong>
-    </td>
-  </ng-container>
-
-  <!-- Contact -->
-  <ng-container matColumnDef="contactNumber">
-    <th mat-header-cell *matHeaderCellDef>Contact Number</th>
-    <td mat-cell *matCellDef="let element">
-      {{ element.contactNumber || '-' }}
-    </td>
-  </ng-container>
-
-  <!-- GST -->
-  <ng-container matColumnDef="gstNumber">
-    <th mat-header-cell *matHeaderCellDef>GST Number</th>
-    <td mat-cell *matCellDef="let element">
-      {{ element.gstNumber || '-' }}
-    </td>
-  </ng-container>
-
-  <!-- Address -->
-    <ng-container matColumnDef="address">
-      <th mat-header-cell *matHeaderCellDef>Address</th>
-      <td mat-cell *matCellDef="let element">
-        {{ formatAddress(element.address) }}
-      </td>
-    </ng-container>
-
-  <!-- Updated By -->
-  <ng-container matColumnDef="updatedBy">
-    <th mat-header-cell *matHeaderCellDef>Updated By</th>
-    <td mat-cell *matCellDef="let element">
-      <div class="updated-user">
-        {{ element.updatedBy || 'System' }}
-        <small *ngIf="element.updatedDate">
-          {{ element.updatedDate | date:'short' }}
-        </small>
-      </div>
-    </td>
-  </ng-container>
-
-      <!-- Actions Column -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="primary" (click)="showEditForm(element)" *ngIf="canEdit" title="Edit Customer">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deleteCustomer(element)" *ngIf="canEdit" title="Remove Customer">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </div>
- </div>
-
-  <ng-template #noCustomers>
-    <div class="no-customers-placeholder glass-card animated-view" style="text-align: center; padding: 40px;">
-
-      <mat-icon>groups</mat-icon>
-
-      <h2>No Customers Yet</h2>
-
-      <p>
-        Add your first customer to begin managing quotations.
-      </p>
-
-      <button
-        class="btn-ghost"
-        *ngIf="canEdit"
-        (click)="showAddForm()">
-
+      <button class="btn-ghost add-customer-btn" *ngIf="canEdit" (click)="showAddForm()">
         <mat-icon>add</mat-icon>
-            Add Customer
+        <span>Add Customer</span>
       </button>
-
     </div>
+  </div>
 
-  </ng-template>
+  <div class="table-container glass-card" *ngIf="dataSource.data.length > 0">
+    <div class="table-scroll-wrapper">
+      <table mat-table [dataSource]="dataSource" class="customers-table">
+
+        <!-- Name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class="col-name">Customer Name</th>
+          <td mat-cell *matCellDef="let element" class="col-name">
+            <strong class="customer-name-text">{{ element.name }}</strong>
+          </td>
+        </ng-container>
+
+        <!-- Contact -->
+        <ng-container matColumnDef="contactNumber">
+          <th mat-header-cell *matHeaderCellDef class="col-contact">Contact Number</th>
+          <td mat-cell *matCellDef="let element" class="col-contact">
+            {{ element.contactNumber || '-' }}
+          </td>
+        </ng-container>
+
+        <!-- GST -->
+        <ng-container matColumnDef="gstNumber">
+          <th mat-header-cell *matHeaderCellDef class="col-gst">GST Number</th>
+          <td mat-cell *matCellDef="let element" class="col-gst">
+            {{ element.gstNumber || '-' }}
+          </td>
+        </ng-container>
+
+        <!-- Address -->
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef class="col-address">Address</th>
+          <td mat-cell *matCellDef="let element" class="col-address address-cell">
+            {{ formatAddress(element.address) }}
+          </td>
+        </ng-container>
+
+        <!-- Updated By -->
+        <ng-container matColumnDef="updatedBy">
+          <th mat-header-cell *matHeaderCellDef class="col-updated">Updated By</th>
+          <td mat-cell *matCellDef="let element" class="col-updated">
+            <div class="updated-user">
+              <span class="user-text">{{ element.updatedBy || 'System' }}</span>
+              <small *ngIf="element.updatedDate" class="date-text">
+                {{ element.updatedDate | date:'short' }}
+              </small>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="col-actions">Actions</th>
+          <td mat-cell *matCellDef="let element" class="col-actions" style="white-space: nowrap;">
+            <button mat-icon-button class="row-icon-btn edit-btn" (click)="showEditForm(element)" *ngIf="canEdit" title="Edit Customer">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button class="row-icon-btn delete-btn" (click)="deleteCustomer(element)" *ngIf="canEdit" title="Remove Customer">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="no-customers-placeholder glass-card animated-view" *ngIf="!loading() && dataSource.data.length === 0">
+    <mat-icon>groups</mat-icon>
+    <h2>No Customers Yet</h2>
+    <p>Add your first customer to begin managing quotations.</p>
+    <button class="btn-ghost" *ngIf="canEdit" (click)="showAddForm()">
+      <mat-icon>add</mat-icon>
+      <span>Add Customer</span>
+    </button>
+  </div>
 
 </div>

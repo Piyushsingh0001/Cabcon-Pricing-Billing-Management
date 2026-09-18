@@ -1,59 +1,119 @@
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
 
-    .admin-container {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-    .header-section {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    h1 {
-      font-size: 28px;
-      font-weight: 700;
-      margin: 0 0 4px 0;
-    }
-    .subtitle {
-      color: var(--text-secondary);
-      margin: 0;
-    }
-    .admin-tabs {
-      background: var(--bg-card);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .tab-content {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .tab-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .tab-actions h3 {
-      margin: 0;
-      font-weight: 600;
-    }
-    .bold-cell {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-    .role-badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 500;
-      background: rgba(99, 102, 241, 0.15);
-      color: #818cf8;
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      padding: 2px 8px;
-      border-radius: 12px;
-      margin-right: 4px;
-    }
-    ::ng-deep .mat-mdc-tab-group-actions-container {
-      border-bottom: 1px solid var(--border-glass) !important;
-    }
-  
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.admin-tabs {
+  background: var(--bg-card);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tab-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tab-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tab-actions h3 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.table-scroll-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+table.mat-mdc-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+
+  th.mat-mdc-header-cell {
+    background: #fafafb;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 13px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-glass);
+    white-space: nowrap;
+  }
+
+  td.mat-mdc-cell {
+    padding: 10px 12px;
+    font-size: 13px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+  }
+}
+
+.bold-cell {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.role-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  background: rgba(99, 102, 241, 0.15);
+  color: #4338ca;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-right: 4px;
+}
+
+::ng-deep .mat-mdc-tab-group-actions-container {
+  border-bottom: 1px solid var(--border-glass) !important;
+}
+
+@media (max-width: 768px) {
+  .admin-container {
+    gap: 14px;
+  }
+
+  .tab-content {
+    padding: 14px 10px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+}

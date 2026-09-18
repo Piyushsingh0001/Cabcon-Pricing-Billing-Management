@@ -228,7 +228,8 @@ html, body {
   height: 90vh !important;
   max-height: 920px !important;
 
-  .mat-mdc-dialog-surface {
+  .mat-mdc-dialog-surface,
+  .mdc-dialog__surface {
     padding: 0 !important;
     border-radius: 12px !important;
     overflow: hidden !important;
@@ -253,13 +254,26 @@ html, body {
     margin: 8px auto !important;
   }
 
+  .dialog-tier-matrix {
+    width: calc(100vw - 12px) !important;
+    min-width: 0 !important;
+    max-width: calc(100vw - 12px) !important;
+    height: calc(100vh - 20px) !important;
+    max-height: calc(100vh - 20px) !important;
+    margin: 6px auto !important;
+
+    .mat-mdc-dialog-surface,
+    .mdc-dialog__surface {
+      padding: 0 !important;
+    }
+  }
+
   .cdk-overlay-pane {
-    max-width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 12px) !important;
   }
 
   .mat-mdc-dialog-container .mdc-dialog__surface {
-    padding: 14px 12px !important;
-    max-height: calc(100vh - 32px) !important;
+    max-height: calc(100vh - 20px) !important;
     border-radius: 10px !important;
   }
 }

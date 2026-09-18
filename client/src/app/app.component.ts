@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
@@ -13,9 +14,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from './core/auth.service';
 import { PricingService } from './core/pricing.service';
 import { ChangePasswordDialogComponent } from './features/auth/change-password-dialog/change-password-dialog.component';
-
-
-
 
 @Component({
   selector: 'app-root',
@@ -42,11 +40,22 @@ export class App {
   public authService = inject(AuthService);
   private pricingService = inject(PricingService);
   private dialog = inject(MatDialog);
+  private breakpointObserver = inject(BreakpointObserver);
 
   public isAuthenticated = this.authService.isAuthenticated;
   public currentUser = this.authService.currentUser;
+  public isMobile = false;
   
   constructor() {
+    this.breakpointObserver.observe(['(max-width: 991px)']).subscribe(result => {
+      this.isMobile = result.matches;
+    });
+  }
+
+  public closeOnMobile(sidenav: any) {
+    if (this.isMobile && sidenav) {
+      sidenav.close();
+    }
   }
 
   public hasPermission(permission: string): boolean {

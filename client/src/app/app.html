@@ -7,40 +7,23 @@
       <img src="Images/Logo.jpg.png" alt="Cabcon Logo" class="toolbar-logo" width="160" height="40">
       <span class="spacer"></span>
 
-      <!-- User profile info -->
-      <div class="user-profile" *ngIf="currentUser() as user">
+      <!-- User profile info (Desktop Only) -->
+      <div class="user-profile desktop-only" *ngIf="!isMobile && currentUser() as user">
         <span class="user-name">{{ user.fullName }}</span>
         <span class="user-role">{{ user.roles.join(', ') }}</span>
-        <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+        <button mat-icon-button [matMenuTriggerFor]="profileMenu" title="User Menu">
           <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #profileMenu="matMenu" xPosition="before">
           <div style="padding: 16px; min-width: 250px; max-width: 380px; outline: none; border-bottom: 1px solid rgba(255,255,255,0.1); cursor: default;" (click)="$event.stopPropagation()">
             <div class="profile-header">
-
-              <div class="profile-avatar">  <mat-icon>account_circle</mat-icon> </div>
+              <div class="profile-avatar"><mat-icon>account_circle</mat-icon></div>
               <div class="profile-info">
-                <div class="profile-name">    {{ user.fullName }}    </div>
-                <div class="profile-email">  <mat-icon>mail</mat-icon>  {{ user.email }}  </div>
-                <div class="profile-role">    <mat-icon>verified_user</mat-icon> {{ user.roles.join(', ') }}    </div>
+                <div class="profile-name">{{ user.fullName }}</div>
+                <div class="profile-email"><mat-icon>mail</mat-icon> {{ user.email }}</div>
+                <div class="profile-role"><mat-icon>verified_user</mat-icon> {{ user.roles.join(', ') }}</div>
               </div>
             </div>
-
-            <!-- <div style="font-size: 13px;">
-          <div style="color: #080808; margin-bottom: 4px;font-weight: 600; font-size: 14px; ">Permissions:</div>
-          <div class="permission-section">
-
-           <div class="permission-group" *ngFor="let group of groupedPermissions">
-                <div class="module-title">
-                    <mat-icon class="module-icon"> {{ getModuleIcon(group.module) }}  </mat-icon>
-                   <span>{{ group.module }}</span>
-                    </div>
-                  <div class="permission-chips">
-                  <span class="permission-chip" *ngFor="let action of group.actions">  {{ action }} </span>
-                    </div>
-            </div>
-          </div>
-        </div> -->
           </div>
           <mat-divider></mat-divider>
           <button mat-menu-item class="logout-btn" (click)="openChangePasswordDialog()">
@@ -56,45 +39,75 @@
     </mat-toolbar>
 
     <mat-sidenav-container class="sidenav-container">
-      <mat-sidenav #sidenav mode="side" opened class="main-sidenav">
-        <mat-nav-list>
-           <a mat-list-item routerLink="/pending-approvals" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View') && authService.hasRole('Super Admin')">
+      <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile" class="main-sidenav">
+        <!-- Mobile User Profile Section (Shown inside sidebar on Mobile) -->
+        <div class="sidebar-user-header" *ngIf="isMobile && currentUser() as user">
+          <div class="sidebar-user-avatar">
+            <mat-icon>account_circle</mat-icon>
+          </div>
+          <div class="sidebar-user-details">
+            <div class="sidebar-user-name">{{ user.fullName }}</div>
+            <div class="sidebar-user-role-badge">{{ user.roles.join(', ') }}</div>
+            <div class="sidebar-user-email">{{ user.email }}</div>
+          </div>
+        </div>
+
+        <mat-divider *ngIf="isMobile"></mat-divider>
+
+        <mat-nav-list class="sidenav-nav-list">
+          <a mat-list-item routerLink="/pending-approvals" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View') && authService.hasRole('Super Admin')" (click)="closeOnMobile(sidenav)">
             <mat-icon matListItemIcon>pending_actions</mat-icon>
             <span matListItemTitle>Pending Approval</span>
           </a>
-           <a mat-list-item routerLink="/materials" routerLinkActive="active-link" *ngIf="hasPermission('Pricing.View')" (click)="onMaterialPricesClick()">
+          <a mat-list-item routerLink="/materials" routerLinkActive="active-link" *ngIf="hasPermission('Pricing.View')" (click)="onMaterialPricesClick(); closeOnMobile(sidenav)">
             <mat-icon matListItemIcon>category</mat-icon>
             <span matListItemTitle>Material Prices</span>
           </a>
-           <a mat-list-item routerLink="/skus" routerLinkActive="active-link" *ngIf="hasPermission('Sku.View')" (click)="onSkusClick()">
+          <a mat-list-item routerLink="/skus" routerLinkActive="active-link" *ngIf="hasPermission('Sku.View')" (click)="onSkusClick(); closeOnMobile(sidenav)">
             <mat-icon matListItemIcon>inventory_2</mat-icon>
             <span matListItemTitle>SKUs & BOMs</span>
           </a>
-          <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.Generate')">
+          <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.Generate')" (click)="closeOnMobile(sidenav)">
             <mat-icon matListItemIcon>dashboard</mat-icon>
             <span matListItemTitle>Offer & Send</span>
           </a>
-          <a mat-list-item routerLink="/customers" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
+          <a mat-list-item routerLink="/customers" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')" (click)="closeOnMobile(sidenav)">
             <mat-icon matListItemIcon>groups</mat-icon>
             <span matListItemTitle>Customer Master</span>
           </a>
-          <a mat-list-item routerLink="/draft-quotations" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
+          <a mat-list-item routerLink="/draft-quotations" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')" (click)="closeOnMobile(sidenav)">
             <mat-icon matListItemIcon>edit_document</mat-icon>
             <span matListItemTitle>Draft Quotations</span>
           </a>
-          <a mat-list-item routerLink="/tracking" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View') && hasPermission('Quotation.State')" >
+          <a mat-list-item routerLink="/tracking" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View') && hasPermission('Quotation.State')" (click)="closeOnMobile(sidenav)">
             <mat-icon matListItemIcon>track_changes</mat-icon>
             <span matListItemTitle>Quotations Tracking</span>
           </a>
-          <a mat-list-item routerLink="/quotations" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')">
+          <a mat-list-item routerLink="/quotations" routerLinkActive="active-link" *ngIf="hasPermission('Quotation.View')" (click)="closeOnMobile(sidenav)">
             <mat-icon matListItemIcon>receipt</mat-icon>
             <span matListItemTitle>Quotation History</span>
           </a>
-          <a mat-list-item routerLink="/admin" routerLinkActive="active-link" *ngIf="hasPermission('Users.View')">
-             <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-             <span matListItemTitle>Admin Panel</span>
-             </a>         
+          <a mat-list-item routerLink="/admin" routerLinkActive="active-link" *ngIf="hasPermission('Users.View')" (click)="closeOnMobile(sidenav)">
+            <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
+            <span matListItemTitle>Admin Panel</span>
+          </a>
         </mat-nav-list>
+
+        <!-- Account Actions (Change Password, Sign Out) in Sidebar on Mobile -->
+        <div class="sidebar-account-section" *ngIf="isMobile">
+          <mat-divider></mat-divider>
+          <div class="sidebar-section-title">Account & Security</div>
+          <mat-nav-list>
+            <a mat-list-item (click)="openChangePasswordDialog(); closeOnMobile(sidenav)">
+              <mat-icon matListItemIcon style="color: #6366f1;">vpn_key</mat-icon>
+              <span matListItemTitle>Change Password</span>
+            </a>
+            <a mat-list-item class="sidebar-logout-item" (click)="logout(); closeOnMobile(sidenav)">
+              <mat-icon matListItemIcon style="color: #dc2626;">logout</mat-icon>
+              <span matListItemTitle style="color: #dc2626; font-weight: 600;">Sign Out</span>
+            </a>
+          </mat-nav-list>
+        </div>
       </mat-sidenav>
 
       <mat-sidenav-content class="main-content">

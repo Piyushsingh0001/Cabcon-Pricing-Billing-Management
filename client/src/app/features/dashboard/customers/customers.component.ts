@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,23 +39,30 @@ export class CustomersComponent implements OnInit {
   private confirmDialog = inject(ConfirmDialogService);
   private snackBar = inject(MatSnackBar);
   private fb = inject(FormBuilder);
+  private cdr = inject(ChangeDetectorRef);
 
   public canEdit = this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
   public displayedColumns = this.canEdit 
     ? ['name', 'contactNumber', 'gstNumber', 'address', 'updatedBy', 'actions']
     : ['name', 'contactNumber', 'gstNumber', 'address', 'updatedBy'];
   public dataSource = new MatTableDataSource<CustomerSummary>([]);
+  public loading = signal(true);
 
   ngOnInit() {
     this.loadCustomers();
   }
 
   public loadCustomers() {
+    this.loading.set(true);
     this.pricingService.getCustomers().subscribe({
       next: (res) => {
         this.dataSource.data = res ?? [];
+        this.loading.set(false);
+        this.cdr.detectChanges();
       },
       error: () => {
+        this.loading.set(false);
+        this.cdr.detectChanges();
         this.snackBar.open('Failed to load customers.', 'Close', { duration: 3000 });
       }
     });
