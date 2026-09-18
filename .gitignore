@@ -28,3 +28,7 @@ publish/
 # OS files
 .DS_Store
 Thumbs.db
+/src/Cabcon.WebApi/Logs/log-20260831.txt
+/src/Cabcon.WebApi/Logs/log-20260901.txt
+/src/Cabcon.WebApi/Logs/log-20260902.txt
+/src/Cabcon.WebApi/Logs/log-20260903.txt

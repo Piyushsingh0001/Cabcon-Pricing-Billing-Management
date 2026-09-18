@@ -244,9 +244,12 @@
   <div class="card footer-card" *ngIf="rows.length > 0">
     <div class="footer-row">
       <div class="footer-inputs">
-        <div class="control-group">
-          <div class="lbls">Customer / Party</div>
-          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="dense-field" style="width: 250px;">
+        <!-- Customer / Party -->
+        <div class="control-group customer-party-group">
+          <div class="lbls">
+            <span>Customer / Party</span>
+          </div>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="dense-field full-width-field">
             <input matInput type="text" placeholder="Search Customer..." [(ngModel)]="partyName" (keyup)="filterCustomers($event)" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCustomerSelected($event.option.value)">
               <mat-option *ngFor="let c of filteredCustomers" [value]="c">
@@ -255,27 +258,49 @@
             </mat-autocomplete>
           </mat-form-field>
         </div>
-        <div class="control-group">
-          <div class="lbls">Customer Address</div>
-          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="dense-field" style="width: 280px;">
+
+        <!-- Customer Address with Noticeable Dropdown -->
+        <div class="control-group customer-address-group">
+          <div class="lbls">
+            <span>Customer Address</span>
+            <span class="addr-count-badge" *ngIf="customerAddresses.length > 0">
+              {{ customerAddresses.length }} {{ customerAddresses.length === 1 ? 'saved address' : 'saved addresses' }}
+            </span>
+          </div>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="dense-field full-width-field customer-address-field">
             <input matInput type="text" placeholder="Select or enter address..." [(ngModel)]="partyAddress" [matAutocomplete]="autoAddress">
-            <mat-autocomplete #autoAddress="matAutocomplete">
-              <mat-option *ngFor="let addr of customerAddresses; let i = index" [value]="addr">
-                {{i + 1}}. {{addr}}
-                <span *ngIf="i === customerDefaultAddressIndex" style="color: #1976d2; font-size: 11px; font-weight: 500; background: #e3f2fd; padding: 2px 6px; border-radius: 4px; margin-left: 8px; display: inline-block; line-height: 1;">Default</span>
+            <mat-icon matSuffix class="address-suffix-icon" *ngIf="customerAddresses.length > 0" title="Click to view saved addresses">arrow_drop_down</mat-icon>
+            <mat-autocomplete #autoAddress="matAutocomplete" class="address-autocomplete-panel">
+              <mat-option *ngFor="let addr of customerAddresses; let i = index" [value]="addr" class="address-mat-option">
+                <div class="address-option-item">
+                  <div class="address-option-header">
+                    <span class="addr-idx-badge">
+                      <mat-icon class="addr-pin-icon">location_on</mat-icon>
+                      Address #{{ i + 1 }}
+                    </span>
+                    <span *ngIf="addr === customerAddresses[customerDefaultAddressIndex]" class="addr-default-chip">Default Address</span>
+                  </div>
+                  <div class="address-option-text">{{ addr }}</div>
+                </div>
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
         </div>
-        <div class="control-group">
-          <div class="lbls">Validity (days)</div>
-          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="dense-field" style="width: 100px;">
-            <input matInput type="number" [(ngModel)]="validityDays">
+
+        <!-- Validity (days) -->
+        <div class="control-group validity-group">
+          <div class="lbls">
+            <span>Validity (days)</span>
+          </div>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="dense-field full-width-field">
+            <input matInput type="number" [(ngModel)]="validityDays" min="1">
           </mat-form-field>
         </div>
       </div>
-      <div style="display: flex; gap: 12px; align-items: center;">
-        <button mat-button class="btn-ghost" (click)="cancel()" style="color: var(--text-secondary); border: 1px solid var(--border-glass);">
+
+      <!-- Action Buttons -->
+      <div class="footer-actions">
+        <button mat-button class="btn-ghost btn-cancel-quote" (click)="cancel()">
           Cancel
         </button>
         <button class="btn-generate-quotation" (click)="generateQuotation()">

@@ -162,7 +162,7 @@ export class DashboardComponent implements OnInit {
         if (this.partyName) {
           const match = this.customers.find(c => c.name.toLowerCase() === this.partyName.toLowerCase());
           if (match) {
-            this.selectedCustomer = match;
+            this.onCustomerSelected(match);
           }
         }
       }
@@ -216,6 +216,14 @@ export class DashboardComponent implements OnInit {
     } else {
       this.customerDefaultAddressIndex = 0;
     }
+  }
+
+  public get filteredCustomerAddresses(): string[] {
+    if (!this.customerAddresses || this.customerAddresses.length === 0) return [];
+    if (!this.partyAddress || !this.partyAddress.trim()) return this.customerAddresses;
+    const q = this.partyAddress.toLowerCase().trim();
+    const matched = this.customerAddresses.filter(a => a.toLowerCase().includes(q));
+    return matched.length > 0 ? matched : this.customerAddresses;
   }
 
   public onSearchChange() {

@@ -459,36 +459,39 @@ export class SkuEditDialogComponent implements OnInit {
   }
 
   public getLandedCost(materialId: any, priceType?: any, vendorName?: string, matName?: string): number {
-    let mat = this.materials.find(m => m.id === materialId);
-    const pType = priceType !== undefined ? Number(priceType) : (mat?.type ?? 0);
+    const pType = priceType !== undefined ? Number(priceType) : 0;
+    let mat: Material | undefined;
 
     if (matName) {
-      if (pType === 1 && vendorName) {
-        const vendorMat = this.materials.find(m => m.name.toLowerCase() === matName.toLowerCase() && m.vendorName?.toLowerCase() === vendorName.toLowerCase());
-        if (vendorMat) mat = vendorMat;
-      } else if (pType === 0) {
-        const lmeMat = this.materials.find(m => m.name.toLowerCase() === matName.toLowerCase() && m.type === 0);
-        if (lmeMat) mat = lmeMat;
+      if (pType === 1) {
+        if (vendorName) {
+          mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.vendorName?.toLowerCase() === vendorName.toLowerCase() && m.type === 1);
+        }
+        if (!mat) {
+          mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 1);
+        }
+      } else {
+        mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 0);
       }
+    }
+
+    if (!mat && materialId) {
+      mat = this.materials.find(m => m.id === materialId);
     }
 
     if (!mat) return 0;
 
     if (pType === 0) {
+      // Strictly LME-linked calculation
       const lme = Number(mat.lmeUsdPerMt || 0);
       const premium = Number(mat.premiumUsdPerMt || 0);
       const fx = Number(mat.fxRate || 0);
       const freight = Number(mat.freightInrPerMt || 0);
       const landed = ((lme + premium) * fx + freight) / 1000;
-      return landed > 0 ? landed : Number(mat.directRateInrPerKg || 0);
+      return landed > 0 ? landed : 0;
     } else {
-      const direct = Number(mat.directRateInrPerKg || 0);
-      if (direct > 0) return direct;
-      const lme = Number(mat.lmeUsdPerMt || 0);
-      const premium = Number(mat.premiumUsdPerMt || 0);
-      const fx = Number(mat.fxRate || 0);
-      const freight = Number(mat.freightInrPerMt || 0);
-      return ((lme + premium) * fx + freight) / 1000;
+      // Strictly Direct Rate
+      return Number(mat.directRateInrPerKg || 0);
     }
   }
 
@@ -605,18 +608,24 @@ export class SkuEditDialogComponent implements OnInit {
     const pType = Number(line.get('priceType')?.value || 0);
     const pMonth = Number(line.get('pricingMonth')?.value || 0);
 
-    let mat = this.materials.find(m => m.id === matId);
+    let mat: Material | undefined;
     if (matName) {
       if (pType === 1 && vendName) {
-        const vMat = this.materials.find(m => m.name.toLowerCase() === matName.toLowerCase() && m.vendorName?.toLowerCase() === vendName.toLowerCase());
-        if (vMat) { mat = vMat; matId = vMat.id; line.patchValue({ materialId: vMat.id }, { emitEvent: false }); }
-      } else if (pType === 0) {
-        const lMat = this.materials.find(m => m.name.toLowerCase() === matName.toLowerCase() && m.type === 0);
-        if (lMat) { mat = lMat; matId = lMat.id; line.patchValue({ materialId: lMat.id }, { emitEvent: false }); }
+        mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.vendorName?.toLowerCase() === vendName.toLowerCase() && m.type === 1);
+      } else if (pType === 1) {
+        mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 1);
+      } else {
+        mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 0);
       }
     }
 
+    if (!mat && matId) {
+      mat = this.materials.find(m => m.id === matId);
+    }
+
     if (mat) {
+      matId = mat.id;
+      line.patchValue({ materialId: mat.id }, { emitEvent: false });
       let avg = 0;
       if (pType === 0) {
         avg = pMonth === 0 ? (mat.thisMonthAvgLme || 0) : (mat.prevMonthAvgLme || 0);
@@ -632,7 +641,7 @@ export class SkuEditDialogComponent implements OnInit {
     this.pricingService.getMissingDates(matId, pType).subscribe(() => {
       this.pricingService.getMaterials(undefined, pType, undefined, false, 1, 1000).subscribe(mats => {
         const updatedMat = mats.items.find(m => m.id === matId)
-                        || mats.items.find(m => m.name.toLowerCase() === matName?.toLowerCase());
+                        || mats.items.find(m => m.name?.toLowerCase() === matName?.toLowerCase() && m.type === pType);
         if (updatedMat) {
           let avg = 0;
           if (pType === 0) {
