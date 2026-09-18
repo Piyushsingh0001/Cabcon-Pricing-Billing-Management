@@ -716,6 +716,37 @@ export class SkuEditDialogComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  public getMaterialCategoryName(matId?: number, matName?: string): string {
+    if (matId) {
+      const mat = this.materials.find(m => m.id === matId) || this.matrixMaterials.find(m => m.id === matId);
+      if (mat?.categoryName) return mat.categoryName;
+    }
+    if (matName) {
+      const mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase()) || 
+                  this.matrixMaterials.find(m => m.name?.toLowerCase() === matName.toLowerCase());
+      if (mat?.categoryName) return mat.categoryName;
+
+      const n = matName.toLowerCase();
+      if (n.includes('cu') || n.includes('copper') || n.includes('al') || n.includes('aluminium')) return 'Core Material';
+      if (n.includes('xlpe') || n.includes('ins')) return 'Insulation Material';
+      if (n.includes('i/sh') || n.includes('inner')) return 'Inner Sheath';
+      if (n.includes('armour') || n.includes('armor') || n.includes('gi') || n.includes('strip') || n.includes('wire')) return 'Armour';
+      if (n.includes('o/sh') || n.includes('outer') || n.includes('shell') || n.includes('sheath') || n.includes('pvc')) return 'Outer Sheath';
+    }
+    return 'Core Material';
+  }
+
+  public getCategoryThemeClass(matId?: number, matName?: string): string {
+    const cat = this.getMaterialCategoryName(matId, matName);
+    const norm = (cat || '').trim().toLowerCase();
+    if (norm.includes('core')) return 'theme-core';
+    if (norm.includes('insulation')) return 'theme-insulation';
+    if (norm.includes('inner')) return 'theme-inner-sheath';
+    if (norm.includes('armour') || norm.includes('armor')) return 'theme-armour';
+    if (norm.includes('outer') || norm.includes('shell') || norm.includes('sheath')) return 'theme-outer-shell';
+    return 'theme-default';
+  }
+
   public checkUniqueness() {
     const formVal = this.form.value;
     const catName = (formVal.categoryName || '').trim().toLowerCase();

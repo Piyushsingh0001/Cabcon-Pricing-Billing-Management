@@ -64,83 +64,114 @@
 
     <div class="bom-section-title">Bill of materials (kg per {{ form.get('unit')?.value }})</div>
     
-    <div formArrayName="bomLines" class="bom-lines-list">
-      <div class="bom-line-card" *ngFor="let line of bomLines.controls; let idx = index" [formGroupName]="idx">
-        
-        <div class="bom-line-row">
-          <select class="sel" formControlName="materialName" (change)="onMaterialNameChange(idx)" style="width: 170px;">
-            <option value="" disabled>Select Material</option>
-            <option *ngFor="let name of uniqueMaterialNames" [value]="name">{{ name }}</option>
-          </select>
+    <div class="bom-table-wrapper">
+      <div class="bom-table-header">
+        <div class="th-cell col-idx">#</div>
+        <div class="th-cell col-mat">Material</div>
+        <div class="th-cell col-type">Price Type</div>
+        <div class="th-cell col-vend">Vendor</div>
+        <div class="th-cell col-method">Price Mode</div>
+        <div class="th-cell col-rate">Rate (₹/kg)</div>
+        <div class="th-cell col-qty">Qty (kg)</div>
+        <div class="th-cell col-total">Total (₹)</div>
+        <div class="th-cell col-action"></div>
+      </div>
 
-          <!-- LME-linked / Direct dropdown (width: 140px) -->
-          <select *ngIf="line.get('pricingMethod')?.value == 0 || line.get('pricingMethod')?.value == 1"
-                  class="sel" formControlName="priceType" (change)="onPriceTypeChange(idx)" style="width: 140px;">
-            <option [value]="0">LME-linked</option>
-            <option [value]="1">Direct ₹/kg</option>
-          </select>
+      <div formArrayName="bomLines" class="bom-rows-list">
+        <div class="bom-grid-row" 
+             *ngFor="let line of bomLines.controls; let idx = index" 
+             [formGroupName]="idx"
+             [ngClass]="getCategoryThemeClass(line.get('materialId')?.value, line.get('materialName')?.value)">
+          
+          <!-- Column 0: Index -->
+          <div class="td-cell col-idx">
+            <span class="idx-badge">{{ idx + 1 }}</span>
+          </div>
 
-          <!-- Vendor dropdown (shown only if Direct ₹/kg is selected) -->
-          <select *ngIf="line.get('priceType')?.value == 1" class="sel" formControlName="vendorName" (change)="onVendorNameChange(idx)" style="width: 140px;">
-            <option value="" disabled>Select Vendor</option>
-            <option *ngFor="let vendor of getAvailableVendors(idx)" [value]="vendor">{{ vendor }}</option>
-          </select>
-
-          <!-- Pricing Method dropdown (Actual / Average / Manual) -->
-          <select class="sel" formControlName="pricingMethod" (change)="onPricingMethodChange(idx)" style="width: 130px;">
-            <option [value]="1">Actual</option>
-            <option [value]="0">Average</option>
-            <option [value]="2">Manual</option>
-          </select>
-        </div>
-
-        <div class="bom-line-row" style="margin-top: 8px;">
-
-          <!-- Dynamic Value / Rate based on Pricing Method -->
-          <div *ngIf="line.get('pricingMethod')?.value == 0" style="display: flex; gap: 8px; align-items: center; width: 360px;">
-            <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Rate ₹/kg:</span>
-            <select class="sel" formControlName="pricingMonth" (change)="onPricingMonthChange(idx)" style="flex: 1; min-width: 140px;">
-              <option [value]="0">This month avg</option>
-              <option [value]="1">Prev month avg</option>
+          <!-- Column 1: Material Dropdown -->
+          <div class="td-cell col-mat">
+            <select class="sel sel-table" formControlName="materialName" (change)="onMaterialNameChange(idx)">
+              <option value="" disabled>Select Material</option>
+              <option *ngFor="let name of uniqueMaterialNames" [value]="name">{{ name }}</option>
             </select>
-            <span class="bom-mult-text" style="font-weight: 600; white-space: nowrap;">₹{{ line.get('manualPrice')?.value | number:'1.2-2' }}</span>
           </div>
 
-          <div *ngIf="line.get('pricingMethod')?.value == 1" style="display: flex; gap: 4px; align-items: center;">
-            <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">Rate ₹/kg:</span>
-            <span class="bom-mult-text" style="font-weight: 600;">₹{{ getLandedCost(line.get('materialId')?.value, line.get('priceType')?.value, line.get('vendorName')?.value, line.get('materialName')?.value) | number:'1.2-2' }}</span>
+          <!-- Column 2: Price Type Dropdown -->
+          <div class="td-cell col-type">
+            <select *ngIf="line.get('pricingMethod')?.value == 0 || line.get('pricingMethod')?.value == 1; else emptyType"
+                    class="sel sel-table" formControlName="priceType" (change)="onPriceTypeChange(idx)">
+              <option [value]="0">LME-linked</option>
+              <option [value]="1">Direct ₹/kg</option>
+            </select>
+            <ng-template #emptyType>
+              <span class="cell-placeholder">&mdash;</span>
+            </ng-template>
           </div>
 
-          <div *ngIf="line.get('pricingMethod')?.value == 2" style="display: flex; gap: 6px; align-items: center; width: 170px;">
-            <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Rate ₹/kg:</span>
-            <input class="in" style="flex: 1; min-width: 0; text-align: right;" type="number" formControlName="manualPrice" placeholder="0.00" min="0" step="0.01">
+          <!-- Column 3: Vendor Dropdown -->
+          <div class="td-cell col-vend">
+            <select *ngIf="line.get('priceType')?.value == 1 && (line.get('pricingMethod')?.value == 0 || line.get('pricingMethod')?.value == 1); else vendPlaceholder"
+                    class="sel sel-table" formControlName="vendorName" (change)="onVendorNameChange(idx)">
+              <option value="" disabled>Select Vendor</option>
+              <option *ngFor="let vendor of getAvailableVendors(idx)" [value]="vendor">{{ vendor }}</option>
+            </select>
+            <ng-template #vendPlaceholder>
+              <span class="cell-placeholder">&mdash;</span>
+            </ng-template>
           </div>
-        </div>
 
-        <!-- Line 3: Qty (kg), Total, and Remove button -->
-        <div class="bom-line-actions" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 8px; margin-top: 8px;">
-          <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- Qty (kg) container matching Select Material boundary (170px) -->
-            <div style="display: flex; gap: 6px; align-items: center; width: 170px;">
-              <span class="lbl" style="font-size: 11px; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Qty (kg):</span>
-              <input class="in" type="number" formControlName="weightKg" placeholder="Qty (kg)" style="flex: 1; min-width: 0; text-align: right;" min="0" step="0.01" title="Quantity (kg)">
+          <!-- Column 4: Price Mode / Pricing Method & Month -->
+          <div class="td-cell col-method">
+            <div class="method-select-wrap">
+              <select class="sel sel-table sel-pmethod" formControlName="pricingMethod" (change)="onPricingMethodChange(idx)">
+                <option [value]="1">Actual</option>
+                <option [value]="0">Average</option>
+                <option [value]="2">Manual</option>
+              </select>
+
+              <select *ngIf="line.get('pricingMethod')?.value == 0"
+                      class="sel sel-table sel-pmonth" formControlName="pricingMonth" (change)="onPricingMonthChange(idx)">
+                <option [value]="0">This mo.</option>
+                <option [value]="1">Prev mo.</option>
+              </select>
             </div>
-
-            <!-- Total container matching Select Vendor right boundary (140px) -->
-            <div style="display: flex; gap: 4px; align-items: center; width: 140px;">
-              <span class="bom-mult-text" style="font-weight: 600; white-space: nowrap;">
-                Total: <span style="color: var(--primary-color);">₹{{ getCalculatedBomLineCost(idx) | number:'1.2-2' }}</span>
-              </span>
-            </div>
           </div>
 
-          <button class="linkbtn-remove" type="button" (click)="removeBomLine(idx)" [disabled]="bomLines.controls.length <= 1" [class.disabled]="bomLines.controls.length <= 1" title="Remove line">
-            <mat-icon style="font-size: 20px; width: 20px; height: 20px;">cancel</mat-icon>
-          </button>
+          <!-- Column 5: Rate -->
+          <div class="td-cell col-rate">
+            <span *ngIf="line.get('pricingMethod')?.value == 0" class="rate-val-pill">
+              ₹{{ line.get('manualPrice')?.value | number:'1.2-2' }}
+            </span>
+
+            <span *ngIf="line.get('pricingMethod')?.value == 1" class="rate-val-pill">
+              ₹{{ getLandedCost(line.get('materialId')?.value, line.get('priceType')?.value, line.get('vendorName')?.value, line.get('materialName')?.value) | number:'1.2-2' }}
+            </span>
+
+            <input *ngIf="line.get('pricingMethod')?.value == 2"
+                   class="in in-table in-rate" type="number" formControlName="manualPrice" placeholder="0.00" min="0" step="0.01">
+          </div>
+
+          <!-- Column 6: Qty -->
+          <div class="td-cell col-qty">
+            <input class="in in-table in-qty" type="number" formControlName="weightKg" placeholder="0.00" min="0" step="0.01" title="Quantity (kg)">
+          </div>
+
+          <!-- Column 7: Total -->
+          <div class="td-cell col-total">
+            <span class="total-val-text">₹{{ getCalculatedBomLineCost(idx) | number:'1.2-2' }}</span>
+          </div>
+
+          <!-- Column 8: Action -->
+          <div class="td-cell col-action">
+            <button class="linkbtn-remove" type="button" (click)="removeBomLine(idx)" [disabled]="bomLines.controls.length <= 1" [class.disabled]="bomLines.controls.length <= 1" title="Remove line">
+              <mat-icon style="font-size: 18px; width: 18px; height: 18px;">cancel</mat-icon>
+            </button>
+          </div>
+
         </div>
       </div>
 
-      <button class="btn-ghost-mini" style="align-self: flex-start; margin-top: 8px;" type="button" (click)="addBomLine()">+ add material line</button>
+      <button class="btn-ghost-mini" style="align-self: flex-start; margin-top: 10px;" type="button" (click)="addBomLine()">+ add material line</button>
     </div>
   </form>
 </mat-dialog-content>

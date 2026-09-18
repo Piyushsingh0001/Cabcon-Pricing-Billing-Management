@@ -267,7 +267,7 @@ export class SkusComponent implements OnInit {
     };
 
     const dialogRef = this.dialog.open(SkuEditDialogComponent, {
-      panelClass: 'dialog-tier-lg',
+      panelClass: 'dialog-tier-xl',
       autoFocus: false,
       data: defaultData
     });
@@ -313,7 +313,7 @@ export class SkusComponent implements OnInit {
       next: (fullSku) => {
         this.loading.set(false);
         const dialogRef = this.dialog.open(SkuEditDialogComponent, {
-          panelClass: 'dialog-tier-lg',
+          panelClass: 'dialog-tier-xl',
           autoFocus: false,
           data: fullSku
         });
