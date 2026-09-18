@@ -10,25 +10,37 @@
   max-height: 85vh;
   padding: 0;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .dialog-header {
+  padding: 2px 0 10px 0;
+
   h2 {
-    margin: 0 0 8px 0;
+    margin: 0;
     font-size: 1.15rem;
     font-weight: 600;
     color: var(--primary-color);
+    line-height: 1.3;
+    word-break: break-word;
   }
+}
+
+mat-dialog-content {
+  padding: 0 !important;
+  max-height: 65vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .filters-row {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  margin-bottom: 14px;
-  padding: 8px 12px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
   border-radius: 8px;
   background: #f8fafc;
   border: 1px solid var(--border-glass);
@@ -36,7 +48,7 @@
   box-sizing: border-box;
 
   .filter-field {
-    flex: 1 1 auto;
+    flex: 1 1 110px;
     min-width: 95px;
 
     ::ng-deep .mat-mdc-form-field-subscript-wrapper {
@@ -45,8 +57,8 @@
   }
 
   .date-field {
-    flex: 1.1 1 auto;
-    min-width: 120px;
+    flex: 1.1 1 125px;
+    min-width: 115px;
   }
 
   .download-btn {
@@ -73,7 +85,8 @@
 .history-table-container {
   max-height: 380px;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border-radius: 8px;
   border: 1px solid var(--border-glass);
   width: 100%;
@@ -82,7 +95,7 @@
 
 .history-table {
   width: 100%;
-  min-width: 0;
+  min-width: 560px;
   table-layout: auto;
   border-collapse: collapse;
 
@@ -116,6 +129,26 @@
   }
 }
 
+.badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+
+  &.badge-lme {
+    background: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+  }
+
+  &.badge-direct {
+    background: #fef3c7;
+    color: #b45309;
+    border: 1px solid #fde68a;
+  }
+}
+
 .no-records {
   padding: 24px;
   text-align: center;
@@ -123,20 +156,32 @@
   font-size: 0.9rem;
 }
 
+mat-dialog-actions {
+  padding: 8px 0 0 0 !important;
+  min-height: auto !important;
+}
+
 /* Mobile Responsiveness */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .dialog-header {
+    h2 {
+      font-size: 1.05rem;
+    }
+  }
+
   .filters-row {
     padding: 8px;
     gap: 6px;
 
     .filter-field, .date-field {
       flex: 1 1 calc(50% - 6px);
-      min-width: 0;
+      min-width: calc(50% - 6px);
     }
 
     .download-btn {
-      flex: 1 1 calc(70% - 6px);
+      flex: 1 1 auto;
       justify-content: center;
+      height: 38px;
     }
 
     .reset-btn {
@@ -145,13 +190,50 @@
   }
 
   .history-table-container {
-    overflow-x: auto;
+    max-height: 48vh;
   }
 
   .history-table {
+    min-width: 520px;
+
+    th.mat-mdc-header-cell, td.mat-mdc-cell {
+      padding: 6px 8px;
+      font-size: 0.75rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .dialog-header {
+    padding-bottom: 8px;
+    h2 {
+      font-size: 0.95rem;
+    }
+  }
+
+  .filters-row {
+    padding: 6px;
+    gap: 6px;
+
+    .filter-field, .date-field {
+      flex: 1 1 calc(50% - 4px);
+      min-width: calc(50% - 4px);
+    }
+
+    .download-btn {
+      flex: 1 1 auto;
+      font-size: 12px;
+      height: 36px;
+      padding: 0 10px;
+    }
+  }
+
+  .history-table {
+    min-width: 500px;
+
     th.mat-mdc-header-cell, td.mat-mdc-cell {
       padding: 6px 6px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
     }
   }
 }

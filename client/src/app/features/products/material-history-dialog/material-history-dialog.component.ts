@@ -60,7 +60,7 @@ export class MaterialHistoryDialogComponent implements OnInit {
 
   public allRawHistory: MaterialPriceHistory[] = [];
   public historyData = new MatTableDataSource<any>();
-  public columns = ['effectiveDate', 'type', 'vendorName', 'lmeRate', 'lmeLandedCost', 'directLandedCost', 'updatedBy'];
+  public columns = ['effectiveDate', 'type', 'vendorName', 'lmeLandedCost', 'directLandedCost', 'updatedBy'];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -111,19 +111,19 @@ export class MaterialHistoryDialogComponent implements OnInit {
   }
 
   public resetFilters() {
+    this.selectedType = 'ALL';
+    this.selectedVendor = 'ALL';
     this.selectedYear = 'ALL';
     this.selectedMonth = 'ALL';
     this.startDate = '';
     this.endDate = '';
-    this.selectedVendor = 'ALL';
-    this.selectedType = 'ALL';
     this.applyFilters();
   }
 
   public applyFilters() {
     let filtered = [...this.allRawHistory];
 
-    // Filter by Price Type (0 = LME, 1 = Direct)
+    // Filter by Type
     if (this.selectedType !== 'ALL') {
       const typeNum = Number(this.selectedType);
       filtered = filtered.filter(item => item.type === typeNum);
@@ -131,39 +131,41 @@ export class MaterialHistoryDialogComponent implements OnInit {
 
     // Filter by Vendor
     if (this.selectedVendor !== 'ALL') {
-      filtered = filtered.filter(item => item.vendorName === this.selectedVendor);
+      filtered = filtered.filter(item => (item.vendorName || '').toLowerCase() === (this.selectedVendor as string).toLowerCase());
     }
 
-    // Filter by Custom Date Range if specified
+    // Filter by Year
+    if (this.selectedYear !== 'ALL') {
+      const yr = Number(this.selectedYear);
+      filtered = filtered.filter(item => new Date(item.effectiveDate).getFullYear() === yr);
+    }
+
+    // Filter by Month
+    if (this.selectedMonth !== 'ALL') {
+      const mo = Number(this.selectedMonth);
+      filtered = filtered.filter(item => (new Date(item.effectiveDate).getMonth() + 1) === mo);
+    }
+
+    // Filter by Start Date
     if (this.startDate) {
-      const start = new Date(this.startDate + 'T00:00:00');
-      filtered = filtered.filter(item => new Date(item.effectiveDate) >= start);
+      const s = new Date(this.startDate);
+      s.setHours(0, 0, 0, 0);
+      filtered = filtered.filter(item => new Date(item.effectiveDate) >= s);
     }
+
+    // Filter by End Date
     if (this.endDate) {
-      const end = new Date(this.endDate + 'T23:59:59');
-      filtered = filtered.filter(item => new Date(item.effectiveDate) <= end);
+      const e = new Date(this.endDate);
+      e.setHours(23, 59, 59, 999);
+      filtered = filtered.filter(item => new Date(item.effectiveDate) <= e);
     }
 
-    // Filter by Year and Month if no custom date specified
-    if (!this.startDate && !this.endDate) {
-      if (this.selectedYear !== 'ALL') {
-        const yearNum = Number(this.selectedYear);
-        filtered = filtered.filter(item => new Date(item.effectiveDate).getFullYear() === yearNum);
-      }
-      if (this.selectedMonth !== 'ALL') {
-        const monthNum = Number(this.selectedMonth);
-        filtered = filtered.filter(item => (new Date(item.effectiveDate).getMonth() + 1) === monthNum);
-      }
-    }
-
-    // Sort descending by date
     filtered.sort((a, b) => new Date(b.effectiveDate).getTime() - new Date(a.effectiveDate).getTime());
 
     const tableRows = filtered.map(item => ({
       effectiveDate: item.effectiveDate,
       type: item.type === 0 ? 'LME-linked' : 'Direct ₹/kg',
       vendorName: item.type === 1 ? (item.vendorName || '-') : 'LME / Exchange',
-      lmeUsdPerMt: item.type === 0 ? item.lmeUsdPerMt : null,
       lmeLandedCost: item.type === 0 ? item.landedCostInrPerKg : null,
       directLandedCost: item.type === 1 ? item.landedCostInrPerKg : null,
       updatedBy: item.updatedBy || 'System'
@@ -177,12 +179,11 @@ export class MaterialHistoryDialogComponent implements OnInit {
     const data = this.historyData.data;
     if (!data || data.length === 0) return;
 
-    const headers = ['Date', 'Type', 'Vendor', 'LME Rate ($/MT)', 'LME Landed Cost (₹/kg)', 'Direct Landed Cost (₹/kg)', 'Updated By'];
+    const headers = ['Date', 'Type', 'Vendor', 'LME Landed Cost (₹/kg)', 'Direct Landed Cost (₹/kg)', 'Updated By'];
     const rows = data.map(item => [
       this.datePipe.transform(item.effectiveDate, 'dd/MM/yyyy') || '',
       `"${item.type}"`,
       `"${(item.vendorName || '').replace(/"/g, '""')}"`,
-      item.lmeUsdPerMt != null ? item.lmeUsdPerMt.toFixed(2) : '-',
       item.lmeLandedCost != null ? item.lmeLandedCost.toFixed(2) : '-',
       item.directLandedCost != null ? item.directLandedCost.toFixed(2) : '-',
       `"${(item.updatedBy || 'System').replace(/"/g, '""')}"`
@@ -215,7 +216,6 @@ export class MaterialHistoryDialogComponent implements OnInit {
       const dateStr = this.datePipe.transform(item.effectiveDate, 'dd/MM/yyyy') || '';
       const typeStr = item.type;
       const vendorStr = item.vendorName || '-';
-      const lmeRateStr = item.lmeUsdPerMt != null ? `$${this.decimalPipe.transform(item.lmeUsdPerMt, '1.2-2')}/MT` : '-';
       const lmeLandedStr = item.lmeLandedCost != null ? `₹${this.decimalPipe.transform(item.lmeLandedCost, '1.2-2')}/kg` : '-';
       const directLandedStr = item.directLandedCost != null ? `₹${this.decimalPipe.transform(item.directLandedCost, '1.2-2')}/kg` : '-';
       const updatedByStr = item.updatedBy || 'System';
@@ -225,7 +225,6 @@ export class MaterialHistoryDialogComponent implements OnInit {
           <td>${dateStr}</td>
           <td>${typeStr}</td>
           <td>${vendorStr}</td>
-          <td>${lmeRateStr}</td>
           <td>${lmeLandedStr}</td>
           <td>${directLandedStr}</td>
           <td>${updatedByStr}</td>
@@ -261,7 +260,6 @@ export class MaterialHistoryDialogComponent implements OnInit {
               <th>Date</th>
               <th>Type</th>
               <th>Vendor</th>
-              <th>LME Rate</th>
               <th>LME Landed Cost</th>
               <th>Direct Landed Cost</th>
               <th>Updated By</th>
