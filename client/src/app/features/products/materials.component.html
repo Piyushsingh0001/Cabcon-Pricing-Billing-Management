@@ -131,26 +131,26 @@
         <ng-container *ngIf="group.selectedType === 0">
           <div class="field-row">
             <span class="field-label">LME (USD/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.lmeState.lmeUsdPerMt" [disabled]="!canUpdate() || isTodayUpdated(group)" placeholder="0.00">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.lmeUsdPerMt" [disabled]="!canUpdate() || isTodayUpdated(group)" [placeholder]="group.lmeState.lastRecordedLme ? (group.lmeState.lastRecordedLme | number:'1.2-2') : '0.00'">
           </div>
           <div class="field-row">
             <span class="field-label">Premium (USD/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.lmeState.premiumUsdPerMt" [disabled]="!canUpdate() || isTodayUpdated(group)" placeholder="0.00">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.premiumUsdPerMt" [disabled]="!canUpdate() || isTodayUpdated(group)" [placeholder]="group.lmeState.lastRecordedPrem != null ? (group.lmeState.lastRecordedPrem | number:'1.2-2') : '0.00'">
           </div>
           <div class="field-row">
             <span class="field-label">FX (₹/USD)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.lmeState.fxRate" [disabled]="!canUpdate() || isTodayUpdated(group)" placeholder="0.00">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.fxRate" [disabled]="!canUpdate() || isTodayUpdated(group)" [placeholder]="group.lmeState.lastRecordedFx ? (group.lmeState.lastRecordedFx | number:'1.2-2') : '0.00'">
           </div>
           <div class="field-row">
             <span class="field-label">Freight (₹/MT)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.lmeState.freightInrPerMt" [disabled]="!canUpdate() || isTodayUpdated(group)" placeholder="0.00">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.freightInrPerMt" [disabled]="!canUpdate() || isTodayUpdated(group)" [placeholder]="group.lmeState.lastRecordedFreight != null ? (group.lmeState.lastRecordedFreight | number:'1.2-2') : '0.00'">
           </div>
         </ng-container>
         <!-- Direct fields (Vendor-specific) -->
         <ng-container *ngIf="group.selectedType === 1">
           <div class="field-row">
             <span class="field-label">Price (₹/kg)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.selectedDirectVariant.directRateInrPerKg" [disabled]="!canUpdate() || isTodayUpdated(group) || !group.vendorOptions || group.vendorOptions.length === 0" *ngIf="group.selectedDirectVariant" placeholder="0.00">
+            <input type="number" class="field-input" [(ngModel)]="group.selectedDirectVariant.directRateInrPerKg" [disabled]="!canUpdate() || isTodayUpdated(group) || !group.vendorOptions || group.vendorOptions.length === 0" *ngIf="group.selectedDirectVariant" [placeholder]="group.selectedDirectVariant?.lastRecordedDirectRate ? (group.selectedDirectVariant.lastRecordedDirectRate | number:'1.2-2') : '0.00'">
             <input type="number" class="field-input" disabled value="" *ngIf="!group.selectedDirectVariant" placeholder="0.00">
           </div>
         </ng-container>
@@ -162,9 +162,20 @@
           <div class="footer-val">
             ₹{{ calculateLandedCost(group) | number:'1.2-2' }}<span class="footer-unit">/kg</span>
           </div>
+          <div class="last-recorded-info" *ngIf="getLastRecordedDate(group)">
+            <span class="last-recorded-label">Last recorded:</span>
+            <span class="last-recorded-val">₹{{ getLastRecordedPrice(group) | number:'1.2-2' }}/kg</span>
+            <span class="last-recorded-date">({{ getLastRecordedDate(group) | date:'dd-MMM-yyyy' }})</span>
+          </div>
+          <div class="last-recorded-info no-record" *ngIf="!getLastRecordedDate(group)">
+            <span>No price recorded</span>
+          </div>
         </div>
         <div class="footer-right">
-          <div *ngIf="isTodayUpdated(group)" class="footer-as-on">Updated today</div>
+          <div *ngIf="isTodayUpdated(group)" class="footer-as-on">
+            <mat-icon style="font-size: 13px; width: 13px; height: 13px; vertical-align: middle; margin-right: 2px;">check_circle</mat-icon>
+            Updated today
+          </div>
           <div *ngIf="getMissingDays(group) > 0" class="warning-badge cursor-pointer" (click)="openBackfill(group)" title="Click to fill missing prices">
             ⚠️ Prices missing for {{ getMissingDays(group) }} day(s)
           </div>

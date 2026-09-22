@@ -90,20 +90,42 @@ export class MaterialsComponent implements OnInit {
         vendorId: undefined,
         isPlaceholder: true,
         directRateInrPerKg: null,
+        lastRecordedDirectRate: null,
+        lastRecordedAsOnDate: null,
         isTodayUpdatedDirect: false,
         missingDaysCountDirect: 30,
         thisMonthAvgDirect: 0,
-        prevMonthAvgDirect: 0
+        prevMonthAvgDirect: 0,
+        asOnDateDirect: null
       };
-    } else if (selected) {
-      if (!selected.isTodayUpdatedDirect || selected.directRateInrPerKg === 0) {
-        selected.directRateInrPerKg = null;
-      }
     }
     
     group.selectedDirectVariant = selected || null;
     group.selectedVariant = group.selectedType === 0 ? (group.lmeState || group.selectedDirectVariant) : group.selectedDirectVariant;
     this.calculateGroupAvg(group);
+  }
+
+  public getLastRecordedPrice(group: any): number {
+    if (!group) return 0;
+    if (group.selectedType === 0) {
+      return Number(group.lmeState?.lastRecordedLandedCost || 0);
+    } else {
+      return Number(group.selectedDirectVariant?.lastRecordedDirectRate 
+        || group.selectedDirectVariant?.landedCost 
+        || 0);
+    }
+  }
+
+  public getLastRecordedDate(group: any): string | Date | null {
+    if (!group) return null;
+    if (group.selectedType === 0) {
+      return group.lmeState?.asOnDate || null;
+    } else {
+      return group.selectedDirectVariant?.asOnDateDirect 
+        || group.selectedDirectVariant?.lastRecordedAsOnDate 
+        || group.selectedDirectVariant?.asOnDate 
+        || null;
+    }
   }
 
   public calculateGroupAvg(group: any) {
@@ -185,7 +207,7 @@ export class MaterialsComponent implements OnInit {
   public getMissingVendorsNotification(group: any): string {
     const missing = this.getMissingVendors(group);
     if (missing.length === 0) return '';
-    const items = missing.map(m => `{${m.name} - ${m.days} ${m.days === 1 ? 'Day' : 'Days'}}`);
+    const items = missing.map(m => `${m.name} - ${m.days} ${m.days === 1 ? 'Day' : 'Days'}`);
     return `Price set missing for vendor ${items.join(', ')}`;
   }
 
@@ -313,11 +335,20 @@ export class MaterialsComponent implements OnInit {
         const groupsMap = new Map<string, any>();
         
         res.items.forEach(m => {
+          const freightVal = m.freightInrPerMt != null
+            ? m.freightInrPerMt
+            : (m.freightInrPerKg != null ? Number((m.freightInrPerKg * 1000).toFixed(2)) : null);
+
+          const lastLme = Number(m.lmeUsdPerMt || 0);
+          const lastPrem = Number(m.premiumUsdPerMt || 0);
+          const lastFx = Number(m.fxRate || 0);
+          const lastFreight = Number(freightVal || 0);
+          const lmeLandedCost = (lastLme > 0 && lastFx > 0)
+            ? ((lastLme + lastPrem) * lastFx + lastFreight) / 1000
+            : (m.landedCost || 0);
+
           if (!groupsMap.has(m.name)) {
             const prev = currentSelections.get(m.name);
-            const freightVal = m.freightInrPerMt != null
-              ? m.freightInrPerMt
-              : (m.freightInrPerKg != null ? Number((m.freightInrPerKg * 1000).toFixed(2)) : null);
 
             groupsMap.set(m.name, {
               name: m.name,
@@ -330,15 +361,20 @@ export class MaterialsComponent implements OnInit {
               calculatedAvg: 0,
               lmeState: {
                 materialId: m.id,
-                lmeUsdPerMt: m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
-                premiumUsdPerMt: m.premiumUsdPerMt ? m.premiumUsdPerMt : null,
-                fxRate: m.fxRate ? m.fxRate : null,
-                freightInrPerMt: freightVal ? freightVal : null,
+                lmeUsdPerMt: m.isTodayUpdatedLme && m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
+                premiumUsdPerMt: m.isTodayUpdatedLme && m.premiumUsdPerMt ? m.premiumUsdPerMt : null,
+                fxRate: m.isTodayUpdatedLme && m.fxRate ? m.fxRate : null,
+                freightInrPerMt: m.isTodayUpdatedLme && freightVal ? freightVal : null,
                 isTodayUpdatedLme: !!m.isTodayUpdatedLme,
                 missingDaysCountLme: m.missingDaysCountLme || 0,
                 thisMonthAvgLme: m.thisMonthAvgLme || 0,
                 prevMonthAvgLme: m.prevMonthAvgLme || 0,
-                asOnDate: m.asOnDateLme || null
+                asOnDate: m.asOnDateLme || null,
+                lastRecordedLandedCost: lmeLandedCost,
+                lastRecordedLme: m.lmeUsdPerMt || null,
+                lastRecordedPrem: m.premiumUsdPerMt != null ? m.premiumUsdPerMt : null,
+                lastRecordedFx: m.fxRate || null,
+                lastRecordedFreight: freightVal
               }
             });
           }
@@ -349,27 +385,34 @@ export class MaterialsComponent implements OnInit {
           if (m.density && !group.density) {
             group.density = m.density;
           }
-          if (m.directRateInrPerKg === 0) {
-            m.directRateInrPerKg = null as any;
-          }
-          group.variants.push(m);
-          // If this variant has LME data, use it for lmeState
-          if (m.type === 0 || (m.lmeUsdPerMt && m.lmeUsdPerMt > 0) || m.freightInrPerKg) {
-            const lmeFreight = m.freightInrPerMt != null
-              ? m.freightInrPerMt
-              : (m.freightInrPerKg != null ? Number((m.freightInrPerKg * 1000).toFixed(2)) : null);
+          
+          const rawDirect = m.directRateInrPerKg || m.landedCost || null;
+          const variant = {
+            ...m,
+            lastRecordedDirectRate: rawDirect,
+            lastRecordedAsOnDate: m.asOnDateDirect || m.asOnDate || null,
+            directRateInrPerKg: (m.isTodayUpdatedDirect && m.directRateInrPerKg && m.directRateInrPerKg > 0) ? m.directRateInrPerKg : null
+          };
+          group.variants.push(variant);
 
+          // If this variant has LME data, use it for lmeState
+          if (m.type === 0 || (m.lmeUsdPerMt && m.lmeUsdPerMt > 0) || m.freightInrPerKg || m.asOnDateLme) {
             group.lmeState = {
               materialId: m.id,
               lmeUsdPerMt: m.isTodayUpdatedLme && m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
               premiumUsdPerMt: m.isTodayUpdatedLme && m.premiumUsdPerMt ? m.premiumUsdPerMt : null,
               fxRate: m.isTodayUpdatedLme && m.fxRate ? m.fxRate : null,
-              freightInrPerMt: m.isTodayUpdatedLme && lmeFreight ? lmeFreight : null,
+              freightInrPerMt: m.isTodayUpdatedLme && freightVal ? freightVal : null,
               isTodayUpdatedLme: !!m.isTodayUpdatedLme,
               missingDaysCountLme: m.missingDaysCountLme || 0,
               thisMonthAvgLme: m.thisMonthAvgLme || 0,
               prevMonthAvgLme: m.prevMonthAvgLme || 0,
-              asOnDate: m.asOnDateLme || null
+              asOnDate: m.asOnDateLme || null,
+              lastRecordedLandedCost: lmeLandedCost,
+              lastRecordedLme: m.lmeUsdPerMt || null,
+              lastRecordedPrem: m.premiumUsdPerMt != null ? m.premiumUsdPerMt : null,
+              lastRecordedFx: m.fxRate || null,
+              lastRecordedFreight: freightVal
             };
           }
         });
@@ -512,12 +555,21 @@ export class MaterialsComponent implements OnInit {
     if (!group) return 0;
     if (group.selectedType === 0) {
       const lme = Number(group.lmeState?.lmeUsdPerMt || 0);
-      const prem = Number(group.lmeState?.premiumUsdPerMt || 0);
       const fx = Number(group.lmeState?.fxRate || 0);
-      const freight = Number(group.lmeState?.freightInrPerMt || 0);
-      return ((lme + prem) * fx + freight) / 1000;
+      if (lme > 0 && fx > 0) {
+        const prem = Number(group.lmeState?.premiumUsdPerMt || 0);
+        const freight = Number(group.lmeState?.freightInrPerMt || 0);
+        return ((lme + prem) * fx + freight) / 1000;
+      }
+      return Number(group.lmeState?.lastRecordedLandedCost || 0);
     } else {
-      return Number(group.selectedDirectVariant?.directRateInrPerKg || 0);
+      const direct = Number(group.selectedDirectVariant?.directRateInrPerKg || 0);
+      if (direct > 0) {
+        return direct;
+      }
+      return Number(group.selectedDirectVariant?.lastRecordedDirectRate 
+        || group.selectedDirectVariant?.landedCost 
+        || 0);
     }
   }
 

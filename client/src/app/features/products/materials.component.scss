@@ -395,6 +395,36 @@
   margin-left: 1px;
 }
 
+.last-recorded-info {
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+
+  .last-recorded-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .last-recorded-val {
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .last-recorded-date {
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  &.no-record {
+    font-style: italic;
+    color: #94a3b8;
+  }
+}
+
 .footer-right {
   display: flex;
   flex-direction: column;
@@ -409,6 +439,8 @@
   background: #ecfdf5;
   padding: 2px 8px;
   border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .btn-update {
@@ -662,9 +694,9 @@
     padding-top: 12px;
 
     .footer-left {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: baseline;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
     }
 
     .footer-right {

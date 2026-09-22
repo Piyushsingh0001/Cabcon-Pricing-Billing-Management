@@ -458,6 +458,68 @@ export class SkuEditDialogComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  public getUnitPriceForLine(idx: number): number {
+    const line = this.bomLines.at(idx);
+    if (!line) return 0;
+    const matId = line.get('materialId')?.value;
+    const matName = line.get('materialName')?.value;
+    const vendName = line.get('vendorName')?.value;
+    const method = Number(line.get('pricingMethod')?.value ?? 1);
+    const pType = Number(line.get('priceType')?.value ?? 0);
+    const pMonth = Number(line.get('pricingMonth')?.value ?? 0);
+    const manualPrice = Number(line.get('manualPrice')?.value || 0);
+
+    let mat: Material | undefined;
+    if (matName) {
+      if (pType === 1) {
+        if (vendName) {
+          mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.vendorName?.toLowerCase() === vendName.toLowerCase() && m.type === 1 && (m.landedCost > 0 || (m.directRateInrPerKg && m.directRateInrPerKg > 0)))
+             || this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.vendorName?.toLowerCase() === vendName.toLowerCase() && m.type === 1);
+        }
+        if (!mat) {
+          mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 1 && (m.landedCost > 0 || (m.directRateInrPerKg && m.directRateInrPerKg > 0)))
+             || this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 1);
+        }
+        if (!mat) {
+          mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && (m.landedCost > 0 || (m.directRateInrPerKg && m.directRateInrPerKg > 0)))
+             || this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase());
+        }
+      } else {
+        mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 0 && (m.landedCost > 0 || (m.lmeUsdPerMt && m.lmeUsdPerMt > 0)))
+           || this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 0)
+           || this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase());
+      }
+    }
+
+    if (!mat && matId) {
+      mat = this.materials.find(m => m.id === matId && (m.landedCost > 0 || (m.directRateInrPerKg && m.directRateInrPerKg > 0)))
+         || this.materials.find(m => m.id === matId);
+    }
+
+    if (method === 1) { // Actual
+      if (pType === 0) { // LME-linked
+        const lme = mat ? Number(mat.lmeUsdPerMt || 0) : 0;
+        const premium = mat ? Number(mat.premiumUsdPerMt || 0) : 0;
+        const fx = mat ? Number(mat.fxRate || 0) : 0;
+        const freight = mat ? Number(mat.freightInrPerMt || 0) : 0;
+        if (lme > 0 && fx > 0) {
+          return ((lme + premium) * fx + freight) / 1000;
+        }
+        return mat ? Number(mat.landedCost || 0) : 0;
+      } else { // Direct
+        return mat ? Number(mat.directRateInrPerKg ?? mat.landedCost ?? 0) : 0;
+      }
+    } else if (method === 0) { // Average
+      if (pType === 0) {
+        return mat ? (pMonth === 0 ? Number(mat.thisMonthAvgLme || manualPrice || 0) : Number(mat.prevMonthAvgLme || manualPrice || 0)) : manualPrice;
+      } else {
+        return mat ? (pMonth === 0 ? Number(mat.thisMonthAvgDirect || manualPrice || 0) : Number(mat.prevMonthAvgDirect || manualPrice || 0)) : manualPrice;
+      }
+    } else { // Manual
+      return manualPrice;
+    }
+  }
+
   public getLandedCost(materialId: any, priceType?: any, vendorName?: string, matName?: string): number {
     const pType = priceType !== undefined ? Number(priceType) : 0;
     let mat: Material | undefined;
@@ -465,54 +527,49 @@ export class SkuEditDialogComponent implements OnInit {
     if (matName) {
       if (pType === 1) {
         if (vendorName) {
-          mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.vendorName?.toLowerCase() === vendorName.toLowerCase() && m.type === 1);
+          mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.vendorName?.toLowerCase() === vendorName.toLowerCase() && m.type === 1 && (m.landedCost > 0 || (m.directRateInrPerKg && m.directRateInrPerKg > 0)))
+             || this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.vendorName?.toLowerCase() === vendorName.toLowerCase() && m.type === 1);
         }
         if (!mat) {
-          mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 1);
+          mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 1 && (m.landedCost > 0 || (m.directRateInrPerKg && m.directRateInrPerKg > 0)))
+             || this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 1);
+        }
+        if (!mat) {
+          mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase());
         }
       } else {
-        mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 0);
+        mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 0 && (m.landedCost > 0 || (m.lmeUsdPerMt && m.lmeUsdPerMt > 0)))
+           || this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase() && m.type === 0);
       }
     }
 
     if (!mat && materialId) {
-      mat = this.materials.find(m => m.id === materialId);
+      mat = this.materials.find(m => m.id === materialId && (m.landedCost > 0 || (m.directRateInrPerKg && m.directRateInrPerKg > 0)))
+         || this.materials.find(m => m.id === materialId);
     }
 
     if (!mat) return 0;
 
     if (pType === 0) {
-      // Strictly LME-linked calculation
       const lme = Number(mat.lmeUsdPerMt || 0);
       const premium = Number(mat.premiumUsdPerMt || 0);
       const fx = Number(mat.fxRate || 0);
       const freight = Number(mat.freightInrPerMt || 0);
-      const landed = ((lme + premium) * fx + freight) / 1000;
-      return landed > 0 ? landed : 0;
+      if (lme > 0 && fx > 0) {
+        const landed = ((lme + premium) * fx + freight) / 1000;
+        return landed > 0 ? landed : Number(mat.landedCost || 0);
+      }
+      return Number(mat.landedCost || 0);
     } else {
-      // Strictly Direct Rate
-      return Number(mat.directRateInrPerKg || 0);
+      return Number(mat.directRateInrPerKg ?? mat.landedCost ?? 0);
     }
   }
 
   public getCalculatedBomLineCost(idx: number): number {
     const line = this.bomLines.at(idx);
     if (!line) return 0;
-    const matId = line.get('materialId')?.value;
-    const matName = line.get('materialName')?.value;
-    const vendName = line.get('vendorName')?.value;
     const weightKg = Number(line.get('weightKg')?.value || 0);
-
-    const method = Number(line.get('pricingMethod')?.value);
-    const pType = Number(line.get('priceType')?.value);
-    let unitPrice = 0;
-
-    if (method === 1) { // Actual
-      unitPrice = this.getLandedCost(matId, pType, vendName, matName);
-    } else {
-      unitPrice = Number(line.get('manualPrice')?.value || 0);
-    }
-
+    const unitPrice = this.getUnitPriceForLine(idx);
     return unitPrice * weightKg;
   }
 

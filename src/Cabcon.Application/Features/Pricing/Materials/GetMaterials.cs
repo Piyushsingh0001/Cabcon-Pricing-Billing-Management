@@ -106,7 +106,7 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
         
         var histories = await _historyRepo.Query()
             .Include(h => h.Vendor)
-            .Where(h => materialIds.Contains(h.MaterialId) && h.EffectiveDate >= earliestDate)
+            .Where(h => materialIds.Contains(h.MaterialId))
             .Select(h => new
             {
                 h.MaterialId,

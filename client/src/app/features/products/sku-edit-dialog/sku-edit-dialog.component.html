@@ -139,12 +139,8 @@
 
           <!-- Column 5: Rate -->
           <div class="td-cell col-rate">
-            <span *ngIf="line.get('pricingMethod')?.value == 0" class="rate-val-pill">
-              ₹{{ line.get('manualPrice')?.value | number:'1.2-2' }}
-            </span>
-
-            <span *ngIf="line.get('pricingMethod')?.value == 1" class="rate-val-pill">
-              ₹{{ getLandedCost(line.get('materialId')?.value, line.get('priceType')?.value, line.get('vendorName')?.value, line.get('materialName')?.value) | number:'1.2-2' }}
+            <span *ngIf="line.get('pricingMethod')?.value == 0 || line.get('pricingMethod')?.value == 1" class="rate-val-pill">
+              ₹{{ getUnitPriceForLine(idx) | number:'1.2-2' }}
             </span>
 
             <input *ngIf="line.get('pricingMethod')?.value == 2"
