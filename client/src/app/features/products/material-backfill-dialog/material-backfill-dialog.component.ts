@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -22,6 +22,10 @@ export interface BackfillDialogData {
   currentVendorName: string;
   /** Currently selected vendor ID */
   currentVendorId?: number;
+  /** Top warning notification message */
+  missingNotification?: string;
+  /** All material variants for looking up vendor ID */
+  variants?: any[];
 }
 
 @Component({
@@ -29,6 +33,7 @@ export interface BackfillDialogData {
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -50,6 +55,13 @@ export class MaterialBackfillDialogComponent implements OnInit {
   public form: FormGroup;
   public missingDates: Date[] = [];
   public availableVendors: string[] = [];
+  public selectedVendorName: string = '';
+  public selectedVendorId?: number;
+
+  get cleanMissingNotification(): string {
+    if (!this.data.missingNotification) return '';
+    return this.data.missingNotification.replace(/\.?\s*Click here to update\.?/gi, '').trim();
+  }
 
   constructor(
     public dialogRef: MatDialogRef<MaterialBackfillDialogComponent>,
@@ -61,14 +73,34 @@ export class MaterialBackfillDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loading.set(true);
-
-    // Populate vendor options from data
     this.availableVendors = this.data.vendorOptions || [];
+    this.selectedVendorName = this.data.currentVendorName || (this.availableVendors[0] || '');
+    this.updateSelectedVendorId();
+    this.loadMissingDates();
+  }
+
+  private updateSelectedVendorId(): void {
+    if (this.data.variants && this.data.variants.length > 0) {
+      const match = this.data.variants.find((v: any) => v.vendorName === this.selectedVendorName);
+      this.selectedVendorId = match?.vendorId;
+    } else {
+      this.selectedVendorId = this.data.currentVendorId;
+    }
+  }
+
+  public onVendorChange(vendorName: string): void {
+    this.selectedVendorName = vendorName;
+    this.updateSelectedVendorId();
+    this.loadMissingDates();
+  }
+
+  public loadMissingDates(): void {
+    this.loading.set(true);
+    this.pricesArray.clear();
 
     // Load missing dates for this material + type (+ vendor if Direct) from the backend
-    const vendorName = this.data.type === 1 ? this.data.currentVendorName : undefined;
-    const vendorId = this.data.type === 1 ? this.data.currentVendorId : undefined;
+    const vendorName = this.data.type === 1 ? this.selectedVendorName : undefined;
+    const vendorId = this.data.type === 1 ? this.selectedVendorId : undefined;
     this.pricingService.getMissingDates(this.data.materialId, this.data.type, vendorName, vendorId).subscribe({
       next: (dates) => {
         this.missingDates = dates.map(d => new Date(d));
@@ -78,7 +110,6 @@ export class MaterialBackfillDialogComponent implements OnInit {
       error: () => {
         this.snackBar.open('Failed to load missing dates', 'Close', { duration: 3000 });
         this.loading.set(false);
-        this.dialogRef.close();
       }
     });
   }
@@ -198,8 +229,8 @@ export class MaterialBackfillDialogComponent implements OnInit {
         payload.push({
           date: p.date,
           type: 1,
-          vendorId: this.data.currentVendorId,
-          vendorName: this.data.currentVendorName || '',
+          vendorId: this.selectedVendorId,
+          vendorName: this.selectedVendorName || '',
           directRateInrPerKg: rateVal
         });
       }

@@ -113,10 +113,10 @@
   </div>
 
   <!-- Global Parameters Controls Card -->
-  <div class="card params-card" *ngIf="rows.length > 0">
+  <div class="card params-card glass-card" *ngIf="rows.length > 0">
     <div class="controls-row">
       <div class="control-group">
-        <div class="lbl">Loading method</div>
+        <label class="lbl">Loading method</label>
         <select class="sel" [ngModel]="loadingMode()" (ngModelChange)="onModeChange($event)">
           <option [ngValue]="0">Margin %</option>
           <option [ngValue]="1">₹ per unit</option>
@@ -126,132 +126,141 @@
 
       <!-- Margin % (mode 0) -->
       <div class="control-group" *ngIf="loadingMode() === 0">
-        <div class="lbl">Margin %</div>
-        <input class="in" style="width: 80px;" type="number" [ngModel]="globalPct() * 100" (ngModelChange)="updateGlobalParam('pct', $event)">
+        <label class="lbl">Margin %</label>
+        <div class="input-with-suffix">
+          <input class="in text-right" style="width: 80px;" type="number" [ngModel]="globalPct() * 100" (ngModelChange)="updateGlobalParam('pct', $event)">
+          <span class="input-suffix">%</span>
+        </div>
       </div>
 
       <!-- ₹ / unit (mode 1) -->
       <div class="control-group" *ngIf="loadingMode() === 1">
-        <div class="lbl">₹ / unit</div>
-        <input class="in" style="width: 90px;" type="number" [ngModel]="globalAmt()" (ngModelChange)="updateGlobalParam('amt', $event)">
+        <label class="lbl">₹ / unit</label>
+        <div class="input-with-suffix">
+          <input class="in text-right" style="width: 90px;" type="number" [ngModel]="globalAmt()" (ngModelChange)="updateGlobalParam('amt', $event)">
+          <span class="input-suffix">₹</span>
+        </div>
       </div>
 
       <!-- Itemised (mode 2) -->
       <ng-container *ngIf="loadingMode() === 2">
         <div class="control-group">
-          <div class="lbl">Overhead %</div>
-          <input class="in" style="width: 74px;" type="number" [ngModel]="globalOverheadPct() * 100" (ngModelChange)="updateGlobalParam('overhead', $event)">
+          <label class="lbl">Overhead %</label>
+          <div class="input-with-suffix">
+            <input class="in text-right" style="width: 74px;" type="number" [ngModel]="globalOverheadPct() * 100" (ngModelChange)="updateGlobalParam('overhead', $event)">
+            <span class="input-suffix">%</span>
+          </div>
         </div>
         <div class="control-group">
-          <div class="lbl">Margin %</div>
-          <input class="in" style="width: 74px;" type="number" [ngModel]="globalMarginPct() * 100" (ngModelChange)="updateGlobalParam('margin', $event)">
+          <label class="lbl">Margin %</label>
+          <div class="input-with-suffix">
+            <input class="in text-right" style="width: 74px;" type="number" [ngModel]="globalMarginPct() * 100" (ngModelChange)="updateGlobalParam('margin', $event)">
+            <span class="input-suffix">%</span>
+          </div>
         </div>
         <div class="control-group">
-          <div class="lbl">Packing ₹/unit</div>
-          <input class="in" style="width: 74px;" type="number" [ngModel]="globalPacking()" (ngModelChange)="updateGlobalParam('packing', $event)">
+          <label class="lbl">Packing ₹/unit</label>
+          <input class="in text-right" style="width: 80px;" type="number" [ngModel]="globalPacking()" (ngModelChange)="updateGlobalParam('packing', $event)">
         </div>
         <div class="control-group">
-          <div class="lbl">Freight ₹/unit</div>
-          <input class="in" style="width: 74px;" type="number" [ngModel]="globalFreight()" (ngModelChange)="updateGlobalParam('freight', $event)">
+          <label class="lbl">Freight ₹/unit</label>
+          <input class="in text-right" style="width: 80px;" type="number" [ngModel]="globalFreight()" (ngModelChange)="updateGlobalParam('freight', $event)">
         </div>
       </ng-container>
 
-      <button class="linkbtn-clear" (click)="clearAllOverrides()">clear overrides</button>
+      <div class="clear-overrides-wrapper">
+        <button class="linkbtn-clear" (click)="clearAllOverrides()">
+          <mat-icon style="font-size: 15px; width: 15px; height: 15px;">restart_alt</mat-icon>
+          clear overrides
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- Spreadsheet Table Card -->
-  <div class="card table-card" style="padding: 0; overflow: hidden; margin-bottom: 14px;" *ngIf="rows.length > 0; else noProducts">
+  <div class="card table-card glass-card" style="padding: 0; overflow: hidden; margin-bottom: 14px;" *ngIf="rows.length > 0; else noProducts">
     <div class="table-scroll-wrapper">
-      <table class="tbl">
+      <table class="tbl offer-pricing-tbl">
         <thead>
           <tr>
-            <th style="text-align: left;">Product</th>
-            <th>Unit</th>
-            <th style="text-align: right;">Total BOM Wt.<br><span style="font-size: 9px; font-weight: 400;">kg</span></th>
-            <th style="text-align: right;">RM Total<br><span style="font-size: 9px; font-weight: 400;">₹/Unit</span></th>
-            <th>MFG Cost</th>
-            <th>Loading Cost<br><span style="font-size: 9px; font-weight: 400;">₹/Unit</span></th>
-            <th>Offer<br><span style="font-size: 9px; font-weight: 400;">₹/Unit</span></th>
-            <th>Qty.</th>
-            <th style="text-align: right;">Total Amount<br><span style="font-size: 9px; font-weight: 400;">Offer &times; Qty</span></th>
-            <th style="width: 40px;"></th>
+            <th class="col-product">Product</th>
+            <th class="col-unit">Unit</th>
+            <th class="col-mfg">MFG Cost</th>
+            <th class="col-loading">Loading Cost<br><span class="col-sub">₹/Unit</span></th>
+            <th class="col-offer">Offer<br><span class="col-sub">₹/Unit</span></th>
+            <th class="col-qty">Qty.</th>
+            <th class="col-total">Total Amount<br><span class="col-sub">Offer &times; Qty</span></th>
+            <th class="col-action"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let element of rows">
-            <td style="text-align: left; font-weight: 600; cursor: pointer; color: var(--primary-color);" (click)="viewBomBreakup(element.skuId)" title="View BOM Breakup">
-              {{ element.categoryName }} &middot; {{ element.skuName }} {{ element.spec }}
+            <td class="col-product" (click)="viewBomBreakup(element.skuId)" title="View BOM Breakup">
+              <span class="product-name-link">{{ element.categoryName }} &middot; {{ element.skuName }} {{ element.spec }}</span>
             </td>
-            <td>{{ element.unit }}</td>
-            <td style="text-align: right; cursor: pointer; color: var(--primary-color);" (click)="viewBomBreakup(element.skuId)" title="Click to view BOM Breakup">
-              {{ (element.totalBomWeight || 0) | number:'1.2-2' }}
-            </td>
-            <td style="text-align: right; cursor: pointer; color: var(--primary-color);" (click)="viewBomBreakup(element.skuId)" title="Click to view BOM Breakup">{{ element.rmCost | number:'1.2-2' }}</td>
-            <td>
-              <div style="display: flex; gap: 4px; align-items: center; justify-content: center;">
-                <select class="sel" style="padding: 3px 5px; font-size: 11px; font-weight: 600;"
+            <td class="col-unit">{{ element.unit }}</td>
+            <td class="col-mfg">
+              <div class="cell-flex-center">
+                <select class="sel mfg-type-sel"
                         [ngModel]="getSkuConversionType(element.skuId)" 
                         (ngModelChange)="onMfgTypeChange(element.skuId, $event)">
-                  <!-- <option [ngValue]="0">% of RM Cost ₹{{ element.rmCost | number:'1.2-2' }}</option>
-                  <option [ngValue]="1">₹/kg of BOM ({{ (element.totalBomWeight || 0) | number:'1.2-2' }} kg)</option> -->
                   <option [ngValue]="0">% of RM Cost</option>
                   <option [ngValue]="1">₹/kg of BOM</option>
                 </select>
-                <input class="in text-right" style="width: 55px;" type="number"
+                <input class="in text-right mfg-val-in" type="number"
                        min="0"
                        [max]="getSkuConversionType(element.skuId) === 0 ? 100 : 999999"
                        [ngModel]="getMfgDisplayValue(element.skuId)" 
                        (ngModelChange)="onMfgOverrideChange(element.skuId, $event)">
-                <!-- <span style="font-weight: 700; margin: 0 2px;">=</span>
-                <span style="font-weight: 700; min-width: 45px; text-align: right;">{{ element.mfgCost | number:'1.2-2' }}</span> -->
               </div>
             </td>
-            <td>
-              <div style="display: flex; gap: 4px; align-items: center; justify-content: center;">
+            <td class="col-loading">
+              <div class="cell-flex-center">
                 <span *ngIf="loadingMode() === 2" class="mute-text">Itemised</span>
                 <ng-container *ngIf="loadingMode() === 0">
-                  <input class="in text-right" style="width: 55px;" type="number" 
+                  <input class="in text-right loading-val-in" type="number" 
                          [ngModel]="getRowLoadingDisplayValue(element.skuId)" 
                          (ngModelChange)="onRowLoadingChange(element.skuId, $event)">
-                  <span style="font-weight: 600; font-size: 11px;">%</span>
+                  <span class="unit-symbol">%</span>
                 </ng-container>
                 <ng-container *ngIf="loadingMode() === 1">
-                  <input class="in text-right" style="width: 55px;" type="number" 
+                  <input class="in text-right loading-val-in" type="number" 
                          [ngModel]="getRowLoadingDisplayValue(element.skuId)" 
                          (ngModelChange)="onRowLoadingChange(element.skuId, $event)">
-                  <span style="font-weight: 600; font-size: 11px;">₹</span>
+                  <span class="unit-symbol">₹</span>
                 </ng-container>
-                <!-- <span style="font-weight: 700; margin: 0 2px;">=</span>
-                <span style="font-weight: 700; min-width: 45px; text-align: right;">{{ getCalculatedLoadingCost(element) | number:'1.2-2' }}</span> -->
               </div>
             </td>
-            <td>
-              <input class="in text-right" style="width: 85px;" type="number" 
-                     [ngModel]="element.rowOfferOverride" 
-                     (ngModelChange)="onRowOfferChange(element.skuId, $event)"
-                     [placeholder]="element.offerExGst | number:'1.2-2'">
+            <td class="col-offer">
+              <div class="cell-flex-center">
+                <input class="in text-right offer-in" type="number" 
+                       [ngModel]="element.rowOfferOverride" 
+                       (ngModelChange)="onRowOfferChange(element.skuId, $event)"
+                       [placeholder]="element.offerExGst | number:'1.2-2'">
+              </div>
             </td>
-            <td>
-              <input class="in text-right" style="width: 75px;" type="number" 
-                     [ngModel]="element.quantity" 
-                     (ngModelChange)="onRowQuantityChange(element.skuId, $event)"
-                     placeholder="1">
+            <td class="col-qty">
+              <div class="cell-flex-center">
+                <input class="in text-right qty-in" type="number" 
+                       [ngModel]="element.quantity" 
+                       (ngModelChange)="onRowQuantityChange(element.skuId, $event)"
+                       placeholder="1">
+              </div>
             </td>
-            <td style="font-weight: 600; text-align: right;">
-              {{ (element.offerExGst * element.quantity) | number:'1.2-2' }}
+            <td class="col-total">
+              <span class="row-total-val">₹{{ (element.offerExGst * element.quantity) | number:'1.2-2' }}</span>
             </td>
-            <td>
-              <button mat-icon-button (click)="removeRow(element.skuId)" title="Remove item" style="color: red; width: 32px; height: 32px; line-height: 20px;">
-                <mat-icon style="font-size: 18px; width: 18px; height: 18px;">close</mat-icon>
+            <td class="col-action">
+              <button mat-icon-button (click)="removeRow(element.skuId)" title="Remove item" class="remove-row-btn">
+                <mat-icon>close</mat-icon>
               </button>
             </td>
           </tr>
-          <!-- Totals Row -->
-          <tr style="background: #fafafa; font-weight: 700;">
-            <td colspan="8" style="text-align: right;">Total Amount</td>
-            <td style="text-align: right;">{{ totalOfferExGst | number:'1.2-2' }}</td>
-            <td></td>
+          <!-- Totals Row: Exactly matches 8 columns -->
+          <tr class="totals-row">
+            <td colspan="6" class="totals-label">Total Amount</td>
+            <td class="totals-amount">₹{{ totalOfferExGst | number:'1.2-2' }}</td>
+            <td class="col-action"></td>
           </tr>
         </tbody>
       </table>
@@ -341,8 +350,7 @@
   <div class="card materials-card" *ngIf="usedMaterials.length > 0" style="margin-top: 14px;">
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
       <h3 style="margin: 0; font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
-        <mat-icon style="color: var(--primary-color);">price_check</mat-icon>
-        Live Material Costs
+        Material Costs
       </h3>
     </div>
     <div style="max-height: 350px; overflow-y: auto; padding-right: 8px;" class="custom-scrollbar">

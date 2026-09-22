@@ -127,6 +127,15 @@ export class MaterialsComponent implements OnInit {
     }
   }
 
+  public isRecordedToday(group: any): boolean {
+    const recDate = this.getLastRecordedDate(group);
+    if (!recDate) return false;
+    const d = new Date(recDate);
+    if (isNaN(d.getTime())) return false;
+    const today = new Date();
+    return d.toDateString() === today.toDateString();
+  }
+
   public calculateGroupAvg(group: any) {
     if (!group) return;
     if (group.selectedType === 0) {
@@ -202,19 +211,31 @@ export class MaterialsComponent implements OnInit {
     return result;
   }
 
-  /** Formats the missing price notification text for the top of the card. */
-  public getMissingVendorsNotification(group: any): string {
+  /** Formats the missing price summary (without action callout). */
+  public getMissingVendorsSummary(group: any): string {
     const missing = this.getMissingVendors(group);
     if (missing.length === 0) return '';
     const items = missing.map(m => `${m.name} - ${m.days} ${m.days === 1 ? 'Day' : 'Days'}`);
-    return `Price set missing for vendor ${items.join(', ')}. Click here to update.`;
+    return `Price set missing for vendor ${items.join(', ')}`;
+  }
+
+  /** Formats the missing price summary for LME-linked material (without action callout). */
+  public getMissingLmeSummary(group: any): string {
+    const days = this.getMissingDays(group);
+    if (days <= 0) return '';
+    return `Price set missing for ${days} ${days === 1 ? 'Day' : 'Days'}`;
+  }
+
+  /** Formats the missing price notification text for the top of the card. */
+  public getMissingVendorsNotification(group: any): string {
+    const summary = this.getMissingVendorsSummary(group);
+    return summary ? `${summary}. Click here to update.` : '';
   }
 
   /** Formats the missing price notification text for LME-linked material at the top of the card. */
   public getMissingLmeNotification(group: any): string {
-    const days = this.getMissingDays(group);
-    if (days <= 0) return '';
-    return `Price set missing for ${days} ${days === 1 ? 'Day' : 'Days'}. Click here to update.`;
+    const summary = this.getMissingLmeSummary(group);
+    return summary ? `${summary}. Click here to update.` : '';
   }
 
   public getCategoryThemeClass(categoryName?: string): string {
@@ -244,6 +265,10 @@ export class MaterialsComponent implements OnInit {
       return;
     }
 
+    const missingNotification = targetType === 1
+      ? this.getMissingVendorsSummary(group)
+      : this.getMissingLmeSummary(group);
+
     const dialogRef = this.dialog.open(MaterialBackfillDialogComponent, {
       panelClass: 'dialog-tier-backfill',
       data: {
@@ -252,7 +277,9 @@ export class MaterialsComponent implements OnInit {
         type: targetType,
         vendorOptions: group.vendorOptions || [],
         currentVendorName: targetType === 1 ? group.selectedVendorName : '',
-        currentVendorId: targetType === 1 ? group.selectedDirectVariant?.vendorId : undefined
+        currentVendorId: targetType === 1 ? group.selectedDirectVariant?.vendorId : undefined,
+        missingNotification: missingNotification,
+        variants: group.variants || []
       }
     });
     dialogRef.afterClosed().subscribe(res => { if (res) this.loadMaterials(); });

@@ -6,11 +6,28 @@
 </h2>
 
 <mat-dialog-content>
+  <!-- Top Missing Price Notification Banner -->
+  <div class="dialog-top-alert" *ngIf="cleanMissingNotification">
+    <mat-icon class="alert-icon">warning_amber</mat-icon>
+    <span class="alert-text">{{ cleanMissingNotification }}</span>
+  </div>
+
   <div class="top-info-bar">
     <p class="subtitle">Enter the missing prices for the dates listed below.</p>
-    <div class="vendor-header-badge" *ngIf="data.type === 1 && data.currentVendorName">
-      <mat-icon class="vendor-badge-icon">storefront</mat-icon>
-      <span>Vendor: <strong>{{ data.currentVendorName }}</strong></span>
+    
+    <!-- Vendor Dropdown Selector for Direct Price Type -->
+    <div class="vendor-selector-wrapper" *ngIf="data.type === 1">
+      <mat-form-field appearance="outline" class="dialog-vendor-select" subscriptSizing="dynamic">
+        <mat-label>Vendor</mat-label>
+        <mat-select [(ngModel)]="selectedVendorName" (selectionChange)="onVendorChange($event.value)" [disabled]="loading() || availableVendors.length === 0">
+          <mat-option *ngIf="availableVendors.length === 0" value="">
+            No vendor associated
+          </mat-option>
+          <mat-option *ngFor="let vName of availableVendors" [value]="vName">
+            {{ vName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 

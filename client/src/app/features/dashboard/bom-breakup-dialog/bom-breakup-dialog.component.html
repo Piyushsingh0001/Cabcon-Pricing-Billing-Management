@@ -1,6 +1,6 @@
 <div class="edit-dialog-container animated-view">
   <div class="dialog-header">
-    <div style="display: flex; align-items: center; gap: 8px;">
+    <div class="title-with-badge">
       <h2 class="dialog-title">BOM Breakup: {{ sku.name }}</h2>
     </div>
     <button mat-icon-button class="header-icon-btn" (click)="close()" title="Close">
@@ -8,39 +8,39 @@
     </button>
   </div>
 
-  <div class="dialog-content custom-scrollbar" style="padding: 16px; overflow-y: auto; max-height: calc(90vh - 70px);">
+  <div class="dialog-content custom-scrollbar">
     <!-- Tags Header -->
-    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; font-size: 13px;">
-      <span class="tag" style="background: #e0f2fe; color: #0284c7;">Category: {{ sku.categoryName }}</span>
-      <span class="tag" style="background: #f1f5f9; color: #475569;">Spec: {{ sku.spec }}</span>
-      <span class="tag" style="background: #f1f5f9; color: #475569;">Unit: {{ sku.unit }}</span>
-      <span class="tag" style="background: #fef3c7; color: #d97706;">Qty: {{ userQuantity }} {{ sku.unit }}</span>
+    <div class="tags-header-row">
+      <span class="tag tag-category">Category: {{ sku.categoryName }}</span>
+      <span class="tag tag-spec">Spec: {{ sku.spec }}</span>
+      <span class="tag tag-unit">Unit: {{ sku.unit }}</span>
+      <span class="tag tag-qty">Qty: {{ userQuantity }} {{ sku.unit }}</span>
     </div>
 
     <!-- RM Cost Justification Summary Card -->
-    <div class="glass-card" style="padding: 14px 18px; margin-bottom: 16px; border-radius: 8px; background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-        <div style="display: flex; gap: 20px; align-items: center;">
-          <div>
-            <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;">BOM Cost per Unit</div>
-            <div style="font-size: 17px; font-weight: 700; color: #0f172a; margin-top: 2px;">
-              ₹{{ totalUnitCost | number:'1.2-2' }} <span style="font-size: 11px; font-weight: 400; color: #64748b;">/ {{ sku.unit || 'unit' }}</span>
-            </div>
-          </div>
-
-          <div style="font-size: 18px; font-weight: 700; color: #94a3b8;">&times;</div>
-
-          <div>
-            <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;">Product Quantity</div>
-            <div style="font-size: 17px; font-weight: 700; color: #0f172a; margin-top: 2px;">
-              {{ userQuantity }} <span style="font-size: 11px; font-weight: 400; color: #64748b;">{{ sku.unit || 'unit' }}</span>
-            </div>
+    <div class="calc-summary-card glass-card">
+      <div class="calc-summary-grid">
+        <div class="calc-factor">
+          <div class="factor-label">BOM Cost per Unit</div>
+          <div class="factor-value">
+            ₹{{ totalUnitCost | number:'1.2-2' }} <span class="factor-unit">/ {{ sku.unit || 'unit' }}</span>
           </div>
         </div>
 
-        <div style="padding-left: 16px; border-left: 2px solid #e2e8f0;">
-          <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;">Total RM Cost (Dashboard)</div>
-          <div style="font-size: 20px; font-weight: 800; color: var(--primary-color); margin-top: 2px; font-family: monospace;">
+        <div class="calc-operator">&times;</div>
+
+        <div class="calc-factor">
+          <div class="factor-label">Product Quantity</div>
+          <div class="factor-value">
+            {{ userQuantity }} <span class="factor-unit">{{ sku.unit || 'unit' }}</span>
+          </div>
+        </div>
+
+        <div class="calc-equals">=</div>
+
+        <div class="calc-result">
+          <div class="result-label">Total RM Cost (Dashboard)</div>
+          <div class="result-value">
             ₹{{ totalBatchCost | number:'1.2-2' }}
           </div>
         </div>
@@ -49,64 +49,70 @@
 
     <!-- BOM Raw Material Calculation Breakdown Table -->
     <div class="section-card glass-card">
-      <h3 class="section-header" style="display: flex; align-items: center; gap: 6px; margin-bottom: 12px; font-size: 15px; font-weight: 600;">
-        Raw Material Breakdown (Edit Product Calculation)
-      </h3>
+      <div class="section-header-bar">
+        <h3 class="section-header-title">
+          <span>Raw Material Breakdown</span>
+        </h3>
+        <span class="swipe-hint" *ngIf="bomLinesDisplay.length > 0">
+          <mat-icon>swipe</mat-icon> Scroll to view all
+        </span>
+      </div>
 
       <div class="table-scroll-wrapper" *ngIf="bomLinesDisplay.length > 0; else noBom">
-        <table class="tbl">
+        <table class="tbl bom-breakup-tbl">
           <thead>
             <tr>
-              <th style="text-align: left;">Material & Vendor</th>
-              <th style="text-align: left;">Pricing Method & Formula</th>
-              <th style="text-align: right;">Rate (₹/kg)</th>
-              <th style="text-align: right;">Qty (kg / {{ sku.unit || 'unit' }})</th>
-              <th style="text-align: right;">Line Cost (₹ / {{ sku.unit || 'unit' }})</th>
+              <th class="col-mat">Material & Vendor</th>
+              <th class="col-pricing">Pricing Method & Formula</th>
+              <th class="col-rate">Rate (₹/kg)</th>
+              <th class="col-qty">Qty (kg / {{ sku.unit || 'unit' }})</th>
+              <th class="col-cost">Line Cost (₹ / {{ sku.unit || 'unit' }})</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let line of bomLinesDisplay">
-              <td style="text-align: left;">
-                <div style="font-weight: 600; color: #1e293b;">{{ line.materialName }}</div>
-                <div style="font-size: 11px; color: #64748b;" *ngIf="line.vendorName && line.vendorName !== '--'">Vendor: {{ line.vendorName }}</div>
+              <td class="col-mat">
+                <div class="mat-name">{{ line.materialName }}</div>
+                <div class="mat-vendor" *ngIf="line.vendorName && line.vendorName !== '--'">
+                  <mat-icon class="vendor-mini-icon">storefront</mat-icon> {{ line.vendorName }}
+                </div>
               </td>
-              <td style="text-align: left;">
+              <td class="col-pricing">
                 <span class="badge-method" [ngClass]="{'badge-actual': line.pricingMethod === 1, 'badge-avg': line.pricingMethod === 0, 'badge-manual': line.pricingMethod === 2}">
                   {{ line.methodLabel }}
                 </span>
-                <div style="font-size: 11px; color: #64748b; margin-top: 2px; font-family: monospace;" *ngIf="line.formulaText">
+                <div class="formula-text" *ngIf="line.formulaText">
                   {{ line.formulaText }}
                 </div>
               </td>
-              <td style="text-align: right;">
-                <div style="font-weight: 700; color: #0f172a;">₹{{ line.unitPrice | number:'1.2-2' }}</div>
-                <div style="font-size: 10.5px; color: #64748b; margin-top: 2px;">
-                  <span style="font-weight: 600; color: #334155;">{{ line.pricingTypeName }}</span>
-                  <span *ngIf="line.vendorName && line.vendorName !== '--'"> &middot; Vendor: <strong>{{ line.vendorName }}</strong></span>
+              <td class="col-rate">
+                <div class="rate-val">₹{{ line.unitPrice | number:'1.2-2' }}</div>
+                <div class="rate-sub">
+                  <span>{{ line.pricingTypeName }}</span>
+                  <span *ngIf="line.vendorName && line.vendorName !== '--'"> &middot; {{ line.vendorName }}</span>
                 </div>
               </td>
-              <td style="text-align: right;">
-                {{ line.weightPerUnit | number:'1.2-2' }}
+              <td class="col-qty">
+                <span class="qty-val">{{ line.weightPerUnit | number:'1.2-2' }} kg</span>
               </td>
-              <td style="text-align: right; font-weight: 600; color: #0f172a;">
-                ₹{{ line.unitLineCost | number:'1.2-2' }}
+              <td class="col-cost">
+                <span class="cost-val">₹{{ line.unitLineCost | number:'1.2-2' }}</span>
               </td>
             </tr>
             <!-- Totals Row -->
-            <tr style="background: #fafafa; font-weight: 700;">
-              <td colspan="3" style="text-align: right; font-weight: 700;">Total BOM Cost & Weight:</td>
-              <td style="text-align: right;">{{ totalUnitWeight | number:'1.2-2' }} kg</td>
-              <td style="text-align: right; font-weight: 800; color: var(--primary-color);">
-                ₹{{ totalUnitCost | number:'1.2-2' }}
-              </td>
+            <tr class="totals-row">
+              <td colspan="3" class="totals-label">Total BOM Cost & Weight:</td>
+              <td class="totals-weight">{{ totalUnitWeight | number:'1.2-2' }} kg</td>
+              <td class="totals-cost">₹{{ totalUnitCost | number:'1.2-2' }}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <ng-template #noBom>
-        <div style="padding: 20px; text-align: center; color: var(--text-secondary); font-style: italic;">
-          No Bill of Materials defined for this product.
+        <div class="no-bom-box">
+          <mat-icon style="font-size: 32px; width: 32px; height: 32px; color: #94a3b8;">inventory_2</mat-icon>
+          <p>No Bill of Materials defined for this product.</p>
         </div>
       </ng-template>
     </div>
