@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { filter } from 'rxjs/operators';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
@@ -41,15 +42,33 @@ export class App {
   private pricingService = inject(PricingService);
   private dialog = inject(MatDialog);
   private breakpointObserver = inject(BreakpointObserver);
+  private router = inject(Router);
 
   public isAuthenticated = this.authService.isAuthenticated;
   public currentUser = this.authService.currentUser;
   public isMobile = false;
+  public isAuthRoute = signal<boolean>(false);
   
   constructor() {
     this.breakpointObserver.observe(['(max-width: 991px)']).subscribe(result => {
       this.isMobile = result.matches;
     });
+
+    this.checkAuthRoute(this.router.url || (typeof window !== 'undefined' ? window.location.pathname : ''));
+
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe(event => {
+      const url = event.urlAfterRedirects || event.url;
+      this.checkAuthRoute(url);
+    });
+  }
+
+  private checkAuthRoute(url: string) {
+    if (!url) return;
+    const cleanUrl = url.split('?')[0].split('#')[0];
+    const isAuth = cleanUrl === '/login' || cleanUrl === '/reset-password';
+    this.isAuthRoute.set(isAuth);
   }
 
   public closeOnMobile(sidenav: any) {

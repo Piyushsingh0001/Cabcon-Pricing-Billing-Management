@@ -111,7 +111,7 @@ export class MaterialsComponent implements OnInit {
       return Number(group.lmeState?.lastRecordedLandedCost || 0);
     } else {
       return Number(group.selectedDirectVariant?.lastRecordedDirectRate 
-        || group.selectedDirectVariant?.landedCost 
+        || group.selectedDirectVariant?.landedCostDirect 
         || 0);
     }
   }
@@ -123,7 +123,6 @@ export class MaterialsComponent implements OnInit {
     } else {
       return group.selectedDirectVariant?.asOnDateDirect 
         || group.selectedDirectVariant?.lastRecordedAsOnDate 
-        || group.selectedDirectVariant?.asOnDate 
         || null;
     }
   }
@@ -343,9 +342,10 @@ export class MaterialsComponent implements OnInit {
           const lastPrem = Number(m.premiumUsdPerMt || 0);
           const lastFx = Number(m.fxRate || 0);
           const lastFreight = Number(freightVal || 0);
+          const hasLmeData = !!(m.asOnDateLme || (lastLme > 0 && lastFx > 0));
           const lmeLandedCost = (lastLme > 0 && lastFx > 0)
             ? ((lastLme + lastPrem) * lastFx + lastFreight) / 1000
-            : (m.landedCost || 0);
+            : (m.landedCostLme ?? 0);
 
           if (!groupsMap.has(m.name)) {
             const prev = currentSelections.get(m.name);
@@ -354,7 +354,7 @@ export class MaterialsComponent implements OnInit {
               name: m.name,
               categoryName: m.categoryName || '',
               density: m.density || 0,
-              selectedType: prev?.type !== undefined ? prev.type : m.type,
+              selectedType: prev?.type !== undefined ? prev.type : (m.type === 0 ? 0 : 1),
               variants: [],
               selectedVendorName: prev?.vendor || m.vendorName || '',
               avgPriceRange: 'this_month',
@@ -370,11 +370,11 @@ export class MaterialsComponent implements OnInit {
                 thisMonthAvgLme: m.thisMonthAvgLme || 0,
                 prevMonthAvgLme: m.prevMonthAvgLme || 0,
                 asOnDate: m.asOnDateLme || null,
-                lastRecordedLandedCost: lmeLandedCost,
-                lastRecordedLme: m.lmeUsdPerMt || null,
-                lastRecordedPrem: m.premiumUsdPerMt != null ? m.premiumUsdPerMt : null,
-                lastRecordedFx: m.fxRate || null,
-                lastRecordedFreight: freightVal
+                lastRecordedLandedCost: hasLmeData ? lmeLandedCost : 0,
+                lastRecordedLme: hasLmeData ? (m.lmeUsdPerMt || null) : null,
+                lastRecordedPrem: hasLmeData ? (m.premiumUsdPerMt != null ? m.premiumUsdPerMt : null) : null,
+                lastRecordedFx: hasLmeData ? (m.fxRate || null) : null,
+                lastRecordedFreight: hasLmeData ? freightVal : null
               }
             });
           }
@@ -386,17 +386,18 @@ export class MaterialsComponent implements OnInit {
             group.density = m.density;
           }
           
-          const rawDirect = m.directRateInrPerKg || m.landedCost || null;
+          const hasDirectData = !!(m.asOnDateDirect || (m.directRateInrPerKg && m.directRateInrPerKg > 0) || m.landedCostDirect);
+          const rawDirect = m.directRateInrPerKg ?? m.landedCostDirect ?? null;
           const variant = {
             ...m,
-            lastRecordedDirectRate: rawDirect,
-            lastRecordedAsOnDate: m.asOnDateDirect || m.asOnDate || null,
+            lastRecordedDirectRate: hasDirectData ? rawDirect : null,
+            lastRecordedAsOnDate: m.asOnDateDirect || null,
             directRateInrPerKg: (m.isTodayUpdatedDirect && m.directRateInrPerKg && m.directRateInrPerKg > 0) ? m.directRateInrPerKg : null
           };
           group.variants.push(variant);
 
           // If this variant has LME data, use it for lmeState
-          if (m.type === 0 || (m.lmeUsdPerMt && m.lmeUsdPerMt > 0) || m.freightInrPerKg || m.asOnDateLme) {
+          if (hasLmeData) {
             group.lmeState = {
               materialId: m.id,
               lmeUsdPerMt: m.isTodayUpdatedLme && m.lmeUsdPerMt ? m.lmeUsdPerMt : null,
@@ -568,7 +569,7 @@ export class MaterialsComponent implements OnInit {
         return direct;
       }
       return Number(group.selectedDirectVariant?.lastRecordedDirectRate 
-        || group.selectedDirectVariant?.landedCost 
+        || group.selectedDirectVariant?.landedCostDirect 
         || 0);
     }
   }

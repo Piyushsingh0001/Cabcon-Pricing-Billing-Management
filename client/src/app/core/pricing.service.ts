@@ -43,6 +43,8 @@ export interface Material {
   asOnDateDirect?: string;
   isPlaceholder: boolean;
   landedCost: number;
+  landedCostLme?: number;
+  landedCostDirect?: number;
   updatedBy?: string;
   missingDaysCountLme?: number;
   missingDaysCountDirect?: number;

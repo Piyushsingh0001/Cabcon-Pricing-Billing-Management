@@ -1,4 +1,4 @@
-<ng-container *ngIf="isAuthenticated(); else loginLayout">
+<ng-container *ngIf="isAuthenticated() && !isAuthRoute(); else loginLayout">
   <div class="app-container">
     <mat-toolbar color="primary" class="main-toolbar">
       <button mat-icon-button (click)="sidenav.toggle()">

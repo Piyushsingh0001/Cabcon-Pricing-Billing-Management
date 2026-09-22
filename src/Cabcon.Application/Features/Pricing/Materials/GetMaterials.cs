@@ -24,6 +24,8 @@ public record MaterialDto
     public DateTime? AsOnDateDirect { get; init; }
     public bool IsPlaceholder { get; init; }
     public decimal LandedCost { get; init; }
+    public decimal? LandedCostLme { get; init; }
+    public decimal? LandedCostDirect { get; init; }
     public string? UpdatedBy { get; init; }
     public string? VendorName { get; init; }
     public int? VendorId { get; init; }
@@ -175,24 +177,30 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             var todayLme = mHistoriesLme.Where(h => h.EffectiveDate.Date == today || h.EffectiveDate.Date == localToday).OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
             var todayDirect = mHistoriesDirect.Where(h => h.EffectiveDate.Date == today || h.EffectiveDate.Date == localToday).OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
 
+            var lmeLandedCost = todayLme?.LandedCostInrPerKg ?? latestLme?.LandedCostInrPerKg;
+            var directLandedCost = todayDirect?.LandedCostInrPerKg ?? latestDirect?.LandedCostInrPerKg;
+
             if (allVendorEntries.Count == 0)
             {
+                bool isLmeConfigured = latestLme != null;
                 // Single base DTO for material
                 dtos.Add(new MaterialDto
                 {
                     Id = m.Id,
                     Name = m.Name,
-                    Type = latestLme != null ? MaterialType.Exchange : MaterialType.Direct,
+                    Type = isLmeConfigured ? MaterialType.Exchange : MaterialType.Direct,
                     LmeUsdPerMt = isTodayUpdatedLme ? todayLme?.LmeUsdPerMt : latestLme?.LmeUsdPerMt,
                     PremiumUsdPerMt = isTodayUpdatedLme ? todayLme?.PremiumUsdPerMt : latestLme?.PremiumUsdPerMt,
                     FxRate = isTodayUpdatedLme ? todayLme?.FxRate : latestLme?.FxRate,
                     FreightInrPerKg = isTodayUpdatedLme ? todayLme?.FreightInrPerKg : latestLme?.FreightInrPerKg,
                     DirectRateInrPerKg = isTodayUpdatedDirect ? todayDirect?.DirectRateInrPerKg : latestDirect?.DirectRateInrPerKg,
-                    AsOnDate = todayLme?.EffectiveDate ?? todayDirect?.EffectiveDate ?? latestLme?.EffectiveDate ?? latestDirect?.EffectiveDate ?? m.CreatedDate,
+                    AsOnDate = isLmeConfigured ? (todayLme?.EffectiveDate ?? latestLme?.EffectiveDate ?? m.CreatedDate) : (todayDirect?.EffectiveDate ?? latestDirect?.EffectiveDate ?? m.CreatedDate),
                     AsOnDateLme = todayLme?.EffectiveDate ?? latestLme?.EffectiveDate,
                     AsOnDateDirect = todayDirect?.EffectiveDate ?? latestDirect?.EffectiveDate,
                     IsPlaceholder = latestLme == null && latestDirect == null,
-                    LandedCost = todayLme?.LandedCostInrPerKg ?? todayDirect?.LandedCostInrPerKg ?? latestLme?.LandedCostInrPerKg ?? latestDirect?.LandedCostInrPerKg ?? 0m,
+                    LandedCost = isLmeConfigured ? (lmeLandedCost ?? 0m) : (directLandedCost ?? 0m),
+                    LandedCostLme = lmeLandedCost,
+                    LandedCostDirect = directLandedCost,
                     UpdatedBy = todayLme?.UpdatedBy ?? todayDirect?.UpdatedBy ?? latestLme?.UpdatedBy ?? latestDirect?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
                     VendorName = null,
                     VendorId = null,
@@ -231,6 +239,9 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
 
                     var vTodayDirect = vHistories.Where(h => h.EffectiveDate.Date == today || h.EffectiveDate.Date == localToday).OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
                     var vLatestDirect = vHistories.OrderByDescending(h => h.EffectiveDate).FirstOrDefault();
+                    var vDirectLandedCost = vTodayDirect?.LandedCostInrPerKg ?? vLatestDirect?.LandedCostInrPerKg;
+
+                    bool isLmeConfigured = latestLme != null;
 
                     dtos.Add(new MaterialDto
                     {
@@ -242,11 +253,13 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                         FxRate = isTodayUpdatedLme ? todayLme?.FxRate : latestLme?.FxRate,
                         FreightInrPerKg = isTodayUpdatedLme ? todayLme?.FreightInrPerKg : latestLme?.FreightInrPerKg,
                         DirectRateInrPerKg = vIsTodayUpdatedDirect ? vTodayDirect?.DirectRateInrPerKg : vLatestDirect?.DirectRateInrPerKg,
-                        AsOnDate = vTodayDirect?.EffectiveDate ?? todayLme?.EffectiveDate ?? vLatestDirect?.EffectiveDate ?? latestLme?.EffectiveDate ?? m.CreatedDate,
+                        AsOnDate = vTodayDirect?.EffectiveDate ?? vLatestDirect?.EffectiveDate ?? (isLmeConfigured ? (todayLme?.EffectiveDate ?? latestLme?.EffectiveDate) : null) ?? m.CreatedDate,
                         AsOnDateLme = todayLme?.EffectiveDate ?? latestLme?.EffectiveDate,
-                        AsOnDateDirect = vTodayDirect?.EffectiveDate ?? vLatestDirect?.EffectiveDate ?? latestDirect?.EffectiveDate,
-                        IsPlaceholder = vLatestDirect == null,
-                        LandedCost = vTodayDirect?.LandedCostInrPerKg ?? todayLme?.LandedCostInrPerKg ?? vLatestDirect?.LandedCostInrPerKg ?? latestLme?.LandedCostInrPerKg ?? 0m,
+                        AsOnDateDirect = vTodayDirect?.EffectiveDate ?? vLatestDirect?.EffectiveDate,
+                        IsPlaceholder = vLatestDirect == null && latestLme == null,
+                        LandedCost = vDirectLandedCost ?? (isLmeConfigured ? lmeLandedCost ?? 0m : 0m),
+                        LandedCostLme = lmeLandedCost,
+                        LandedCostDirect = vDirectLandedCost,
                         UpdatedBy = vTodayDirect?.UpdatedBy ?? todayLme?.UpdatedBy ?? vLatestDirect?.UpdatedBy ?? latestLme?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
                         VendorName = v.Name,
                         VendorId = v.Id,
