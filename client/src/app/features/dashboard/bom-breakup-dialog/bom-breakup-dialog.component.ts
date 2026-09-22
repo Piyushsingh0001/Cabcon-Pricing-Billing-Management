@@ -116,16 +116,23 @@ export class BomBreakupDialogComponent implements OnInit {
             const premium = mat ? Number(mat.premiumUsdPerMt || 0) : 0;
             const fx = mat ? Number(mat.fxRate || 0) : 0;
             const freight = mat ? Number(mat.freightInrPerMt || 0) : 0;
-            unitPrice = ((lme + premium) * fx + freight) / 1000;
-            methodLabel = 'Actual (LME-linked)';
-            pricingBasis = 'LME-linked';
-            if (lme > 0 || premium > 0 || fx > 0 || freight > 0) {
+            if (lme > 0 && fx > 0) {
+              unitPrice = ((lme + premium) * fx + freight) / 1000;
               formulaText = `((₹${lme.toLocaleString()} + ₹${premium}) × ${fx} + ₹${freight.toLocaleString()}) / 1000`;
             } else {
-              formulaText = `((LME + Premium) × FX + Freight) / 1000`;
+              unitPrice = line.materialLandedCost !== undefined && line.materialLandedCost !== null 
+                ? Number(line.materialLandedCost) 
+                : (mat ? Number(mat.landedCost || 0) : 0);
+              formulaText = `Landed rate: ₹${unitPrice.toFixed(2)}/kg`;
             }
+            methodLabel = 'Actual (LME-linked)';
+            pricingBasis = 'LME-linked';
           } else { // Direct
-            unitPrice = mat ? Number(mat.directRateInrPerKg || 0) : 0;
+            unitPrice = (mat?.directRateInrPerKg !== undefined && mat.directRateInrPerKg !== null)
+              ? Number(mat.directRateInrPerKg)
+              : (line.materialLandedCost !== undefined && line.materialLandedCost !== null
+                  ? Number(line.materialLandedCost)
+                  : (mat ? Number(mat.landedCost || 0) : 0));
             methodLabel = 'Actual (Direct Rate)';
             pricingBasis = 'Direct Rate';
             formulaText = `Direct rate master: ₹${unitPrice.toFixed(2)}/kg`;
