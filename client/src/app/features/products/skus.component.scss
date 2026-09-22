@@ -190,9 +190,52 @@
 
 .tbl {
   width: 100%;
-  min-width: 720px; /* Crucial to prevent column squishing on mobile */
+  min-width: 780px; /* Crucial to prevent column squishing on mobile */
   border-collapse: collapse;
   font-size: 13px;
+}
+
+/* BOM Summary Chips */
+.bom-chips-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  max-width: 320px;
+}
+
+.bom-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 1.5px 5px;
+  font-size: 11px;
+  line-height: 1.3;
+  white-space: nowrap;
+  color: #334155;
+  transition: all 0.15s ease;
+
+  .chip-label {
+    font-weight: 500;
+    color: #475569;
+  }
+
+  .chip-val {
+    font-weight: 700;
+    color: #0f172a;
+    background: #e2e8f0;
+    padding: 0 3px;
+    border-radius: 3px;
+    font-size: 10px;
+  }
+
+  &:hover {
+    background: #e2e8f0;
+    border-color: #cbd5e1;
+  }
 }
 
 .tbl th {

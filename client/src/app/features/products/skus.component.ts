@@ -365,6 +365,14 @@ export class SkusComponent implements OnInit {
     }).join(' · ');
   }
 
+  public getBomItems(sku: Sku): { name: string; weight: number }[] {
+    if (!sku.bomLines || sku.bomLines.length === 0) return [];
+    return sku.bomLines.map(line => ({
+      name: line.materialName ? line.materialName.split(' ')[0] : 'Material',
+      weight: line.weightKg
+    }));
+  }
+
   public getLandedCost(materialId: number): number {
     const mat = this.materials.find(m => m.id === materialId);
     if (!mat) return 0;

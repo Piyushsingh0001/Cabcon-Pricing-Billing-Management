@@ -357,6 +357,14 @@ export class DashboardComponent implements OnInit {
     }).join(' · ');
   }
 
+  public getBomItems(sku: Sku): { name: string; weight: number }[] {
+    if (!sku.bomLines || sku.bomLines.length === 0) return [];
+    return sku.bomLines.map(line => ({
+      name: line.materialName ? line.materialName.split(' ')[0] : 'Material',
+      weight: line.weightKg
+    }));
+  }
+
   public get usedMaterials(): Material[] {
     if (!this.skus || this.skus.length === 0 || !this.materials || this.materials.length === 0) return [];
     const selectedIds = Array.from(this.pricingService.selectedSkuIds);
@@ -594,7 +602,9 @@ export class DashboardComponent implements OnInit {
           }
 
           const totalRmCost = item.rmCost * skuQty;
-          const totalBomWeight = sku && sku.bomLines ? sku.bomLines.reduce((acc, b) => acc + (b.weightKg || 0), 0) : 0;
+          const totalBomWeight = sku && sku.bomLines && sku.bomLines.length > 0 
+            ? sku.bomLines.reduce((acc, b) => acc + (b.weightKg || 0), 0) 
+            : (sku?.totalWeight || 0);
 
           let rowMfgCost = 0;
           if (convType === 0) {
