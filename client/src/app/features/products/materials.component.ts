@@ -207,7 +207,14 @@ export class MaterialsComponent implements OnInit {
     const missing = this.getMissingVendors(group);
     if (missing.length === 0) return '';
     const items = missing.map(m => `${m.name} - ${m.days} ${m.days === 1 ? 'Day' : 'Days'}`);
-    return `Price set missing for vendor ${items.join(', ')}. Click here to update the missing prices.`;
+    return `Price set missing for vendor ${items.join(', ')}. Click here to update.`;
+  }
+
+  /** Formats the missing price notification text for LME-linked material at the top of the card. */
+  public getMissingLmeNotification(group: any): string {
+    const days = this.getMissingDays(group);
+    if (days <= 0) return '';
+    return `Price set missing for ${days} ${days === 1 ? 'Day' : 'Days'}. Click here to update.`;
   }
 
   public getCategoryThemeClass(categoryName?: string): string {
