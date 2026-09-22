@@ -207,7 +207,7 @@ export class MaterialsComponent implements OnInit {
     const missing = this.getMissingVendors(group);
     if (missing.length === 0) return '';
     const items = missing.map(m => `${m.name} - ${m.days} ${m.days === 1 ? 'Day' : 'Days'}`);
-    return `Price set missing for vendor ${items.join(', ')}`;
+    return `Price set missing for vendor ${items.join(', ')}. Click here to update the missing prices.`;
   }
 
   public getCategoryThemeClass(categoryName?: string): string {
@@ -552,26 +552,67 @@ export class MaterialsComponent implements OnInit {
     });
   }
 
+  public getGlobalFxRate(): number {
+    for (const g of this.materialGroups) {
+      if (g.lmeState?.fxRate && Number(g.lmeState.fxRate) > 0) {
+        return Number(g.lmeState.fxRate);
+      }
+      if (g.lmeState?.lastRecordedFx && Number(g.lmeState.lastRecordedFx) > 0) {
+        return Number(g.lmeState.lastRecordedFx);
+      }
+    }
+    for (const m of this.materials) {
+      if (m.fxRate && Number(m.fxRate) > 0) {
+        return Number(m.fxRate);
+      }
+    }
+    return 86.0;
+  }
+
+  public getFxPlaceholder(group: any): string {
+    const fx = (group.lmeState?.lastRecordedFx && Number(group.lmeState.lastRecordedFx) > 0)
+      ? Number(group.lmeState.lastRecordedFx)
+      : this.getGlobalFxRate();
+    return fx > 0 ? fx.toFixed(2) : '86.00';
+  }
+
   public calculateLandedCost(group: any): number {
     if (!group) return 0;
     if (group.selectedType === 0) {
-      const lme = Number(group.lmeState?.lmeUsdPerMt || 0);
-      const fx = Number(group.lmeState?.fxRate || 0);
-      if (lme > 0 && fx > 0) {
-        const prem = Number(group.lmeState?.premiumUsdPerMt || 0);
-        const freight = Number(group.lmeState?.freightInrPerMt || 0);
-        return ((lme + prem) * fx + freight) / 1000;
+      const fallbackFx = (group.lmeState?.lastRecordedFx && Number(group.lmeState.lastRecordedFx) > 0)
+        ? Number(group.lmeState.lastRecordedFx)
+        : this.getGlobalFxRate();
+
+      const lme = this.parseValue(group.lmeState?.lmeUsdPerMt, group.lmeState?.lastRecordedLme);
+      let fx = this.parseValue(group.lmeState?.fxRate, fallbackFx);
+      if (fx <= 0) {
+        fx = fallbackFx > 0 ? fallbackFx : 86.0;
+      }
+      const prem = this.parseValue(group.lmeState?.premiumUsdPerMt, group.lmeState?.lastRecordedPrem);
+      const freight = this.parseValue(group.lmeState?.freightInrPerMt, group.lmeState?.lastRecordedFreight);
+
+      const calculated = ((lme + prem) * fx + freight) / 1000;
+      if (calculated > 0) {
+        return calculated;
       }
       return Number(group.lmeState?.lastRecordedLandedCost || 0);
     } else {
-      const direct = Number(group.selectedDirectVariant?.directRateInrPerKg || 0);
-      if (direct > 0) {
-        return direct;
-      }
-      return Number(group.selectedDirectVariant?.lastRecordedDirectRate 
-        || group.selectedDirectVariant?.landedCostDirect 
-        || 0);
+      const direct = this.parseValue(
+        group.selectedDirectVariant?.directRateInrPerKg,
+        group.selectedDirectVariant?.lastRecordedDirectRate || group.selectedDirectVariant?.landedCostDirect
+      );
+      return direct;
     }
+  }
+
+  private parseValue(val: any, fallback: any = 0): number {
+    if (val !== null && val !== undefined && val !== '' && !isNaN(Number(val))) {
+      return Number(val);
+    }
+    if (fallback !== null && fallback !== undefined && fallback !== '' && !isNaN(Number(fallback))) {
+      return Number(fallback);
+    }
+    return 0;
   }
 
   public updatePrice(group: any) {
@@ -579,10 +620,22 @@ export class MaterialsComponent implements OnInit {
 
     if (group.selectedType === 0) {
       // Validate LME Price
-      const lme = group.lmeState?.lmeUsdPerMt;
-      const fx = group.lmeState?.fxRate;
-      const prem = group.lmeState?.premiumUsdPerMt;
-      const freight = group.lmeState?.freightInrPerMt;
+      const fallbackFx = (group.lmeState?.lastRecordedFx && Number(group.lmeState.lastRecordedFx) > 0)
+        ? Number(group.lmeState.lastRecordedFx)
+        : this.getGlobalFxRate();
+
+      const lme = group.lmeState?.lmeUsdPerMt != null && group.lmeState?.lmeUsdPerMt !== ''
+        ? group.lmeState.lmeUsdPerMt
+        : group.lmeState?.lastRecordedLme;
+      const fx = group.lmeState?.fxRate != null && group.lmeState?.fxRate !== ''
+        ? group.lmeState.fxRate
+        : fallbackFx;
+      const prem = group.lmeState?.premiumUsdPerMt != null && group.lmeState?.premiumUsdPerMt !== ''
+        ? group.lmeState.premiumUsdPerMt
+        : (group.lmeState?.lastRecordedPrem ?? 0);
+      const freight = group.lmeState?.freightInrPerMt != null && group.lmeState?.freightInrPerMt !== ''
+        ? group.lmeState.freightInrPerMt
+        : (group.lmeState?.lastRecordedFreight ?? 0);
 
       if (lme === null || lme === undefined || lme === '' || Number(lme) <= 0) {
         this.snackBar.open('Please enter a valid LME (USD/MT) greater than 0.', 'Close', { duration: 3500 });

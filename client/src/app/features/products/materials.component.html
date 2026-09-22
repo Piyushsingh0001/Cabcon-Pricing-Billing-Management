@@ -139,7 +139,7 @@
           </div>
           <div class="field-row">
             <span class="field-label">FX (₹/USD)</span>
-            <input type="number" class="field-input" [(ngModel)]="group.lmeState.fxRate" [disabled]="!canUpdate() || isTodayUpdated(group)" [placeholder]="group.lmeState.lastRecordedFx ? (group.lmeState.lastRecordedFx | number:'1.2-2') : '0.00'">
+            <input type="number" class="field-input" [(ngModel)]="group.lmeState.fxRate" [disabled]="!canUpdate() || isTodayUpdated(group)" [placeholder]="getFxPlaceholder(group)">
           </div>
           <div class="field-row">
             <span class="field-label">Freight (₹/MT)</span>
@@ -172,13 +172,13 @@
           </div>
         </div>
         <div class="footer-right">
-          <div *ngIf="isTodayUpdated(group)" class="footer-as-on">
+          <!-- <div *ngIf="isTodayUpdated(group)" class="footer-as-on">
             <mat-icon style="font-size: 13px; width: 13px; height: 13px; vertical-align: middle; margin-right: 2px;">check_circle</mat-icon>
             Updated today
           </div>
           <div *ngIf="getMissingDays(group) > 0" class="warning-badge cursor-pointer" (click)="openBackfill(group)" title="Click to fill missing prices">
             ⚠️ Prices missing for {{ getMissingDays(group) }} day(s)
-          </div>
+          </div> -->
           
           <button class="btn-update" style="margin-top: 4px;" (click)="updatePrice(group)" [disabled]="!canUpdate() || isTodayUpdated(group) || (group.selectedType === 1 && (!group.vendorOptions || group.vendorOptions.length === 0))">Update today's price</button>
         </div>
