@@ -107,11 +107,17 @@ export class MaterialCreateEditDialogComponent implements OnInit {
       if (!val) {
         return null;
       }
-      const currentName = this.material?.name?.trim().toLowerCase() || '';
+      const currentName = (this.material?.name || '').trim().toLowerCase();
       
+      // Allow the current material's own existing name
+      if (currentName && val === currentName) {
+        return null;
+      }
+
+      // Disallow matching with any other material's name
       const isDuplicate = this.existingNames.some(name => {
         const item = (name || '').trim().toLowerCase();
-        return item === val && item !== currentName;
+        return item && item === val && item !== currentName;
       });
 
       return isDuplicate ? { nameExists: true } : null;
@@ -122,10 +128,13 @@ export class MaterialCreateEditDialogComponent implements OnInit {
     this.pricingService.getMaterials(undefined, undefined, undefined, undefined, 1, 500).subscribe({
       next: (res) => {
         if (res && res.items) {
-          if (!this.existingNames || this.existingNames.length === 0) {
-            this.existingNames = Array.from(new Set(res.items.map(m => m.name)));
-            this.form.get('name')?.updateValueAndValidity();
-          }
+          const allFetchedNames = res.items
+            .map(m => m.name)
+            .filter((n): n is string => typeof n === 'string' && n.trim().length > 0);
+          const combinedNames = new Set([...this.existingNames, ...allFetchedNames]);
+          this.existingNames = Array.from(combinedNames);
+          this.form.get('name')?.updateValueAndValidity();
+
           const catSet = new Set<string>(this.categories);
           res.items.forEach(m => {
             if (m.categoryName && m.categoryName.trim()) {
@@ -178,7 +187,11 @@ export class MaterialCreateEditDialogComponent implements OnInit {
         },
         error: (err) => {
           this.loading.set(false);
-          this.snackBar.open(err.error?.message || 'Failed to update material.', 'Close', { duration: 3000 });
+          const errMsg = err.error?.message || err.error?.errors?.[0] || 'Failed to update material.';
+          if (errMsg.toLowerCase().includes('already exists')) {
+            this.form.get('name')?.setErrors({ nameExists: true });
+          }
+          this.snackBar.open(errMsg, 'Close', { duration: 3000 });
         }
       });
     } else {
@@ -190,7 +203,11 @@ export class MaterialCreateEditDialogComponent implements OnInit {
         },
         error: (err) => {
           this.loading.set(false);
-          this.snackBar.open(err.error?.message || 'Failed to create material.', 'Close', { duration: 3000 });
+          const errMsg = err.error?.message || err.error?.errors?.[0] || 'Failed to create material.';
+          if (errMsg.toLowerCase().includes('already exists')) {
+            this.form.get('name')?.setErrors({ nameExists: true });
+          }
+          this.snackBar.open(errMsg, 'Close', { duration: 3000 });
         }
       });
     }

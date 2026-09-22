@@ -52,8 +52,20 @@ html, body {
   padding: 0 20px !important;
   box-shadow: 0 4px 14px 0 rgba(16, 29, 50, 0.3) !important;
   transition: all 0.2s ease !important;
+
+  &:disabled,
+  &[disabled],
+  &.mat-mdc-button-disabled {
+    background: #cbd5e1 !important;
+    color: #94a3b8 !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    opacity: 0.65 !important;
+    pointer-events: none !important;
+  }
 }
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled):not([disabled]) {
   transform: translateY(-1px);
   background: var(--primary-gradient) !important;
   box-shadow: 0 6px 20px 0 rgba(16, 29, 50, 0.4) !important;
@@ -67,8 +79,20 @@ html, body {
   padding: 0 20px !important;
   box-shadow: 0 4px 14px 0 rgba(214, 40, 40, 0.3) !important;
   transition: all 0.2s ease !important;
+
+  &:disabled,
+  &[disabled],
+  &.mat-mdc-button-disabled {
+    background: #cbd5e1 !important;
+    color: #94a3b8 !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    opacity: 0.65 !important;
+    pointer-events: none !important;
+  }
 }
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled):not([disabled]) {
   transform: translateY(-1px);
   background: var(--secondary-gradient) !important;
   box-shadow: 0 6px 20px 0 rgba(214, 40, 40, 0.4) !important;
@@ -171,7 +195,19 @@ html, body {
     box-shadow: 0 2px 6px rgba(16, 29, 50, 0.2) !important;
     transition: all 0.2s ease !important;
 
-    &:hover:not([disabled]) {
+    &:disabled,
+    &[disabled],
+    &.mat-mdc-button-disabled {
+      background: #cbd5e1 !important;
+      color: #94a3b8 !important;
+      box-shadow: none !important;
+      cursor: not-allowed !important;
+      transform: none !important;
+      opacity: 0.65 !important;
+      pointer-events: none !important;
+    }
+
+    &:hover:not(:disabled):not([disabled]) {
       background: #1c3256 !important;
       box-shadow: 0 4px 12px rgba(16, 29, 50, 0.3) !important;
       transform: translateY(-1px) !important;

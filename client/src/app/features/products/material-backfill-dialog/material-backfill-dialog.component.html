@@ -41,6 +41,7 @@
     <div formArrayName="prices" class="prices-list">
       <div *ngFor="let priceGroup of pricesArray.controls; let i = index" [formGroupName]="i" class="price-row">
         <div class="date-column">
+          <span class="serial-badge">#{{ i + 1 }}</span>
           <mat-icon class="date-icon">calendar_today</mat-icon>
           <span class="date-label">{{ missingDates[i] | date:'dd MMM yyyy' }}</span>
         </div>
