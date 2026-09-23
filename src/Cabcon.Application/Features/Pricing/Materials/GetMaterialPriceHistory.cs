@@ -19,10 +19,10 @@ public record MaterialPriceHistoryDto
     public decimal LandedCostInrPerKg { get; init; }
     public DateTime EffectiveDate { get; init; }
     public string? UpdatedBy { get; init; }
-    public Cabcon.Domain.Enums.MaterialType Type { get; init; }
+    public Cabcon.Domain.Enums.MaterialPriceType Type { get; init; }
 }
 
-public record GetMaterialPriceHistoryQuery(int MaterialId, Cabcon.Domain.Enums.MaterialType? Type = null) : IRequest<IReadOnlyList<MaterialPriceHistoryDto>>;
+public record GetMaterialPriceHistoryQuery(int MaterialId, Cabcon.Domain.Enums.MaterialPriceType? Type = null) : IRequest<IReadOnlyList<MaterialPriceHistoryDto>>;
 
 public class GetMaterialPriceHistoryQueryHandler : IRequestHandler<GetMaterialPriceHistoryQuery, IReadOnlyList<MaterialPriceHistoryDto>>
 {

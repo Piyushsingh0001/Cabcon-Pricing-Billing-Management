@@ -47,6 +47,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
 
     // Pricing (core domain)
     public DbSet<Category> Categories => Set<Category>();
+    public DbSet<MaterialType> MaterialTypes => Set<MaterialType>();
     public DbSet<Material> Materials => Set<Material>();
     public DbSet<MaterialPriceHistory> MaterialPriceHistory => Set<MaterialPriceHistory>();
     public DbSet<Vendor> Vendors => Set<Vendor>();
@@ -136,7 +137,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
 
             var typeName = entry.Entity.GetType().Name;
             // Only audit tracked entities
-            if (typeName != "Material" && typeName != "Sku" && typeName != "SkuBomLine" && 
+            if (typeName != "Material" && typeName != "MaterialType" && typeName != "Sku" && typeName != "SkuBomLine" && 
                 typeName != "Role" && typeName != "UserRole" && typeName != "RolePermission" && 
                 typeName != "User" && typeName != "Quotation" && typeName != "Customer")
             {
@@ -167,6 +168,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
                 Module = typeName switch
                 {
                     "Material" => "Material",
+                    "MaterialType" => "Material",
                     "Sku" => "Product",
                     "SkuBomLine" => "Product",
                     "Role" => "Role",

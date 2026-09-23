@@ -7,7 +7,7 @@ using Cabcon.Domain.Enums;
 
 namespace Cabcon.Application.Features.Pricing.Materials;
 
-public record GetMaterialMissingDatesQuery(int MaterialId, MaterialType? Type = null, string? VendorName = null, int? VendorId = null) : IRequest<IReadOnlyList<DateTime>>;
+public record GetMaterialMissingDatesQuery(int MaterialId, MaterialPriceType? Type = null, string? VendorName = null, int? VendorId = null) : IRequest<IReadOnlyList<DateTime>>;
 
 public class GetMaterialMissingDatesQueryHandler : IRequestHandler<GetMaterialMissingDatesQuery, IReadOnlyList<DateTime>>
 {
@@ -39,7 +39,7 @@ public class GetMaterialMissingDatesQueryHandler : IRequestHandler<GetMaterialMi
         if (request.Type.HasValue)
         {
             query = query.Where(h => h.Type == request.Type.Value);
-            if (request.Type.Value == MaterialType.Direct)
+            if (request.Type.Value == MaterialPriceType.Direct)
             {
                 if (request.VendorId.HasValue)
                 {

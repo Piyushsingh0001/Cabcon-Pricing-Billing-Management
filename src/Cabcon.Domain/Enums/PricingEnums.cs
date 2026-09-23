@@ -5,7 +5,7 @@ namespace Cabcon.Domain.Enums;
 /// (landed = ((LME+Premium)*FX + Freight)/1000), "direct" materials
 /// use a flat rate (₹/kg) entered manually.
 /// </summary>
-public enum MaterialType
+public enum MaterialPriceType
 {
     Exchange = 0,
     Direct = 1

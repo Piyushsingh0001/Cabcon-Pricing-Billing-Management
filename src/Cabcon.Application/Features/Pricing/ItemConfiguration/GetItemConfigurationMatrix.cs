@@ -12,7 +12,9 @@ public record ItemConfigMaterialDto(
     int Id,
     string Name,
     string CategoryName,
-    decimal Density
+    decimal Density,
+    int? MaterialTypeId = null,
+    string? MaterialTypeName = null
 );
 
 public record ItemConfigRowDto(
@@ -45,38 +47,25 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
     {
         var materialRepo = _unitOfWork.Repository<Material>();
         var materials = await materialRepo.Query()
+            .Include(m => m.MaterialType)
             .OrderBy(m => m.Id)
             .ToListAsync(cancellationToken);
 
-        // Migrate any legacy 'PVC Outer Shell' to 'PVC Outer Sheath' if exists
-        bool needsSave = false;
-        foreach (var m in materials)
-        {
-            if (string.Equals(m.CategoryName, "PVC Outer Shell", StringComparison.OrdinalIgnoreCase))
-            {
-                m.CategoryName = "PVC Outer Sheath";
-                materialRepo.Update(m);
-                needsSave = true;
-            }
-        }
-        if (needsSave)
-        {
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-        }
-
         var materialDtos = materials
-            .Where(m => !string.IsNullOrWhiteSpace(m.CategoryName))
+            .Where(m => m.MaterialType != null && !string.IsNullOrWhiteSpace(m.MaterialType.Name))
             .Select(m => new ItemConfigMaterialDto(
                 m.Id,
                 m.Name,
-                m.CategoryName!.Trim(),
-                m.Density
+                m.MaterialType!.Name.Trim(),
+                m.Density,
+                m.MaterialTypeId,
+                m.MaterialType.Name.Trim()
             )).ToList();
 
-        // Dynamically extract all distinct categories from materials in database
+        // Dynamically extract all distinct material types from materials in database
         var dynamicCategories = materials
-            .Where(m => !string.IsNullOrWhiteSpace(m.CategoryName))
-            .Select(m => m.CategoryName!.Trim())
+            .Where(m => m.MaterialType != null && !string.IsNullOrWhiteSpace(m.MaterialType.Name))
+            .Select(m => m.MaterialType!.Name.Trim())
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .OrderBy(c => c)
             .ToList();

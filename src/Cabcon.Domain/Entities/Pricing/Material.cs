@@ -10,7 +10,8 @@ namespace Cabcon.Domain.Entities.Pricing;
 public class Material : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
-    public string? CategoryName { get; set; }
+    public int? MaterialTypeId { get; set; }
+    public MaterialType? MaterialType { get; set; }
     public decimal Density { get; set; } = 0m;
 
     public ICollection<MaterialPriceHistory> PriceHistory { get; set; } = new List<MaterialPriceHistory>();

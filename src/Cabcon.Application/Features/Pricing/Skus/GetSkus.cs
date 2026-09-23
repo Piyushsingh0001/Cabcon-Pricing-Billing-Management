@@ -13,7 +13,7 @@ public record SkuBomSummaryDto
     public int MaterialId { get; init; }
     public string MaterialName { get; init; } = string.Empty;
     public decimal WeightKg { get; init; }
-    public MaterialType PriceType { get; init; }
+    public MaterialPriceType PriceType { get; init; }
     public BomPricingMethod PricingMethod { get; init; }
     public BomPricingMonth? PricingMonth { get; init; }
     public decimal? ManualPrice { get; init; }

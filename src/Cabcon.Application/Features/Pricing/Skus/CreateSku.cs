@@ -11,7 +11,7 @@ namespace Cabcon.Application.Features.Pricing.Skus;
 public record CreateSkuBomLineInput(
     int MaterialId, 
     decimal WeightKg,
-    MaterialType PriceType = MaterialType.Exchange,
+    MaterialPriceType PriceType = MaterialPriceType.Exchange,
     BomPricingMethod PricingMethod = BomPricingMethod.Actual,
     BomPricingMonth? PricingMonth = null,
     decimal? ManualPrice = null

@@ -13,13 +13,15 @@ namespace Cabcon.Application.Features.Pricing.Materials;
 public record CreateMaterialCommand(
     string Name,
     string? VendorName = null,
-    MaterialType? Type = null,
+    MaterialPriceType? Type = null,
     decimal? LmeUsdPerMt = null,
     decimal? PremiumUsdPerMt = null,
     decimal? FxRate = null,
     decimal? FreightInrPerKg = null,
     decimal? FreightInrPerMt = null,
     decimal? DirectRateInrPerKg = null,
+    int? MaterialTypeId = null,
+    string? MaterialTypeName = null,
     string? CategoryName = null,
     decimal? Density = null
 ) : IRequest<Result<int>>;
@@ -30,14 +32,14 @@ public class CreateMaterialCommandValidator : AbstractValidator<CreateMaterialCo
     {
         RuleFor(x => x.Name).NotEmpty().MaximumLength(150);
         
-        When(x => x.Type == MaterialType.Exchange, () =>
+        When(x => x.Type == MaterialPriceType.Exchange, () =>
         {
             RuleFor(x => x.LmeUsdPerMt).GreaterThanOrEqualTo(0);
             RuleFor(x => x.PremiumUsdPerMt).GreaterThanOrEqualTo(0);
             RuleFor(x => x.FxRate).GreaterThanOrEqualTo(0);
         });
 
-        When(x => x.Type == MaterialType.Direct, () =>
+        When(x => x.Type == MaterialPriceType.Direct, () =>
         {
             RuleFor(x => x.DirectRateInrPerKg).GreaterThanOrEqualTo(0);
         });
@@ -59,6 +61,25 @@ public class CreateMaterialCommandHandler : IRequestHandler<CreateMaterialComman
         var trimmedName = request.Name.Trim();
         var repository = _unitOfWork.Repository<Material>();
 
+        // Resolve MaterialTypeId
+        int? resolvedMaterialTypeId = request.MaterialTypeId;
+        var matTypeName = request.MaterialTypeName ?? request.CategoryName;
+        if (!resolvedMaterialTypeId.HasValue && !string.IsNullOrWhiteSpace(matTypeName))
+        {
+            var trimmedCat = matTypeName.Trim();
+            var matTypeRepo = _unitOfWork.Repository<MaterialType>();
+            var existingType = await matTypeRepo.Query()
+                .FirstOrDefaultAsync(t => t.Name.ToLower() == trimmedCat.ToLower(), cancellationToken);
+
+            if (existingType == null)
+            {
+                existingType = new MaterialType { Name = trimmedCat, IsActive = true };
+                await matTypeRepo.AddAsync(existingType, cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+            }
+            resolvedMaterialTypeId = existingType.Id;
+        }
+
         var existingMaterial = await repository.Query()
             .FirstOrDefaultAsync(x => x.Name.ToLower() == trimmedName.ToLower(), cancellationToken);
 
@@ -68,7 +89,7 @@ public class CreateMaterialCommandHandler : IRequestHandler<CreateMaterialComman
             material = new Material
             {
                 Name = trimmedName,
-                CategoryName = request.CategoryName,
+                MaterialTypeId = resolvedMaterialTypeId,
                 Density = request.Density ?? 0m
             };
             await repository.AddAsync(material, cancellationToken);
@@ -77,9 +98,9 @@ public class CreateMaterialCommandHandler : IRequestHandler<CreateMaterialComman
         else
         {
             material = existingMaterial;
-            if (!string.IsNullOrWhiteSpace(request.CategoryName))
+            if (resolvedMaterialTypeId.HasValue)
             {
-                material.CategoryName = request.CategoryName;
+                material.MaterialTypeId = resolvedMaterialTypeId.Value;
             }
             if (request.Density.HasValue)
             {
@@ -128,15 +149,15 @@ public class CreateMaterialCommandHandler : IRequestHandler<CreateMaterialComman
                 freightKg = request.FreightInrPerMt.Value / 1000m;
             }
 
-            var landedCost = request.Type == MaterialType.Exchange
-                ? _pricingService.LandedCost(MaterialType.Exchange, request.LmeUsdPerMt, request.PremiumUsdPerMt, request.FxRate, freightKg, null)
+            var landedCost = request.Type == MaterialPriceType.Exchange
+                ? _pricingService.LandedCost(MaterialPriceType.Exchange, request.LmeUsdPerMt, request.PremiumUsdPerMt, request.FxRate, freightKg, null)
                 : (request.DirectRateInrPerKg ?? 0);
 
             var history = new MaterialPriceHistory
             {
                 MaterialId = material.Id,
                 Type = request.Type.Value,
-                VendorId = request.Type.Value == MaterialType.Direct ? vendorId : null,
+                VendorId = request.Type.Value == MaterialPriceType.Direct ? vendorId : null,
                 LmeUsdPerMt = request.LmeUsdPerMt,
                 PremiumUsdPerMt = request.PremiumUsdPerMt,
                 FxRate = request.FxRate,
@@ -161,7 +182,9 @@ public record UpdateMaterialCommand(
     int Id,
     string Name,
     string? VendorName = null,
-    MaterialType? Type = null,
+    MaterialPriceType? Type = null,
+    int? MaterialTypeId = null,
+    string? MaterialTypeName = null,
     string? CategoryName = null,
     decimal? Density = null
 ) : IRequest<Result>;
@@ -202,10 +225,29 @@ public class UpdateMaterialCommandHandler : IRequestHandler<UpdateMaterialComman
             return Result.Failure("Another material with this name already exists.");
         }
 
-        material.Name = trimmedName;
-        if (!string.IsNullOrWhiteSpace(request.CategoryName))
+        // Resolve MaterialTypeId
+        int? resolvedMaterialTypeId = request.MaterialTypeId;
+        var matTypeName = request.MaterialTypeName ?? request.CategoryName;
+        if (!resolvedMaterialTypeId.HasValue && !string.IsNullOrWhiteSpace(matTypeName))
         {
-            material.CategoryName = request.CategoryName;
+            var trimmedCat = matTypeName.Trim();
+            var matTypeRepo = _unitOfWork.Repository<MaterialType>();
+            var existingType = await matTypeRepo.Query()
+                .FirstOrDefaultAsync(t => t.Name.ToLower() == trimmedCat.ToLower(), cancellationToken);
+
+            if (existingType == null)
+            {
+                existingType = new MaterialType { Name = trimmedCat, IsActive = true };
+                await matTypeRepo.AddAsync(existingType, cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+            }
+            resolvedMaterialTypeId = existingType.Id;
+        }
+
+        material.Name = trimmedName;
+        if (resolvedMaterialTypeId.HasValue)
+        {
+            material.MaterialTypeId = resolvedMaterialTypeId.Value;
         }
         if (request.Density.HasValue)
         {
@@ -320,7 +362,7 @@ public record BackfillPriceDto(
     decimal? FreightInrPerKg,
     decimal? FreightInrPerMt,
     decimal? DirectRateInrPerKg,
-    MaterialType? Type = null,
+    MaterialPriceType? Type = null,
     int? VendorId = null
 );
 
@@ -334,7 +376,7 @@ public class BackfillMaterialPricesCommandValidator : AbstractValidator<Backfill
         RuleFor(x => x.Prices).NotEmpty().WithMessage("At least one price entry must be provided.");
         RuleForEach(x => x.Prices).ChildRules(price =>
         {
-            price.When(p => (p.Type ?? MaterialType.Exchange) == MaterialType.Exchange, () =>
+            price.When(p => (p.Type ?? MaterialPriceType.Exchange) == MaterialPriceType.Exchange, () =>
             {
                 price.RuleFor(p => p.LmeUsdPerMt)
                     .NotNull().WithMessage("LME (USD/MT) is required.")
@@ -347,7 +389,7 @@ public class BackfillMaterialPricesCommandValidator : AbstractValidator<Backfill
                     .GreaterThanOrEqualTo(0).WithMessage("Premium (USD/MT) cannot be negative.");
             });
 
-            price.When(p => (p.Type ?? MaterialType.Exchange) == MaterialType.Direct, () =>
+            price.When(p => (p.Type ?? MaterialPriceType.Exchange) == MaterialPriceType.Direct, () =>
             {
                 price.RuleFor(p => p.DirectRateInrPerKg)
                     .NotNull().WithMessage("Direct Price (₹/kg) is required.")
@@ -381,7 +423,7 @@ public class BackfillMaterialPricesCommandHandler : IRequestHandler<BackfillMate
 
         foreach (var price in request.Prices)
         {
-            var targetType = price.Type ?? MaterialType.Exchange;
+            var targetType = price.Type ?? MaterialPriceType.Exchange;
             decimal? freightKg = price.FreightInrPerKg;
             if (!freightKg.HasValue && price.FreightInrPerMt.HasValue)
             {
@@ -389,7 +431,7 @@ public class BackfillMaterialPricesCommandHandler : IRequestHandler<BackfillMate
             }
 
             int? resolvedVendorId = null;
-            if (targetType == MaterialType.Direct)
+            if (targetType == MaterialPriceType.Direct)
             {
                 resolvedVendorId = price.VendorId;
                 if (!resolvedVendorId.HasValue && !string.IsNullOrWhiteSpace(price.VendorName))
@@ -406,15 +448,15 @@ public class BackfillMaterialPricesCommandHandler : IRequestHandler<BackfillMate
                 }
             }
 
-            decimal landedCost = targetType == MaterialType.Exchange
-                ? _pricingService.LandedCost(MaterialType.Exchange, price.LmeUsdPerMt, price.PremiumUsdPerMt, price.FxRate, freightKg, null)
+            decimal landedCost = targetType == MaterialPriceType.Exchange
+                ? _pricingService.LandedCost(MaterialPriceType.Exchange, price.LmeUsdPerMt, price.PremiumUsdPerMt, price.FxRate, freightKg, null)
                 : (price.DirectRateInrPerKg ?? 0);
 
             var history = new MaterialPriceHistory
             {
                 MaterialId = material.Id,
                 Type = targetType,
-                VendorId = targetType == MaterialType.Direct ? resolvedVendorId : null,
+                VendorId = targetType == MaterialPriceType.Direct ? resolvedVendorId : null,
                 LmeUsdPerMt = price.LmeUsdPerMt,
                 PremiumUsdPerMt = price.PremiumUsdPerMt,
                 FxRate = price.FxRate,

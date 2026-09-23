@@ -12,7 +12,7 @@ public class MaterialPriceHistory : BaseEntity
     public int MaterialId { get; set; }
     public Material Material { get; set; } = null!;
 
-    public MaterialType Type { get; set; }
+    public MaterialPriceType Type { get; set; }
     public DateTime EffectiveDate { get; set; }
 
     /// <summary>Nullable Vendor ID for Direct type pricing; null for LME/Exchange type.</summary>

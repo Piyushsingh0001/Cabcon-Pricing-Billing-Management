@@ -24,6 +24,15 @@ export interface MaterialCategoryGroup {
   headerColorClass: string;
 }
 
+export interface DbMaterialItem {
+  id: number;
+  name: string;
+  materialTypeId?: number;
+  materialTypeName?: string;
+  categoryName?: string;
+  density?: number;
+}
+
 @Component({
   selector: 'app-item-configuration-dialog',
   standalone: true,
@@ -59,9 +68,9 @@ export class ItemConfigurationDialogComponent implements OnInit {
   public newCategoryName = '';
 
   public standardCategories: string[] = [];
-  public allDbMaterials: { id: number; name: string; categoryName?: string; density?: number }[] = [];
-  public categoryAvailableMaterials: { id: number; name: string; categoryName?: string; density?: number }[] = [];
-  public filteredCategoryMaterials: { id: number; name: string; categoryName?: string; density?: number }[] = [];
+  public allDbMaterials: DbMaterialItem[] = [];
+  public categoryAvailableMaterials: DbMaterialItem[] = [];
+  public filteredCategoryMaterials: DbMaterialItem[] = [];
   public materialSearchInput = '';
   public materials: ItemConfigMaterial[] = [];
   public rows: ItemConfigRow[] = [];
@@ -93,13 +102,15 @@ export class ItemConfigurationDialogComponent implements OnInit {
     this.pricingService.getMaterials(undefined, undefined, undefined, undefined, 1, 500).subscribe({
       next: (res) => {
         if (res && res.items) {
-          const map = new Map<string, { id: number; name: string; categoryName?: string; density?: number }>();
+          const map = new Map<string, DbMaterialItem>();
           res.items.forEach(m => {
-            const rawCat = (m.categoryName || '').trim();
+            const rawCat = (m.materialTypeName || m.categoryName || '').trim();
             if (m.name && !map.has(m.name.trim().toLowerCase())) {
               map.set(m.name.trim().toLowerCase(), {
                 id: m.id,
                 name: m.name.trim(),
+                materialTypeId: m.materialTypeId,
+                materialTypeName: rawCat,
                 categoryName: rawCat,
                 density: m.density || 0
               });
@@ -117,7 +128,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
     const catOrder: string[] = [];
 
     this.materials.forEach(m => {
-      const cat = (m.categoryName || '').trim();
+      const cat = (m.materialTypeName || m.categoryName || '').trim();
       if (cat) {
         if (!groups[cat]) {
           groups[cat] = [];
@@ -155,7 +166,10 @@ export class ItemConfigurationDialogComponent implements OnInit {
           if (res.standardCategories && res.standardCategories.length > 0) {
             this.standardCategories = res.standardCategories;
           }
-          this.materials = res.materials || [];
+          this.materials = (res.materials || []).map(m => ({
+            ...m,
+            categoryName: m.materialTypeName || m.categoryName
+          }));
           this.rows = (res.rows || []).map(r => ({
             ...r,
             weights: r.weights || {}
@@ -233,7 +247,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
   public confirmAddCategory(): void {
     const cat = (this.newCategoryName || '').trim();
     if (!cat) {
-      this.snackBar.open('Please enter a category name.', 'Close', { duration: 2500 });
+      this.snackBar.open('Please enter a material type/category name.', 'Close', { duration: 2500 });
       return;
     }
 
@@ -248,7 +262,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
     // Filter DB materials that aren't already added to the matrix
     if (targetCategory) {
       this.categoryAvailableMaterials = this.allDbMaterials.filter(m =>
-        (m.categoryName || '').trim().toLowerCase() === targetCategory.toLowerCase() &&
+        ((m.materialTypeName || m.categoryName || '').trim().toLowerCase() === targetCategory.toLowerCase()) &&
         !this.materials.some(cur => cur.name.trim().toLowerCase() === m.name.trim().toLowerCase())
       );
     } else {
@@ -282,7 +296,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
     const clean = term.toLowerCase().trim();
     this.filteredCategoryMaterials = this.categoryAvailableMaterials.filter(m =>
       m.name.toLowerCase().includes(clean) ||
-      (m.categoryName && m.categoryName.toLowerCase().includes(clean))
+      ((m.materialTypeName || m.categoryName || '').toLowerCase().includes(clean))
     );
   }
 
@@ -293,8 +307,8 @@ export class ItemConfigurationDialogComponent implements OnInit {
       if (matched.density) {
         this.newMaterial.density = matched.density;
       }
-      if (matched.categoryName && !this.newMaterial.categoryName) {
-        this.newMaterial.categoryName = matched.categoryName;
+      if ((matched.materialTypeName || matched.categoryName) && !this.newMaterial.categoryName) {
+        this.newMaterial.categoryName = matched.materialTypeName || matched.categoryName || '';
       }
     }
   }
@@ -318,7 +332,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
     }
 
     const matchedDbMat = this.allDbMaterials.find(m => m.name.toLowerCase() === finalName.toLowerCase());
-    const finalCategory = (this.newMaterial.categoryName || matchedDbMat?.categoryName || 'Material').trim();
+    const finalCategory = (this.newMaterial.categoryName || matchedDbMat?.materialTypeName || matchedDbMat?.categoryName || 'Material').trim();
     const density = matchedDbMat?.density && matchedDbMat.density > 0
       ? matchedDbMat.density
       : (this.newMaterial.density || 0);
@@ -330,6 +344,8 @@ export class ItemConfigurationDialogComponent implements OnInit {
     this.materials.push({
       id: tempId,
       name: finalName,
+      materialTypeId: matchedDbMat?.materialTypeId,
+      materialTypeName: finalCategory,
       categoryName: finalCategory,
       density: density
     });
@@ -346,7 +362,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
     }
     this.confirmDialog.open({
       title: 'Remove Material',
-      message: `Remove "${mat.name}" from ${mat.categoryName || 'matrix'}? Correlation weights for this material will be cleared.`,
+      message: `Remove "${mat.name}" from ${mat.materialTypeName || mat.categoryName || 'matrix'}? Correlation weights for this material will be cleared.`,
       type: 'confirm',
       confirmText: 'Remove',
       cancelText: 'Cancel'
@@ -439,7 +455,9 @@ export class ItemConfigurationDialogComponent implements OnInit {
       materials: this.materials.map(m => ({
         id: m.id > 0 ? m.id : null,
         name: m.name,
-        categoryName: m.categoryName,
+        materialTypeId: m.materialTypeId,
+        materialTypeName: m.materialTypeName || m.categoryName,
+        categoryName: m.materialTypeName || m.categoryName,
         density: Number(m.density) || 0
       })),
       rows: this.rows.map(r => ({

@@ -33,6 +33,7 @@ public interface IApplicationDbContext
     DbSet<MaterialPriceHistory> MaterialPriceHistory { get; }
     DbSet<QuotationTracking> QuotationTrackings { get; }
     DbSet<Vendor> Vendors { get; }
+    DbSet<MaterialType> MaterialTypes { get; }
     DbSet<MaterialVendor> MaterialVendors { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { PricingService, Material } from '../../../core/pricing.service';
+import { PricingService, Material, MaterialType } from '../../../core/pricing.service';
 
 @Component({
   selector: 'app-material-create-edit-dialog',
@@ -35,13 +35,7 @@ export class MaterialCreateEditDialogComponent implements OnInit {
   public existingNames: string[] = [];
   public form: FormGroup;
 
-  public categories: string[] = [
-    'Core Material',
-    'Insulation Material',
-    'Inner Sheath',
-    'Armour Wire',
-    'PVC Outer Sheath'
-  ];
+  public materialTypes: MaterialType[] = [];
 
   private categoryDefaultDensities: { [key: string]: number } = {
     'Core Material': 8.89,
@@ -67,22 +61,21 @@ export class MaterialCreateEditDialogComponent implements OnInit {
       this.existingNames = [];
     }
 
-    const rawCategory = this.material?.categoryName || 'Core Material';
-    const initialCategory = rawCategory.trim().toLowerCase() === 'pvc outer shell' ? 'PVC Outer Sheath' : rawCategory;
     const initialDensity = this.material?.density !== undefined && this.material?.density !== null && this.material.density > 0
       ? this.material.density
-      : (this.categoryDefaultDensities[initialCategory] || 8.89);
+      : 8.89;
 
     this.form = this.fb.group({
       name: [this.material?.name || '', [Validators.required, this.nonEmptyNameValidator(), this.uniqueMaterialNameValidator()]],
-      categoryName: [initialCategory, Validators.required],
+      materialTypeId: [this.material?.materialTypeId || null, Validators.required],
       density: [initialDensity, [Validators.required, Validators.min(0)]]
     });
   }
 
-  public onCategoryChange(category: string) {
-    if (!this.material || !this.material.density) {
-      const defaultDensity = this.categoryDefaultDensities[category];
+  public onMaterialTypeChange(typeId: number) {
+    const selectedType = this.materialTypes.find(t => t.id === typeId);
+    if (selectedType && (!this.material || !this.material.density)) {
+      const defaultDensity = this.categoryDefaultDensities[selectedType.name];
       if (defaultDensity !== undefined) {
         this.form.patchValue({ density: defaultDensity });
       }
@@ -125,6 +118,25 @@ export class MaterialCreateEditDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Load Material Types
+    this.pricingService.getMaterialTypes().subscribe({
+      next: (types) => {
+        this.materialTypes = types || [];
+        // If editing material and materialTypeId is null, try to match by materialTypeName or categoryName
+        if (this.material && !this.form.get('materialTypeId')?.value) {
+          const typeName = (this.material.materialTypeName || this.material.categoryName || '').trim().toLowerCase();
+          const matched = this.materialTypes.find(t => t.name.trim().toLowerCase() === typeName);
+          if (matched) {
+            this.form.patchValue({ materialTypeId: matched.id });
+          } else if (this.materialTypes.length > 0) {
+            this.form.patchValue({ materialTypeId: this.materialTypes[0].id });
+          }
+        } else if (!this.material && !this.form.get('materialTypeId')?.value && this.materialTypes.length > 0) {
+          this.form.patchValue({ materialTypeId: this.materialTypes[0].id });
+        }
+      }
+    });
+
     this.pricingService.getMaterials(undefined, undefined, undefined, undefined, 1, 500).subscribe({
       next: (res) => {
         if (res && res.items) {
@@ -134,29 +146,6 @@ export class MaterialCreateEditDialogComponent implements OnInit {
           const combinedNames = new Set([...this.existingNames, ...allFetchedNames]);
           this.existingNames = Array.from(combinedNames);
           this.form.get('name')?.updateValueAndValidity();
-
-          const catSet = new Set<string>(this.categories);
-          res.items.forEach(m => {
-            if (m.categoryName && m.categoryName.trim()) {
-              const norm = m.categoryName.trim().toLowerCase() === 'pvc outer shell' ? 'PVC Outer Sheath' : m.categoryName.trim();
-              catSet.add(norm);
-            }
-          });
-          const orderMap: { [cat: string]: number } = {
-            'core material': 1,
-            'insulation material': 2,
-            'inner sheath': 3,
-            'armour wire': 4,
-            'pvc outer sheath': 5
-          };
-          const catList = Array.from(catSet);
-          catList.sort((a, b) => {
-            const rankA = orderMap[a.toLowerCase()] ?? 99;
-            const rankB = orderMap[b.toLowerCase()] ?? 99;
-            if (rankA !== rankB) return rankA - rankB;
-            return a.localeCompare(b);
-          });
-          this.categories = catList;
         }
       }
     });
@@ -171,10 +160,13 @@ export class MaterialCreateEditDialogComponent implements OnInit {
 
     this.loading.set(true);
     const formValues = this.form.value;
+    const selectedType = this.materialTypes.find(t => t.id === formValues.materialTypeId);
 
     const payload = {
       name: (formValues.name || '').trim(),
-      categoryName: formValues.categoryName,
+      materialTypeId: formValues.materialTypeId,
+      materialTypeName: selectedType?.name,
+      categoryName: selectedType?.name,
       density: Number(formValues.density)
     };
 

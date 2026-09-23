@@ -11,8 +11,10 @@ namespace Cabcon.Application.Features.Pricing.ItemConfiguration;
 public record SaveItemConfigMaterialInput(
     int? Id,
     string Name,
-    string CategoryName,
-    decimal Density
+    string? CategoryName,
+    decimal Density,
+    int? MaterialTypeId = null,
+    string? MaterialTypeName = null
 );
 
 public record SaveItemConfigRowInput(
@@ -37,7 +39,6 @@ public class SaveItemConfigurationMatrixCommandValidator : AbstractValidator<Sav
         RuleForEach(x => x.Materials).ChildRules(m =>
         {
             m.RuleFor(x => x.Name).NotEmpty().MaximumLength(150);
-            m.RuleFor(x => x.CategoryName).NotEmpty().MaximumLength(150);
             m.RuleFor(x => x.Density).GreaterThanOrEqualTo(0);
         });
         RuleForEach(x => x.Rows).ChildRules(r =>
@@ -60,17 +61,53 @@ public class SaveItemConfigurationMatrixCommandHandler : IRequestHandler<SaveIte
     public async Task<Result> Handle(SaveItemConfigurationMatrixCommand request, CancellationToken cancellationToken)
     {
         var materialRepo = _unitOfWork.Repository<Material>();
-        var existingMaterials = await materialRepo.Query().ToListAsync(cancellationToken);
+        var matTypeRepo = _unitOfWork.Repository<MaterialType>();
 
-        var materialMap = new Dictionary<string, Material>(StringComparer.OrdinalIgnoreCase);
+        var existingMaterials = await materialRepo.Query()
+            .Include(m => m.MaterialType)
+            .ToListAsync(cancellationToken);
+
+        var existingMaterialTypes = await matTypeRepo.Query()
+            .ToListAsync(cancellationToken);
+
+        var materialTypeMap = new Dictionary<string, MaterialType>(StringComparer.OrdinalIgnoreCase);
+        foreach (var mt in existingMaterialTypes)
+        {
+            materialTypeMap[mt.Name] = mt;
+        }
 
         var activeMaterialIds = new HashSet<int>();
+
+        // Helper to resolve MaterialTypeId
+        async Task<int?> ResolveMaterialTypeIdAsync(int? typeId, string? typeName, string? catName)
+        {
+            if (typeId.HasValue && typeId.Value > 0) return typeId.Value;
+
+            var name = (typeName ?? catName)?.Trim();
+            if (string.IsNullOrWhiteSpace(name)) return null;
+
+            if (materialTypeMap.TryGetValue(name, out var foundType))
+            {
+                return foundType.Id;
+            }
+
+            var newType = new MaterialType
+            {
+                Name = name,
+                IsActive = true
+            };
+            await matTypeRepo.AddAsync(newType, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            materialTypeMap[name] = newType;
+            return newType.Id;
+        }
 
         // 1. Sync Materials
         foreach (var matInput in request.Materials)
         {
             var trimmedName = matInput.Name.Trim();
-            var trimmedCategory = matInput.CategoryName.Trim();
+            var resolvedTypeId = await ResolveMaterialTypeIdAsync(matInput.MaterialTypeId, matInput.MaterialTypeName, matInput.CategoryName);
 
             Material? targetMaterial = null;
             if (matInput.Id.HasValue && matInput.Id.Value > 0)
@@ -86,10 +123,12 @@ public class SaveItemConfigurationMatrixCommandHandler : IRequestHandler<SaveIte
             if (targetMaterial != null)
             {
                 targetMaterial.Name = trimmedName;
-                targetMaterial.CategoryName = trimmedCategory;
+                if (resolvedTypeId.HasValue)
+                {
+                    targetMaterial.MaterialTypeId = resolvedTypeId.Value;
+                }
                 targetMaterial.Density = matInput.Density;
                 materialRepo.Update(targetMaterial);
-                materialMap[trimmedName] = targetMaterial;
                 activeMaterialIds.Add(targetMaterial.Id);
             }
             else
@@ -97,25 +136,10 @@ public class SaveItemConfigurationMatrixCommandHandler : IRequestHandler<SaveIte
                 var newMaterial = new Material
                 {
                     Name = trimmedName,
-                    CategoryName = trimmedCategory,
+                    MaterialTypeId = resolvedTypeId,
                     Density = matInput.Density
                 };
                 await materialRepo.AddAsync(newMaterial, cancellationToken);
-                materialMap[trimmedName] = newMaterial;
-            }
-        }
-
-        // Detach category from any existing materials that were removed from the matrix
-        foreach (var existingMat in existingMaterials)
-        {
-            if (!string.IsNullOrEmpty(existingMat.CategoryName) && !activeMaterialIds.Contains(existingMat.Id))
-            {
-                // Check if it was matched by name
-                if (!request.Materials.Any(m => m.Name.Equals(existingMat.Name, StringComparison.OrdinalIgnoreCase)))
-                {
-                    existingMat.CategoryName = null;
-                    materialRepo.Update(existingMat);
-                }
             }
         }
 

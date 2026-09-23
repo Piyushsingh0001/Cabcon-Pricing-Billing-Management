@@ -9,16 +9,16 @@
       <mat-error *ngIf="form.get('name')?.hasError('nameExists')">Material name already exists</mat-error>
     </mat-form-field>
 
-    <!-- Row 2: Category Name & Density -->
+    <!-- Row 2: Material Type & Density -->
     <div class="form-row-2col">
       <mat-form-field appearance="outline">
-        <mat-label>Category Name</mat-label>
-        <mat-select formControlName="categoryName" (selectionChange)="onCategoryChange($event.value)">
-          <mat-option *ngFor="let cat of categories" [value]="cat">
-            {{ cat }}
+        <mat-label>Material Type</mat-label>
+        <mat-select formControlName="materialTypeId" (selectionChange)="onMaterialTypeChange($event.value)">
+          <mat-option *ngFor="let type of materialTypes" [value]="type.id">
+            {{ type.name }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="form.get('categoryName')?.hasError('required')">Category is required</mat-error>
+        <mat-error *ngIf="form.get('materialTypeId')?.hasError('required')">Material Type is required</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">

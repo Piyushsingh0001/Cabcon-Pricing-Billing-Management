@@ -783,11 +783,13 @@ export class SkuEditDialogComponent implements OnInit {
   public getMaterialCategoryName(matId?: number, matName?: string): string {
     if (matId) {
       const mat = this.materials.find(m => m.id === matId) || this.matrixMaterials.find(m => m.id === matId);
+      if (mat?.materialTypeName) return mat.materialTypeName;
       if (mat?.categoryName) return mat.categoryName;
     }
     if (matName) {
       const mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase()) || 
                   this.matrixMaterials.find(m => m.name?.toLowerCase() === matName.toLowerCase());
+      if (mat?.materialTypeName) return mat.materialTypeName;
       if (mat?.categoryName) return mat.categoryName;
 
       const n = matName.toLowerCase();

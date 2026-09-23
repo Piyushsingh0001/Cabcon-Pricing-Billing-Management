@@ -13,9 +13,9 @@ namespace Cabcon.Domain.Services;
 public class PricingCalculationService
 {
     /// <summary>Calculate landed cost in ₹ per kg from parameters.</summary>
-    public decimal LandedCost(MaterialType type, decimal? lmeUsdPerMt, decimal? premiumUsdPerMt, decimal? fxRate, decimal? freightInrPerKg, decimal? directRateInrPerKg)
+    public decimal LandedCost(MaterialPriceType type, decimal? lmeUsdPerMt, decimal? premiumUsdPerMt, decimal? fxRate, decimal? freightInrPerKg, decimal? directRateInrPerKg)
     {
-        if (type == MaterialType.Exchange)
+        if (type == MaterialPriceType.Exchange)
         {
             var lme = lmeUsdPerMt ?? 0;
             var premium = premiumUsdPerMt ?? 0;

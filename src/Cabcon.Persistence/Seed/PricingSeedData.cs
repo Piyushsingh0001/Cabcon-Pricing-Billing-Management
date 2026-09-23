@@ -23,6 +23,14 @@ public static class PricingSeedData
             new Category { Id = 3, Name = "LT Cable", CreatedDate = SeedDate }
         );
 
+        modelBuilder.Entity<MaterialType>().HasData(
+            new MaterialType { Id = 1, Name = "Core Material", IsActive = true, CreatedDate = SeedDate },
+            new MaterialType { Id = 2, Name = "Insulation Material", IsActive = true, CreatedDate = SeedDate },
+            new MaterialType { Id = 3, Name = "Armour Wire", IsActive = true, CreatedDate = SeedDate },
+            new MaterialType { Id = 4, Name = "Inner Sheath", IsActive = true, CreatedDate = SeedDate },
+            new MaterialType { Id = 5, Name = "PVC Outer Sheath", IsActive = true, CreatedDate = SeedDate }
+        );
+
         modelBuilder.Entity<Vendor>().HasData(
             new Vendor { Id = 1, Name = "Hindalco", CreatedDate = SeedDate },
             new Vendor { Id = 2, Name = "Vedanta", CreatedDate = SeedDate },
@@ -32,11 +40,11 @@ public static class PricingSeedData
         );
 
         modelBuilder.Entity<Material>().HasData(
-            new Material { Id = 1, Name = "Copper", CategoryName = "Core Material", Density = 8.89m, CreatedDate = SeedDate },
-            new Material { Id = 2, Name = "Aluminium (EC)", CategoryName = "Core Material", Density = 2.703m, CreatedDate = SeedDate },
-            new Material { Id = 3, Name = "PVC-FR", CategoryName = "Insulation Material", Density = 1.40m, CreatedDate = SeedDate },
-            new Material { Id = 4, Name = "GI Steel Wire", CategoryName = "Armour Wire", Density = 7.85m, CreatedDate = SeedDate },
-            new Material { Id = 5, Name = "XLPE", CategoryName = "Insulation Material", Density = 0.92m, CreatedDate = SeedDate }
+            new Material { Id = 1, Name = "Copper", MaterialTypeId = 1, Density = 8.89m, CreatedDate = SeedDate },
+            new Material { Id = 2, Name = "Aluminium (EC)", MaterialTypeId = 1, Density = 2.703m, CreatedDate = SeedDate },
+            new Material { Id = 3, Name = "PVC-FR", MaterialTypeId = 2, Density = 1.40m, CreatedDate = SeedDate },
+            new Material { Id = 4, Name = "GI Steel Wire", MaterialTypeId = 3, Density = 7.85m, CreatedDate = SeedDate },
+            new Material { Id = 5, Name = "XLPE", MaterialTypeId = 2, Density = 0.92m, CreatedDate = SeedDate }
         );
 
         // Housing Wire FR coil range (HTML's HW array: spec, cu-weight, pvc-weight)

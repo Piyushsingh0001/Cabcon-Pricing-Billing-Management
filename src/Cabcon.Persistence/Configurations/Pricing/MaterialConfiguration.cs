@@ -12,9 +12,13 @@ public class MaterialConfiguration : IEntityTypeConfiguration<Material>
         b.HasKey(x => x.Id);
 
         b.Property(x => x.Name).HasMaxLength(150).IsRequired();
-        b.Property(x => x.CategoryName).HasMaxLength(150);
         b.Property(x => x.Density).HasColumnType("decimal(18,4)");
         b.HasIndex(x => x.Name);
+
+        b.HasOne(x => x.MaterialType)
+            .WithMany(x => x.Materials)
+            .HasForeignKey(x => x.MaterialTypeId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         b.HasMany(x => x.PriceHistory)
             .WithOne(x => x.Material)

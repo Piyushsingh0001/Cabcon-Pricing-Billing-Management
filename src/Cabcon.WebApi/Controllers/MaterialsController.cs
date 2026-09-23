@@ -38,7 +38,7 @@ public class MaterialsController : ControllerBase
 
     [HttpGet("{id}/history")]
     [HasPermission(AppPermissions.Pricing.View)]
-    public async Task<IActionResult> GetHistory(int id, [FromQuery] MaterialType? type, CancellationToken ct)
+    public async Task<IActionResult> GetHistory(int id, [FromQuery] MaterialPriceType? type, CancellationToken ct)
     {
         var result = await _mediator.Send(new GetMaterialPriceHistoryQuery(id, type), ct);
         return Ok(result);
@@ -64,7 +64,7 @@ public class MaterialsController : ControllerBase
     [HasPermission(AppPermissions.Pricing.Update)]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateMaterialRequest request, CancellationToken ct)
     {
-        var result = await _mediator.Send(new UpdateMaterialCommand(id, request.Name, request.VendorName, request.Type, request.CategoryName, request.Density), ct);
+        var result = await _mediator.Send(new UpdateMaterialCommand(id, request.Name, request.VendorName, request.Type, request.MaterialTypeId, request.MaterialTypeName, request.CategoryName, request.Density), ct);
         return result.Succeeded ? NoContent() : BadRequest(result.Errors);
     }
 
@@ -103,19 +103,28 @@ public class MaterialsController : ControllerBase
 
     [HttpGet("{id:int}/missing-dates")]
     [HasPermission(AppPermissions.Pricing.View)]
-    public async Task<IActionResult> GetMissingDates(int id, [FromQuery] MaterialType? type, [FromQuery] string? vendorName, [FromQuery] int? vendorId, CancellationToken ct)
+    public async Task<IActionResult> GetMissingDates(int id, [FromQuery] MaterialPriceType? type, [FromQuery] string? vendorName, [FromQuery] int? vendorId, CancellationToken ct)
     {
         var result = await _mediator.Send(new GetMaterialMissingDatesQuery(id, type, vendorName, vendorId), ct);
         return Ok(result);
     }
 }
 
-public record UpdateMaterialRequest(string Name, string? VendorName = null, MaterialType? Type = null, string? CategoryName = null, decimal? Density = null);
+public record UpdateMaterialRequest(
+    string Name,
+    string? VendorName = null,
+    MaterialPriceType? Type = null,
+    int? MaterialTypeId = null,
+    string? MaterialTypeName = null,
+    string? CategoryName = null,
+    decimal? Density = null
+);
 
 public record GetMaterialsRequest(
     string? Search = null,
-    MaterialType? Type = null,
+    MaterialPriceType? Type = null,
     string? SortBy = null,
     bool SortDesc = false,
     int PageNumber = 1,
-    int PageSize = 10);
+    int PageSize = 10
+);

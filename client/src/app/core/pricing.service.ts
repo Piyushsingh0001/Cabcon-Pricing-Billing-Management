@@ -24,9 +24,18 @@ export interface Category {
   name: string;
 }
 
+export interface MaterialType {
+  id: number;
+  name: string;
+  description?: string;
+  isActive?: boolean;
+}
+
 export interface Material {
   id: number;
   name: string;
+  materialTypeId?: number;
+  materialTypeName?: string;
   categoryName?: string;
   density?: number;
   vendorName?: string;
@@ -202,6 +211,23 @@ export class PricingService {
     return this.http.delete<void>(`${this.apiBase}/categories/${id}`);
   }
 
+  // --- Material Types ---
+  public getMaterialTypes(): Observable<MaterialType[]> {
+    return this.http.get<MaterialType[]>(`${this.apiBase}/materialtypes`);
+  }
+
+  public createMaterialType(name: string, description?: string): Observable<number> {
+    return this.http.post<number>(`${this.apiBase}/materialtypes`, { name, description });
+  }
+
+  public updateMaterialType(id: number, name: string, description?: string, isActive?: boolean): Observable<void> {
+    return this.http.put<void>(`${this.apiBase}/materialtypes/${id}`, { name, description, isActive });
+  }
+
+  public deleteMaterialType(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiBase}/materialtypes/${id}`);
+  }
+
   // --- Materials ---
   public getMaterials(
     search?: string,
@@ -268,6 +294,8 @@ export class PricingService {
 
   public createMaterial(payload: {
     name: string;
+    materialTypeId?: number;
+    materialTypeName?: string;
     categoryName?: string;
     density?: number;
     type?: number;
@@ -283,6 +311,8 @@ export class PricingService {
 
   public updateMaterial(id: number, payload: {
     name: string;
+    materialTypeId?: number;
+    materialTypeName?: string;
     categoryName?: string;
     density?: number;
     type?: number;
@@ -574,6 +604,8 @@ export class PricingService {
 export interface ItemConfigMaterial {
   id: number;
   name: string;
+  materialTypeId?: number;
+  materialTypeName?: string;
   categoryName: string;
   density: number;
 }
@@ -597,7 +629,9 @@ export interface SaveItemConfigPayload {
   materials: {
     id?: number | null;
     name: string;
-    categoryName: string;
+    materialTypeId?: number;
+    materialTypeName?: string;
+    categoryName?: string;
     density: number;
   }[];
   rows: {

@@ -386,7 +386,9 @@ export class MaterialsComponent implements OnInit {
 
             groupsMap.set(m.name, {
               name: m.name,
-              categoryName: m.categoryName || '',
+              materialTypeId: m.materialTypeId,
+              materialTypeName: m.materialTypeName || m.categoryName || '',
+              categoryName: m.materialTypeName || m.categoryName || '',
               density: m.density || 0,
               selectedType: prev?.type !== undefined ? prev.type : (m.type === 0 ? 0 : 1),
               variants: [],
@@ -413,8 +415,12 @@ export class MaterialsComponent implements OnInit {
             });
           }
           const group = groupsMap.get(m.name);
-          if (m.categoryName && !group.categoryName) {
-            group.categoryName = m.categoryName;
+          if (m.materialTypeId && !group.materialTypeId) {
+            group.materialTypeId = m.materialTypeId;
+          }
+          if ((m.materialTypeName || m.categoryName) && !group.materialTypeName) {
+            group.materialTypeName = m.materialTypeName || m.categoryName;
+            group.categoryName = m.materialTypeName || m.categoryName;
           }
           if (m.density && !group.density) {
             group.density = m.density;
@@ -544,7 +550,9 @@ export class MaterialsComponent implements OnInit {
         material: {
           id: mat.id || group.lmeState?.materialId,
           name: group.name,
-          categoryName: group.categoryName,
+          materialTypeId: group.materialTypeId,
+          materialTypeName: group.materialTypeName || group.categoryName,
+          categoryName: group.materialTypeName || group.categoryName,
           density: group.density
         },
         existingNames: existingNames

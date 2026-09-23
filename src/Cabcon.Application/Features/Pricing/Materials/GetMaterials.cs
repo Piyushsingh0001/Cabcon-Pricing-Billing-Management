@@ -12,7 +12,7 @@ public record MaterialDto
 {
     public int Id { get; init; }
     public string Name { get; init; } = string.Empty;
-    public MaterialType Type { get; init; }
+    public MaterialPriceType Type { get; init; }
     public decimal? LmeUsdPerMt { get; init; }
     public decimal? PremiumUsdPerMt { get; init; }
     public decimal? FxRate { get; init; }
@@ -35,6 +35,8 @@ public record MaterialDto
     public decimal PrevMonthAvgLme { get; init; }
     public decimal ThisMonthAvgDirect { get; init; }
     public decimal PrevMonthAvgDirect { get; init; }
+    public int? MaterialTypeId { get; init; }
+    public string? MaterialTypeName { get; init; }
     public string? CategoryName { get; init; }
     public decimal Density { get; init; }
     /// <summary>True when a history record for today already exists for LME/Exchange type.</summary>
@@ -46,7 +48,7 @@ public record MaterialDto
 public record GetMaterialsQuery : IRequest<PaginatedList<MaterialDto>>
 {
     public string? Search { get; init; }
-    public MaterialType? Type { get; init; }
+    public MaterialPriceType? Type { get; init; }
     public string? SortBy { get; init; }
     public bool SortDesc { get; init; }
     public int PageNumber { get; init; } = 1;
@@ -91,6 +93,7 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
 
         var count = await query.CountAsync(cancellationToken);
         var items = await query
+            .Include(m => m.MaterialType)
             .Include(m => m.MaterialVendors)
                 .ThenInclude(mv => mv.Vendor)
             .Skip((request.PageNumber - 1) * request.PageSize)
@@ -132,8 +135,8 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
         foreach (var m in items)
         {
             var mHistories = histories.Where(h => h.MaterialId == m.Id).ToList();
-            var mHistoriesLme = mHistories.Where(h => h.Type == MaterialType.Exchange).ToList();
-            var mHistoriesDirect = mHistories.Where(h => h.Type == MaterialType.Direct).ToList();
+            var mHistoriesLme = mHistories.Where(h => h.Type == MaterialPriceType.Exchange).ToList();
+            var mHistoriesDirect = mHistories.Where(h => h.Type == MaterialPriceType.Direct).ToList();
 
             var mHistoryDatesLme = mHistoriesLme.Where(h => h.EffectiveDate.Date >= thirtyDaysAgo).Select(h => h.EffectiveDate.Date).Distinct().ToList();
 
@@ -180,6 +183,8 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             var lmeLandedCost = todayLme?.LandedCostInrPerKg ?? latestLme?.LandedCostInrPerKg;
             var directLandedCost = todayDirect?.LandedCostInrPerKg ?? latestDirect?.LandedCostInrPerKg;
 
+            var matTypeName = m.MaterialType?.Name;
+
             if (allVendorEntries.Count == 0)
             {
                 bool isLmeConfigured = latestLme != null;
@@ -188,7 +193,7 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                 {
                     Id = m.Id,
                     Name = m.Name,
-                    Type = isLmeConfigured ? MaterialType.Exchange : MaterialType.Direct,
+                    Type = isLmeConfigured ? MaterialPriceType.Exchange : MaterialPriceType.Direct,
                     LmeUsdPerMt = isTodayUpdatedLme ? todayLme?.LmeUsdPerMt : latestLme?.LmeUsdPerMt,
                     PremiumUsdPerMt = isTodayUpdatedLme ? todayLme?.PremiumUsdPerMt : latestLme?.PremiumUsdPerMt,
                     FxRate = isTodayUpdatedLme ? todayLme?.FxRate : latestLme?.FxRate,
@@ -204,7 +209,9 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                     UpdatedBy = todayLme?.UpdatedBy ?? todayDirect?.UpdatedBy ?? latestLme?.UpdatedBy ?? latestDirect?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
                     VendorName = null,
                     VendorId = null,
-                    CategoryName = m.CategoryName,
+                    MaterialTypeId = m.MaterialTypeId,
+                    MaterialTypeName = matTypeName,
+                    CategoryName = matTypeName,
                     Density = m.Density,
                     MissingDaysCountLme = missingCountLme,
                     MissingDaysCountDirect = missingCountDirect,
@@ -247,7 +254,7 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                     {
                         Id = m.Id,
                         Name = m.Name,
-                        Type = MaterialType.Direct,
+                        Type = MaterialPriceType.Direct,
                         LmeUsdPerMt = isTodayUpdatedLme ? todayLme?.LmeUsdPerMt : latestLme?.LmeUsdPerMt,
                         PremiumUsdPerMt = isTodayUpdatedLme ? todayLme?.PremiumUsdPerMt : latestLme?.PremiumUsdPerMt,
                         FxRate = isTodayUpdatedLme ? todayLme?.FxRate : latestLme?.FxRate,
@@ -263,7 +270,9 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                         UpdatedBy = vTodayDirect?.UpdatedBy ?? todayLme?.UpdatedBy ?? vLatestDirect?.UpdatedBy ?? latestLme?.UpdatedBy ?? m.UpdatedBy ?? m.CreatedBy,
                         VendorName = v.Name,
                         VendorId = v.Id,
-                        CategoryName = m.CategoryName,
+                        MaterialTypeId = m.MaterialTypeId,
+                        MaterialTypeName = matTypeName,
+                        CategoryName = matTypeName,
                         Density = m.Density,
                         MissingDaysCountLme = missingCountLme,
                         MissingDaysCountDirect = vMissingCountDirect,

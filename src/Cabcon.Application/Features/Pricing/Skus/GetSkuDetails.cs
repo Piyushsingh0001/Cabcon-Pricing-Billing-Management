@@ -12,11 +12,11 @@ public record SkuBomLineDto
 {
     public int MaterialId { get; init; }
     public string MaterialName { get; init; } = string.Empty;
-    public MaterialType MaterialType { get; init; }
+    public MaterialPriceType MaterialType { get; init; }
     public decimal WeightKg { get; init; }
     public decimal MaterialLandedCost { get; init; }
     public int LineOrder { get; init; }
-    public MaterialType PriceType { get; init; }
+    public MaterialPriceType PriceType { get; init; }
     public BomPricingMethod PricingMethod { get; init; }
     public BomPricingMonth? PricingMonth { get; init; }
     public decimal? ManualPrice { get; init; }
