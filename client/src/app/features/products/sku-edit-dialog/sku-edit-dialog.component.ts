@@ -87,19 +87,11 @@ export class SkuEditDialogComponent implements OnInit {
     });
 
     this.form.get('quantity')?.valueChanges.subscribe(() => {
-      if (this.isAutoPopulatedFromMatrix && this.matchedMatrixRow && (!this.sku || !this.sku.id || this.sku.isAddSpec)) {
-        this.recalculateMatrixBomWeights();
-      } else {
-        this.onVariantOrSpecChange();
-      }
+      this.recalculateMatrixBomWeights();
     });
 
     this.form.get('unit')?.valueChanges.subscribe(() => {
-      if (this.isAutoPopulatedFromMatrix && this.matchedMatrixRow && (!this.sku || !this.sku.id || this.sku.isAddSpec)) {
-        this.recalculateMatrixBomWeights();
-      } else {
-        this.onVariantOrSpecChange();
-      }
+      this.recalculateMatrixBomWeights();
     });
   }
 
@@ -161,7 +153,7 @@ export class SkuEditDialogComponent implements OnInit {
             this.matchedMatrixRow = this.matrixRows.find(r =>
               r.variant?.trim().toLowerCase() === currentVariant.toLowerCase() &&
               r.spec?.trim().toLowerCase() === currentSpec.toLowerCase()
-            ) || null;
+            ) || this.getFallbackMatrixRow(currentSpec, currentVariant) || null;
           }
 
           // Only trigger BOM auto-population for new products/specs, NOT when editing an existing product
@@ -220,15 +212,6 @@ export class SkuEditDialogComponent implements OnInit {
 
     if (!variant || !spec) return;
 
-    // If editing an existing product and variant & spec have not changed, do NOT overwrite saved BOM lines
-    if (this.sku && this.sku.id && !this.sku.isAddSpec && !this.isAutoPopulatedFromMatrix) {
-      const origV = (this.sku.name || '').trim().toLowerCase();
-      const origS = (this.sku.spec || '').trim().toLowerCase();
-      if (variant.toLowerCase() === origV && spec.toLowerCase() === origS) {
-        return;
-      }
-    }
-
     let matched = this.matrixRows.find(r =>
       r.variant?.trim().toLowerCase() === variant.toLowerCase() &&
       r.spec?.trim().toLowerCase() === spec.toLowerCase()
@@ -238,9 +221,87 @@ export class SkuEditDialogComponent implements OnInit {
       matched = this.getFallbackMatrixRow(spec, variant) || matched;
     }
 
+    this.matchedMatrixRow = matched || null;
+
+    // If editing an existing product and variant & spec have not changed, do NOT overwrite saved BOM lines
+    if (this.sku && this.sku.id && !this.sku.isAddSpec && !this.isAutoPopulatedFromMatrix) {
+      const origV = (this.sku.name || '').trim().toLowerCase();
+      const origS = (this.sku.spec || '').trim().toLowerCase();
+      if (variant.toLowerCase() === origV && spec.toLowerCase() === origS) {
+        return;
+      }
+    }
+
     if (matched && matched.weights && Object.keys(matched.weights).length > 0) {
       this.populateBomFromMatrixRow(matched);
     }
+  }
+
+  public getMatrixWeightForMaterial(matId?: number | null, matName?: string): number | null {
+    const variant = (this.form.get('name')?.value || '').trim();
+    const spec = (this.form.get('spec')?.value || '').trim();
+    if (!variant || !spec) return null;
+
+    let matched = this.matchedMatrixRow;
+    if (!matched || !matched.weights || Object.keys(matched.weights).length === 0) {
+      matched = this.matrixRows.find(r =>
+        r.variant?.trim().toLowerCase() === variant.toLowerCase() &&
+        r.spec?.trim().toLowerCase() === spec.toLowerCase()
+      ) || null;
+    }
+
+    if (!matched || !matched.weights || Object.keys(matched.weights).length === 0) {
+      matched = this.getFallbackMatrixRow(spec, variant) || matched;
+    }
+
+    if (!matched || !matched.weights) return null;
+
+    // 1. Direct ID match
+    if (matId && matched.weights[matId] !== undefined && Number(matched.weights[matId]) > 0) {
+      return Number(matched.weights[matId]);
+    }
+
+    // 2. Name matches
+    if (matName && matName.trim()) {
+      const normName = matName.trim().toLowerCase();
+
+      // Check in matrixMaterials
+      const mm = this.matrixMaterials.find(m => m.name?.trim().toLowerCase() === normName);
+      if (mm && matched.weights[mm.id] !== undefined && Number(matched.weights[mm.id]) > 0) {
+        return Number(matched.weights[mm.id]);
+      }
+
+      // Check in materials
+      const dm = this.materials.find(m => m.name?.trim().toLowerCase() === normName);
+      if (dm && matched.weights[dm.id] !== undefined && Number(matched.weights[dm.id]) > 0) {
+        return Number(matched.weights[dm.id]);
+      }
+
+      // Check all keys in weights and compare material names
+      for (const [key, wt] of Object.entries(matched.weights)) {
+        const id = Number(key);
+        const mObj = this.matrixMaterials.find(m => m.id === id) || this.materials.find(m => m.id === id);
+        if (mObj && mObj.name?.trim().toLowerCase() === normName && Number(wt) > 0) {
+          return Number(wt);
+        }
+      }
+
+      // Check fallback template
+      const fallback = this.getFallbackMatrixRow(spec, variant);
+      if (fallback && fallback.weights) {
+        if (matId && fallback.weights[matId] !== undefined && Number(fallback.weights[matId]) > 0) {
+          return Number(fallback.weights[matId]);
+        }
+        if (mm && fallback.weights[mm.id] !== undefined && Number(fallback.weights[mm.id]) > 0) {
+          return Number(fallback.weights[mm.id]);
+        }
+        if (dm && fallback.weights[dm.id] !== undefined && Number(fallback.weights[dm.id]) > 0) {
+          return Number(fallback.weights[dm.id]);
+        }
+      }
+    }
+
+    return null;
   }
 
   private getFallbackMatrixRow(spec: string, variant: string): ItemConfigRow | null {
@@ -339,16 +400,16 @@ export class SkuEditDialogComponent implements OnInit {
   }
 
   public recalculateMatrixBomWeights() {
-    if (!this.matchedMatrixRow || !this.matchedMatrixRow.weights) return;
     const qty = Number(this.form.get('quantity')?.value || 1);
     const unit = (this.form.get('unit')?.value || 'km').toLowerCase();
     const multiplier = (unit === '100m' || unit === 'coil') ? (qty * 0.1) : qty;
 
     for (let i = 0; i < this.bomLines.length; i++) {
       const line = this.bomLines.at(i);
-      const matId = Number(line.get('materialId')?.value);
-      if (matId && this.matchedMatrixRow.weights[matId] !== undefined) {
-        const weightPerKm = Number(this.matchedMatrixRow.weights[matId]);
+      const matId = line.get('materialId')?.value ? Number(line.get('materialId')?.value) : null;
+      const matName = line.get('materialName')?.value;
+      const weightPerKm = this.getMatrixWeightForMaterial(matId, matName);
+      if (weightPerKm !== null && weightPerKm > 0) {
         const calculatedWeight = Math.round(weightPerKm * multiplier * 1000) / 1000;
         line.patchValue({ weightKg: calculatedWeight }, { emitEvent: false });
       }
@@ -742,10 +803,12 @@ export class SkuEditDialogComponent implements OnInit {
     line.patchValue({ vendorName: '', materialId: null });
     
     if (matName) {
-      const mat = this.materials.find(m => m.name === matName);
+      const mat = this.materials.find(m => m.name === matName)
+               || this.matrixMaterials.find(m => m.name === matName);
       if (mat) {
-        line.patchValue({ materialId: mat.id, priceType: mat.type });
-        if (mat.type === 0) { // LME-linked
+        const matType = (mat as any).type ?? 0;
+        line.patchValue({ materialId: mat.id, priceType: matType });
+        if (matType === 0) { // LME-linked
           vendorCtrl?.disable();
           line.patchValue({ vendorName: '' });
           this.onPricingMethodChange(idx);
@@ -757,6 +820,17 @@ export class SkuEditDialogComponent implements OnInit {
             this.onVendorNameChange(idx);
           }
         }
+
+        // Auto-render configured weight from Weight Matrix into QTY (weightKg) column
+        let configuredWeight = this.getMatrixWeightForMaterial(mat.id, matName);
+        
+          configuredWeight = configuredWeight ?? 0;
+          const qty = Number(this.form.get('quantity')?.value || 1);
+          const unit = (this.form.get('unit')?.value || 'km').toLowerCase();
+          const multiplier = (unit === '100m' || unit === 'coil') ? (qty * 0.1) : qty;
+          const calculatedWeight = Math.round(configuredWeight * multiplier * 1000) / 1000;
+          line.patchValue({ weightKg: calculatedWeight });
+
       }
     } else {
       vendorCtrl?.disable();
