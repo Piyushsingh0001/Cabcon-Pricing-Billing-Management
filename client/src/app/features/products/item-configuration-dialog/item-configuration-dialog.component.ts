@@ -188,13 +188,14 @@ export class ItemConfigurationDialogComponent implements OnInit {
   }
 
   public getCategoryColorClass(catName: string): string {
-    const norm = (catName || '').toLowerCase();
-    if (norm.includes('conductor') || norm.includes('core')) return 'cat-core';
-    if (norm.includes('insulat')) return 'cat-insulation';
-    if (norm.includes('inner')) return 'cat-innersheath';
-    if (norm.includes('armour') || norm.includes('armor')) return 'cat-armour';
-    if (norm.includes('outer') || norm.includes('sheath') || norm.includes('shell') || norm.includes('pvc')) return 'cat-outershell';
-    return 'cat-default';
+    if (!catName) return 'cat-default';
+    const classes = ['cat-core', 'cat-insulation', 'cat-innersheath', 'cat-armour', 'cat-outershell'];
+    let hash = 0;
+    for (let i = 0; i < catName.length; i++) {
+      hash = (hash * 31 + catName.charCodeAt(i)) & 0xffffffff;
+    }
+    const idx = Math.abs(hash) % classes.length;
+    return classes[idx];
   }
 
   public get totalColumns(): number {
@@ -332,7 +333,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
     }
 
     const matchedDbMat = this.allDbMaterials.find(m => m.name.toLowerCase() === finalName.toLowerCase());
-    const finalCategory = (this.newMaterial.categoryName || matchedDbMat?.materialTypeName || matchedDbMat?.categoryName || 'Material').trim();
+    const finalCategory = (this.newMaterial.categoryName || matchedDbMat?.materialTypeName || matchedDbMat?.categoryName || '').trim();
     const density = matchedDbMat?.density && matchedDbMat.density > 0
       ? matchedDbMat.density
       : (this.newMaterial.density || 0);
@@ -352,7 +353,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
 
     this.updateGroupedCategories();
     this.closeAddMaterialModal();
-    this.snackBar.open(`Added "${finalName}" under ${finalCategory}.`, 'Close', { duration: 2500 });
+    this.snackBar.open(`Added "${finalName}" under ${finalCategory || 'General'}.`, 'Close', { duration: 2500 });
     this.cdr.detectChanges();
   }
 
@@ -409,7 +410,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
       skuId: null,
       spec: trimmedSpec,
       variant: trimmedVariant,
-      categoryId: 3,
+      categoryId: undefined,
       categoryName: this.newRow.categoryName || '',
       weights: {}
     };
@@ -464,7 +465,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
         skuId: r.skuId,
         spec: r.spec,
         variant: r.variant,
-        categoryId: r.categoryId || 3,
+        categoryId: r.categoryId,
         weights: r.weights || {}
       }))
     };

@@ -54,14 +54,15 @@ export class MaterialsComponent implements OnInit {
   public selectedYear = new Date().getFullYear();
   public averageColumns = ['materialName', 'vendorName', 'averageCost'];
 
-  public months = [
-    { value: 1, label: 'January' }, { value: 2, label: 'February' }, { value: 3, label: 'March' },
-    { value: 4, label: 'April' }, { value: 5, label: 'May' }, { value: 6, label: 'June' },
-    { value: 7, label: 'July' }, { value: 8, label: 'August' }, { value: 9, label: 'September' },
-    { value: 10, label: 'October' }, { value: 11, label: 'November' }, { value: 12, label: 'December' }
-  ];
+  public months = Array.from({ length: 12 }, (_, i) => {
+    const d = new Date(2000, i, 1);
+    return {
+      value: i + 1,
+      label: d.toLocaleString('en-US', { month: 'long' })
+    };
+  });
   
-  public years = [2024, 2025, 2026, 2027];
+  public years = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - 2 + i);
 
   ngOnInit() {
     this.loadMaterials();
@@ -240,13 +241,13 @@ export class MaterialsComponent implements OnInit {
 
   public getCategoryThemeClass(categoryName?: string): string {
     if (!categoryName) return 'theme-default';
-    const norm = categoryName.trim().toLowerCase();
-    if (norm.includes('core')) return 'theme-core';
-    if (norm.includes('insulation')) return 'theme-insulation';
-    if (norm.includes('inner')) return 'theme-inner-sheath';
-    if (norm.includes('armour') || norm.includes('armor')) return 'theme-armour';
-    if (norm.includes('outer') || norm.includes('pvc') || norm.includes('shell') || norm.includes('sheath')) return 'theme-outer-shell';
-    return 'theme-default';
+    const themes = ['theme-core', 'theme-insulation', 'theme-inner-sheath', 'theme-armour', 'theme-outer-shell'];
+    let hash = 0;
+    for (let i = 0; i < categoryName.length; i++) {
+      hash = (hash * 31 + categoryName.charCodeAt(i)) & 0xffffffff;
+    }
+    const idx = Math.abs(hash) % themes.length;
+    return themes[idx];
   }
 
   public openBackfill(group: any) {
@@ -307,33 +308,15 @@ export class MaterialsComponent implements OnInit {
   }
 
   private sortMaterialGroups(): void {
-    const categoryOrder: { [cat: string]: number } = {
-      'core material': 1,
-      'insulation material': 2,
-      'inner sheath': 3,
-      'armour wire': 4,
-      'pvc outer sheath': 5,
-      'pvc outer shell': 5
-    };
-
-    const getCategoryRank = (cat?: string): number => {
-      if (!cat || !cat.trim()) return 99;
-      const lower = cat.trim().toLowerCase();
-      for (const key in categoryOrder) {
-        if (lower.includes(key) || key.includes(lower)) {
-          return categoryOrder[key];
-        }
-      }
-      return 50;
-    };
-
     this.materialGroups.sort((a, b) => {
-      const rankA = getCategoryRank(a.categoryName);
-      const rankB = getCategoryRank(b.categoryName);
-      if (rankA !== rankB) {
-        return rankA - rankB;
+      if (a.materialTypeId !== b.materialTypeId) {
+        if (a.materialTypeId != null && b.materialTypeId != null) {
+          return a.materialTypeId - b.materialTypeId;
+        }
+        if (a.materialTypeId != null) return -1;
+        if (b.materialTypeId != null) return 1;
       }
-      const catCompare = (a.categoryName || '').localeCompare(b.categoryName || '');
+      const catCompare = (a.materialTypeName || a.categoryName || '').localeCompare(b.materialTypeName || b.categoryName || '');
       if (catCompare !== 0) {
         return catCompare;
       }

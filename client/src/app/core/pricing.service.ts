@@ -614,7 +614,7 @@ export interface ItemConfigRow {
   skuId?: number | null;
   spec: string;
   variant: string;
-  categoryId?: number;
+  categoryId?: number | null;
   categoryName?: string;
   weights: { [materialId: number]: number };
 }
@@ -638,7 +638,7 @@ export interface SaveItemConfigPayload {
     skuId?: number | null;
     spec: string;
     variant: string;
-    categoryId?: number;
+    categoryId?: number | null;
     weights: { [materialId: number]: number };
   }[];
 }

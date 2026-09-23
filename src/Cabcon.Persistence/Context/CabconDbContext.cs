@@ -96,7 +96,7 @@ public class CabconDbContext : DbContext, Application.Common.Interfaces.IApplica
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var now = DateTime.UtcNow;
-        var user = _currentUser?.UserName ?? "system";
+        var user = _currentUser?.UserName ?? (_currentUser?.UserId.HasValue == true ? _currentUser.UserId.Value.ToString() : "System");
         var userId = _currentUser?.UserId;
 
         // ---- 1. Audit-column stamping + true soft-delete interception ----

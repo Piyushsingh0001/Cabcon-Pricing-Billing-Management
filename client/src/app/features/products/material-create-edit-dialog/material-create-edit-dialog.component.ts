@@ -37,15 +37,6 @@ export class MaterialCreateEditDialogComponent implements OnInit {
 
   public materialTypes: MaterialType[] = [];
 
-  private categoryDefaultDensities: { [key: string]: number } = {
-    'Core Material': 8.89,
-    'Insulation Material': 0.92,
-    'Inner Sheath': 1.45,
-    'Armour Wire': 7.85,
-    'PVC Outer Sheath': 1.45,
-    'PVC Outer Shell': 1.45
-  };
-
   constructor(
     public dialogRef: MatDialogRef<MaterialCreateEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -61,9 +52,9 @@ export class MaterialCreateEditDialogComponent implements OnInit {
       this.existingNames = [];
     }
 
-    const initialDensity = this.material?.density !== undefined && this.material?.density !== null && this.material.density > 0
+    const initialDensity = this.material?.density !== undefined && this.material?.density !== null
       ? this.material.density
-      : 8.89;
+      : 0;
 
     this.form = this.fb.group({
       name: [this.material?.name || '', [Validators.required, this.nonEmptyNameValidator(), this.uniqueMaterialNameValidator()]],
@@ -73,13 +64,7 @@ export class MaterialCreateEditDialogComponent implements OnInit {
   }
 
   public onMaterialTypeChange(typeId: number) {
-    const selectedType = this.materialTypes.find(t => t.id === typeId);
-    if (selectedType && (!this.material || !this.material.density)) {
-      const defaultDensity = this.categoryDefaultDensities[selectedType.name];
-      if (defaultDensity !== undefined) {
-        this.form.patchValue({ density: defaultDensity });
-      }
-    }
+    // Keep user-entered or existing density
   }
 
   private nonEmptyNameValidator(): ValidatorFn {

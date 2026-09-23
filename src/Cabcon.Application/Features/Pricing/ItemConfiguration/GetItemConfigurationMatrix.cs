@@ -21,8 +21,8 @@ public record ItemConfigRowDto(
     int? SkuId,
     string Spec,
     string Variant,
-    int CategoryId,
-    string CategoryName,
+    int? CategoryId,
+    string? CategoryName,
     Dictionary<int, decimal> Weights
 );
 
@@ -90,8 +90,8 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
                 r.Id,
                 r.Spec,
                 r.Variant,
-                3,
-                "LT Cable",
+                null,
+                null,
                 weightsMap
             ));
         }

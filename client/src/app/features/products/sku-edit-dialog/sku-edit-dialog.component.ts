@@ -63,17 +63,17 @@ export class SkuEditDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<SkuEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public sku: any // SkuDetails
   ) {
-    const isGstPct = sku ? Math.round(sku.gstRate * 100) : 18;
+    const isGstPct = sku?.gstRate != null ? Math.round(sku.gstRate * 100) : (sku?.gstPercent != null ? sku.gstPercent : null);
 
     this.form = this.fb.group({
-      categoryName: [{value: sku?.categoryName || 'New category', disabled: !sku?.isGlobalAdd}, Validators.required],
+      categoryName: [{value: sku?.categoryName || '', disabled: !sku?.isGlobalAdd}, Validators.required],
       name: [{value: sku?.name || '', disabled: sku?.isAddSpec}, Validators.required],
       spec: [sku?.spec || '', Validators.required],
-      unit: [sku?.unit || 'km', Validators.required],
-      quantity: [sku?.quantity || 1, [Validators.required, Validators.min(0.0001)]],
+      unit: [sku?.unit || '', Validators.required],
+      quantity: [sku?.quantity ?? 1, [Validators.required, Validators.min(0.0001)]],
       conversionType: [sku?.conversionType ?? 0],
       conversionValue: [0],
-      gstPercent: [isGstPct],
+      gstPercent: [isGstPct, Validators.required],
       bomLines: this.fb.array([], Validators.required)
     });
 
@@ -791,26 +791,20 @@ export class SkuEditDialogComponent implements OnInit {
                   this.matrixMaterials.find(m => m.name?.toLowerCase() === matName.toLowerCase());
       if (mat?.materialTypeName) return mat.materialTypeName;
       if (mat?.categoryName) return mat.categoryName;
-
-      const n = matName.toLowerCase();
-      if (n.includes('cu') || n.includes('copper') || n.includes('al') || n.includes('aluminium')) return 'Core Material';
-      if (n.includes('xlpe') || n.includes('ins')) return 'Insulation Material';
-      if (n.includes('i/sh') || n.includes('inner')) return 'Inner Sheath';
-      if (n.includes('armour') || n.includes('armor') || n.includes('gi') || n.includes('strip') || n.includes('wire')) return 'Armour';
-      if (n.includes('o/sh') || n.includes('outer') || n.includes('shell') || n.includes('sheath') || n.includes('pvc')) return 'Outer Sheath';
     }
-    return 'Core Material';
+    return '';
   }
 
   public getCategoryThemeClass(matId?: number, matName?: string): string {
     const cat = this.getMaterialCategoryName(matId, matName);
-    const norm = (cat || '').trim().toLowerCase();
-    if (norm.includes('core')) return 'theme-core';
-    if (norm.includes('insulation')) return 'theme-insulation';
-    if (norm.includes('inner')) return 'theme-inner-sheath';
-    if (norm.includes('armour') || norm.includes('armor')) return 'theme-armour';
-    if (norm.includes('outer') || norm.includes('shell') || norm.includes('sheath')) return 'theme-outer-shell';
-    return 'theme-default';
+    if (!cat) return 'theme-default';
+    const themes = ['theme-core', 'theme-insulation', 'theme-inner-sheath', 'theme-armour', 'theme-outer-shell'];
+    let hash = 0;
+    for (let i = 0; i < cat.length; i++) {
+      hash = (hash * 31 + cat.charCodeAt(i)) & 0xffffffff;
+    }
+    const idx = Math.abs(hash) % themes.length;
+    return themes[idx];
   }
 
   public checkUniqueness() {
@@ -897,7 +891,7 @@ export class SkuEditDialogComponent implements OnInit {
         unit: formVal.unit,
         conversionType: Number(formVal.conversionType ?? 0),
         conversionValue: 0,
-        gstRate: Number(formVal.gstPercent || 18) / 100,
+        gstRate: (Number(formVal.gstPercent) || 0) / 100,
         quantity: Number(formVal.quantity || 1),
         bomLines: formVal.bomLines.map((line: any, index: number) => ({
           materialId: Number(line.materialId),
