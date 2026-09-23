@@ -126,22 +126,6 @@ export class SkuEditDialogComponent implements OnInit {
             if (r.spec && r.spec.trim()) sSet.add(r.spec.trim());
           });
 
-          // Ensure standard options exist in list
-          ['2XWY', '2XFY', 'A2XFY'].forEach(v => vSet.add(v));
-          [
-            '2 C X 4 sq.mm.',
-            '2 C X 2.5 sq.mm.',
-            '3 C X 2.5 sq.mm.',
-            '4 C X 2.5 sq.mm.',
-            '4 C X 6 sq.mm.',
-            '7 C X 2.5 sq.mm.',
-            '12 C X 2.5 sq.mm.',
-            '19 C X 2.5 sq.mm.',
-            '4 C X 16 sq.mm.',
-            '3.5 C X 70 sq.mm.',
-            '3.5 C X 300 sq.mm.'
-          ].forEach(s => sSet.add(s));
-
           this.matrixVariants = Array.from(vSet);
           this.matrixSpecs = Array.from(sSet);
           this.filteredVariants = [...this.matrixVariants];
@@ -153,7 +137,7 @@ export class SkuEditDialogComponent implements OnInit {
             this.matchedMatrixRow = this.matrixRows.find(r =>
               r.variant?.trim().toLowerCase() === currentVariant.toLowerCase() &&
               r.spec?.trim().toLowerCase() === currentSpec.toLowerCase()
-            ) || this.getFallbackMatrixRow(currentSpec, currentVariant) || null;
+            ) || null;
           }
 
           // Only trigger BOM auto-population for new products/specs, NOT when editing an existing product
@@ -217,10 +201,6 @@ export class SkuEditDialogComponent implements OnInit {
       r.spec?.trim().toLowerCase() === spec.toLowerCase()
     );
 
-    if (!matched || !matched.weights || Object.keys(matched.weights).length === 0) {
-      matched = this.getFallbackMatrixRow(spec, variant) || matched;
-    }
-
     this.matchedMatrixRow = matched || null;
 
     // If editing an existing product and variant & spec have not changed, do NOT overwrite saved BOM lines
@@ -248,10 +228,6 @@ export class SkuEditDialogComponent implements OnInit {
         r.variant?.trim().toLowerCase() === variant.toLowerCase() &&
         r.spec?.trim().toLowerCase() === spec.toLowerCase()
       ) || null;
-    }
-
-    if (!matched || !matched.weights || Object.keys(matched.weights).length === 0) {
-      matched = this.getFallbackMatrixRow(spec, variant) || matched;
     }
 
     if (!matched || !matched.weights) return null;
@@ -285,61 +261,9 @@ export class SkuEditDialogComponent implements OnInit {
           return Number(wt);
         }
       }
-
-      // Check fallback template
-      const fallback = this.getFallbackMatrixRow(spec, variant);
-      if (fallback && fallback.weights) {
-        if (matId && fallback.weights[matId] !== undefined && Number(fallback.weights[matId]) > 0) {
-          return Number(fallback.weights[matId]);
-        }
-        if (mm && fallback.weights[mm.id] !== undefined && Number(fallback.weights[mm.id]) > 0) {
-          return Number(fallback.weights[mm.id]);
-        }
-        if (dm && fallback.weights[dm.id] !== undefined && Number(fallback.weights[dm.id]) > 0) {
-          return Number(fallback.weights[dm.id]);
-        }
-      }
     }
 
     return null;
-  }
-
-  private getFallbackMatrixRow(spec: string, variant: string): ItemConfigRow | null {
-    const sNorm = spec.trim().toLowerCase();
-    const vNorm = variant.trim().toLowerCase();
-
-    const fallbackTemplates: { [key: string]: { [matName: string]: number } } = {
-      '2 c x 4 sq.mm.|2xwy': { 'CU': 68, 'LT XLPE': 24, 'PVC-ST-2 (I/SH)': 51, 'G.S. ARMOUR': 253, 'PVC-ST-2 FRLSH (O/SH)': 96 },
-      '2 c x 2.5 sq.mm.|2xwy': { 'CU': 44, 'LT XLPE': 15, 'PVC-ST-2 (I/SH)': 44, 'G.S. ARMOUR': 210, 'PVC-ST-2 FRLSH (O/SH)': 83 },
-      '3 c x 2.5 sq.mm.|2xwy': { 'CU': 65, 'LT XLPE': 23, 'PVC-ST-2 (I/SH)': 21, 'G.S. ARMOUR': 226, 'PVC-ST-2 FRLSH (O/SH)': 86 },
-      '4 c x 2.5 sq.mm.|2xwy': { 'CU': 87, 'LT XLPE': 30, 'PVC-ST-2 (I/SH)': 23, 'G.S. ARMOUR': 251, 'PVC-ST-2 FRLSH (O/SH)': 92 },
-      '4 c x 6 sq.mm.|2xwy': { 'CU': 202, 'LT XLPE': 54, 'PVC-ST-2 (I/SH)': 32, 'G.S. ARMOUR': 332, 'PVC-ST-2 FRLSH (O/SH)': 133 },
-      '7 c x 2.5 sq.mm.|2xwy': { 'CU': 152, 'LT XLPE': 53, 'PVC-ST-2 (I/SH)': 29, 'G.S. ARMOUR': 304, 'PVC-ST-2 FRLSH (O/SH)': 104 },
-      '12 c x 2.5 sq.mm.|2xfy': { 'CU': 261, 'LT XLPE': 90, 'PVC-ST-2 (I/SH)': 38, 'G.S. ARMOUR': 236, 'PVC-ST-2 FRLSH (O/SH)': 142 },
-      '19 c x 2.5 sq.mm.|2xfy': { 'CU': 414, 'LT XLPE': 143, 'PVC-ST-2 (I/SH)': 44, 'G.S. ARMOUR': 281, 'PVC-ST-2 FRLSH (O/SH)': 166 },
-      '4 c x 16 sq.mm.|2xfy': { 'CU': 533, 'LT XLPE': 76, 'PVC-ST-2 (I/SH)': 42, 'G.S. ARMOUR': 317, 'PVC-ST-2 FRLSH (O/SH)': 157 },
-      '3.5 c x 70 sq.mm.|a2xfy': { 'AL': 623, 'LT XLPE': 145, 'PVC-ST-2 (I/SH)': 78, 'G.S. ARMOUR': 491, 'PVC-ST-2 FRLSH (O/SH)': 271 },
-      '3.5 c x 300 sq.mm.|a2xfy': { 'AL': 2670, 'LT XLPE': 447, 'PVC-ST-2 (I/SH)': 195, 'G.S. ARMOUR': 907, 'PVC-ST-2 FRLSH (O/SH)': 693 }
-    };
-
-    const key = `${sNorm}|${vNorm}`;
-    const weightsByName = fallbackTemplates[key];
-    if (!weightsByName) return null;
-
-    const weightsMap: { [matId: number]: number } = {};
-    for (const [matName, wt] of Object.entries(weightsByName)) {
-      const mat = this.materials.find(m => m.name.toLowerCase().includes(matName.toLowerCase()))
-        || this.matrixMaterials.find(m => m.name.toLowerCase().includes(matName.toLowerCase()));
-      if (mat) {
-        weightsMap[mat.id] = wt;
-      }
-    }
-
-    return {
-      spec: spec,
-      variant: variant,
-      weights: weightsMap
-    };
   }
 
   public populateBomFromMatrixRow(row: ItemConfigRow) {

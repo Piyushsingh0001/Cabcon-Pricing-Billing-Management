@@ -53,18 +53,12 @@ export class ItemConfigurationDialogComponent implements OnInit {
   public loading = signal(false);
   public saving = signal(false);
   public searchQuery = '';
+  public showAddCategoryModal = false;
   public showAddMaterialModal = false;
   public showAddRowModal = false;
+  public newCategoryName = '';
 
-  // Standard material categories (dynamic base)
-  public standardCategories: string[] = [
-    'Core Material',
-    'Insulation Material',
-    'Inner Sheath',
-    'Armour Wire',
-    'PVC Outer Sheath'
-  ];
-
+  public standardCategories: string[] = [];
   public allDbMaterials: { id: number; name: string; categoryName?: string; density?: number }[] = [];
   public categoryAvailableMaterials: { id: number; name: string; categoryName?: string; density?: number }[] = [];
   public filteredCategoryMaterials: { id: number; name: string; categoryName?: string; density?: number }[] = [];
@@ -72,26 +66,25 @@ export class ItemConfigurationDialogComponent implements OnInit {
   public materials: ItemConfigMaterial[] = [];
   public rows: ItemConfigRow[] = [];
   public groupedCategories: MaterialCategoryGroup[] = [];
-  public availableVariants: string[] = ['2XWY', '2XFY', 'A2XFY'];
+  public availableVariants: string[] = [];
 
   // Temporary model for new material
   public newMaterial = {
     name: '',
     customName: '',
-    categoryName: 'Core Material',
-    density: 1.0,
+    categoryName: '',
+    density: 0,
     isCustom: false
   };
 
   // Temporary model for new row
   public newRow = {
     spec: '',
-    variant: '2XWY',
-    categoryName: 'LT Cable'
+    variant: '',
+    categoryName: ''
   };
 
   ngOnInit(): void {
-    this.updateGroupedCategories();
     this.loadMatrix();
     this.loadAllDbMaterials();
   }
@@ -103,12 +96,11 @@ export class ItemConfigurationDialogComponent implements OnInit {
           const map = new Map<string, { id: number; name: string; categoryName?: string; density?: number }>();
           res.items.forEach(m => {
             const rawCat = (m.categoryName || '').trim();
-            const normalizedCat = rawCat.toLowerCase() === 'pvc outer shell' ? 'PVC Outer Sheath' : (rawCat || 'Core Material');
             if (m.name && !map.has(m.name.trim().toLowerCase())) {
               map.set(m.name.trim().toLowerCase(), {
                 id: m.id,
                 name: m.name.trim(),
-                categoryName: normalizedCat,
+                categoryName: rawCat,
                 density: m.density || 0
               });
             }
@@ -121,67 +113,37 @@ export class ItemConfigurationDialogComponent implements OnInit {
   }
 
   public updateGroupedCategories(): void {
-    // Collect all dynamic categories
-    const catSet = new Set<string>();
-
-    this.standardCategories.forEach(c => {
-      if (c && c.trim()) {
-        const norm = c.trim().toLowerCase() === 'pvc outer shell' ? 'PVC Outer Sheath' : c.trim();
-        catSet.add(norm);
-      }
-    });
-
-    this.materials.forEach(m => {
-      if (m.categoryName && m.categoryName.trim()) {
-        const norm = m.categoryName.trim().toLowerCase() === 'pvc outer shell' ? 'PVC Outer Sheath' : m.categoryName.trim();
-        m.categoryName = norm;
-        catSet.add(norm);
-      }
-    });
-
-    this.allDbMaterials.forEach(m => {
-      if (m.categoryName && m.categoryName.trim()) {
-        const norm = m.categoryName.trim().toLowerCase() === 'pvc outer shell' ? 'PVC Outer Sheath' : m.categoryName.trim();
-        catSet.add(norm);
-      }
-    });
-
-    const orderMap: { [cat: string]: number } = {
-      'core material': 1,
-      'insulation material': 2,
-      'inner sheath': 3,
-      'armour wire': 4,
-      'pvc outer sheath': 5
-    };
-
-    const dynamicCategories = Array.from(catSet);
-    dynamicCategories.sort((a, b) => {
-      const rankA = orderMap[a.toLowerCase()] ?? 99;
-      const rankB = orderMap[b.toLowerCase()] ?? 99;
-      if (rankA !== rankB) return rankA - rankB;
-      return a.localeCompare(b);
-    });
-
-    this.standardCategories = dynamicCategories;
-
     const groups: { [cat: string]: ItemConfigMaterial[] } = {};
-    dynamicCategories.forEach(cat => {
-      groups[cat] = [];
-    });
+    const catOrder: string[] = [];
 
     this.materials.forEach(m => {
-      const cat = m.categoryName?.trim() || 'Core Material';
-      if (!groups[cat]) {
-        groups[cat] = [];
+      const cat = (m.categoryName || '').trim();
+      if (cat) {
+        if (!groups[cat]) {
+          groups[cat] = [];
+          catOrder.push(cat);
+        }
+        groups[cat].push(m);
       }
-      groups[cat].push(m);
     });
 
-    this.groupedCategories = dynamicCategories.map(catName => ({
+    this.groupedCategories = catOrder.map(catName => ({
       categoryName: catName,
       materials: groups[catName] || [],
       headerColorClass: this.getCategoryColorClass(catName)
     }));
+
+    this.updateAvailableVariants();
+  }
+
+  public updateAvailableVariants(): void {
+    const vSet = new Set<string>();
+    this.rows.forEach(r => {
+      if (r.variant && r.variant.trim()) {
+        vSet.add(r.variant.trim());
+      }
+    });
+    this.availableVariants = Array.from(vSet);
   }
 
   public loadMatrix(): void {
@@ -213,33 +175,16 @@ export class ItemConfigurationDialogComponent implements OnInit {
 
   public getCategoryColorClass(catName: string): string {
     const norm = (catName || '').toLowerCase();
-    if (norm.includes('core')) return 'cat-core';
-    if (norm.includes('insulation')) return 'cat-insulation';
+    if (norm.includes('conductor') || norm.includes('core')) return 'cat-core';
+    if (norm.includes('insulat')) return 'cat-insulation';
     if (norm.includes('inner')) return 'cat-innersheath';
     if (norm.includes('armour') || norm.includes('armor')) return 'cat-armour';
     if (norm.includes('outer') || norm.includes('sheath') || norm.includes('shell') || norm.includes('pvc')) return 'cat-outershell';
     return 'cat-default';
   }
 
-  private initDefaultMaterials(): void {
-    const defaultList = [
-      { id: -1, name: 'AL', categoryName: 'Core Material', density: 2.703 },
-      { id: -2, name: 'CU', categoryName: 'Core Material', density: 8.89 },
-      { id: -3, name: 'LT XLPE', categoryName: 'Insulation Material', density: 0.92 },
-      { id: -4, name: 'PVC-A(INS)', categoryName: 'Insulation Material', density: 1.40 },
-      { id: -5, name: 'PVC-C(INS)', categoryName: 'Insulation Material', density: 1.42 },
-      { id: -6, name: 'PVC-ST-2 (I/SH)', categoryName: 'Inner Sheath', density: 1.45 },
-      { id: -7, name: 'PVC-FRLSH(I/SH)', categoryName: 'Inner Sheath', density: 1.48 },
-      { id: -8, name: 'AL ARMOUR', categoryName: 'Armour Wire', density: 2.703 },
-      { id: -9, name: 'G.S. ARMOUR', categoryName: 'Armour Wire', density: 7.85 },
-      { id: -10, name: 'PVC-ST-2 FRLSH (O/SH)', categoryName: 'PVC Outer Sheath', density: 1.45 }
-    ];
-    this.materials = defaultList;
-  }
-
   public get totalColumns(): number {
-    const matCols = this.groupedCategories.reduce((acc, g) => acc + (g.materials.length > 0 ? g.materials.length : 1), 0);
-    return matCols + 3; // spec, variant, actions (total column removed)
+    return this.materials.length + 3; // spec, variant, actions
   }
 
   public get filteredRows(): ItemConfigRow[] {
@@ -275,22 +220,49 @@ export class ItemConfigurationDialogComponent implements OnInit {
     return sum;
   }
 
+  // --- ADD CATEGORY ---
+  public openAddCategoryModal(): void {
+    this.newCategoryName = '';
+    this.showAddCategoryModal = true;
+  }
+
+  public closeAddCategoryModal(): void {
+    this.showAddCategoryModal = false;
+  }
+
+  public confirmAddCategory(): void {
+    const cat = (this.newCategoryName || '').trim();
+    if (!cat) {
+      this.snackBar.open('Please enter a category name.', 'Close', { duration: 2500 });
+      return;
+    }
+
+    this.closeAddCategoryModal();
+    this.openAddMaterialModal(cat);
+  }
+
   // --- ADD MATERIAL (SEARCHABLE DROPDOWN PER CATEGORY) ---
-  public openAddMaterialModal(categoryName: string): void {
-    const targetCategory = categoryName || 'Core Material';
+  public openAddMaterialModal(categoryName?: string): void {
+    const targetCategory = (categoryName || '').trim();
     
-    // Filter DB materials matching this specific category that aren't already added to the matrix
-    this.categoryAvailableMaterials = this.allDbMaterials.filter(m =>
-      (m.categoryName || '').trim().toLowerCase() === targetCategory.trim().toLowerCase() &&
-      !this.materials.some(cur => cur.name.trim().toLowerCase() === m.name.trim().toLowerCase())
-    );
+    // Filter DB materials that aren't already added to the matrix
+    if (targetCategory) {
+      this.categoryAvailableMaterials = this.allDbMaterials.filter(m =>
+        (m.categoryName || '').trim().toLowerCase() === targetCategory.toLowerCase() &&
+        !this.materials.some(cur => cur.name.trim().toLowerCase() === m.name.trim().toLowerCase())
+      );
+    } else {
+      this.categoryAvailableMaterials = this.allDbMaterials.filter(m =>
+        !this.materials.some(cur => cur.name.trim().toLowerCase() === m.name.trim().toLowerCase())
+      );
+    }
 
     this.filteredCategoryMaterials = [...this.categoryAvailableMaterials];
     this.materialSearchInput = '';
 
     const initialDensity = this.categoryAvailableMaterials.length > 0 && this.categoryAvailableMaterials[0].density
       ? this.categoryAvailableMaterials[0].density
-      : this.getDefaultDensityForCategory(targetCategory);
+      : 0;
 
     this.newMaterial = {
       name: '',
@@ -309,26 +281,22 @@ export class ItemConfigurationDialogComponent implements OnInit {
     }
     const clean = term.toLowerCase().trim();
     this.filteredCategoryMaterials = this.categoryAvailableMaterials.filter(m =>
-      m.name.toLowerCase().includes(clean)
+      m.name.toLowerCase().includes(clean) ||
+      (m.categoryName && m.categoryName.toLowerCase().includes(clean))
     );
   }
 
   public onMaterialOptionSelected(selectedName: string): void {
     this.materialSearchInput = selectedName;
     const matched = this.categoryAvailableMaterials.find(m => m.name.toLowerCase() === selectedName.toLowerCase());
-    if (matched && matched.density) {
-      this.newMaterial.density = matched.density;
+    if (matched) {
+      if (matched.density) {
+        this.newMaterial.density = matched.density;
+      }
+      if (matched.categoryName && !this.newMaterial.categoryName) {
+        this.newMaterial.categoryName = matched.categoryName;
+      }
     }
-  }
-
-  public getDefaultDensityForCategory(categoryName: string): number {
-    const norm = (categoryName || '').toLowerCase();
-    if (norm.includes('core')) return 8.89;
-    if (norm.includes('insulation')) return 0.92;
-    if (norm.includes('inner')) return 1.45;
-    if (norm.includes('armour') || norm.includes('armor')) return 7.85;
-    if (norm.includes('outer') || norm.includes('sheath') || norm.includes('shell') || norm.includes('pvc')) return 1.45;
-    return 1.0;
   }
 
   public closeAddMaterialModal(): void {
@@ -350,9 +318,10 @@ export class ItemConfigurationDialogComponent implements OnInit {
     }
 
     const matchedDbMat = this.allDbMaterials.find(m => m.name.toLowerCase() === finalName.toLowerCase());
+    const finalCategory = (this.newMaterial.categoryName || matchedDbMat?.categoryName || 'Material').trim();
     const density = matchedDbMat?.density && matchedDbMat.density > 0
       ? matchedDbMat.density
-      : this.getDefaultDensityForCategory(this.newMaterial.categoryName);
+      : (this.newMaterial.density || 0);
 
     // Assign temporary negative ID if new
     const minId = this.materials.reduce((min, m) => Math.min(min, m.id), 0);
@@ -361,13 +330,13 @@ export class ItemConfigurationDialogComponent implements OnInit {
     this.materials.push({
       id: tempId,
       name: finalName,
-      categoryName: this.newMaterial.categoryName,
+      categoryName: finalCategory,
       density: density
     });
 
     this.updateGroupedCategories();
     this.closeAddMaterialModal();
-    this.snackBar.open(`Added "${finalName}" to ${this.newMaterial.categoryName}.`, 'Close', { duration: 2500 });
+    this.snackBar.open(`Added "${finalName}" under ${finalCategory}.`, 'Close', { duration: 2500 });
     this.cdr.detectChanges();
   }
 
@@ -398,10 +367,11 @@ export class ItemConfigurationDialogComponent implements OnInit {
 
   // --- ADD SPECIFICATION / ROW ---
   public openAddRowModal(): void {
+    this.updateAvailableVariants();
     this.newRow = {
       spec: '',
-      variant: this.availableVariants[0] || '2XWY',
-      categoryName: 'LT Cable'
+      variant: this.availableVariants.length > 0 ? this.availableVariants[0] : '',
+      categoryName: ''
     };
     this.showAddRowModal = true;
   }
@@ -412,7 +382,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
 
   public confirmAddRow(): void {
     if (!this.newRow.spec.trim()) {
-      this.snackBar.open('Please enter specification name (e.g. "3 C X 4 sq.mm.").', 'Close', { duration: 2500 });
+      this.snackBar.open('Please enter specification name.', 'Close', { duration: 2500 });
       return;
     }
 
@@ -424,11 +394,12 @@ export class ItemConfigurationDialogComponent implements OnInit {
       spec: trimmedSpec,
       variant: trimmedVariant,
       categoryId: 3,
-      categoryName: this.newRow.categoryName || 'LT Cable',
+      categoryName: this.newRow.categoryName || '',
       weights: {}
     };
 
     this.rows.push(newRowObj);
+    this.updateAvailableVariants();
 
     this.closeAddRowModal();
     this.snackBar.open(`Added specification "${trimmedSpec}" (${trimmedVariant}).`, 'Close', { duration: 2500 });
@@ -448,103 +419,11 @@ export class ItemConfigurationDialogComponent implements OnInit {
     }).subscribe(confirmed => {
       if (confirmed) {
         this.rows.splice(index, 1);
+        this.updateAvailableVariants();
         this.snackBar.open('Row removed.', 'Close', { duration: 2000 });
         this.cdr.detectChanges();
       }
     });
-  }
-
-  // --- AREA & DENSITY AUTO-CALCULATION CONCEPT ---
-  public parseSpecification(specStr: string): { cores: number; areaPerCore: number; totalConductorArea: number } | null {
-    if (!specStr) return null;
-    const clean = specStr.toLowerCase().replace(/,/g, '.');
-    const regex = /([0-9]+(?:\.[0-9]+)?)\s*(?:c|core|cores)?\s*[xX*]\s*([0-9]+(?:\.[0-9]+)?)/;
-    const match = clean.match(regex);
-    if (match) {
-      const cores = parseFloat(match[1]);
-      const areaPerCore = parseFloat(match[2]);
-      if (!isNaN(cores) && !isNaN(areaPerCore)) {
-        return {
-          cores,
-          areaPerCore,
-          totalConductorArea: cores * areaPerCore
-        };
-      }
-    }
-
-    const singleRegex = /([0-9]+(?:\.[0-9]+)?)\s*(?:sq\.?mm|sqmm)/;
-    const singleMatch = clean.match(singleRegex);
-    if (singleMatch) {
-      const area = parseFloat(singleMatch[1]);
-      if (!isNaN(area)) {
-        return { cores: 1, areaPerCore: area, totalConductorArea: area };
-      }
-    }
-
-    return null;
-  }
-
-  public autoCalculateRowWeight(row: ItemConfigRow): void {
-    if (!row || !row.spec) return;
-    if (!row.weights) row.weights = {};
-
-    const parsed = this.parseSpecification(row.spec);
-    if (!parsed) return;
-
-    const totalArea = parsed.totalConductorArea;
-    const isAluminium = (row.variant && row.variant.toUpperCase().startsWith('A')) || row.spec.toUpperCase().includes('AL');
-
-    const cuMat = this.materials.find(m => m.name.toUpperCase() === 'CU');
-    const alMat = this.materials.find(m => m.name.toUpperCase() === 'AL');
-    const xlpeMat = this.materials.find(m => m.name.toUpperCase().includes('XLPE'));
-    const ishMat = this.materials.find(m => m.categoryName === 'Inner Sheath');
-    const armourMat = this.materials.find(m => m.categoryName === 'Armour Wire' && (isAluminium ? m.name.includes('AL') || m.name.includes('G.S.') : m.name.includes('G.S.') || m.name.includes('ARMOUR')));
-    const oshMat = this.materials.find(m => m.categoryName === 'PVC Outer Sheath' || m.categoryName === 'PVC Outer Shell' || (m.categoryName || '').toLowerCase().includes('outer'));
-
-    // 1. Core Conductor Weight = TotalArea (mm²) * Density (g/cm³) * 1.02
-    if (isAluminium && alMat) {
-      const density = alMat.density || 2.703;
-      row.weights[alMat.id] = Math.round(totalArea * density * 1.02);
-      if (cuMat) row.weights[cuMat.id] = 0;
-    } else if (cuMat) {
-      const density = cuMat.density || 8.89;
-      row.weights[cuMat.id] = Math.round(totalArea * density * 1.02);
-      if (alMat) row.weights[alMat.id] = 0;
-    }
-
-    // 2. Insulation Weight
-    if (xlpeMat) {
-      const density = xlpeMat.density || 0.92;
-      const insWeight = Math.round(totalArea * density * 0.42 + (parsed.cores * 3.5));
-      row.weights[xlpeMat.id] = Math.max(12, insWeight);
-    }
-
-    // 3. Inner Sheath Weight
-    if (ishMat) {
-      const density = ishMat.density || 1.45;
-      const ishWeight = Math.round(Math.sqrt(totalArea) * 6.5 * density);
-      row.weights[ishMat.id] = Math.max(20, ishWeight);
-    }
-
-    // 4. Armour Weight
-    if (armourMat) {
-      const density = armourMat.density || 7.85;
-      const armWeight = Math.round(Math.sqrt(totalArea) * 28.5 * (density / 7.85));
-      row.weights[armourMat.id] = Math.max(80, armWeight);
-    }
-
-    // 5. Outer Shell Weight
-    if (oshMat) {
-      const density = oshMat.density || 1.45;
-      const oshWeight = Math.round(Math.sqrt(totalArea) * 16.5 * density);
-      row.weights[oshMat.id] = Math.max(45, oshWeight);
-    }
-  }
-
-  public autoCalculateAll(): void {
-    this.rows.forEach(r => this.autoCalculateRowWeight(r));
-    this.snackBar.open('Auto-calculated weights for all rows based on Area & Density.', 'Close', { duration: 2500 });
-    this.cdr.detectChanges();
   }
 
   // --- SAVE CONFIGURATION TO DATABASE ---

@@ -27,6 +27,10 @@
     </div>
 
     <div class="action-buttons-group">
+      <button class="btn-secondary" (click)="openAddMaterialModal()">
+        <mat-icon class="btn-icon">add</mat-icon>
+        Add Material
+      </button>
       <button class="btn-secondary" (click)="openAddRowModal()">
         <mat-icon class="btn-icon">add_circle</mat-icon>
         Add Specification
@@ -44,7 +48,7 @@
           <th rowspan="2" class="col-variant">Variant</th>
 
           <ng-container *ngFor="let group of groupedCategories">
-            <th [attr.colspan]="group.materials.length > 0 ? group.materials.length : 1" [ngClass]="group.headerColorClass" class="category-header-cell">
+            <th [attr.colspan]="group.materials.length" [ngClass]="group.headerColorClass" class="category-header-cell">
               <div class="cat-header-content">
                 <span class="cat-title">{{ group.categoryName }}</span>
                 <button class="add-mat-mini-btn" (click)="openAddMaterialModal(group.categoryName)" title="Add new material under {{ group.categoryName }}">
@@ -60,25 +64,16 @@
         <!-- Level 2 Headers (Specific Materials) -->
         <tr class="header-level-2">
           <ng-container *ngFor="let group of groupedCategories">
-            <ng-container *ngIf="group.materials.length > 0">
-              <th *ngFor="let mat of group.materials" class="material-sub-header" [ngClass]="group.headerColorClass + '-sub'">
-                <div class="mat-header-cell-inner">
-                  <div class="mat-name-wrapper">
-                    <span class="mat-name-label" [title]="mat.name">{{ mat.name }}</span>
-                    <button type="button" class="remove-mat-mini-btn" (click)="removeMaterial(mat, $event)" title="Remove {{ mat.name }} from {{ group.categoryName }}">
-                      <mat-icon>close</mat-icon>
-                    </button>
-                  </div>
+            <th *ngFor="let mat of group.materials" class="material-sub-header" [ngClass]="group.headerColorClass + '-sub'">
+              <div class="mat-header-cell-inner">
+                <div class="mat-name-wrapper">
+                  <span class="mat-name-label" [title]="mat.name">{{ mat.name }}</span>
+                  <button type="button" class="remove-mat-mini-btn" (click)="removeMaterial(mat, $event)" title="Remove {{ mat.name }} from {{ group.categoryName }}">
+                    <mat-icon>close</mat-icon>
+                  </button>
                 </div>
-              </th>
-            </ng-container>
-            <ng-container *ngIf="group.materials.length === 0">
-              <th class="material-sub-header empty-cat-sub" [ngClass]="group.headerColorClass + '-sub'" (click)="openAddMaterialModal(group.categoryName)" title="Click to add material to {{ group.categoryName }}">
-                <div class="mat-header-cell-inner">
-                  <span class="mat-name-label empty-placeholder">+ Click to add</span>
-                </div>
-              </th>
-            </ng-container>
+              </div>
+            </th>
           </ng-container>
         </tr>
       </thead>
@@ -87,34 +82,27 @@
         <tr *ngFor="let row of filteredRows; let rowIndex = index" class="data-row">
           <!-- Specification Column -->
           <td class="col-spec spec-cell">
-            <input type="text" class="cell-input spec-input" [(ngModel)]="row.spec" placeholder="e.g. 2 C X 4 sq.mm.">
+            <input type="text" class="cell-input spec-input" [(ngModel)]="row.spec" placeholder="Specification name">
           </td>
 
           <!-- Variant Column -->
           <td class="col-variant variant-cell">
-            <input type="text" class="cell-input variant-input" [(ngModel)]="row.variant" placeholder="e.g. 2XWY">
+            <input type="text" class="cell-input variant-input" [(ngModel)]="row.variant" placeholder="Variant">
           </td>
 
           <!-- Dynamic Material Columns -->
           <ng-container *ngFor="let group of groupedCategories">
-            <ng-container *ngIf="group.materials.length > 0">
-              <td *ngFor="let mat of group.materials" class="weight-cell" [class.has-weight]="(row.weights[mat.id] || 0) > 0">
-                <input
-                  type="number"
-                  step="1"
-                  min="0"
-                  class="cell-input weight-input"
-                  [ngModel]="row.weights[mat.id] !== undefined ? row.weights[mat.id] : 0"
-                  (ngModelChange)="setWeight(row, mat.id, $event)"
-                  placeholder="0"
-                >
-              </td>
-            </ng-container>
-            <ng-container *ngIf="group.materials.length === 0">
-              <td class="weight-cell empty-cat-cell">
-                <span class="empty-dash">-</span>
-              </td>
-            </ng-container>
+            <td *ngFor="let mat of group.materials" class="weight-cell" [class.has-weight]="(row.weights[mat.id] || 0) > 0">
+              <input
+                type="number"
+                step="1"
+                min="0"
+                class="cell-input weight-input"
+                [ngModel]="row.weights[mat.id] !== undefined ? row.weights[mat.id] : 0"
+                (ngModelChange)="setWeight(row, mat.id, $event)"
+                placeholder="0"
+              >
+            </td>
           </ng-container>
 
           <!-- Actions Column -->
@@ -161,10 +149,14 @@
   <div class="custom-modal-overlay" *ngIf="showAddMaterialModal">
     <div class="custom-modal-card glass-card">
       <div class="modal-card-header">
-        <h3>+ Add Material to {{ newMaterial.categoryName }}</h3>
+        <h3>+ Add Material {{ newMaterial.categoryName ? 'to ' + newMaterial.categoryName : 'to Matrix' }}</h3>
         <button mat-icon-button (click)="closeAddMaterialModal()"><mat-icon>close</mat-icon></button>
       </div>
       <div class="modal-card-body">
+        <div class="form-group" *ngIf="!newMaterial.categoryName">
+          <label>Category Name</label>
+          <input type="text" class="in" [(ngModel)]="newMaterial.categoryName" placeholder="Enter category (e.g. Conductor, Insulator, Armour...)">
+        </div>
         <div class="form-group">
           <label>Material Name (Search & Select)</label>
           <mat-form-field appearance="outline" class="searchable-mat-field">
@@ -183,7 +175,7 @@
               <mat-option *ngFor="let mat of filteredCategoryMaterials" [value]="mat.name">
                 <div class="mat-option-row">
                   <span class="option-name">{{ mat.name }}</span>
-                  <span class="option-density" *ngIf="mat.density">{{ mat.density }} g/cm³</span>
+                  <span class="option-density" *ngIf="mat.categoryName">({{ mat.categoryName }})</span>
                 </div>
               </mat-option>
               <mat-option *ngIf="filteredCategoryMaterials.length === 0 && materialSearchInput?.trim()" [value]="materialSearchInput.trim()">
@@ -192,10 +184,7 @@
             </mat-autocomplete>
           </mat-form-field>
           <small class="help-text" *ngIf="categoryAvailableMaterials.length > 0">
-            Showing {{ filteredCategoryMaterials.length }} of {{ categoryAvailableMaterials.length }} materials under {{ newMaterial.categoryName }}
-          </small>
-          <small class="help-text" *ngIf="categoryAvailableMaterials.length === 0">
-            No predefined materials found for {{ newMaterial.categoryName }}. Type any name to create.
+            Showing {{ filteredCategoryMaterials.length }} of {{ categoryAvailableMaterials.length }} materials available
           </small>
         </div>
       </div>
@@ -216,13 +205,12 @@
       <div class="modal-card-body">
         <div class="form-group">
           <label>Specification</label>
-          <input type="text" class="in" [(ngModel)]="newRow.spec" placeholder="e.g. 3.5 C X 95 sq.mm. or 4 C X 10 sq.mm.">
-          <small class="help-text">Format: [Cores] C X [Area] sq.mm. (e.g. 3 C X 2.5 sq.mm.)</small>
+          <input type="text" class="in" [(ngModel)]="newRow.spec" placeholder="e.g. 3.5 C X 95 sq.mm.">
         </div>
         <div class="form-group">
           <label>Variant</label>
           <input type="text" class="in" [(ngModel)]="newRow.variant" placeholder="e.g. 2XWY, 2XFY, A2XFY">
-          <div class="variant-tags">
+          <div class="variant-tags" *ngIf="availableVariants.length > 0">
             <span class="v-tag" *ngFor="let v of availableVariants" (click)="newRow.variant = v">{{ v }}</span>
           </div>
         </div>

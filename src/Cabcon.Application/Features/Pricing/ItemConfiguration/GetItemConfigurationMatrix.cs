@@ -36,15 +36,6 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    private static readonly string[] DefaultCategoryOrder = new[]
-    {
-        "Core Material",
-        "Insulation Material",
-        "Inner Sheath",
-        "Armour Wire",
-        "PVC Outer Sheath"
-    };
-
     public GetItemConfigurationMatrixQueryHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
@@ -57,16 +48,7 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
             .OrderBy(m => m.Id)
             .ToListAsync(cancellationToken);
 
-        // If no categorized materials exist, seed or classify existing materials
-        if (materials.Count == 0 || materials.All(m => string.IsNullOrEmpty(m.CategoryName)))
-        {
-            await EnsureDefaultMaterialsAsync(materials, materialRepo, cancellationToken);
-            materials = await materialRepo.Query()
-                .OrderBy(m => m.Id)
-                .ToListAsync(cancellationToken);
-        }
-
-        // Migrate any legacy 'PVC Outer Shell' to 'PVC Outer Sheath'
+        // Migrate any legacy 'PVC Outer Shell' to 'PVC Outer Sheath' if exists
         bool needsSave = false;
         foreach (var m in materials)
         {
@@ -91,26 +73,13 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
                 m.Density
             )).ToList();
 
-        // Dynamically extract all distinct categories from materials
+        // Dynamically extract all distinct categories from materials in database
         var dynamicCategories = materials
             .Where(m => !string.IsNullOrWhiteSpace(m.CategoryName))
             .Select(m => m.CategoryName!.Trim())
             .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(c => c)
             .ToList();
-
-        var standardCategoriesList = new List<string>();
-        foreach (var defCat in DefaultCategoryOrder)
-        {
-            var matched = dynamicCategories.FirstOrDefault(c => c.Equals(defCat, StringComparison.OrdinalIgnoreCase));
-            standardCategoriesList.Add(matched ?? defCat);
-        }
-        foreach (var dynCat in dynamicCategories)
-        {
-            if (!standardCategoriesList.Any(c => c.Equals(dynCat, StringComparison.OrdinalIgnoreCase)))
-            {
-                standardCategoriesList.Add(dynCat);
-            }
-        }
 
         var matrixRowRepo = _unitOfWork.Repository<WeightMatrixRow>();
         var matrixRows = await matrixRowRepo.Query()
@@ -119,18 +88,6 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
             .ThenBy(r => r.Id)
             .ToListAsync(cancellationToken);
 
-        if (matrixRows.Count == 0)
-        {
-            await EnsureDefaultMatrixRowsAsync(materials, matrixRowRepo, cancellationToken);
-            matrixRows = await matrixRowRepo.Query()
-                .Include(r => r.Weights)
-                .OrderBy(r => r.SortOrder)
-                .ThenBy(r => r.Id)
-                .ToListAsync(cancellationToken);
-        }
-
-        var matMap = materials.ToDictionary(m => m.Name.ToUpper(), m => m.Id);
-
         var rows = new List<ItemConfigRowDto>();
         foreach (var r in matrixRows)
         {
@@ -138,34 +95,6 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
             foreach (var w in r.Weights)
             {
                 weightsMap[w.MaterialId] = w.WeightKg;
-            }
-
-            // If a standard specification row currently has 0 weights in database, auto-fill baseline template values
-            if (weightsMap.Count == 0 || weightsMap.Values.All(v => v == 0))
-            {
-                var sample = StandardBaselineData.FirstOrDefault(s =>
-                    s.Spec.Equals(r.Spec, StringComparison.OrdinalIgnoreCase) &&
-                    s.Variant.Equals(r.Variant, StringComparison.OrdinalIgnoreCase));
-
-                if (sample != default)
-                {
-                    void AddDef(string matKey, decimal? weight)
-                    {
-                        if (!weight.HasValue || weight.Value <= 0) return;
-                        var matchedKey = matMap.Keys.FirstOrDefault(k => k.Contains(matKey));
-                        if (matchedKey != null && matMap.TryGetValue(matchedKey, out var matId))
-                        {
-                            weightsMap[matId] = weight.Value;
-                        }
-                    }
-
-                    AddDef("AL", sample.Al);
-                    AddDef("CU", sample.Cu);
-                    AddDef("XLPE", sample.Xlpe);
-                    AddDef("PVC-ST-2 (I/SH)", sample.Ish);
-                    AddDef("G.S. ARMOUR", sample.Gs);
-                    AddDef("PVC-ST-2 FRLSH (O/SH)", sample.Osh);
-                }
             }
 
             rows.Add(new ItemConfigRowDto(
@@ -179,116 +108,11 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
         }
 
         var result = new ItemConfigMatrixDto(
-            standardCategoriesList,
+            dynamicCategories,
             materialDtos,
             rows
         );
 
         return Result<ItemConfigMatrixDto>.Success(result);
-    }
-
-    private static readonly (string Spec, string Variant, int? Al, int? Cu, int? Xlpe, int? Ish, int? Gs, int? Osh)[] StandardBaselineData = new[]
-    {
-        ("2 C X 4 sq.mm.", "2XWY", (int?)null, (int?)68, (int?)24, (int?)51, (int?)253, (int?)96),
-        ("2 C X 2.5 sq.mm.", "2XWY", null, 44, 15, 44, 210, 83),
-        ("3 C X 2.5 sq.mm.", "2XWY", null, 65, 23, 21, 226, 86),
-        ("4 C X 2.5 sq.mm.", "2XWY", null, 87, 30, 23, 251, 92),
-        ("4 C X 6 sq.mm.", "2XWY", null, 202, 54, 32, 332, 133),
-        ("7 C X 2.5 sq.mm.", "2XWY", null, 152, 53, 29, 304, 104),
-        ("12 C X 2.5 sq.mm.", "2XFY", null, 261, 90, 38, 236, 142),
-        ("19 C X 2.5 sq.mm.", "2XFY", null, 414, 143, 44, 281, 166),
-        ("4 C X 16 sq.mm.", "2XFY", null, 533, 76, 42, 317, 157),
-        ("3.5 C X 70 sq.mm.", "A2XFY", 623, null, 145, 78, 491, 271),
-        ("3.5 C X 300 sq.mm.", "A2XFY", 2670, null, 447, 195, 907, 693)
-    };
-
-    private async Task EnsureDefaultMatrixRowsAsync(List<Material> materials, IRepository<WeightMatrixRow> matrixRowRepo, CancellationToken cancellationToken)
-    {
-        var matMap = materials.ToDictionary(m => m.Name.ToUpper(), m => m.Id);
-
-        int sortOrder = 0;
-        foreach (var s in StandardBaselineData)
-        {
-            var row = new WeightMatrixRow
-            {
-                Spec = s.Spec,
-                Variant = s.Variant,
-                SortOrder = ++sortOrder
-            };
-
-            void AddWeight(string matKey, decimal? weight)
-            {
-                if (!weight.HasValue || weight.Value <= 0) return;
-                var matchedKey = matMap.Keys.FirstOrDefault(k => k.Contains(matKey));
-                if (matchedKey != null && matMap.TryGetValue(matchedKey, out var matId))
-                {
-                    row.Weights.Add(new WeightMatrixWeight
-                    {
-                        MaterialId = matId,
-                        WeightKg = weight.Value
-                    });
-                }
-            }
-
-            AddWeight("AL", s.Al);
-            AddWeight("CU", s.Cu);
-            AddWeight("XLPE", s.Xlpe);
-            AddWeight("PVC-ST-2 (I/SH)", s.Ish);
-            AddWeight("G.S. ARMOUR", s.Gs);
-            AddWeight("PVC-ST-2 FRLSH (O/SH)", s.Osh);
-
-            await matrixRowRepo.AddAsync(row, cancellationToken);
-        }
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-    }
-
-    private async Task EnsureDefaultMaterialsAsync(List<Material> existing, IRepository<Material> materialRepo, CancellationToken cancellationToken)
-    {
-        var defaultList = new (string Name, string Category, decimal Density)[]
-        {
-            ("AL", "Core Material", 2.703m),
-            ("CU", "Core Material", 8.89m),
-            ("LT XLPE", "Insulation Material", 0.92m),
-            ("PVC-A(INS)", "Insulation Material", 1.40m),
-            ("PVC-C(INS)", "Insulation Material", 1.42m),
-            ("PVC-ST-2 (I/SH)", "Inner Sheath", 1.45m),
-            ("PVC-FRLSH(I/SH)", "Inner Sheath", 1.48m),
-            ("AL ARMOUR", "Armour Wire", 2.703m),
-            ("G.S. ARMOUR", "Armour Wire", 7.85m),
-            ("PVC-ST-2 FRLSH (O/SH)", "PVC Outer Sheath", 1.45m)
-        };
-
-        bool hasChanges = false;
-        foreach (var (name, cat, density) in defaultList)
-        {
-            var match = existing.FirstOrDefault(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-            if (match != null)
-            {
-                if (string.IsNullOrEmpty(match.CategoryName) || match.Density == 0)
-                {
-                    match.CategoryName = cat;
-                    match.Density = density;
-                    materialRepo.Update(match);
-                    hasChanges = true;
-                }
-            }
-            else
-            {
-                var newMat = new Material
-                {
-                    Name = name,
-                    CategoryName = cat,
-                    Density = density
-                };
-                await materialRepo.AddAsync(newMat, cancellationToken);
-                hasChanges = true;
-            }
-        }
-
-        if (hasChanges)
-        {
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-        }
     }
 }
