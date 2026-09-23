@@ -14,7 +14,8 @@ public record ItemConfigMaterialDto(
     string CategoryName,
     decimal Density,
     int? MaterialTypeId = null,
-    string? MaterialTypeName = null
+    string? MaterialTypeName = null,
+    string? ColorCode = null
 );
 
 public record ItemConfigRowDto(
@@ -59,7 +60,8 @@ public class GetItemConfigurationMatrixQueryHandler : IRequestHandler<GetItemCon
                 m.MaterialType!.Name.Trim(),
                 m.Density,
                 m.MaterialTypeId,
-                m.MaterialType.Name.Trim()
+                m.MaterialType.Name.Trim(),
+                m.MaterialType.ColorCode
             )).ToList();
 
         // Dynamically extract all distinct material types from materials in database

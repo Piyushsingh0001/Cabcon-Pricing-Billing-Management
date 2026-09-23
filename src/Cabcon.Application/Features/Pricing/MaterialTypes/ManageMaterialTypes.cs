@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Cabcon.Application.Features.Pricing.MaterialTypes;
 
 // --- CREATE MATERIAL TYPE ---
-public record CreateMaterialTypeCommand(string Name, string? Description = null) : IRequest<Result<int>>;
+public record CreateMaterialTypeCommand(string Name, string? Description = null, string? ColorCode = null) : IRequest<Result<int>>;
 
 public class CreateMaterialTypeCommandValidator : AbstractValidator<CreateMaterialTypeCommand>
 {
@@ -16,6 +16,7 @@ public class CreateMaterialTypeCommandValidator : AbstractValidator<CreateMateri
     {
         RuleFor(x => x.Name).NotEmpty().MaximumLength(150);
         RuleFor(x => x.Description).MaximumLength(500);
+        RuleFor(x => x.ColorCode).MaximumLength(50);
     }
 }
 
@@ -45,6 +46,7 @@ public class CreateMaterialTypeCommandHandler : IRequestHandler<CreateMaterialTy
         {
             Name = trimmedName,
             Description = request.Description?.Trim(),
+            ColorCode = !string.IsNullOrWhiteSpace(request.ColorCode) ? request.ColorCode.Trim() : null,
             IsActive = true
         };
 
@@ -56,7 +58,7 @@ public class CreateMaterialTypeCommandHandler : IRequestHandler<CreateMaterialTy
 }
 
 // --- UPDATE MATERIAL TYPE ---
-public record UpdateMaterialTypeCommand(int Id, string Name, string? Description = null, bool? IsActive = null) : IRequest<Result>;
+public record UpdateMaterialTypeCommand(int Id, string Name, string? Description = null, string? ColorCode = null, bool? IsActive = null) : IRequest<Result>;
 
 public class UpdateMaterialTypeCommandValidator : AbstractValidator<UpdateMaterialTypeCommand>
 {
@@ -65,6 +67,7 @@ public class UpdateMaterialTypeCommandValidator : AbstractValidator<UpdateMateri
         RuleFor(x => x.Id).NotEmpty();
         RuleFor(x => x.Name).NotEmpty().MaximumLength(150);
         RuleFor(x => x.Description).MaximumLength(500);
+        RuleFor(x => x.ColorCode).MaximumLength(50);
     }
 }
 
@@ -99,6 +102,10 @@ public class UpdateMaterialTypeCommandHandler : IRequestHandler<UpdateMaterialTy
         if (request.Description != null)
         {
             materialType.Description = request.Description.Trim();
+        }
+        if (request.ColorCode != null)
+        {
+            materialType.ColorCode = !string.IsNullOrWhiteSpace(request.ColorCode) ? request.ColorCode.Trim() : null;
         }
         if (request.IsActive.HasValue)
         {

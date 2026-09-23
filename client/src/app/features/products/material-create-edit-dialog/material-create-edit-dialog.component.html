@@ -15,7 +15,10 @@
         <mat-label>Material Type</mat-label>
         <mat-select formControlName="materialTypeId" (selectionChange)="onMaterialTypeChange($event.value)">
           <mat-option *ngFor="let type of materialTypes" [value]="type.id">
-            {{ type.name }}
+            <span style="display: inline-flex; align-items: center; gap: 8px;">
+              <span [style.backgroundColor]="type.colorCode || '#3B82F6'" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block;"></span>
+              {{ type.name }}
+            </span>
           </mat-option>
         </mat-select>
         <mat-error *ngIf="form.get('materialTypeId')?.hasError('required')">Material Type is required</mat-error>

@@ -81,11 +81,17 @@
         <div class="bom-grid-row" 
              *ngFor="let line of bomLines.controls; let idx = index" 
              [formGroupName]="idx"
-             [ngClass]="getCategoryThemeClass(line.get('materialId')?.value, line.get('materialName')?.value)">
+             [style.borderLeftColor]="getMaterialColorCode(line.get('materialId')?.value, line.get('materialName')?.value)"
+             [style.borderLeftWidth]="'3.5px'"
+             [style.borderLeftStyle]="'solid'">
           
           <!-- Column 0: Index -->
           <div class="td-cell col-idx">
-            <span class="idx-badge">{{ idx + 1 }}</span>
+            <span class="idx-badge" 
+                  [style.backgroundColor]="getMaterialColorCode(line.get('materialId')?.value, line.get('materialName')?.value) + '20'"
+                  [style.color]="getMaterialColorCode(line.get('materialId')?.value, line.get('materialName')?.value)">
+              {{ idx + 1 }}
+            </span>
           </div>
 
           <!-- Column 1: Material Dropdown -->

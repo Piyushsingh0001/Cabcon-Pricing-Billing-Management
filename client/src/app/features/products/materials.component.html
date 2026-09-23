@@ -5,6 +5,9 @@
       <p class="subtitle">Update inputs, then stamp the date. Exchange metals build up from LME; others are a direct ₹/kg.</p>
     </div>
     <div class="header-actions" *ngIf="canUpdate()">
+      <button class="btn-ghost" (click)="openManageMaterialTypes()">
+        <mat-icon style="vertical-align: middle; font-size: 18px; width: 18px; height: 18px;">palette</mat-icon> Add Material Type
+      </button>
       <button class="btn-ghost" (click)="openManageVendors()">
         <mat-icon style="vertical-align: middle; font-size: 18px; width: 18px; height: 18px;">storefront</mat-icon> Manage Vendors
       </button>
@@ -55,7 +58,10 @@
   </div>
 
   <div class="grid">
-    <div class="card glass-card" [ngClass]="getCategoryThemeClass(group.categoryName)" *ngFor="let group of materialGroups">
+    <div class="card glass-card" 
+         [style.borderTopColor]="getMaterialTypeColor(group)" 
+         [style.--accent-color]="getMaterialTypeColor(group)"
+         *ngFor="let group of materialGroups">
       <!-- Top notification for Direct price type missing vendors -->
       <div class="card-top-alert cursor-pointer" 
            *ngIf="group.selectedType === 1 && getMissingVendors(group).length > 0"
@@ -99,7 +105,13 @@
       </div>
 
       <div class="material-meta-row" *ngIf="group.categoryName || group.density">
-        <span class="category-chip" *ngIf="group.categoryName">{{ group.categoryName }}</span>
+        <span class="category-chip" *ngIf="group.categoryName"
+              [style.backgroundColor]="getMaterialTypeColor(group) + '18'" 
+              [style.color]="getMaterialTypeColor(group)" 
+              [style.borderColor]="getMaterialTypeColor(group) + '45'">
+          <span class="chip-color-dot" [style.backgroundColor]="getMaterialTypeColor(group)"></span>
+          {{ group.categoryName }}
+        </span>
         <span class="density-chip" *ngIf="group.density">
           <mat-icon class="density-icon">straighten</mat-icon> {{ group.density }} g/cm³
         </span>

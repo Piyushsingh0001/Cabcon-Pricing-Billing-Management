@@ -20,6 +20,7 @@ import { ConfirmDialogService } from '../../../shared/confirm-dialog/confirm-dia
 
 export interface MaterialCategoryGroup {
   categoryName: string;
+  colorCode?: string;
   materials: ItemConfigMaterial[];
   headerColorClass: string;
 }
@@ -30,6 +31,7 @@ export interface DbMaterialItem {
   materialTypeId?: number;
   materialTypeName?: string;
   categoryName?: string;
+  colorCode?: string;
   density?: number;
 }
 
@@ -112,6 +114,7 @@ export class ItemConfigurationDialogComponent implements OnInit {
                 materialTypeId: m.materialTypeId,
                 materialTypeName: rawCat,
                 categoryName: rawCat,
+                colorCode: m.colorCode,
                 density: m.density || 0
               });
             }
@@ -138,11 +141,16 @@ export class ItemConfigurationDialogComponent implements OnInit {
       }
     });
 
-    this.groupedCategories = catOrder.map(catName => ({
-      categoryName: catName,
-      materials: groups[catName] || [],
-      headerColorClass: this.getCategoryColorClass(catName)
-    }));
+    this.groupedCategories = catOrder.map(catName => {
+      const mats = groups[catName] || [];
+      const color = this.getCategoryColorCode(catName, mats);
+      return {
+        categoryName: catName,
+        colorCode: color,
+        materials: mats,
+        headerColorClass: this.getCategoryColorClass(catName)
+      };
+    });
 
     this.updateAvailableVariants();
   }
@@ -185,6 +193,23 @@ export class ItemConfigurationDialogComponent implements OnInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  public getCategoryColorCode(catName: string, materials?: ItemConfigMaterial[]): string {
+    if (materials && materials.length > 0) {
+      const found = materials.find(m => m.colorCode);
+      if (found?.colorCode) return found.colorCode;
+    }
+    const dbMat = this.allDbMaterials.find(m => (m.materialTypeName || m.categoryName || '').toLowerCase() === catName.toLowerCase());
+    if (dbMat?.colorCode) return dbMat.colorCode;
+
+    const classes = ['#3B82F6', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899', '#06B6D4'];
+    let hash = 0;
+    for (let i = 0; i < catName.length; i++) {
+      hash = (hash * 31 + catName.charCodeAt(i)) & 0xffffffff;
+    }
+    const idx = Math.abs(hash) % classes.length;
+    return classes[idx];
   }
 
   public getCategoryColorClass(catName: string): string {

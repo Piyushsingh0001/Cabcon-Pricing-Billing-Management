@@ -795,6 +795,19 @@ export class SkuEditDialogComponent implements OnInit {
     return '';
   }
 
+  public getMaterialColorCode(matId?: number, matName?: string): string {
+    if (matId) {
+      const mat = this.materials.find(m => m.id === matId) || this.matrixMaterials.find(m => m.id === matId);
+      if (mat?.colorCode) return mat.colorCode;
+    }
+    if (matName) {
+      const mat = this.materials.find(m => m.name?.toLowerCase() === matName.toLowerCase()) || 
+                  this.matrixMaterials.find(m => m.name?.toLowerCase() === matName.toLowerCase());
+      if (mat?.colorCode) return mat.colorCode;
+    }
+    return '#3B82F6';
+  }
+
   public getCategoryThemeClass(matId?: number, matName?: string): string {
     const cat = this.getMaterialCategoryName(matId, matName);
     if (!cat) return 'theme-default';

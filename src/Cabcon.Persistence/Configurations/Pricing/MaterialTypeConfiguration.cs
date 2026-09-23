@@ -13,6 +13,7 @@ public class MaterialTypeConfiguration : IEntityTypeConfiguration<MaterialType>
 
         b.Property(x => x.Name).HasMaxLength(150).IsRequired();
         b.Property(x => x.Description).HasMaxLength(500);
+        b.Property(x => x.ColorCode).HasMaxLength(50);
         b.Property(x => x.IsActive).HasDefaultValue(true);
 
         b.HasIndex(x => x.Name);

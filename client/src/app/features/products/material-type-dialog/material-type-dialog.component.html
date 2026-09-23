@@ -1,0 +1,149 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header-title-group">
+      <div class="header-icon-box">
+        <mat-icon>palette</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">Material Types & Custom Colors</h2>
+        <p class="dialog-subtitle">Create and manage material categories and their associated theme colors.</p>
+      </div>
+    </div>
+    <button mat-icon-button (click)="close()" class="close-btn" title="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="dialog-body">
+    <!-- Form Card -->
+    <div class="glass-form-card">
+      <div class="form-title-row">
+        <span class="form-section-title">
+          <mat-icon class="section-icon">{{ editingId ? 'edit' : 'add_circle' }}</mat-icon>
+          {{ editingId ? 'Edit Material Type' : 'Add New Material Type' }}
+        </span>
+        <button *ngIf="editingId" class="btn-text-cancel" (click)="cancelEdit()">Cancel Edit</button>
+      </div>
+
+      <div class="form-grid">
+        <div class="input-group">
+          <label class="form-label">Material Type Name <span class="required">*</span></label>
+          <input 
+            type="text" 
+            class="custom-input" 
+            [(ngModel)]="typeName" 
+            placeholder="e.g. Core Material, Insulation, Sheath"
+            (keyup.enter)="saveType()"
+          />
+        </div>
+
+        <div class="input-group">
+          <label class="form-label">Description (Optional)</label>
+          <input 
+            type="text" 
+            class="custom-input" 
+            [(ngModel)]="typeDescription" 
+            placeholder="Short details about this type"
+            (keyup.enter)="saveType()"
+          />
+        </div>
+      </div>
+
+      <!-- Color Selection Section -->
+      <div class="color-picker-section">
+        <label class="form-label">Custom Theme Color</label>
+        
+        <div class="color-controls-row">
+          <div class="color-input-wrapper">
+            <input type="color" [(ngModel)]="typeColor" class="native-color-picker" title="Pick custom color" />
+            <span class="color-hex-text">{{ typeColor.toUpperCase() }}</span>
+          </div>
+
+          <div class="preset-swatches">
+            <button 
+              type="button"
+              *ngFor="let c of presetColors" 
+              class="swatch-btn" 
+              [style.backgroundColor]="c"
+              [class.active]="typeColor.toLowerCase() === c.toLowerCase()"
+              (click)="selectPresetColor(c)"
+              [title]="c">
+              <mat-icon *ngIf="typeColor.toLowerCase() === c.toLowerCase()" class="swatch-check">check</mat-icon>
+            </button>
+          </div>
+
+          <div class="preview-badge-wrapper">
+            <span class="preview-label">Live Preview:</span>
+            <span class="type-pill-preview" 
+                  [style.backgroundColor]="typeColor + '20'" 
+                  [style.color]="typeColor" 
+                  [style.borderColor]="typeColor + '55'">
+              <span class="pill-dot" [style.backgroundColor]="typeColor"></span>
+              {{ typeName || 'Sample Material Type' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions-row">
+        <button class="btn-save" [disabled]="saving() || !typeName.trim()" (click)="saveType()">
+          <mat-icon *ngIf="!saving()">{{ editingId ? 'check' : 'add' }}</mat-icon>
+          <span *ngIf="saving()">Saving...</span>
+          <span *ngIf="!saving()">{{ editingId ? 'Update Material Type' : 'Add Material Type' }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Existing Material Types Table -->
+    <div class="types-list-section">
+      <div class="list-header-row">
+        <span class="list-section-title">Existing Material Types ({{ materialTypes.length }})</span>
+      </div>
+
+      <div class="types-table-wrapper">
+        <table class="types-table" *ngIf="materialTypes.length > 0">
+          <thead>
+            <tr>
+              <th style="width: 50px;">Color</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th style="width: 110px; text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of materialTypes" [class.editing-row]="editingId === item.id">
+              <td>
+                <span class="table-color-dot" [style.backgroundColor]="item.colorCode || '#3B82F6'" [title]="item.colorCode || '#3B82F6'"></span>
+              </td>
+              <td>
+                <span class="type-name-badge" 
+                      [style.backgroundColor]="(item.colorCode || '#3B82F6') + '18'" 
+                      [style.color]="item.colorCode || '#3B82F6'" 
+                      [style.borderColor]="(item.colorCode || '#3B82F6') + '40'">
+                  {{ item.name }}
+                </span>
+              </td>
+              <td class="desc-cell">{{ item.description || '-' }}</td>
+              <td style="text-align: right;">
+                <button mat-icon-button class="action-btn edit" (click)="editType(item)" title="Edit">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button class="action-btn delete" (click)="deleteType(item)" title="Delete">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div *ngIf="materialTypes.length === 0 && !loading()" class="empty-state">
+          No material types defined. Add one above!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialog-footer">
+    <button class="btn-close-modal" (click)="close()">Done</button>
+  </div>
+</div>

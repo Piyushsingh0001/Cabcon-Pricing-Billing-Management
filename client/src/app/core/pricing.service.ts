@@ -28,6 +28,7 @@ export interface MaterialType {
   id: number;
   name: string;
   description?: string;
+  colorCode?: string;
   isActive?: boolean;
 }
 
@@ -37,6 +38,7 @@ export interface Material {
   materialTypeId?: number;
   materialTypeName?: string;
   categoryName?: string;
+  colorCode?: string;
   density?: number;
   vendorName?: string;
   vendorId?: number;
@@ -216,12 +218,12 @@ export class PricingService {
     return this.http.get<MaterialType[]>(`${this.apiBase}/materialtypes`);
   }
 
-  public createMaterialType(name: string, description?: string): Observable<number> {
-    return this.http.post<number>(`${this.apiBase}/materialtypes`, { name, description });
+  public createMaterialType(name: string, description?: string, colorCode?: string): Observable<number> {
+    return this.http.post<number>(`${this.apiBase}/materialtypes`, { name, description, colorCode });
   }
 
-  public updateMaterialType(id: number, name: string, description?: string, isActive?: boolean): Observable<void> {
-    return this.http.put<void>(`${this.apiBase}/materialtypes/${id}`, { name, description, isActive });
+  public updateMaterialType(id: number, name: string, description?: string, colorCode?: string, isActive?: boolean): Observable<void> {
+    return this.http.put<void>(`${this.apiBase}/materialtypes/${id}`, { name, description, colorCode, isActive });
   }
 
   public deleteMaterialType(id: number): Observable<void> {
@@ -607,6 +609,7 @@ export interface ItemConfigMaterial {
   materialTypeId?: number;
   materialTypeName?: string;
   categoryName: string;
+  colorCode?: string;
   density: number;
 }
 
@@ -632,6 +635,7 @@ export interface SaveItemConfigPayload {
     materialTypeId?: number;
     materialTypeName?: string;
     categoryName?: string;
+    colorCode?: string;
     density: number;
   }[];
   rows: {

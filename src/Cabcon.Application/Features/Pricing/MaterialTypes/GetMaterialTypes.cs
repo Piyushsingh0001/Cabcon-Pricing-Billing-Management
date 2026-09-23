@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cabcon.Application.Features.Pricing.MaterialTypes;
 
-public record MaterialTypeDto(int Id, string Name, string? Description, bool IsActive);
+public record MaterialTypeDto(int Id, string Name, string? Description, string? ColorCode, bool IsActive);
 
 public record GetAllMaterialTypesQuery : IRequest<Result<List<MaterialTypeDto>>>;
 
@@ -23,7 +23,7 @@ public class GetAllMaterialTypesQueryHandler : IRequestHandler<GetAllMaterialTyp
     {
         var types = await _repository.Query()
             .OrderBy(t => t.Id)
-            .Select(t => new MaterialTypeDto(t.Id, t.Name, t.Description, t.IsActive))
+            .Select(t => new MaterialTypeDto(t.Id, t.Name, t.Description, t.ColorCode, t.IsActive))
             .ToListAsync(cancellationToken);
 
         return Result<List<MaterialTypeDto>>.Success(types);

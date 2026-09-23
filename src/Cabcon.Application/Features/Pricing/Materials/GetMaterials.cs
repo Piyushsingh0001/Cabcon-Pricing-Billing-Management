@@ -38,6 +38,7 @@ public record MaterialDto
     public int? MaterialTypeId { get; init; }
     public string? MaterialTypeName { get; init; }
     public string? CategoryName { get; init; }
+    public string? ColorCode { get; init; }
     public decimal Density { get; init; }
     /// <summary>True when a history record for today already exists for LME/Exchange type.</summary>
     public bool IsTodayUpdatedLme { get; init; }
@@ -184,6 +185,7 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
             var directLandedCost = todayDirect?.LandedCostInrPerKg ?? latestDirect?.LandedCostInrPerKg;
 
             var matTypeName = m.MaterialType?.Name;
+            var colorCode = m.MaterialType?.ColorCode;
 
             if (allVendorEntries.Count == 0)
             {
@@ -212,6 +214,7 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                     MaterialTypeId = m.MaterialTypeId,
                     MaterialTypeName = matTypeName,
                     CategoryName = matTypeName,
+                    ColorCode = colorCode,
                     Density = m.Density,
                     MissingDaysCountLme = missingCountLme,
                     MissingDaysCountDirect = missingCountDirect,
@@ -273,6 +276,7 @@ public class GetMaterialsQueryHandler : IRequestHandler<GetMaterialsQuery, Pagin
                         MaterialTypeId = m.MaterialTypeId,
                         MaterialTypeName = matTypeName,
                         CategoryName = matTypeName,
+                        ColorCode = colorCode,
                         Density = m.Density,
                         MissingDaysCountLme = missingCountLme,
                         MissingDaysCountDirect = vMissingCountDirect,

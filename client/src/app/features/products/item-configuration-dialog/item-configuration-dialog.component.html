@@ -48,9 +48,18 @@
           <th rowspan="2" class="col-variant">Variant</th>
 
           <ng-container *ngFor="let group of groupedCategories">
-            <th [attr.colspan]="group.materials.length" [ngClass]="group.headerColorClass" class="category-header-cell">
+            <th [attr.colspan]="group.materials.length" 
+                class="category-header-cell"
+                [style.borderTopColor]="group.colorCode || '#3B82F6'"
+                [style.borderTopWidth]="'3px'"
+                [style.borderTopStyle]="'solid'"
+                [style.background]="(group.colorCode || '#3B82F6') + '15'"
+                [style.color]="group.colorCode || '#1e293b'">
               <div class="cat-header-content">
-                <span class="cat-title">{{ group.categoryName }}</span>
+                <span class="cat-title" style="display: inline-flex; align-items: center; gap: 6px;">
+                  <span class="cat-dot" [style.backgroundColor]="group.colorCode || '#3B82F6'" style="width: 8px; height: 8px; border-radius: 50%; display: inline-block;"></span>
+                  {{ group.categoryName }}
+                </span>
                 <button class="add-mat-mini-btn" (click)="openAddMaterialModal(group.categoryName)" title="Add new material under {{ group.categoryName }}">
                   + Add
                 </button>
@@ -64,7 +73,10 @@
         <!-- Level 2 Headers (Specific Materials) -->
         <tr class="header-level-2">
           <ng-container *ngFor="let group of groupedCategories">
-            <th *ngFor="let mat of group.materials" class="material-sub-header" [ngClass]="group.headerColorClass + '-sub'">
+            <th *ngFor="let mat of group.materials" 
+                class="material-sub-header"
+                [style.background]="(mat.colorCode || group.colorCode || '#3B82F6') + '0a'"
+                [style.borderBottomColor]="(mat.colorCode || group.colorCode || '#3B82F6') + '35'">
               <div class="mat-header-cell-inner">
                 <div class="mat-name-wrapper">
                   <span class="mat-name-label" [title]="mat.name">{{ mat.name }}</span>

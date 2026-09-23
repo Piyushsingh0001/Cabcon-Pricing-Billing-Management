@@ -9,13 +9,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { PricingService, Material } from '../../core/pricing.service';
+import { PricingService, Material, MaterialType } from '../../core/pricing.service';
 import { AuthService } from '../../core/auth.service';
 import { MaterialCreateEditDialogComponent } from './material-create-edit-dialog/material-create-edit-dialog.component';
 import { MaterialHistoryDialogComponent } from './material-history-dialog/material-history-dialog.component';
 import { MaterialBackfillDialogComponent } from './material-backfill-dialog/material-backfill-dialog.component';
 import { MaterialTrendDialogComponent } from './material-trend-dialog/material-trend-dialog.component';
 import { VendorManageDialogComponent } from './vendor-manage-dialog/vendor-manage-dialog.component';
+import { MaterialTypeDialogComponent } from './material-type-dialog/material-type-dialog.component';
 
 @Component({
   selector: 'app-materials',
@@ -44,6 +45,8 @@ export class MaterialsComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   public materials: Material[] = [];
+  public materialTypes: MaterialType[] = [];
+  public materialTypesMap = new Map<number, MaterialType>();
   public materialGroups: any[] = [];
   public loading = signal(true);
 
@@ -303,6 +306,30 @@ export class MaterialsComponent implements OnInit {
     });
   }
 
+  public openManageMaterialTypes() {
+    const dialogRef = this.dialog.open(MaterialTypeDialogComponent, {
+      panelClass: 'dialog-auto-fit'
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.loadMaterials();
+      }
+    });
+  }
+
+  public getMaterialTypeColor(group: any): string {
+    if (group?.colorCode) return group.colorCode;
+    if (group?.materialTypeId && this.materialTypesMap.has(group.materialTypeId)) {
+      return this.materialTypesMap.get(group.materialTypeId)?.colorCode || '#3B82F6';
+    }
+    if (group?.categoryName) {
+      const matched = this.materialTypes.find(t => t.name.toLowerCase() === group.categoryName.toLowerCase());
+      if (matched?.colorCode) return matched.colorCode;
+    }
+    return '#3B82F6';
+  }
+
   public canUpdate(): boolean {
     return this.authService.hasRole('Super Admin') || this.authService.hasRole('Admin');
   }
@@ -334,6 +361,14 @@ export class MaterialsComponent implements OnInit {
         vendor: g.selectedVendorName,
         type: g.selectedType
       });
+    });
+
+    this.pricingService.getMaterialTypes().subscribe({
+      next: (types) => {
+        this.materialTypes = types || [];
+        this.materialTypesMap.clear();
+        (types || []).forEach(t => this.materialTypesMap.set(t.id, t));
+      }
     });
 
     // Request up to 100 materials on page 1 sorted by name (asc) to ensure all display together
@@ -372,6 +407,7 @@ export class MaterialsComponent implements OnInit {
               materialTypeId: m.materialTypeId,
               materialTypeName: m.materialTypeName || m.categoryName || '',
               categoryName: m.materialTypeName || m.categoryName || '',
+              colorCode: m.colorCode || '',
               density: m.density || 0,
               selectedType: prev?.type !== undefined ? prev.type : (m.type === 0 ? 0 : 1),
               variants: [],
@@ -404,6 +440,9 @@ export class MaterialsComponent implements OnInit {
           if ((m.materialTypeName || m.categoryName) && !group.materialTypeName) {
             group.materialTypeName = m.materialTypeName || m.categoryName;
             group.categoryName = m.materialTypeName || m.categoryName;
+          }
+          if (m.colorCode && !group.colorCode) {
+            group.colorCode = m.colorCode;
           }
           if (m.density && !group.density) {
             group.density = m.density;

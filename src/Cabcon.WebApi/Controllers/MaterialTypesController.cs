@@ -29,7 +29,7 @@ public class MaterialTypesController : ControllerBase
     [HasPermission(AppPermissions.Pricing.Update)]
     public async Task<IActionResult> Create([FromBody] CreateMaterialTypeRequest request, CancellationToken ct)
     {
-        var result = await _mediator.Send(new CreateMaterialTypeCommand(request.Name, request.Description), ct);
+        var result = await _mediator.Send(new CreateMaterialTypeCommand(request.Name, request.Description, request.ColorCode), ct);
         return result.Succeeded ? Ok(result.Data) : BadRequest(result.Errors);
     }
 
@@ -37,7 +37,7 @@ public class MaterialTypesController : ControllerBase
     [HasPermission(AppPermissions.Pricing.Update)]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateMaterialTypeRequest request, CancellationToken ct)
     {
-        var result = await _mediator.Send(new UpdateMaterialTypeCommand(id, request.Name, request.Description, request.IsActive), ct);
+        var result = await _mediator.Send(new UpdateMaterialTypeCommand(id, request.Name, request.Description, request.ColorCode, request.IsActive), ct);
         return result.Succeeded ? NoContent() : BadRequest(result.Errors);
     }
 
@@ -50,5 +50,5 @@ public class MaterialTypesController : ControllerBase
     }
 }
 
-public record CreateMaterialTypeRequest(string Name, string? Description = null);
-public record UpdateMaterialTypeRequest(string Name, string? Description = null, bool? IsActive = null);
+public record CreateMaterialTypeRequest(string Name, string? Description = null, string? ColorCode = null);
+public record UpdateMaterialTypeRequest(string Name, string? Description = null, string? ColorCode = null, bool? IsActive = null);
